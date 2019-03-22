@@ -4,6 +4,7 @@
   "main": "dist/index.js",
   "module": "dist/index.js",
   "dependencies": {
+    "core-js": "^3.0.0",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
     "react-scripts": "2.1.8"
@@ -28,7 +29,8 @@
     "not op_mini all"
   ],
   "presets": [
-    "@babel/preset-react"
+    "@babel/preset-react",
+    "es2015"
   ],
   "babel": {
     "plugins": [

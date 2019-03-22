@@ -1,10 +1,20 @@
-import React, { Component } from 'react';
+"use strict";
 
-class Input extends Component {
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireWildcard(require("react"));
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+class Input extends _react.Component {
   render() {
-    return React.createElement("div", null, React.createElement("input", null), "dededede");
+    return _react.default.createElement("div", null, _react.default.createElement("input", null), "dededede");
   }
 
 }
 
-export default Input;
+var _default = Input;
+exports.default = _default;
