@@ -5,6 +5,7 @@ class Input extends Component {
 		return (
 			<div>
 				<input></input>
+				dededede
 			</div>
 		)
 	}
