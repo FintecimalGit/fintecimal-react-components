@@ -17,7 +17,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "storybook": "start-storybook -p 9009 -s public",
+    "build-storybook": "build-storybook -s public"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -39,8 +41,15 @@
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0-beta.44",
+    "@babel/core": "^7.4.0",
     "@babel/plugin-transform-classes": "^7.4.0",
     "@babel/plugin-transform-react-jsx": "^7.3.0",
-    "@babel/preset-react": "^7.0.0"
+    "@babel/preset-react": "^7.0.0",
+    "@storybook/addon-actions": "^5.0.3",
+    "@storybook/addon-links": "^5.0.3",
+    "@storybook/addon-notes": "^5.0.11",
+    "@storybook/addons": "^5.0.3",
+    "@storybook/react": "^5.0.3",
+    "babel-loader": "^8.0.5"
   }
 }
