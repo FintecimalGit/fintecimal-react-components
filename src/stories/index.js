@@ -4,14 +4,21 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 
 import lib from '../lib';
+import ui from '../ui';
 
 const { Input, Button } = lib;
+const { LoginUI } = ui
 
-storiesOf('Welcome', module).add('Input', () => <Input
+storiesOf('UI|Login', module).add('Login', () => <LoginUI 
+onChangeEmail={action('onChangeEmail')}
+onChangePassword={action('onChangePassword')}
+/>);
+
+storiesOf('Components|Input', module).add('Input', () => <Input
   onChange={action('onChange')}
 />);
 
-storiesOf('Button', module)
+storiesOf('Components|Button', module)
   .add('Classic Button', () => 
     <Button onClick={action('clicked')}></Button>
   ,{notes: 'Este es el botón creado por default, incluye la respuesta del evento cuando se dispara el evento onClick',})

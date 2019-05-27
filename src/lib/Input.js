@@ -4,7 +4,7 @@ import '../styles/Input.css'
 class Input extends Component {
 
 	constructor(props) {
-		super(props)
+		super(props);
 
 		this.state = {
 			inputWithContent: 0
@@ -14,21 +14,23 @@ class Input extends Component {
 	hasContent(e) {
 		this.setState({
 			inputWithContent: e.target.value.length
-		}, this.props.onChange(e))
+		})
+		this.props.onChange(e)
 	}
 
 	render() {
 
 		const { 
 			className, style, label,
-			name, type
+			name, type, id
 		} = this.props;
 
 		const { inputWithContent } = this.state;
 
 		return (
-			<div>
+			<div style={{padding:'30px 0'}}>
 				<input
+					id={id}
 					className={`fnt-input-basic ${className}`}
 					style={style}
 					name={name}
@@ -48,6 +50,7 @@ class Input extends Component {
 }
 
 Input.defaultProps = {
+	id:'not-uid',
 	className: '',
 	style: {},
 	label: 'Cualquier texto',
