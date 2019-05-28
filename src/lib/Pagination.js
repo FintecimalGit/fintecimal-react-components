@@ -23,7 +23,10 @@ class Pagination extends Component {
         <div className='ftn-pagination-arrow-left'
           onClick={() => this.checkNumber(-1)}
         >
-          <img alt='' src={imageDisable}></img>
+          <img 
+            alt='' 
+            src={actualPage === 1 ? imageDisable : imageActive}
+          ></img>
         </div>
         <div className='ftn-pagination-body'>
           <span className='ftn-pagination-text'>Página { actualPage } de { totalPage }</span>
@@ -31,7 +34,9 @@ class Pagination extends Component {
         <div className='ftn-pagination-arrow-right'
           onClick={() => this.checkNumber(1)}
         >
-          <img alt='' src={imageActive}></img>
+          <img alt=''
+            src={actualPage >= totalPage ? imageDisable : imageActive}
+          ></img>
         </div>
       </div>
     )

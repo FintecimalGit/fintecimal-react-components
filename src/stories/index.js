@@ -5,8 +5,9 @@ import { action } from '@storybook/addon-actions';
 
 import lib from '../lib';
 import ui from '../ui';
+import tables from '../commons/exampleTable'
 
-const { Input, Button, Pagination } = lib;
+const { Input, Button, Pagination, Tables } = lib;
 const { LoginUI } = ui
 
 storiesOf('UI|Login', module).add('Login', () => <LoginUI 
@@ -31,6 +32,11 @@ storiesOf('Components|Pagination', module).add('Pagination Init', () => <Paginat
   onChangePagination={action('onChangePagination')}
   totalPage={5}
   actualPage={3}
+/>);
+
+storiesOf('Components|Tables', module).add('Table', () => <Tables
+  table={tables}
+  onSelectRow={action('onSelectRow')}
 />);
 
 storiesOf('Components|Button', module)
