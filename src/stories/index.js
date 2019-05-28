@@ -11,8 +11,11 @@ const { Input, Button, Pagination, Tables } = lib;
 const { LoginUI } = ui
 
 storiesOf('UI|Login', module).add('Login', () => <LoginUI 
-onChangeEmail={action('onChangeEmail')}
-onChangePassword={action('onChangePassword')}
+  onChangeEmail={action('onChangeEmail')}
+  onKeyDownEmail={action('onKeyDownEmail')}
+  onKeyDownPassword={action('onKeyDownPassword')}
+  onChangePassword={action('onChangePassword')}
+  onClickBtnSend={action('onClickBtnSend')}
 />);
 
 storiesOf('Components|Input', module).add('Input Basic', () => <Input

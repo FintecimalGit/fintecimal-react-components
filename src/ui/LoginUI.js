@@ -21,14 +21,20 @@ class LoginUI extends Component {
 						<Input
 							type={'email'}
 							onChange={ (e) => this.props.onChangeEmail(e)}
+							onKeyDown= { (e) => this.props.onKeyDownEmail(e) }
 						></Input>
 						<Input
 							type={'password'}
 							onChange={ (e) => this.props.onChangePassword(e)}
+							onKeyDown= { (e) => this.props.onKeyDownPassword(e) }
 						></Input>
 					</div>
 					<div className='fnt-login-ui-btn-container'>
-						<Button textBtn='Entrar' style={{ width: '100%' }}></Button>
+						<Button
+							textBtn='Entrar'
+							style={{ width: '100%' }}
+							onClick={(e) => this.props.onClickBtnSend(e)}
+						></Button>
 					</div>
 				</div>
 				<div className='fnt-login-ui-background-top'></div>

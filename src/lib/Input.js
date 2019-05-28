@@ -46,7 +46,7 @@ class Input extends Component {
 					style={style}
 					name={name}
 					onChange={ (e) => this.hasContent(e)}
-					onKeyUp={this.props.onKeyUp}
+					onKeyDown={(e) => this.props.onKeyDown(e)}
 					onClick={this.props.onClick}
 					type={type}
 				></input>
