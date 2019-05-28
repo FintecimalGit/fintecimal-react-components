@@ -7,13 +7,15 @@ exports.default = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
 
-require("../styles/Input.css");
-
-require("../styles/InputSearch.css");
+require("../styles/Tables.css");
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -31,94 +33,59 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
-var Input =
+var Tables =
 /*#__PURE__*/
 function (_Component) {
-  _inherits(Input, _Component);
+  _inherits(Tables, _Component);
 
-  function Input(props) {
-    var _this;
+  function Tables() {
+    _classCallCheck(this, Tables);
 
-    _classCallCheck(this, Input);
-
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(Input).call(this, props));
-    _this.state = {
-      inputWithContent: 0
-    };
-    return _this;
+    return _possibleConstructorReturn(this, _getPrototypeOf(Tables).apply(this, arguments));
   }
 
-  _createClass(Input, [{
-    key: "hasContent",
-    value: function hasContent(e) {
-      this.setState({
-        inputWithContent: e.target.value.length
+  _createClass(Tables, [{
+    key: "colsInRow",
+    value: function colsInRow(headers, style) {
+      var arrayHeaders = Object.keys(headers);
+      return arrayHeaders.map(function (type, i) {
+        return _react.default.createElement("div", {
+          className: "fnt-tables-".concat(style, "-col")
+        }, headers[type]);
       });
-      this.props.onChange(e);
     }
   }, {
-    key: "typeInput",
-    value: function typeInput(aparience) {
-      var className = 'fnt-input-';
+    key: "bodyTable",
+    value: function bodyTable(body) {
+      var _this = this;
 
-      switch (aparience) {
-        case 'search':
-          return "".concat(className).concat(aparience);
-
-        default:
-          return "".concat(className, "basic");
-      }
+      return body.map(function (row, i) {
+        return _react.default.createElement("div", {
+          className: "fnt-tables-body-row",
+          onClick: function onClick() {
+            return _this.props.onSelectRow(_objectSpread({}, row, {
+              i: i
+            }));
+          }
+        }, _this.colsInRow(row, 'body'));
+      });
     }
   }, {
     key: "render",
     value: function render() {
-      var _this2 = this;
-
-      var _this$props = this.props,
-          className = _this$props.className,
-          style = _this$props.style,
-          label = _this$props.label,
-          name = _this$props.name,
-          type = _this$props.type,
-          id = _this$props.id,
-          aparience = _this$props.aparience;
-      var inputWithContent = this.state.inputWithContent;
+      var _this$props$table = this.props.table,
+          headers = _this$props$table.headers,
+          body = _this$props$table.body;
       return _react.default.createElement("div", {
-        style: {
-          padding: "".concat(aparience === 'basic' ? '30px' : '0', " 0")
-        }
-      }, _react.default.createElement("input", {
-        id: id,
-        className: "".concat(this.typeInput(aparience), " ").concat(className),
-        style: style,
-        name: name,
-        onChange: function onChange(e) {
-          return _this2.hasContent(e);
-        },
-        onKeyDown: function onKeyDown(e) {
-          return _this2.props.onKeyDown(e);
-        },
-        onClick: this.props.onClick,
-        type: type
-      }), _react.default.createElement("label", {
-        className: "".concat(this.typeInput(aparience), "-label ").concat(inputWithContent ? 'inputFill' : ''),
-        name: name
-      }, label));
+        className: "fnt-tables"
+      }, _react.default.createElement("div", {
+        className: "fnt-tables-header-row"
+      }, this.colsInRow(headers, 'header')), this.bodyTable(body));
     }
   }]);
 
-  return Input;
+  return Tables;
 }(_react.Component);
 
-Input.defaultProps = {
-  id: 'not-uid',
-  className: '',
-  style: {},
-  label: 'Cualquier texto',
-  placeholder: 'Introduce Texto',
-  name: 'input',
-  type: 'text',
-  aparience: 'basic'
-};
-var _default = Input;
+var _default = Tables;
 exports.default = _default;

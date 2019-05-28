@@ -7,9 +7,7 @@ exports.default = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
 
-require("../styles/Input.css");
-
-require("../styles/InputSearch.css");
+require("../styles/Button.css");
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
@@ -31,94 +29,45 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
-var Input =
+var Button =
 /*#__PURE__*/
 function (_Component) {
-  _inherits(Input, _Component);
+  _inherits(Button, _Component);
 
-  function Input(props) {
-    var _this;
+  function Button() {
+    _classCallCheck(this, Button);
 
-    _classCallCheck(this, Input);
-
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(Input).call(this, props));
-    _this.state = {
-      inputWithContent: 0
-    };
-    return _this;
+    return _possibleConstructorReturn(this, _getPrototypeOf(Button).apply(this, arguments));
   }
 
-  _createClass(Input, [{
-    key: "hasContent",
-    value: function hasContent(e) {
-      this.setState({
-        inputWithContent: e.target.value.length
-      });
-      this.props.onChange(e);
-    }
-  }, {
-    key: "typeInput",
-    value: function typeInput(aparience) {
-      var className = 'fnt-input-';
-
-      switch (aparience) {
-        case 'search':
-          return "".concat(className).concat(aparience);
-
-        default:
-          return "".concat(className, "basic");
-      }
-    }
-  }, {
+  _createClass(Button, [{
     key: "render",
     value: function render() {
-      var _this2 = this;
+      var _this = this;
 
       var _this$props = this.props,
           className = _this$props.className,
+          textBtn = _this$props.textBtn,
           style = _this$props.style,
-          label = _this$props.label,
-          name = _this$props.name,
-          type = _this$props.type,
-          id = _this$props.id,
-          aparience = _this$props.aparience;
-      var inputWithContent = this.state.inputWithContent;
-      return _react.default.createElement("div", {
-        style: {
-          padding: "".concat(aparience === 'basic' ? '30px' : '0', " 0")
-        }
-      }, _react.default.createElement("input", {
-        id: id,
-        className: "".concat(this.typeInput(aparience), " ").concat(className),
+          type = _this$props.type;
+      return _react.default.createElement("div", null, _react.default.createElement("button", {
+        className: "fnt-btn-general".concat(type.length ? '-' : '').concat(type, " ").concat(className),
         style: style,
-        name: name,
-        onChange: function onChange(e) {
-          return _this2.hasContent(e);
-        },
-        onKeyDown: function onKeyDown(e) {
-          return _this2.props.onKeyDown(e);
-        },
-        onClick: this.props.onClick,
-        type: type
-      }), _react.default.createElement("label", {
-        className: "".concat(this.typeInput(aparience), "-label ").concat(inputWithContent ? 'inputFill' : ''),
-        name: name
-      }, label));
+        onClick: function onClick(e) {
+          return _this.props.onClick(e);
+        }
+      }, textBtn));
     }
   }]);
 
-  return Input;
+  return Button;
 }(_react.Component);
 
-Input.defaultProps = {
-  id: 'not-uid',
+Button.defaultProps = {
   className: '',
-  style: {},
-  label: 'Cualquier texto',
-  placeholder: 'Introduce Texto',
-  name: 'input',
-  type: 'text',
-  aparience: 'basic'
+  textBtn: 'Botón',
+  type: '',
+  style: {}
 };
-var _default = Input;
+var _default = Button;
 exports.default = _default;

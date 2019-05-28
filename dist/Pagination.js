@@ -7,9 +7,7 @@ exports.default = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
 
-require("../styles/Input.css");
-
-require("../styles/InputSearch.css");
+require("../styles/Pagination.css");
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
@@ -31,94 +29,73 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
-var Input =
+var imageDisable = 'https://s3.us-east-2.amazonaws.com/fintecimal/fintecimal-img/arrow-left-menu-disable.svg';
+var imageActive = 'https://s3.us-east-2.amazonaws.com/fintecimal/fintecimal-img/arrow-left.svg';
+
+var Pagination =
 /*#__PURE__*/
 function (_Component) {
-  _inherits(Input, _Component);
+  _inherits(Pagination, _Component);
 
-  function Input(props) {
-    var _this;
+  function Pagination() {
+    _classCallCheck(this, Pagination);
 
-    _classCallCheck(this, Input);
-
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(Input).call(this, props));
-    _this.state = {
-      inputWithContent: 0
-    };
-    return _this;
+    return _possibleConstructorReturn(this, _getPrototypeOf(Pagination).apply(this, arguments));
   }
 
-  _createClass(Input, [{
-    key: "hasContent",
-    value: function hasContent(e) {
-      this.setState({
-        inputWithContent: e.target.value.length
-      });
-      this.props.onChange(e);
-    }
-  }, {
-    key: "typeInput",
-    value: function typeInput(aparience) {
-      var className = 'fnt-input-';
+  _createClass(Pagination, [{
+    key: "checkNumber",
+    value: function checkNumber(sum) {
+      var _this$props = this.props,
+          actualPage = _this$props.actualPage,
+          totalPage = _this$props.totalPage;
+      var newCount = actualPage + sum;
 
-      switch (aparience) {
-        case 'search':
-          return "".concat(className).concat(aparience);
-
-        default:
-          return "".concat(className, "basic");
+      if (!(newCount < 1 || newCount > totalPage)) {
+        this.props.onChangePagination(newCount);
       }
     }
   }, {
     key: "render",
     value: function render() {
-      var _this2 = this;
+      var _this = this;
 
-      var _this$props = this.props,
-          className = _this$props.className,
-          style = _this$props.style,
-          label = _this$props.label,
-          name = _this$props.name,
-          type = _this$props.type,
-          id = _this$props.id,
-          aparience = _this$props.aparience;
-      var inputWithContent = this.state.inputWithContent;
+      var _this$props2 = this.props,
+          totalPage = _this$props2.totalPage,
+          actualPage = _this$props2.actualPage;
       return _react.default.createElement("div", {
-        style: {
-          padding: "".concat(aparience === 'basic' ? '30px' : '0', " 0")
+        className: "fnt-pagination"
+      }, _react.default.createElement("div", {
+        className: "ftn-pagination-arrow-left",
+        onClick: function onClick() {
+          return _this.checkNumber(-1);
         }
-      }, _react.default.createElement("input", {
-        id: id,
-        className: "".concat(this.typeInput(aparience), " ").concat(className),
-        style: style,
-        name: name,
-        onChange: function onChange(e) {
-          return _this2.hasContent(e);
-        },
-        onKeyDown: function onKeyDown(e) {
-          return _this2.props.onKeyDown(e);
-        },
-        onClick: this.props.onClick,
-        type: type
-      }), _react.default.createElement("label", {
-        className: "".concat(this.typeInput(aparience), "-label ").concat(inputWithContent ? 'inputFill' : ''),
-        name: name
-      }, label));
+      }, _react.default.createElement("img", {
+        alt: "",
+        src: actualPage === 1 ? imageDisable : imageActive
+      })), _react.default.createElement("div", {
+        className: "ftn-pagination-body"
+      }, _react.default.createElement("span", {
+        className: "ftn-pagination-text"
+      }, "P\xE1gina ", actualPage, " de ", totalPage)), _react.default.createElement("div", {
+        className: "ftn-pagination-arrow-right",
+        onClick: function onClick() {
+          return _this.checkNumber(1);
+        }
+      }, _react.default.createElement("img", {
+        alt: "",
+        src: actualPage >= totalPage ? imageDisable : imageActive
+      })));
     }
   }]);
 
-  return Input;
+  return Pagination;
 }(_react.Component);
 
-Input.defaultProps = {
-  id: 'not-uid',
-  className: '',
-  style: {},
-  label: 'Cualquier texto',
-  placeholder: 'Introduce Texto',
-  name: 'input',
-  type: 'text',
-  aparience: 'basic'
+;
+Pagination.defaultProps = {
+  totalPage: 5,
+  actualPage: 1
 };
-var _default = Input;
+var _default = Pagination;
 exports.default = _default;
