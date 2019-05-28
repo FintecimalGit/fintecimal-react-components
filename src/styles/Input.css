@@ -1,3 +1,7 @@
+input:-internal-autofill-selected {
+  background-color: #fff !important;
+}
+
 input:focus {
   outline: 0;
 }
@@ -20,7 +24,7 @@ input:focus {
   font-weight: 600;
 }
 
-.fnt-input-label-basic {
+.fnt-input-basic-label {
   position: absolute;
   z-index: 2;
   margin-top: 12px;
@@ -43,7 +47,7 @@ input:focus {
   font-weight: 600;
 }
 
-.fnt-input-label-basic.inputFill {
+.fnt-input-basic-label.inputFill {
   margin-top: -15px;
   font-size: 12px;
   color: #979797;

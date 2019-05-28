@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import '../styles/Input.css'
+import '../styles/Input.css';
+import '../styles/InputSearch.css';
 
 class Input extends Component {
 
@@ -18,20 +19,30 @@ class Input extends Component {
 		this.props.onChange(e)
 	}
 
+	typeInput(aparience) {
+		let className = 'fnt-input-';
+		switch (aparience) {
+			case 'search':
+				return `${className}${aparience}`;
+			default:
+				return `${className}basic`;
+		}
+	}
+
 	render() {
 
 		const { 
 			className, style, label,
-			name, type, id
+			name, type, id, aparience
 		} = this.props;
 
 		const { inputWithContent } = this.state;
 
 		return (
-			<div style={{padding:'30px 0'}}>
+			<div style={{padding:`${aparience === 'basic' ? '30px' : '0'} 0`}}>
 				<input
 					id={id}
-					className={`fnt-input-basic ${className}`}
+					className={`${this.typeInput(aparience)} ${className}`}
 					style={style}
 					name={name}
 					onChange={ (e) => this.hasContent(e)}
@@ -40,7 +51,7 @@ class Input extends Component {
 					type={type}
 				></input>
 				<label
-					className={`fnt-input-label-basic ${inputWithContent ? 'inputFill': ''}`}
+					className={`${this.typeInput(aparience)}-label ${inputWithContent ? 'inputFill': ''}`}
 					name={name}>
 					{label}
 				</label>
@@ -56,7 +67,8 @@ Input.defaultProps = {
 	label: 'Cualquier texto',
 	placeholder: 'Introduce Texto',
 	name: 'input',
-	type: 'text'
+	type: 'text',
+	aparience: 'basic'
 }
 
 export default Input;

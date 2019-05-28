@@ -1,0 +1,22 @@
+input:focus {
+  outline: 0;
+}
+
+.fnt-input-search {
+  width: 350px;
+  height: 35px;
+  padding-left: 15px;
+  box-sizing: border-box;
+  font-size: 13px;
+  color: #979797;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  background: #fff;
+  font-weight: 600;
+  background: url(https://s3.us-east-2.amazonaws.com/fintecimal/fintecimal-img/magnify.svg) no-repeat right #fff;
+  background-position-x: 97%;
+}
+
+.fnt-input-search-label {
+  display: none;
+}
