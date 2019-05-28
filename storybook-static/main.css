@@ -1,0 +1,227 @@
+input:-internal-autofill-selected {
+  background-color: #fff !important;
+}
+
+input:focus {
+  outline: 0;
+}
+
+.fnt-input-basic {
+  position: absolute;
+  width: 100%;
+  height: 35px;
+  padding-left: 10px;
+  box-sizing: border-box;
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+  font-size: 13px;
+  color: #4C5C68;
+  border-bottom: 1px solid #ddd;
+  z-index: 2;
+  background: transparent;
+  transition: .5s linear;
+  font-weight: 600;
+}
+
+.fnt-input-basic-label {
+  position: absolute;
+  z-index: 2;
+  margin-top: 12px;
+  font-size: 13px;
+  color: #979797;
+  margin-left: 10px;
+  transition: .2s linear;
+}
+
+.fnt-input-basic:focus {
+  outline: none;
+  border-bottom: 1px solid #37E7C8;
+  font-weight: 600;
+}
+
+.fnt-input-basic:focus+label {
+  margin-top: -15px;
+  font-size: 12px;
+  color: #979797;
+  font-weight: 600;
+}
+
+.fnt-input-basic-label.inputFill {
+  margin-top: -15px;
+  font-size: 12px;
+  color: #979797;
+  font-weight: 600;
+}
+
+input:focus {
+  outline: 0;
+}
+
+.fnt-input-search {
+  width: 350px;
+  height: 35px;
+  padding-left: 15px;
+  box-sizing: border-box;
+  font-size: 13px;
+  color: #979797;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  background: #fff;
+  font-weight: 600;
+  background: url(https://s3.us-east-2.amazonaws.com/fintecimal/fintecimal-img/magnify.svg) no-repeat right #fff;
+  background-position-x: 97%;
+}
+
+.fnt-input-search-label {
+  display: none;
+}
+.fnt-btn-general, .fnt-btn-general-error, .fnt-btn-general-cancel {
+  height: 45px;
+  padding: 0 40px;
+  border: 0;
+  border-radius: 3px;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.80px;
+  color: #4C5C68;
+  background-color: #37E7C8;
+}
+
+.fnt-btn-general-error {
+  color: #fff;
+  background-color: #D55353;
+}
+
+.fnt-btn-general-cancel {
+  color: #fff;
+  background-color: #979797;
+}
+.fnt-pagination {
+  display: -webkit-flex;
+  display: flex;
+}
+
+.ftn-pagination-arrow-left {
+  display: -webkit-flex;
+  display: flex;
+  -webkit-align-items: center;
+          align-items: center;
+  cursor: pointer;
+}
+
+.ftn-pagination-arrow-right {
+  display: -webkit-flex;
+  display: flex;
+  -webkit-align-items: center;
+          align-items: center;
+  -webkit-transform: rotateZ(180deg);
+          transform: rotateZ(180deg);
+  cursor: pointer;
+}
+
+.ftn-pagination-body {
+  display: -webkit-flex;
+  display: flex;
+  -webkit-align-items: center;
+          align-items: center;
+}
+
+.ftn-pagination-text {
+  font-size: 15px;
+  color: #4C5C68;
+}
+.fnt-tables {
+  width: 100%;
+}
+
+.fnt-tables-body-col {
+  display: inline-block;
+  width: 25%;
+  padding-left: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.50px;
+  color: #4C5C68;
+}
+
+.fnt-tables-body-row {
+  display: -webkit-flex;
+  display: flex;
+  width: 100%;
+  height: 60px;
+  -webkit-align-items: center;
+          align-items: center;
+  border-bottom: 1px solid #ddd;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
+.fnt-tables-header-col {
+  display: inline-block;
+  width: 25%;
+  padding-left: 20px;
+  font-size: 15px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.50px;
+}
+
+.fnt-tables-header-row {
+  display: -webkit-flex;
+  display: flex;
+  width: 100%;
+  height: 60px;
+  -webkit-align-items: center;
+          align-items: center;
+  border-bottom: 1px solid #ddd;
+  box-sizing: border-box;
+}
+.fnt-login-ui-body {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+}
+
+.fnt-login-ui-background-top {
+  width: 100vw;
+  height: 50vh;
+  background-color: #4C5C68;
+}
+
+.fnt-login-ui-background-bottom {
+  width: 100vw;
+  height: 50vh;
+  background-color: #F3F2F2;
+}
+
+.fnt-login-ui-btn-container {
+  width: 100%;
+  padding: 45px 0 20px 0;
+  text-align: center;
+}
+
+.fnt-login-ui-form {
+  position: absolute;
+  width: 350px;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%,-50%);
+          transform: translate(-50%,-50%);
+  padding: 12px;
+  background-color: #fff;
+  box-shadow: 1px 1px 3px 3px rgba(0,0,0,0.1);
+}
+
+.fnt-login-ui-form-img-content {
+  width: 100%;
+  text-align: center;
+}
+
+.fnt-login-ui-form-input-content {
+  position: relative;
+  padding: 0;
+}
+
+/*# sourceMappingURL=main.css.map*/
