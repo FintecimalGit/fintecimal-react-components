@@ -39,7 +39,6 @@ class Dropdown extends Component {
       width, parentClass, parentStyle,
       img, imgArrowDown, options 
     } = this.props;
-
     const { activeOptions } = this.state;
 
     const listOptions = options.map((option, i) => {
