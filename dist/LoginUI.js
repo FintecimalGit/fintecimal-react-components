@@ -7,7 +7,11 @@ exports.default = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
 
-require("../src/styles/Button.css");
+require("../src/styles/LoginUI.css");
+
+var _lib = _interopRequireDefault(require("./index"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
@@ -29,45 +33,73 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
-var Button =
+var Input = _lib.default.Input,
+    Button = _lib.default.Button;
+
+var LoginUI =
 /*#__PURE__*/
 function (_Component) {
-  _inherits(Button, _Component);
+  _inherits(LoginUI, _Component);
 
-  function Button() {
-    _classCallCheck(this, Button);
+  function LoginUI() {
+    _classCallCheck(this, LoginUI);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(Button).apply(this, arguments));
+    return _possibleConstructorReturn(this, _getPrototypeOf(LoginUI).apply(this, arguments));
   }
 
-  _createClass(Button, [{
+  _createClass(LoginUI, [{
     key: "render",
     value: function render() {
       var _this = this;
 
-      var _this$props = this.props,
-          className = _this$props.className,
-          textBtn = _this$props.textBtn,
-          style = _this$props.style,
-          type = _this$props.type;
-      return _react.default.createElement("div", null, _react.default.createElement("button", {
-        className: "fnt-btn-general".concat(type.length ? '-' : '').concat(type, " ").concat(className),
-        style: style,
-        onClick: function onClick(e) {
-          return _this.props.onClick(e);
+      return _react.default.createElement("div", {
+        className: "fnt-login-ui-body"
+      }, _react.default.createElement("div", {
+        className: "fnt-login-ui-form"
+      }, _react.default.createElement("div", {
+        className: "fnt-login-ui-form-img-content"
+      }, _react.default.createElement("img", {
+        width: "120px",
+        alt: "",
+        src: "http://fintecimal-test.herokuapp.com/admin/images/fintecimal-logo.png"
+      })), _react.default.createElement("div", {
+        className: "fnt-login-ui-form-input-content"
+      }, _react.default.createElement(Input, {
+        type: 'email',
+        onChange: function onChange(e) {
+          return _this.props.onChangeEmail(e);
+        },
+        onKeyDown: function onKeyDown(e) {
+          return _this.props.onKeyDownEmail(e);
         }
-      }, textBtn));
+      }), _react.default.createElement(Input, {
+        type: 'password',
+        onChange: function onChange(e) {
+          return _this.props.onChangePassword(e);
+        },
+        onKeyDown: function onKeyDown(e) {
+          return _this.props.onKeyDownPassword(e);
+        }
+      })), _react.default.createElement("div", {
+        className: "fnt-login-ui-btn-container"
+      }, _react.default.createElement(Button, {
+        textBtn: "Entrar",
+        style: {
+          width: '100%'
+        },
+        onClick: function onClick(e) {
+          return _this.props.onClickBtnSend(e);
+        }
+      }))), _react.default.createElement("div", {
+        className: "fnt-login-ui-background-top"
+      }), _react.default.createElement("div", {
+        className: "fnt-login-ui-background-bottom"
+      }));
     }
   }]);
 
-  return Button;
+  return LoginUI;
 }(_react.Component);
 
-Button.defaultProps = {
-  className: '',
-  textBtn: 'Botón',
-  type: '',
-  style: {}
-};
-var _default = Button;
+var _default = LoginUI;
 exports.default = _default;

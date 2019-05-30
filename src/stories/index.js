@@ -7,7 +7,7 @@ import lib from '../lib';
 import ui from '../ui';
 import tables from '../commons/exampleTable'
 
-const { Input, Button, Pagination, Tables } = lib;
+const { Input, Button, Pagination, Tables, Dropdown } = lib;
 const { LoginUI } = ui
 
 storiesOf('UI|Login', module).add('Login', () => <LoginUI 
@@ -23,6 +23,20 @@ storiesOf('Components|Input', module).add('Input Basic', () => <Input
 />).add('Input Search', () => <Input
   onChange={action('onChange')}
   aparience='search'
+/>);
+
+storiesOf('Components|Dropdown', module).add('Dropdown Basic', () => <Dropdown
+  parentStyle={{
+    backgroundColor: '#4C5C68',
+    color: '#fff'
+  }}
+  options={[
+    { name: 'name', value: 'Tranquilino' },
+    { name: 'setting', value: 'Configuración' },
+    { name: 'logout', value: 'Cerrar Sesión' }
+  ]}
+  onClickOption={action('onClickOption')}
+  clickSelect={action('clickSelect')}
 />);
 
 storiesOf('Components|Pagination', module).add('Pagination Init', () => <Pagination
