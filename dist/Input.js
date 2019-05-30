@@ -43,18 +43,23 @@ function (_Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(Input).call(this, props));
     _this.state = {
-      inputWithContent: 0
+      inputWithContent: 0,
+      value: ''
     };
     return _this;
   }
 
   _createClass(Input, [{
     key: "hasContent",
-    value: function hasContent(e) {
+    value: function hasContent(event) {
+      var value = event.target.value;
       this.setState({
-        inputWithContent: e.target.value.length
-      });
-      this.props.onChange(e);
+        value: value,
+        inputWithContent: value.length
+      }, this.props.onChange({
+        event: event,
+        value: value
+      }));
     }
   }, {
     key: "typeInput",
@@ -82,7 +87,9 @@ function (_Component) {
           type = _this$props.type,
           id = _this$props.id,
           aparience = _this$props.aparience;
-      var inputWithContent = this.state.inputWithContent;
+      var _this$state = this.state,
+          inputWithContent = _this$state.inputWithContent,
+          value = _this$state.value;
       return _react.default.createElement("div", {
         style: {
           padding: "".concat(aparience === 'basic' ? '30px' : '0', " 0")
@@ -95,10 +102,8 @@ function (_Component) {
         onChange: function onChange(e) {
           return _this2.hasContent(e);
         },
-        onKeyDown: function onKeyDown(e) {
-          return _this2.props.onKeyDown(e);
-        },
         onClick: this.props.onClick,
+        value: value,
         type: type
       }), _react.default.createElement("label", {
         className: "".concat(this.typeInput(aparience), "-label ").concat(inputWithContent ? 'inputFill' : ''),

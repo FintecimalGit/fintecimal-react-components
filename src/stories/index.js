@@ -11,10 +11,10 @@ const { Input, Button, Pagination, Tables, Dropdown } = lib;
 const { LoginUI } = ui
 
 storiesOf('UI|Login', module).add('Login', () => <LoginUI 
-  onChangeEmail={action('onChangeEmail')}
   onKeyDownEmail={action('onKeyDownEmail')}
   onKeyDownPassword={action('onKeyDownPassword')}
   onChangePassword={action('onChangePassword')}
+  onChangeEmail={action('onChangeEmail')}
   onClickBtnSend={action('onClickBtnSend')}
 />);
 

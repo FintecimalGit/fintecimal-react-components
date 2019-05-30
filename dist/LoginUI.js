@@ -68,17 +68,11 @@ function (_Component) {
         type: 'email',
         onChange: function onChange(e) {
           return _this.props.onChangeEmail(e);
-        },
-        onKeyDown: function onKeyDown(e) {
-          return _this.props.onKeyDownEmail(e);
         }
       }), _react.default.createElement(Input, {
         type: 'password',
         onChange: function onChange(e) {
           return _this.props.onChangePassword(e);
-        },
-        onKeyDown: function onKeyDown(e) {
-          return _this.props.onKeyDownPassword(e);
         }
       })), _react.default.createElement("div", {
         className: "fnt-login-ui-btn-container"

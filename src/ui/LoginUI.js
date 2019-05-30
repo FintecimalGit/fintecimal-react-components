@@ -21,12 +21,10 @@ class LoginUI extends Component {
 						<Input
 							type={'email'}
 							onChange={ (e) => this.props.onChangeEmail(e)}
-							onKeyDown= { (e) => this.props.onKeyDownEmail(e) }
 						></Input>
 						<Input
 							type={'password'}
 							onChange={ (e) => this.props.onChangePassword(e)}
-							onKeyDown= { (e) => this.props.onKeyDownPassword(e) }
 						></Input>
 					</div>
 					<div className='fnt-login-ui-btn-container'>

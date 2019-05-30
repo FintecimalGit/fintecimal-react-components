@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
-var _LoginUI = _interopRequireDefault(require("./LoginUI"));
+var _Input = _interopRequireDefault(require("./Input"));
 
 var _Button = _interopRequireDefault(require("./Button"));
 
@@ -13,13 +13,18 @@ var _Pagination = _interopRequireDefault(require("./Pagination"));
 
 var _Tables = _interopRequireDefault(require("./Tables"));
 
+var _Dropdown = _interopRequireDefault(require("./Dropdown"));
+
+var _LoginUI = _interopRequireDefault(require("./LoginUI"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var _default = {
-  LoginUI: _LoginUI.default,
   Input: _Input.default,
   Button: _Button.default,
   Pagination: _Pagination.default,
-  Tables: _Tables.default
+  Tables: _Tables.default,
+  Dropdown: _Dropdown.default,
+  LoginUI: _LoginUI.default
 };
 exports.default = _default;
