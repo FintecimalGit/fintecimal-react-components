@@ -13,8 +13,6 @@ const { LoginUI } = ui
 storiesOf('UI|Login', module).add('Login', () => <LoginUI 
   onKeyDownEmail={action('onKeyDownEmail')}
   onKeyDownPassword={action('onKeyDownPassword')}
-  onChangePassword={action('onChangePassword')}
-  onChangeEmail={action('onChangeEmail')}
   onClickBtnSend={action('onClickBtnSend')}
 />);
 

@@ -7,20 +7,25 @@ class Tables extends Component {
     const arrayHeaders = Object.keys(headers);
     return arrayHeaders.map((type, i) => {
       return (
-        <div className={`fnt-tables-${style}-col`}>
+        <div key={i} className={`fnt-tables-${style}-col`}>
           {headers[type]}
         </div>
       );
     })
   }
 
-  bodyTable(body) {
+  bodyTable(body, headers) {
+    const arrayHeaders = Object.keys(headers);
     return body.map((row, i) => {
-      return (<div className='fnt-tables-body-row'
-        onClick={() => this.props.onSelectRow({...row,i})}
-      >
-        { this.colsInRow(row, 'body') }
-      </div>)
+      return (
+        <div
+          key={i}
+          className='fnt-tables-body-row'
+          onClick={() => this.props.onSelectRow({...row,i})}
+        >
+          { this.colsInRow(arrayHeaders, 'body') }
+        </div>
+      )
     })
   }
 
@@ -32,7 +37,7 @@ class Tables extends Component {
         <div className='fnt-tables-header-row'>
           {this.colsInRow(headers, 'header')}
         </div>
-        {this.bodyTable(body)}
+        {this.bodyTable(body, headers)}
       </div>
     )
   }
