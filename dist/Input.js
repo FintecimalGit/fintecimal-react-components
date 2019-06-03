@@ -54,9 +54,8 @@ function (_Component) {
     value: function hasContent(event) {
       var value = event.target.value;
       this.setState({
-        value: value,
         inputWithContent: value.length
-      }, this.props.onChange({
+      }, this.props.onKeyUp({
         event: event,
         value: value
       }));
@@ -87,9 +86,7 @@ function (_Component) {
           type = _this$props.type,
           id = _this$props.id,
           aparience = _this$props.aparience;
-      var _this$state = this.state,
-          inputWithContent = _this$state.inputWithContent,
-          value = _this$state.value;
+      var inputWithContent = this.state.inputWithContent;
       return _react.default.createElement("div", {
         style: {
           padding: "".concat(aparience === 'basic' ? '30px' : '0', " 0")
@@ -99,11 +96,10 @@ function (_Component) {
         className: "".concat(this.typeInput(aparience), " ").concat(className),
         style: style,
         name: name,
-        onChange: function onChange(e) {
+        onKeyUp: function onKeyUp(e) {
           return _this2.hasContent(e);
         },
         onClick: this.props.onClick,
-        value: value,
         type: type
       }), _react.default.createElement("label", {
         className: "".concat(this.typeInput(aparience), "-label ").concat(inputWithContent ? 'inputFill' : ''),

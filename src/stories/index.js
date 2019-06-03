@@ -17,9 +17,9 @@ storiesOf('UI|Login', module).add('Login', () => <LoginUI
 />);
 
 storiesOf('Components|Input', module).add('Input Basic', () => <Input
-  onChange={action('onChange')}
+  onKeyUp={action('onKeyPress')}
 />).add('Input Search', () => <Input
-  onChange={action('onChange')}
+  onKeyUp={action('onKeyPress')}
   aparience='search'
 />);
 

@@ -16,9 +16,8 @@ class Input extends Component {
 	hasContent(event) {
 		const { value } = event.target;
 		this.setState({
-			value,
 			inputWithContent: value.length
-		}, this.props.onChange({event, value}))
+		}, this.props.onKeyUp({event, value}))
 	}
 
 	typeInput(aparience) {
@@ -38,7 +37,7 @@ class Input extends Component {
 			name, type, id, aparience
 		} = this.props;
 
-		const { inputWithContent, value } = this.state;
+		const { inputWithContent } = this.state;
 
 		return (
 			<div style={{padding:`${aparience === 'basic' ? '30px' : '0'} 0`}}>
@@ -47,9 +46,8 @@ class Input extends Component {
 					className={`${this.typeInput(aparience)} ${className}`}
 					style={style}
 					name={name}
-					onChange={ (e) => this.hasContent(e)}
+					onKeyUp={ (e) => this.hasContent(e)}
 					onClick={this.props.onClick}
-					value={value}
 					type={type}
 				></input>
 				<label
