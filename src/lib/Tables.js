@@ -3,19 +3,22 @@ import '../styles/Tables.css';
 
 class Tables extends Component {
 
-  colsInRow(headers, style) {
+  colsInRow(headers, style, body = null) {
     const arrayHeaders = Object.keys(headers);
     return arrayHeaders.map((type, i) => {
       return (
         <div key={i} className={`fnt-tables-${style}-col`}>
-          {headers[type]}
+          { body === null ?
+            headers[type] :
+            body[type]
+          }
         </div>
       );
     })
   }
 
   bodyTable(body, headers) {
-    const arrayHeaders = Object.keys(headers);
+    // const arrayHeaders = Object.keys(headers);
     return body.map((row, i) => {
       return (
         <div
@@ -23,7 +26,7 @@ class Tables extends Component {
           className='fnt-tables-body-row'
           onClick={() => this.props.onSelectRow({...row,i})}
         >
-          { this.colsInRow(arrayHeaders, 'body') }
+          { this.colsInRow(headers, 'body', body[i]) }
         </div>
       )
     })
