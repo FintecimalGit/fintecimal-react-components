@@ -7,7 +7,7 @@ exports.default = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
 
-require("../src/styles/Tables.css");
+require("../styles/Tables.css");
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
@@ -47,12 +47,13 @@ function (_Component) {
   _createClass(Tables, [{
     key: "colsInRow",
     value: function colsInRow(headers, style) {
+      var body = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
       var arrayHeaders = Object.keys(headers);
       return arrayHeaders.map(function (type, i) {
         return _react.default.createElement("div", {
           key: i,
           className: "fnt-tables-".concat(style, "-col")
-        }, headers[type]);
+        }, body === null ? headers[type] : body[type]);
       });
     }
   }, {
@@ -60,7 +61,7 @@ function (_Component) {
     value: function bodyTable(body, headers) {
       var _this = this;
 
-      var arrayHeaders = Object.keys(headers);
+      // const arrayHeaders = Object.keys(headers);
       return body.map(function (row, i) {
         return _react.default.createElement("div", {
           key: i,
@@ -70,7 +71,7 @@ function (_Component) {
               i: i
             }));
           }
-        }, _this.colsInRow(arrayHeaders, 'body'));
+        }, _this.colsInRow(headers, 'body', body[i]));
       });
     }
   }, {
