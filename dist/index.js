@@ -15,7 +15,7 @@ var _Tables = _interopRequireDefault(require("./Tables"));
 
 var _Dropdown = _interopRequireDefault(require("./Dropdown"));
 
-var _LoginUI = _interopRequireDefault(require("./LoginUI"));
+var _LoginUi = _interopRequireDefault(require("./LoginUI"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -25,6 +25,6 @@ var _default = {
   Pagination: _Pagination.default,
   Tables: _Tables.default,
   Dropdown: _Dropdown.default,
-  LoginUI: _LoginUI.default
+  LoginUi: _LoginUi.default
 };
 exports.default = _default;

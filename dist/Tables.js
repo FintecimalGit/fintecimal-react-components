@@ -50,24 +50,27 @@ function (_Component) {
       var arrayHeaders = Object.keys(headers);
       return arrayHeaders.map(function (type, i) {
         return _react.default.createElement("div", {
+          key: i,
           className: "fnt-tables-".concat(style, "-col")
         }, headers[type]);
       });
     }
   }, {
     key: "bodyTable",
-    value: function bodyTable(body) {
+    value: function bodyTable(body, headers) {
       var _this = this;
 
+      var arrayHeaders = Object.keys(headers);
       return body.map(function (row, i) {
         return _react.default.createElement("div", {
+          key: i,
           className: "fnt-tables-body-row",
           onClick: function onClick() {
             return _this.props.onSelectRow(_objectSpread({}, row, {
               i: i
             }));
           }
-        }, _this.colsInRow(row, 'body'));
+        }, _this.colsInRow(arrayHeaders, 'body'));
       });
     }
   }, {
@@ -80,7 +83,7 @@ function (_Component) {
         className: "fnt-tables"
       }, _react.default.createElement("div", {
         className: "fnt-tables-header-row"
-      }, this.colsInRow(headers, 'header')), this.bodyTable(body));
+      }, this.colsInRow(headers, 'header')), this.bodyTable(body, headers));
     }
   }]);
 
