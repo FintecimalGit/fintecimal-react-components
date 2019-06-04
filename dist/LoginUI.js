@@ -9,7 +9,7 @@ var _react = _interopRequireWildcard(require("react"));
 
 require("../src/styles/LoginUI.css");
 
-var _lib = _interopRequireDefault(require("./index"));
+var _lib = _interopRequireDefault(require("./index.js"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -66,13 +66,13 @@ function (_Component) {
         className: "fnt-login-ui-form-input-content"
       }, _react.default.createElement(Input, {
         type: 'email',
-        onChange: function onChange(e) {
-          return _this.props.onChangeEmail(e);
+        onKeyUp: function onKeyUp(e) {
+          return _this.props.onKeyPressEmail(e);
         }
       }), _react.default.createElement(Input, {
         type: 'password',
-        onChange: function onChange(e) {
-          return _this.props.onChangePassword(e);
+        onKeyUp: function onKeyUp(e) {
+          return _this.props.onKeyPressPassword(e);
         }
       })), _react.default.createElement("div", {
         className: "fnt-login-ui-btn-container"
