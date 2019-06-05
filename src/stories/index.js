@@ -5,9 +5,9 @@ import { action } from '@storybook/addon-actions';
 
 import lib from '../lib';
 import ui from '../ui';
-import tables from '../commons/exampleTable'
+import tables from '../commons/exampleTable';
 
-const { Input, Button, Pagination, Tables, Dropdown } = lib;
+const { Input, Button, Pagination, Tables, Dropdown, Loader } = lib;
 const { LoginUI } = ui
 
 storiesOf('UI|Login', module).add('Login', () => <LoginUI 
@@ -15,6 +15,14 @@ storiesOf('UI|Login', module).add('Login', () => <LoginUI
   onKeyPressPassword={action('onKeyDownPassword')}
   onClickBtnSend={action('onClickBtnSend')}
 />);
+
+storiesOf('Components|Loader', module).add('Loader Default', () => <Loader/>)
+.add('Loader Color', () => <Loader
+  colors={{
+    first: 'red',
+    secound: 'blue'
+  }
+}/>);
 
 storiesOf('Components|Input', module).add('Input Basic', () => <Input
   onKeyUp={action('onKeyPress')}
