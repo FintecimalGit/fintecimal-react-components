@@ -1,9 +1,8 @@
 .fnt-loader {
   position: relative;
-  margin-top: 20px;
   width: 100%;
   height: 6px;
-  background-color: #fdba2c;
+  background-color: #ddd;
 }
 .fnt-loader-bar {
   content: "";

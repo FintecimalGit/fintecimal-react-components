@@ -11,7 +11,11 @@ class Loader extends Component {
     return (
       <div
         className={`fnt-loader ${className}`}
-        style={{...style, display: displayed ? 'block': 'none'}}
+        style={{
+          ...style,
+          display: displayed ? 'block': 'none',
+          backgroundColor: first
+        }}
       >
         <div
           className='fnt-loader-bar'
