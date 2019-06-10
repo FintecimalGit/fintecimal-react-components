@@ -7,7 +7,7 @@ import lib from '../lib';
 import ui from '../ui';
 import tables from '../commons/exampleTable';
 
-const { Input, Button, Pagination, Tables, Dropdown, Loader } = lib;
+const { Input, Button, Pagination, Tables, Dropdown, Loader, Switch } = lib;
 const { LoginUI } = ui
 
 storiesOf('UI|Login', module).add('Login', () => <LoginUI 
@@ -30,6 +30,12 @@ storiesOf('Components|Input', module).add('Input Basic', () => <Input
   onKeyUp={action('onKeyPress')}
   aparience='search'
 />);
+
+storiesOf('Components|Switch', module).add('Switch Basic', () =>
+  <Switch
+    onClick={action('onClick')}
+  />
+);
 
 storiesOf('Components|Dropdown', module).add('Dropdown Basic', () => <Dropdown
   parentStyle={{

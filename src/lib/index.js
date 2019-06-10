@@ -4,6 +4,7 @@ import Pagination from './Pagination';
 import Tables from './Tables';
 import Dropdown from './Dropdown';
 import Loader from './Loader';
+import Switch from './Switch';
 
 export default {
 	Input, 
@@ -11,5 +12,6 @@ export default {
 	Pagination,
 	Tables,
 	Dropdown,
-	Loader
+	Loader,
+	Switch
 }
