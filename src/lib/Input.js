@@ -40,7 +40,7 @@ class Input extends Component {
 		const { inputWithContent } = this.state;
 
 		return (
-			<div style={{padding:`${aparience === 'basic' ? '30px' : '0'} 0`, position: 'relative'}}>
+			<div style={{padding:`${aparience === 'basic' ? '30px' : '0'} 0`}}>
 				<input
 					id={id}
 					className={`${this.typeInput(aparience)} ${className}`}
