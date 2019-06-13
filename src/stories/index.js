@@ -8,7 +8,9 @@ import ui from '../ui';
 import tables from '../commons/exampleTable';
 
 const { Input, Button, Pagination, Tables, Dropdown, Loader, Switch } = lib;
-const { LoginUI } = ui
+const { LoginUI, MultiDrop } = ui
+
+storiesOf('UI|MultiDropdown', module).add('MultiDropdown', () => <MultiDrop />);
 
 storiesOf('UI|Login', module).add('Login', () => <LoginUI 
   onKeyPressEmail={action('onKeyDownEmail')}

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import '../styles/Dropdown.css'
 
 class Dropdown extends Component {
@@ -14,19 +15,23 @@ class Dropdown extends Component {
 
   componentDidMount() {
 
+    const node = ReactDOM.findDOMNode(this);
     const ctx = this;
-    document.addEventListener('click', (e) => {
-      const elements = document.getElementsByClassName('fnt-dropdown-select');
-      for (let i = 0; i < elements.length; i++) {
-        const element = elements[i];
-        if (element !== e.target && !element.contains(e.target)) {    
+
+    // Get child nodes
+    if (node instanceof HTMLElement) {
+      const child = node.querySelector('.fnt-dropdown-select');
+      console.log(child);
+      document.addEventListener('click', (e) => {
+        console.log('check: ', child !== e.target, !child.contains(e.target))
+        if (child !== e.target && !child.contains(e.target)) {   
           ctx.setState({
             activeOptions: false
           })
         }
-        return;
-      }
-    })
+      })
+    }
+
   }
 
   clickSelect(e) {
