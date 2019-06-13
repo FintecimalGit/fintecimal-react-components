@@ -23,7 +23,8 @@ class Dropdown extends Component {
           ctx.setState({
             activeOptions: false
           })
-        } 
+        }
+        return;
       }
     })
   }

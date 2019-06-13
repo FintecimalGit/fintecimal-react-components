@@ -61,6 +61,8 @@ function (_Component) {
               activeOptions: false
             });
           }
+
+          return;
         }
       });
     }
