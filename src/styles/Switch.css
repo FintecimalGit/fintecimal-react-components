@@ -17,13 +17,3 @@
   transition: all 0.5s;
 }
 
-.fnt-switch-circle-active {
-  transform: translateX(-1px);
-  transition: all 0.5s;
-}
-
-.fnt-switch-circle-inactive {
-  transform: translateX(15px);
-  transition: all 0.5s;
-}
-
