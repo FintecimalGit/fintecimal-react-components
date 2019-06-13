@@ -16,12 +16,15 @@ class Dropdown extends Component {
 
     const ctx = this;
     document.addEventListener('click', (e) => {
-      const [type] = document.getElementsByClassName('fnt-dropdown-select');
-      if (type !== e.target && !type.contains(e.target)) {    
-				ctx.setState({
-          activeOptions: false
-        })
-			}
+      const elements = document.getElementsByClassName('fnt-dropdown-select');
+      for (let i = 0; i < elements.length; i++) {
+        const element = elements[i];
+        if (element !== e.target && !element.contains(e.target)) {    
+          ctx.setState({
+            activeOptions: false
+          })
+        } 
+      }
     })
   }
 

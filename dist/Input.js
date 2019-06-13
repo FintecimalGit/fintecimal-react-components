@@ -89,8 +89,7 @@ function (_Component) {
       var inputWithContent = this.state.inputWithContent;
       return _react.default.createElement("div", {
         style: {
-          padding: "".concat(aparience === 'basic' ? '30px' : '0', " 0"),
-          position: 'relative'
+          padding: "".concat(aparience === 'basic' ? '30px' : '0', " 0")
         }
       }, _react.default.createElement("input", {
         id: id,
