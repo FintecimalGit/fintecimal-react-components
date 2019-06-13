@@ -7,7 +7,11 @@ exports.default = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
 
+var _reactDom = _interopRequireDefault(require("react-dom"));
+
 require("../src/styles/Dropdown.css");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
@@ -49,22 +53,23 @@ function (_Component) {
   _createClass(Dropdown, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      var ctx = this;
-      document.addEventListener('click', function (e) {
-        var elements = document.getElementsByClassName('fnt-dropdown-select');
+      var node = _reactDom.default.findDOMNode(this);
 
-        for (var i = 0; i < elements.length; i++) {
-          var element = elements[i];
+      var ctx = this; // Get child nodes
 
-          if (element !== e.target && !element.contains(e.target)) {
+      if (node instanceof HTMLElement) {
+        var child = node.querySelector('.fnt-dropdown-select');
+        console.log(child);
+        document.addEventListener('click', function (e) {
+          console.log('check: ', child !== e.target, !child.contains(e.target));
+
+          if (child !== e.target && !child.contains(e.target)) {
             ctx.setState({
               activeOptions: false
             });
           }
-
-          return;
-        }
-      });
+        });
+      }
     }
   }, {
     key: "clickSelect",
