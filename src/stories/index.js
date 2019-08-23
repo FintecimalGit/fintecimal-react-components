@@ -7,7 +7,7 @@ import lib from '../lib';
 import ui from '../ui';
 import tables from '../commons/exampleTable';
 
-const { Input, Button, Pagination, Tables, Dropdown, Loader, Switch } = lib;
+const { Input, Button, Pagination, Tables, Dropdown, Loader, Switch, BaseInput } = lib;
 const { LoginUI, MultiDrop } = ui
 
 storiesOf('UI|MultiDropdown', module).add('MultiDropdown', () => <MultiDrop />);
@@ -68,6 +68,10 @@ storiesOf('Components|Pagination', module).add('Pagination Init', () => <Paginat
 storiesOf('Components|Tables', module).add('Table', () => <Tables
   table={tables}
   onSelectRow={action('onSelectRow')}
+/>);
+
+storiesOf('Components|Inputs', module).add('BaseInput', () => <BaseInput
+  label={'Cualquier label'}
 />);
 
 storiesOf('Components|Button', module)
