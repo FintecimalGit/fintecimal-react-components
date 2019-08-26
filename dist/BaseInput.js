@@ -9,43 +9,43 @@ var _react = _interopRequireDefault(require("react"));
 
 var _propTypes = _interopRequireDefault(require("prop-types"));
 
-require("../styles/BaseInput.css");
+var _core = require("@material-ui/core");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+var useStyles = makeStyles(function (theme) {
+  return {
+    root: {
+      display: 'flex',
+      flexWrap: 'wrap'
+    },
+    formControl: {
+      margin: theme.spacing(1)
+    }
+  };
+});
+
 var BaseInput = function BaseInput(_ref) {
   var label = _ref.label,
-      type = _ref.type,
       value = _ref.value,
-      required = _ref.required,
-      error = _ref.error,
-      errorMessage = _ref.errorMessage;
-  return _react.default.createElement("div", {
-    className: "group"
-  }, _react.default.createElement("input", {
-    type: type,
-    required: required,
-    value: value
-  }), _react.default.createElement("span", {
-    className: "highlight"
-  }), _react.default.createElement("span", {
-    className: "bar"
-  }), _react.default.createElement("label", null, label));
+      handleChange = _ref.handleChange;
+  var classes = useStyles();
+  return _react.default.createElement(_core.FormControl, {
+    className: classes.formControl
+  }, _react.default.createElement(_core.InputLabel, {
+    htmlFor: "component-simple"
+  }, label), _react.default.createElement(_core.Input, {
+    id: "component-simple",
+    value: value,
+    onChange: handleChange
+  }));
 };
 
 BaseInput.defaultPropTypes = {
-  required: false,
-  error: false,
-  errorMessage: '',
-  type: 'text',
   value: ''
 };
 BaseInput.propTypes = {
-  required: _propTypes.default.bool,
-  type: _propTypes.default.string,
   label: _propTypes.default.string.isRequired,
-  error: _propTypes.default.bool,
-  errorMessage: _propTypes.default.string,
   value: _propTypes.default.oneOfType([_propTypes.default.number, _propTypes.default.string])
 };
 var _default = BaseInput;

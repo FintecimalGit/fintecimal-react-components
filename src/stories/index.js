@@ -72,6 +72,9 @@ storiesOf('Components|Tables', module).add('Table', () => <Tables
 
 storiesOf('Components|Inputs', module).add('BaseInput', () => <BaseInput
   label={'Cualquier label'}
+  handleChange={action('handleChange')}
+  error={false}
+  required={true}
 />);
 
 storiesOf('Components|Button', module)
