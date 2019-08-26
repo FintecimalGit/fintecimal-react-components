@@ -73,8 +73,11 @@ storiesOf('Components|Tables', module).add('Table', () => <Tables
 storiesOf('Components|Inputs', module).add('BaseInput', () => <BaseInput
   label={'Cualquier label'}
   handleChange={action('handleChange')}
-  error={false}
+  //error={true}
+  //errorMessage={'Este es un mensaje de error que puede tener cualquier cosa'}
   required={true}
+  clear={true}
+  value={'Este input viene lleno'}
 />);
 
 storiesOf('Components|Button', module)
