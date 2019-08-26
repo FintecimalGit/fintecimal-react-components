@@ -10,7 +10,7 @@ export const email = {
 export const rfc = {
     label: 'RFC',
     errorMessages: {
-        validation: 'RFC no válido',
+        validation: 'RFC incompleto o con formato incorrecto',
         empty: 'El campo RFC es requerido'
     },
     type: 'text'
@@ -19,7 +19,7 @@ export const rfc = {
 export const curp = {
     label: 'CURP',
     errorMessages: {
-        validation: 'CURP no válido',
+        validation: 'CURP incompleto o con formato incorrecto',
         empty: 'El campo CURP es requerido'
     }
 }

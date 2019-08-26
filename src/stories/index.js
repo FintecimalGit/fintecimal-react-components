@@ -9,7 +9,7 @@ import tables from '../commons/exampleTable';
 
 const { 
   Input, Button, Pagination, Tables, Dropdown, Loader, Switch, 
-  BaseInput, EmailInput, RFCInput
+  BaseInput, EmailInput, RFCInput, CURPInput
 } = lib;
 const { LoginUI, MultiDrop } = ui
 
@@ -89,6 +89,11 @@ storiesOf('Components|Inputs', module).add('BaseInput', () => <BaseInput
   //errorMessage={'Este es un mensaje de error que puede tener cualquier cosa'}
 />).add('RFC Input', () => <RFCInput
   label={'RFC'}
+  handleChange={action('handleChange')}
+  required={true}
+  error={false}
+/>).add('CURP Input', () => <CURPInput
+  label={'CURP'}
   handleChange={action('handleChange')}
   required={true}
   error={false}
