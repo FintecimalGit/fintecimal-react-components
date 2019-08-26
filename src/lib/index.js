@@ -6,6 +6,7 @@ import Dropdown from './Dropdown';
 import Loader from './Loader';
 import Switch from './Switch';
 import BaseInput from './BaseInput';
+import EmailInput from './EmailInput';
 
 export default {
 	Input, 
@@ -15,5 +16,6 @@ export default {
 	Dropdown,
 	Loader,
 	Switch,
-	BaseInput
+	BaseInput,
+	EmailInput,
 }

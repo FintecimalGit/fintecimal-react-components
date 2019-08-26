@@ -21,6 +21,8 @@ var _Switch = _interopRequireDefault(require("./Switch"));
 
 var _BaseInput = _interopRequireDefault(require("./BaseInput"));
 
+var _EmailInput = _interopRequireDefault(require("./inputTypes/EmailInput"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var _default = {
@@ -31,6 +33,7 @@ var _default = {
   Dropdown: _Dropdown.default,
   Loader: _Loader.default,
   Switch: _Switch.default,
-  BaseInput: _BaseInput.default
+  BaseInput: _BaseInput.default,
+  EmailInput: _EmailInput.default
 };
 exports.default = _default;

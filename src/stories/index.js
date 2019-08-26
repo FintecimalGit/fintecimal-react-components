@@ -7,7 +7,7 @@ import lib from '../lib';
 import ui from '../ui';
 import tables from '../commons/exampleTable';
 
-const { Input, Button, Pagination, Tables, Dropdown, Loader, Switch, BaseInput } = lib;
+const { Input, Button, Pagination, Tables, Dropdown, Loader, Switch, BaseInput, EmailInput } = lib;
 const { LoginUI, MultiDrop } = ui
 
 storiesOf('UI|MultiDropdown', module).add('MultiDropdown', () => <MultiDrop />);
@@ -78,6 +78,12 @@ storiesOf('Components|Inputs', module).add('BaseInput', () => <BaseInput
   required={true}
   clear={true}
   value={'Este input viene lleno'}
+/>).add('Email Input', () => <EmailInput
+  label={'Correo electrónico'}
+  handleChange={action('handleChange')}
+  required={true}
+  error={false}
+  //errorMessage={'Este es un mensaje de error que puede tener cualquier cosa'}
 />);
 
 storiesOf('Components|Button', module)

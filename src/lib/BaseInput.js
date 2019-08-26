@@ -38,7 +38,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const BaseInput = ({ label, value, handleChange, required, error, errorMessage, type, clear }) => {
+const BaseInput = ({ label, value, handleChange, required, error, errorMessage, type, clear, onBlur }) => {
     const classes = useStyles();
     const [inputValue, setInputValue] = useState(value);
 
@@ -74,6 +74,7 @@ const BaseInput = ({ label, value, handleChange, required, error, errorMessage, 
         id="component-simple"
         value={inputValue}
         onChange={compHandleChange}
+        onBlur={onBlur}
         endAdornment={ clear && 
         <InputAdornment position="end">
           <IconButton
@@ -116,6 +117,8 @@ BaseInput.propTypes = {
     type: PropTypes.string,
     clear: PropTypes.bool,
     errorMessage: PropTypes.string,
+    handleChange: PropTypes.func.isRequired,
+    onBlur: PropTypes.func,
 };
 
 export default BaseInput;
