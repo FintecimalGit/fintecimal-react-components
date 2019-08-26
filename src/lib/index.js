@@ -7,6 +7,7 @@ import Loader from './Loader';
 import Switch from './Switch';
 import BaseInput from './BaseInput';
 import EmailInput from './EmailInput';
+import RFCInput from './RFCInput';
 
 export default {
 	Input, 
@@ -16,6 +17,7 @@ export default {
 	Dropdown,
 	Loader,
 	Switch,
+	RFCInput,
 	BaseInput,
 	EmailInput,
 }

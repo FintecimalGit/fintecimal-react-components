@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { FormControl, OutlinedInput, InputLabel, makeStyles, InputAdornment, IconButton } from '@material-ui/core';
 import { Clear } from '@material-ui/icons';
@@ -38,22 +38,8 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const BaseInput = ({ label, value, handleChange, required, error, errorMessage, type, clear, onBlur }) => {
+const BaseInput = ({ label, value, handleChange, required, error, errorMessage, type, clear, onBlur, onClear }) => {
     const classes = useStyles();
-    const [inputValue, setInputValue] = useState(value);
-
-    const handleClear = () => {
-      setInputValue('');
-    };
-
-    const compHandleChange = event => {
-      const { target } = event;
-      setInputValue(target.value);
-    };
-
-    useEffect(() => {
-      handleChange(inputValue);
-    }, [inputValue]);
 
     return (
       <FormControl
@@ -72,14 +58,14 @@ const BaseInput = ({ label, value, handleChange, required, error, errorMessage, 
         </InputLabel>
         <OutlinedInput 
         id="component-simple"
-        value={inputValue}
-        onChange={compHandleChange}
+        value={value}
+        onChange={handleChange}
         onBlur={onBlur}
         endAdornment={ clear && 
         <InputAdornment position="end">
           <IconButton
             aria-label="clear input"
-            onClick={handleClear}
+            onClick={onClear}
           >
             <Clear/>
           </IconButton>

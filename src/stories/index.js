@@ -7,7 +7,10 @@ import lib from '../lib';
 import ui from '../ui';
 import tables from '../commons/exampleTable';
 
-const { Input, Button, Pagination, Tables, Dropdown, Loader, Switch, BaseInput, EmailInput } = lib;
+const { 
+  Input, Button, Pagination, Tables, Dropdown, Loader, Switch, 
+  BaseInput, EmailInput, RFCInput
+} = lib;
 const { LoginUI, MultiDrop } = ui
 
 storiesOf('UI|MultiDropdown', module).add('MultiDropdown', () => <MultiDrop />);
@@ -84,6 +87,11 @@ storiesOf('Components|Inputs', module).add('BaseInput', () => <BaseInput
   required={false}
   error={false}
   //errorMessage={'Este es un mensaje de error que puede tener cualquier cosa'}
+/>).add('RFC Input', () => <RFCInput
+  label={'RFC'}
+  handleChange={action('handleChange')}
+  required={true}
+  error={false}
 />);
 
 storiesOf('Components|Button', module)
