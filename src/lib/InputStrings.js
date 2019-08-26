@@ -15,3 +15,11 @@ export const rfc = {
     },
     type: 'text'
 };
+
+export const curp = {
+    label: 'CURP',
+    errorMessages: {
+        validation: 'CURP no válido',
+        empty: 'El campo CURP es requerido'
+    }
+}

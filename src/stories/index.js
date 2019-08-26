@@ -81,7 +81,7 @@ storiesOf('Components|Inputs', module).add('BaseInput', () => <BaseInput
 />).add('Email Input', () => <EmailInput
   label={'Correo electrónico'}
   handleChange={action('handleChange')}
-  required={true}
+  required={false}
   error={false}
   //errorMessage={'Este es un mensaje de error que puede tener cualquier cosa'}
 />);

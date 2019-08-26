@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import BaseInput from './BaseInput';
 import { email } from './InputStrings';
 
-const EmailInput = ({ value, handleChange, label, error, errorMessage, type }) => {
+const EmailInput = ({ value, handleChange, label, error, errorMessage, type, required }) => {
     const { errorMessages } = email;
     const [emailError, setEmailError] = useState(error);
     const [emailErrorMessage, setErrorMessage] = useState(errorMessage);
@@ -15,7 +15,7 @@ const EmailInput = ({ value, handleChange, label, error, errorMessage, type }) =
 
     const onBlur = () => {
         const { validation, empty } = errorMessages;
-        if(isEmpty(emailValue)) {
+        if(isEmpty(emailValue) && required) {
             setEmailError(true);
             setErrorMessage(empty);
         } else if (!isValid(emailValue)) {
@@ -28,6 +28,7 @@ const EmailInput = ({ value, handleChange, label, error, errorMessage, type }) =
 
     const isEmpty = (data) => !data || data.length < 1;
     const isValid = (data) => {
+        if(!data) return true;
         const reg = /\S+@\S+\.\S+/;
         return reg.test(data);
     }
@@ -45,6 +46,7 @@ const EmailInput = ({ value, handleChange, label, error, errorMessage, type }) =
         onBlur={onBlur}
         error={emailError}
         errorMessage={emailErrorMessage}
+        required={required}
         />
     );
 };
@@ -54,6 +56,7 @@ EmailInput.defaultProps = {
     type: email.type,
     error: false,
     errorMessage: '',
+    required: false,
 };
 
 EmailInput.propTypes = {
@@ -61,6 +64,7 @@ EmailInput.propTypes = {
     type: PropTypes.string,
     error: PropTypes.bool,
     errorMessage: PropTypes.string,
+    required: PropTypes.bool,
 };
 
 export default EmailInput;
