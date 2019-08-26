@@ -21,5 +21,15 @@ export const curp = {
     errorMessages: {
         validation: 'CURP incompleto o con formato incorrecto',
         empty: 'El campo CURP es requerido'
-    }
-}
+    },
+    type: 'text'
+};
+
+export const number = {
+    label: 'Número',
+    errorMessages: {
+        validation: 'Campo con formato incorrecto',
+        empty: 'El campo es requerido'
+    },
+    type: 'number',
+};
