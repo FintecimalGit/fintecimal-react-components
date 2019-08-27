@@ -7,15 +7,11 @@ exports.default = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
 
-require("../styles/Loader.css");
+require("../styles/Switch.css");
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -33,58 +29,80 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
-var Loader =
+var Switch =
 /*#__PURE__*/
 function (_Component) {
-  _inherits(Loader, _Component);
+  _inherits(Switch, _Component);
 
-  function Loader() {
-    _classCallCheck(this, Loader);
+  function Switch(props) {
+    var _this;
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(Loader).apply(this, arguments));
+    _classCallCheck(this, Switch);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(Switch).call(this, props));
+    _this.state = {
+      active: props.active
+    };
+    return _this;
   }
 
-  _createClass(Loader, [{
+  _createClass(Switch, [{
+    key: "onClick",
+    value: function onClick(e) {
+      this.setState(function (state) {
+        return {
+          active: !state.active
+        };
+      }, this.props.onClick({
+        event: e,
+        active: this.state.active
+      }));
+    }
+  }, {
     key: "render",
     value: function render() {
+      var _this2 = this;
+
       var _this$props = this.props,
-          colors = _this$props.colors,
-          className = _this$props.className,
-          style = _this$props.style,
-          displayed = _this$props.displayed;
-      var first = colors.first,
-          secound = colors.secound;
+          parentClass = _this$props.parentClass,
+          colors = _this$props.colors;
+      var activeColorBG = colors.activeColorBG,
+          activeColorBorder = colors.activeColorBorder,
+          inactiveColorBG = colors.inactiveColorBG,
+          inactiveColorBorder = colors.inactiveColorBorder;
+      var active = this.state.active;
       return _react.default.createElement("div", {
-        className: "fnt-loader ".concat(className),
-        style: _objectSpread({}, style, {
-          display: displayed ? 'block' : 'none',
-          backgroundColor: first
-        })
+        className: "".concat(parentClass),
+        onClick: function onClick(e) {
+          return _this2.onClick(e);
+        }
       }, _react.default.createElement("div", {
-        className: "fnt-loader-bar",
+        className: "fnt-switch-bar",
         style: {
-          backgroundColor: first
+          backgroundColor: active ? activeColorBG : inactiveColorBG,
+          border: "1px solid ".concat(active ? activeColorBorder : inactiveColorBorder)
         }
       }), _react.default.createElement("div", {
-        className: "fnt-loader-bar",
+        className: "fnt-switch-circle",
         style: {
-          backgroundColor: secound
+          transform: active ? 'translateX(-1px)' : 'translateX(15px)'
         }
       }));
     }
   }]);
 
-  return Loader;
+  return Switch;
 }(_react.Component);
 
-Loader.defaultProps = {
+Switch.defaultProps = {
+  active: true,
+  parentClass: 'fnt-switch',
   colors: {
-    first: '#ddd',
-    secound: '#31DDBF'
-  },
-  className: '',
-  style: {},
-  displayed: true
+    activeColorBG: '#37E7C8',
+    activeColorBorder: '#56BFB2',
+    inactiveColorBG: '#E66868',
+    inactiveColorBorder: '#D55353'
+  }
 };
-var _default = Loader;
+var _default = Switch;
 exports.default = _default;

@@ -15,9 +15,19 @@ var _Tables = _interopRequireDefault(require("./Tables"));
 
 var _Dropdown = _interopRequireDefault(require("./Dropdown"));
 
-var _LoginUi = _interopRequireDefault(require("./LoginUI"));
-
 var _Loader = _interopRequireDefault(require("./Loader"));
+
+var _Switch = _interopRequireDefault(require("./Switch"));
+
+var _BaseInput = _interopRequireDefault(require("./BaseInput"));
+
+var _EmailInput = _interopRequireDefault(require("./EmailInput"));
+
+var _RFCInput = _interopRequireDefault(require("./RFCInput"));
+
+var _CURPInput = _interopRequireDefault(require("./CURPInput"));
+
+var _NumberInput = _interopRequireDefault(require("./NumberInput"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -27,7 +37,12 @@ var _default = {
   Pagination: _Pagination.default,
   Tables: _Tables.default,
   Dropdown: _Dropdown.default,
-  LoginUi: _LoginUi.default,
-  Loader: _Loader.default
+  Loader: _Loader.default,
+  Switch: _Switch.default,
+  RFCInput: _RFCInput.default,
+  BaseInput: _BaseInput.default,
+  CURPInput: _CURPInput.default,
+  EmailInput: _EmailInput.default,
+  NumberInput: _NumberInput.default
 };
 exports.default = _default;

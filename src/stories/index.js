@@ -7,7 +7,10 @@ import lib from '../lib';
 import ui from '../ui';
 import tables from '../commons/exampleTable';
 
-const { Input, Button, Pagination, Tables, Dropdown, Loader, Switch } = lib;
+const { 
+  Input, Button, Pagination, Tables, Dropdown, Loader, Switch, 
+  BaseInput, EmailInput, RFCInput, CURPInput, NumberInput
+} = lib;
 const { LoginUI, MultiDrop } = ui
 
 storiesOf('UI|MultiDropdown', module).add('MultiDropdown', () => <MultiDrop />);
@@ -68,6 +71,37 @@ storiesOf('Components|Pagination', module).add('Pagination Init', () => <Paginat
 storiesOf('Components|Tables', module).add('Table', () => <Tables
   table={tables}
   onSelectRow={action('onSelectRow')}
+/>);
+
+storiesOf('Components|Inputs', module).add('BaseInput', () => <BaseInput
+  label={'Cualquier label'}
+  handleChange={action('handleChange')}
+  //error={true}
+  //errorMessage={'Este es un mensaje de error que puede tener cualquier cosa'}
+  required={true}
+  clear={true}
+  value={'Este input viene lleno'}
+/>).add('Email Input', () => <EmailInput
+  label={'Correo electrónico'}
+  handleChange={action('handleChange')}
+  required={false}
+  error={false}
+  //errorMessage={'Este es un mensaje de error que puede tener cualquier cosa'}
+/>).add('RFC Input', () => <RFCInput
+  label={'RFC'}
+  handleChange={action('handleChange')}
+  required={true}
+  error={false}
+/>).add('CURP Input', () => <CURPInput
+  label={'CURP'}
+  handleChange={action('handleChange')}
+  required={true}
+  error={false}
+/>).add('Number Input', () => <NumberInput
+  //label={'Código Postal'}
+  handleChange={action('handleChange')}
+  required={false}
+  error={false}
 />);
 
 storiesOf('Components|Button', module)

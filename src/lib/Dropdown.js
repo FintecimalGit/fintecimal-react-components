@@ -21,9 +21,9 @@ class Dropdown extends Component {
     // Get child nodes
     if (node instanceof HTMLElement) {
       const child = node.querySelector('.fnt-dropdown-select');
-      console.log(child);
+      //console.log(child);
       document.addEventListener('click', (e) => {
-        console.log('check: ', child !== e.target, !child.contains(e.target))
+        //console.log('check: ', child !== e.target, !child.contains(e.target))
         if (child !== e.target && !child.contains(e.target)) {   
           ctx.setState({
             activeOptions: false
