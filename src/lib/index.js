@@ -10,6 +10,7 @@ import EmailInput from './EmailInput';
 import RFCInput from './RFCInput';
 import CURPInput from './CURPInput';
 import NumberInput from './NumberInput';
+import CellPhoneInput from './CellPhoneInput';
 
 export default {
 	Input, 
@@ -24,4 +25,5 @@ export default {
 	CURPInput,
 	EmailInput,
 	NumberInput,
+	CellPhoneInput,
 }

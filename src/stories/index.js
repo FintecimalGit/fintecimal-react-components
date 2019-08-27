@@ -9,7 +9,7 @@ import tables from '../commons/exampleTable';
 
 const { 
   Input, Button, Pagination, Tables, Dropdown, Loader, Switch, 
-  TextInput, EmailInput, RFCInput, CURPInput, NumberInput
+  TextInput, EmailInput, RFCInput, CURPInput, NumberInput, CellPhoneInput
 } = lib;
 const { LoginUI, MultiDrop } = ui
 
@@ -98,6 +98,11 @@ storiesOf('Components|Inputs', module).add('TextInput', () => <TextInput
   required={true}
   error={false}
 />).add('Number Input', () => <NumberInput
+  //label={'Código Postal'}
+  handleChange={action('handleChange')}
+  required={false}
+  error={false}
+/>).add('Cellphone Input', () => <CellPhoneInput
   //label={'Código Postal'}
   handleChange={action('handleChange')}
   required={false}

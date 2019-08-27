@@ -4,6 +4,12 @@ export const textFormats = {
     NUMBER: 'number',
 };
 
+export const status = {
+    NORMAL: 'normal',
+    FOCUS: 'focus',
+    ERROR: 'error',
+};
+
 export const isEmpty = (data) => !data || data.length < 1;
 
 export const isNumber = (data) => Number(data);

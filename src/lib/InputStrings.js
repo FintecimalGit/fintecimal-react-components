@@ -42,3 +42,12 @@ export const number = {
     },
     type: 'text',
 };
+
+export const cellphone = {
+    label: 'Celular',
+    errorMessages: {
+        validation: 'El número no es válido',
+        empty: 'El campo es requerido'
+    },
+    type: 'tel',
+};
