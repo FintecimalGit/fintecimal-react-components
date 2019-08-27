@@ -1,8 +1,8 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { 
     FormControl, OutlinedInput, InputLabel, makeStyles, InputAdornment,
-    IconButton, SvgIcon,
+    IconButton,
 } from '@material-ui/core';
 import { Clear } from '@material-ui/icons';
 import '../styles/BaseInput.css';
