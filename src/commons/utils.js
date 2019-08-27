@@ -6,7 +6,17 @@ export const textFormats = {
 
 export const isEmpty = (data) => !data || data.length < 1;
 
-export const isNumber = (data) =>  (typeof data === 'number' && isFinite(data));
+export const isNumber = (data) => Number(data);
+
+export const removeNan = (text) => {
+    while(text.length > 0) {
+        if (isNumber(text)) return text;
+        else {
+            text = text.slice(0, text.length - 1);
+        }
+    }
+    return '';
+};
 
 export const formatText = (text, format) => {
     if(!text || text.length < 1) return '';
@@ -17,12 +27,12 @@ export const formatText = (text, format) => {
         return text.toLowerCase();
     }
     if (format === textFormats.NUMBER) {
-        console.log('FORMAT Number');
-        if (isNumber) return text;
-        else {
-            return text.slice(0, text.length - 1);
+        if (isNumber(text)) {
+            return text;
         }
+        else return removeNan(text);
     }
 };
+
 
 export const validateRegex = (text, reg) => reg.test(text);

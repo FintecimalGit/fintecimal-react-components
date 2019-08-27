@@ -98,9 +98,9 @@ storiesOf('Components|Inputs', module).add('BaseInput', () => <BaseInput
   required={true}
   error={false}
 />).add('Number Input', () => <NumberInput
-  label={'Number'}
+  //label={'Código Postal'}
   handleChange={action('handleChange')}
-  required={true}
+  required={false}
   error={false}
 />);
 

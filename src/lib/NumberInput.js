@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { number } from './InputStrings';
 import InputWrapper from './InputWrapper';
-import { textFormats } from '../commons/utils';
+import { textFormats, isNumber, isEmpty } from '../commons/utils';
 
 const NumberInput = ({ value, handleChange, label, error, errorMessage, type, required }) => {
     const config = {
@@ -10,8 +10,8 @@ const NumberInput = ({ value, handleChange, label, error, errorMessage, type, re
         label,
         value,
         required,
-        format: textFormats.NUMBER,
         handleChange,
+        format: textFormats.NUMBER,
     };
     const errors = {
         error,
@@ -21,7 +21,8 @@ const NumberInput = ({ value, handleChange, label, error, errorMessage, type, re
 
     const isValid = (data) => {
         if (isEmpty(data) && !required ) return true;
-        // TODO: Validate is number
+        if(!isNumber(data)) return false;
+        return true;
     };
 
     return (

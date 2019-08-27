@@ -14,7 +14,6 @@ const InputWrapper = ({ config, errors, isValid }) => {
         const { target: { value } } = event;
         if(format) {
             const formattedText = formatText(value, format);
-            console.log(formattedText);
             setValue(formattedText);
         } else {
             setValue(value);

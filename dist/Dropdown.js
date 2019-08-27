@@ -58,11 +58,10 @@ function (_Component) {
       var ctx = this; // Get child nodes
 
       if (node instanceof HTMLElement) {
-        var child = node.querySelector('.fnt-dropdown-select');
-        console.log(child);
-        document.addEventListener('click', function (e) {
-          console.log('check: ', child !== e.target, !child.contains(e.target));
+        var child = node.querySelector('.fnt-dropdown-select'); //console.log(child);
 
+        document.addEventListener('click', function (e) {
+          //console.log('check: ', child !== e.target, !child.contains(e.target))
           if (child !== e.target && !child.contains(e.target)) {
             ctx.setState({
               activeOptions: false

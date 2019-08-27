@@ -31,5 +31,5 @@ export const number = {
         validation: 'Campo con formato incorrecto',
         empty: 'El campo es requerido'
     },
-    type: 'number',
+    type: 'text',
 };

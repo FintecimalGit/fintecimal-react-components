@@ -21,7 +21,13 @@ var _Switch = _interopRequireDefault(require("./Switch"));
 
 var _BaseInput = _interopRequireDefault(require("./BaseInput"));
 
-var _EmailInput = _interopRequireDefault(require("./inputTypes/EmailInput"));
+var _EmailInput = _interopRequireDefault(require("./EmailInput"));
+
+var _RFCInput = _interopRequireDefault(require("./RFCInput"));
+
+var _CURPInput = _interopRequireDefault(require("./CURPInput"));
+
+var _NumberInput = _interopRequireDefault(require("./NumberInput"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -33,7 +39,10 @@ var _default = {
   Dropdown: _Dropdown.default,
   Loader: _Loader.default,
   Switch: _Switch.default,
+  RFCInput: _RFCInput.default,
   BaseInput: _BaseInput.default,
-  EmailInput: _EmailInput.default
+  CURPInput: _CURPInput.default,
+  EmailInput: _EmailInput.default,
+  NumberInput: _NumberInput.default
 };
 exports.default = _default;

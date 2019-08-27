@@ -38,7 +38,10 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const BaseInput = ({ label, value, handleChange, required, error, errorMessage, type, clear, onBlur, onClear }) => {
+const BaseInput = ({
+    label, value, handleChange, required, error, errorMessage, type, 
+    clear, onBlur, onClear, onKeyDown,
+  }) => {
     const classes = useStyles();
 
     return (
