@@ -5,7 +5,7 @@ import Tables from './Tables';
 import Dropdown from './Dropdown';
 import Loader from './Loader';
 import Switch from './Switch';
-import BaseInput from './BaseInput';
+import TextInput from './TextInput';
 import EmailInput from './EmailInput';
 import RFCInput from './RFCInput';
 import CURPInput from './CURPInput';
@@ -20,7 +20,7 @@ export default {
 	Loader,
 	Switch,
 	RFCInput,
-	BaseInput,
+	TextInput,
 	CURPInput,
 	EmailInput,
 	NumberInput,

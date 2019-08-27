@@ -9,7 +9,7 @@ import tables from '../commons/exampleTable';
 
 const { 
   Input, Button, Pagination, Tables, Dropdown, Loader, Switch, 
-  BaseInput, EmailInput, RFCInput, CURPInput, NumberInput
+  TextInput, EmailInput, RFCInput, CURPInput, NumberInput
 } = lib;
 const { LoginUI, MultiDrop } = ui
 
@@ -73,14 +73,14 @@ storiesOf('Components|Tables', module).add('Table', () => <Tables
   onSelectRow={action('onSelectRow')}
 />);
 
-storiesOf('Components|Inputs', module).add('BaseInput', () => <BaseInput
+storiesOf('Components|Inputs', module).add('TextInput', () => <TextInput
   label={'Cualquier label'}
   handleChange={action('handleChange')}
   //error={true}
   //errorMessage={'Este es un mensaje de error que puede tener cualquier cosa'}
   required={true}
   clear={true}
-  value={'Este input viene lleno'}
+  //value={'Este input viene lleno'}
 />).add('Email Input', () => <EmailInput
   label={'Correo electrónico'}
   handleChange={action('handleChange')}

@@ -1,3 +1,12 @@
+export const text = {
+    label: 'Texto',
+    errorMessages: {
+        validation: 'Texto con formato no válido',
+        empty: 'El campo es requerido'
+    },
+    type: 'text'
+};
+
 export const email = {
     label: 'Correo electrónico',
     errorMessages: {
