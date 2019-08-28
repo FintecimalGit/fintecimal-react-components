@@ -2,14 +2,20 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormControl, OutlinedInput, InputLabel, makeStyles, InputAdornment, IconButton } from '@material-ui/core';
 import { Clear } from '@material-ui/icons';
+import LongPlaceHolder from './LongPlaceHolder';
+import { isTextLong, defaultPlaceHolder } from '../commons/utils';
 import '../styles/BaseInput.css';
 
 const useStyles = makeStyles(theme => ({
     root: {
       display: 'flex',
+      flexDirection: 'column',
       flexWrap: 'wrap',
       margin: theme.spacing(1),
       fontFamily: '"Open Sans", sans-serif',
+    },
+    form: {
+      alignSelf: 'stretch',
     },
     label: {
       fontSize: 14,
@@ -40,13 +46,19 @@ const useStyles = makeStyles(theme => ({
 
 const BaseInput = ({
     label, value, handleChange, required, error, errorMessage, type, 
-    clear, onBlur, onClear, onKeyDown,
+    clear, onBlur, onClear,
   }) => {
     const classes = useStyles();
-
+    const selectLabel = () => {
+      return ((error && errorMessage) || (!isTextLong(label) && label) || defaultPlaceHolder);
+    };
     return (
+      <div className={classes.root}>
+        {isTextLong(label) && <div className={classes.longText}>
+          <LongPlaceHolder text={label} />
+        </div>}
       <FormControl
-      className={classes.root}
+      className={classes.form}
       margin="normal"
       required={required}
       error={error}>
@@ -57,7 +69,7 @@ const BaseInput = ({
         classes={{
           asterisk: classes.asterisk,
         }}
-        >{(error && errorMessage) || label}
+        >{selectLabel()}
         </InputLabel>
         <OutlinedInput 
         id="component-simple"
@@ -83,6 +95,7 @@ const BaseInput = ({
         type={type}
         />
       </FormControl>
+      </div>
     );
 };
 
