@@ -4,16 +4,23 @@ import {
   FormControl, InputLabel, makeStyles, Select, MenuItem, OutlinedInput, Icon,
 } from '@material-ui/core';
 import { KeyboardArrowDown, KeyboardArrowUp } from '@material-ui/icons';
-import { status, isEmpty } from '../commons/utils';
+import {
+  status, isEmpty, isTextLong,
+} from '../commons/utils';
+import LongPlaceHolder from './LongPlaceHolder';
 import { list } from './InputStrings';
 import '../styles/BaseInput.css';
 
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
+    flexDirection: 'column',
     flexWrap: 'wrap',
     margin: theme.spacing(1),
     fontFamily: '"Open Sans", sans-serif',
+  },
+  form: {
+    alignSelf: 'stretch',
   },
   label: {
     fontSize: 14,
@@ -73,15 +80,15 @@ const useStyles = makeStyles(theme => ({
     borderLeft: '2px solid rgba(244,67,54,0.7)',
     borderRight: '2px solid rgba(244,67,54,0.7)',
     borderBottom: '2px solid rgba(244,67,54,0.7)',
-  }
+  },
 }));
 
-const isCategory = (option) => option.children && option.children.length > 0;
+const isCategory = option => option.children && option.children.length > 0;
 const getClassByStatus = (inputStatus, classes) => {
-  switch(inputStatus) {
-      case status.FOCUS: return classes.focus;
-      case status.ERROR: return classes.error;
-      default: return classes.normal;
+  switch (inputStatus) {
+  case status.FOCUS: return classes.focus;
+  case status.ERROR: return classes.error;
+  default: return classes.normal;
   }
 };
 
@@ -89,7 +96,7 @@ const SelectInput = ({
   label, value, handleChange, required, error, errorMessage, options,
 }) => {
   const classes = useStyles();
-  const { errorMessages } = list;
+  const { errorMessages, label:defaultPlaceHolder } = list;
   const [mValue, setValue] = useState(value);
   const [mError, setError] = useState(error);
   const [mErrorMessage, setErrorMessage] = useState(errorMessage);
@@ -97,21 +104,27 @@ const SelectInput = ({
   const [mOpen, setOpen] = useState(false);
 
   const renderItem = (info) => {
-    const { name, index, category = true, parentName = ''} = info;
+    const {
+      name, index, category = true, parentName = '',
+    } = info;
     return (
       <MenuItem
         disabled={category}
         key={`${parentName}_${name}_${index}`}
-        className={category ? classes.category: classes.item}
-        value={parentName ? `${parentName} - ${name}`: name}
+        className={category ? classes.category : classes.item}
+        value={parentName ? `${parentName} - ${name}` : name}
         classes={{
           disabled: classes.disabled,
         }}
       >
-      { name }
+        { name }
       </MenuItem>
-    )
+    );
   };
+
+  const selectLabel = () => ((mError && mErrorMessage)
+  || (!isTextLong(label) && label)
+  || defaultPlaceHolder);
 
   const open = () => {
     setOpen(true);
@@ -120,7 +133,7 @@ const SelectInput = ({
   const close = () => {
     setOpen(false);
   };
-  
+
   const renderChildren = (children, items, parentName = '') => {
     children.map((child, index) => {
       const { name, children } = child;
@@ -128,13 +141,12 @@ const SelectInput = ({
       if (isCategory(child)) {
         items.push(renderItem(info));
         return renderChildren(children, items, name);
-      } else {
-        const newInfo = { ...info, category: false };
-        items.push(renderItem(newInfo));
       }
+      const newInfo = { ...info, category: false };
+      items.push(renderItem(newInfo));
     });
   };
-  
+
   const renderOptions = (listOptions) => {
     const items = [];
     renderChildren(listOptions, items);
@@ -154,11 +166,11 @@ const SelectInput = ({
 
   const mOnBlur = () => {
     const { empty } = errorMessages;
-    if(isEmpty(mValue) && required) {
+    if (isEmpty(mValue) && required) {
       setError(true);
       setErrorMessage(empty);
     } else {
-        setError(false);
+      setError(false);
     }
     setStatus(status.NORMAL);
   };
@@ -169,59 +181,65 @@ const SelectInput = ({
 
 
   return (
-    <FormControl
-      className={classes.root}
-      margin="normal"
-      required={required}
-      error={mError}>
-      <InputLabel
-        className={classes.label}
-        htmlFor="component-simple"
-        variant="filled"
-        classes={{
-          asterisk: classes.asterisk,
-        }}
-      >{(mError && mErrorMessage) || label}
-      </InputLabel>
-      <Select
-        renderValue={() => mValue}
-        value={mValue}
-        onChange={mHandleChange}
-        onBlur={mOnBlur}
-        onFocus={mOnFocus}
-        onOpen={open}
-        onClose={close}
-        IconComponent={mOpen ? KeyboardArrowUp : KeyboardArrowDown}
-        classes={{
-          icon: classes.icon,
-        }}
-        MenuProps={{
-          getContentAnchorEl: null,
-          anchorOrigin: {
-            vertical: "bottom",
-            horizontal: "left",
-          },
-          classes: {
-            paper: (mError 
-            ? getClassByStatus(status.ERROR, classes)
-            : getClassByStatus(mStatus, classes))
-          },
-        }}
-        input={
-          <OutlinedInput
-            inputProps={{
-              className: classes.input,
-            }}
-            classes={{
-              notchedOutline: classes.notchedOutline,
-              focused: classes.focusNotchedOutline,
-            }}
-          />
-        }
-      >
-        {renderOptions(options)}
-      </Select>
-    </FormControl>
+    <div className={classes.root}>
+      {isTextLong(label)
+      && <div>
+        <LongPlaceHolder text={label} />
+      </div>}
+      <FormControl
+        className={classes.form}
+        margin="normal"
+        required={required}
+        error={mError}>
+        <InputLabel
+          className={classes.label}
+          htmlFor="component-simple"
+          variant="filled"
+          classes={{
+            asterisk: classes.asterisk,
+          }}
+        >{selectLabel()}
+        </InputLabel>
+        <Select
+          renderValue={() => mValue}
+          value={mValue}
+          onChange={mHandleChange}
+          onBlur={mOnBlur}
+          onFocus={mOnFocus}
+          onOpen={open}
+          onClose={close}
+          IconComponent={mOpen ? KeyboardArrowUp : KeyboardArrowDown}
+          classes={{
+            icon: classes.icon,
+          }}
+          MenuProps={{
+            getContentAnchorEl: null,
+            anchorOrigin: {
+              vertical: 'bottom',
+              horizontal: 'left',
+            },
+            classes: {
+              paper: (mError
+                ? getClassByStatus(status.ERROR, classes)
+                : getClassByStatus(mStatus, classes)),
+            },
+          }}
+          input={
+            <OutlinedInput
+              inputProps={{
+                className: classes.input,
+              }}
+              classes={{
+                notchedOutline: classes.notchedOutline,
+                focused: classes.focusNotchedOutline,
+              }}
+            />
+          }
+        >
+          {renderOptions(options)}
+        </Select>
+      </FormControl>
+    </div>
   );
 };
 
