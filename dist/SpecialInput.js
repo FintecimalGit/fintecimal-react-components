@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
-var _react = _interopRequireDefault(require("react"));
+var _react = _interopRequireWildcard(require("react"));
 
 var _propTypes = _interopRequireDefault(require("prop-types"));
 
@@ -17,12 +17,22 @@ require("../styles/BaseInput.css");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
 var useStyles = (0, _core.makeStyles)(function (theme) {
   return {
     root: {
       display: 'flex',
+      flexDirection: 'row',
       flexWrap: 'wrap',
+      alignItems: 'center',
       margin: theme.spacing(1)
+    },
+    icon: {
+      flex: 1
+    },
+    form: {
+      flex: 20
     },
     label: {
       fontFamily: '"Open Sans", sans-serif',
@@ -36,8 +46,10 @@ var useStyles = (0, _core.makeStyles)(function (theme) {
       paddingBottom: 12
     },
     notchedOutline: {
-      borderWidth: 2,
-      borderColor: 'lightgray',
+      //borderLeft: '1px solid lightgray',
+      borderRight: '2px solid lightgray',
+      borderTop: '2px solid lightgray',
+      borderBottom: '2px solid lightgray',
       opacity: 0.7
     },
     focusNotchedOutline: {
@@ -49,6 +61,9 @@ var useStyles = (0, _core.makeStyles)(function (theme) {
       color: 'red',
       fontSize: 11,
       verticalAlign: 'super'
+    },
+    adornment: {
+      marginTop: 12
     }
   };
 });
@@ -64,10 +79,17 @@ var BaseInput = function BaseInput(_ref) {
       clear = _ref.clear,
       onBlur = _ref.onBlur,
       onClear = _ref.onClear,
-      onKeyDown = _ref.onKeyDown;
+      onKeyDown = _ref.onKeyDown,
+      children = _ref.children,
+      onFocus = _ref.onFocus,
+      startAdornment = _ref.startAdornment;
   var classes = useStyles();
-  return _react.default.createElement(_core.FormControl, {
-    className: classes.root,
+  return _react.default.createElement("div", {
+    className: classes.root
+  }, _react.default.createElement("div", {
+    className: classes.icon
+  }, children), _react.default.createElement(_core.FormControl, {
+    className: classes.form,
     margin: "normal",
     required: required,
     error: error
@@ -83,6 +105,11 @@ var BaseInput = function BaseInput(_ref) {
     value: value,
     onChange: handleChange,
     onBlur: onBlur,
+    onFocus: onFocus,
+    startAdornment: startAdornment && _react.default.createElement(_core.InputAdornment, {
+      position: "start",
+      className: classes.adornment
+    }, startAdornment),
     endAdornment: clear && _react.default.createElement(_core.InputAdornment, {
       position: "end"
     }, _react.default.createElement(_core.IconButton, {
@@ -97,7 +124,7 @@ var BaseInput = function BaseInput(_ref) {
       focused: classes.focusNotchedOutline
     },
     type: type
-  }));
+  })));
 };
 
 BaseInput.defaultProps = {
@@ -117,7 +144,9 @@ BaseInput.propTypes = {
   clear: _propTypes.default.bool,
   errorMessage: _propTypes.default.string,
   handleChange: _propTypes.default.func.isRequired,
-  onBlur: _propTypes.default.func
+  onBlur: _propTypes.default.func,
+  onFocus: _propTypes.default.func,
+  startAdornment: _propTypes.default.string
 };
 var _default = BaseInput;
 exports.default = _default;

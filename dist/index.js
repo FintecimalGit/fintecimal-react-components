@@ -19,7 +19,7 @@ var _Loader = _interopRequireDefault(require("./Loader"));
 
 var _Switch = _interopRequireDefault(require("./Switch"));
 
-var _BaseInput = _interopRequireDefault(require("./BaseInput"));
+var _TextInput = _interopRequireDefault(require("./TextInput"));
 
 var _EmailInput = _interopRequireDefault(require("./EmailInput"));
 
@@ -28,6 +28,8 @@ var _RFCInput = _interopRequireDefault(require("./RFCInput"));
 var _CURPInput = _interopRequireDefault(require("./CURPInput"));
 
 var _NumberInput = _interopRequireDefault(require("./NumberInput"));
+
+var _CellPhoneInput = _interopRequireDefault(require("./CellPhoneInput"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -40,9 +42,10 @@ var _default = {
   Loader: _Loader.default,
   Switch: _Switch.default,
   RFCInput: _RFCInput.default,
-  BaseInput: _BaseInput.default,
+  TextInput: _TextInput.default,
   CURPInput: _CURPInput.default,
   EmailInput: _EmailInput.default,
-  NumberInput: _NumberInput.default
+  NumberInput: _NumberInput.default,
+  CellPhoneInput: _CellPhoneInput.default
 };
 exports.default = _default;

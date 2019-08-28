@@ -3,7 +3,16 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.number = exports.curp = exports.rfc = exports.email = void 0;
+exports.cellphone = exports.number = exports.curp = exports.rfc = exports.email = exports.text = void 0;
+var text = {
+  label: 'Texto',
+  errorMessages: {
+    validation: 'Texto con formato no válido',
+    empty: 'El campo es requerido'
+  },
+  type: 'text'
+};
+exports.text = text;
 var email = {
   label: 'Correo electrónico',
   errorMessages: {
@@ -37,6 +46,15 @@ var number = {
     validation: 'Campo con formato incorrecto',
     empty: 'El campo es requerido'
   },
-  type: 'number'
+  type: 'text'
 };
 exports.number = number;
+var cellphone = {
+  label: 'Celular',
+  errorMessages: {
+    validation: 'El número no es válido',
+    empty: 'El campo es requerido'
+  },
+  type: 'tel'
+};
+exports.cellphone = cellphone;

@@ -17,7 +17,7 @@ var _utils = require("../commons/utils");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var NumberInput = function NumberInput(_ref) {
+var TextInput = function TextInput(_ref) {
   var value = _ref.value,
       handleChange = _ref.handleChange,
       label = _ref.label,
@@ -30,18 +30,16 @@ var NumberInput = function NumberInput(_ref) {
     label: label,
     value: value,
     required: required,
-    handleChange: handleChange,
-    format: _utils.textFormats.NUMBER
+    handleChange: handleChange
   };
   var errors = {
     error: error,
     errorMessage: errorMessage,
-    errorMessages: _InputStrings.number.errorMessages
+    errorMessages: _InputStrings.text.errorMessages
   };
 
   var isValid = function isValid(data) {
     if ((0, _utils.isEmpty)(data) && !required) return true;
-    if (!(0, _utils.isNumber)(data)) return false;
     return true;
   };
 
@@ -52,19 +50,19 @@ var NumberInput = function NumberInput(_ref) {
   });
 };
 
-NumberInput.defaultProps = {
-  label: _InputStrings.number.label,
-  type: _InputStrings.number.type,
+TextInput.defaultProps = {
+  label: _InputStrings.text.label,
+  type: _InputStrings.text.type,
   error: false,
   errorMessage: '',
   required: false
 };
-NumberInput.propTypes = {
+TextInput.propTypes = {
   label: _propTypes.default.string,
   type: _propTypes.default.string,
   error: _propTypes.default.bool,
   errorMessage: _propTypes.default.string,
   required: _propTypes.default.bool
 };
-var _default = NumberInput;
+var _default = TextInput;
 exports.default = _default;
