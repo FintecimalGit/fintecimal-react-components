@@ -51,3 +51,12 @@ export const cellphone = {
     },
     type: 'tel',
 };
+
+export const list = {
+    label: 'Selecciona una opción',
+    errorMessages: {
+        validation: 'Selección no válida',
+        empty: 'Debes seleccionar una opción'
+    },
+    type: 'list'
+};

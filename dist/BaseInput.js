@@ -22,12 +22,12 @@ var useStyles = (0, _core.makeStyles)(function (theme) {
     root: {
       display: 'flex',
       flexWrap: 'wrap',
-      margin: theme.spacing(1)
+      margin: theme.spacing(1),
+      fontFamily: '"Open Sans", sans-serif'
     },
     label: {
-      fontFamily: '"Open Sans", sans-serif',
       fontSize: 14,
-      fontWeight: 600,
+      fontWeight: 500,
       opacity: 1,
       color: 'gray'
     },
@@ -47,7 +47,7 @@ var useStyles = (0, _core.makeStyles)(function (theme) {
     },
     asterisk: {
       color: 'red',
-      fontSize: 11,
+      fontSize: 13,
       verticalAlign: 'super'
     }
   };

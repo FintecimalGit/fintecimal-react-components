@@ -6,7 +6,7 @@ import { action } from '@storybook/addon-actions';
 import lib from '../lib';
 import ui from '../ui';
 import tables from '../commons/exampleTable';
-
+import { listWithCategories, listWithoutCategories } from '../commons/exampleList';
 const { 
   Input, Button, Pagination, Tables, Dropdown, Loader, Switch, 
   TextInput, EmailInput, RFCInput, CURPInput, NumberInput, CellPhoneInput,
@@ -110,8 +110,11 @@ storiesOf('Components|Inputs', module).add('TextInput', () => <TextInput
 />).add('Select Input', () => <SelectInput
   label={'Selector de opciones'}
   handleChange={action('handleChange')}
-  required={false}
+  required={true}
   error={false}
+  errorMessage={'Seleccionaste algo que no era'}
+  //value={'Seleccion mal'}
+  options={listWithCategories}
 />);
 
 storiesOf('Components|Button', module)
