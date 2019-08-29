@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { FormControl, OutlinedInput, InputLabel, makeStyles, InputAdornment, IconButton } from '@material-ui/core';
 import { Clear } from '@material-ui/icons';
 import LongPlaceHolder from './LongPlaceHolder';
+import LongError from './LongError';
 import { isTextLong, defaultPlaceHolder } from '../commons/utils';
 import '../styles/BaseInput.css';
 
@@ -50,11 +51,21 @@ const BaseInput = ({
   }) => {
     const classes = useStyles();
     const selectLabel = () => {
-      return ((error && errorMessage) || (!isTextLong(label) && label) || defaultPlaceHolder);
+      if (error) {
+        if (isTextLong(errorMessage)){
+          if (isTextLong(label)) return defaultPlaceHolder;
+          return label;
+        }
+        return errorMessage;
+      } else {
+        if (isTextLong(label)) return defaultPlaceHolder;
+        return label;
+      }
     };
     return (
       <div className={classes.root}>
-        {isTextLong(label) && <div className={classes.longText}>
+        {isTextLong(label) && 
+        <div>
           <LongPlaceHolder text={label} />
         </div>}
       <FormControl
@@ -95,6 +106,9 @@ const BaseInput = ({
         type={type}
         />
       </FormControl>
+      { error && isTextLong(errorMessage) &&
+        <LongError text={errorMessage}></LongError>
+      }
       </div>
     );
 };

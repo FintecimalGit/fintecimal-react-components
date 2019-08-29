@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.list = exports.cellphone = exports.number = exports.curp = exports.rfc = exports.email = exports.text = void 0;
+exports.clabe = exports.list = exports.cellphone = exports.number = exports.curp = exports.rfc = exports.email = exports.text = void 0;
 var text = {
   label: 'Texto',
   errorMessages: {
@@ -67,3 +67,12 @@ var list = {
   type: 'list'
 };
 exports.list = list;
+var clabe = {
+  label: 'CLABE',
+  errorMessages: {
+    validation: 'CLABE interbancaria incompleta o no válida',
+    empty: 'El campo CLABE es requerido'
+  },
+  type: 'text'
+};
+exports.clabe = clabe;

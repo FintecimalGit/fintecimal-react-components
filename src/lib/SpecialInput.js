@@ -6,6 +6,7 @@ import {
 } from '@material-ui/core';
 import { Clear } from '@material-ui/icons';
 import LongPlaceHolder from './LongPlaceHolder';
+import LongError from './LongError';
 import { isTextLong, defaultPlaceHolder } from '../commons/utils';
 import '../styles/BaseInput.css';
 
@@ -69,9 +70,18 @@ const SpecialInput = ({
   clear, onBlur, onClear, children, onFocus, startAdornment,
 }) => {
   const classes = useStyles();
-  const selectLabel = () => ((error && errorMessage)
-  || (!isTextLong(label) && label)
-  || defaultPlaceHolder);
+  const selectLabel = () => {
+    if (error) {
+      if (isTextLong(errorMessage)){
+        if (isTextLong(label)) return defaultPlaceHolder;
+        return label;
+      }
+      return errorMessage;
+    } else {
+      if (isTextLong(label)) return defaultPlaceHolder;
+      return label;
+    }
+  };
   return (
     <div className={classes.root}>
       {isTextLong(label)
@@ -128,6 +138,9 @@ const SpecialInput = ({
           />
         </FormControl>
       </div>
+      { error && isTextLong(errorMessage) &&
+        <LongError text={errorMessage}></LongError>
+      }
     </div>
   );
 };

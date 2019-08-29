@@ -8,6 +8,7 @@ import {
   status, isEmpty, isTextLong,
 } from '../commons/utils';
 import LongPlaceHolder from './LongPlaceHolder';
+import LongError from './LongError';
 import { list } from './InputStrings';
 import '../styles/BaseInput.css';
 
@@ -122,9 +123,18 @@ const SelectInput = ({
     );
   };
 
-  const selectLabel = () => ((mError && mErrorMessage)
-  || (!isTextLong(label) && label)
-  || defaultPlaceHolder);
+  const selectLabel = () => {
+    if (mError) {
+      if (isTextLong(mErrorMessage)){
+        if(isTextLong(label)) return defaultPlaceHolder;
+        return label;
+      }
+      return mErrorMessage;
+    } else {
+      if (isTextLong(label)) return defaultPlaceHolder;
+      return label;
+    }
+  };
 
   const open = () => {
     setOpen(true);
@@ -239,6 +249,9 @@ const SelectInput = ({
           {renderOptions(options)}
         </Select>
       </FormControl>
+      { mError && isTextLong(mErrorMessage) &&
+        <LongError text={mErrorMessage}></LongError>
+      }
     </div>
   );
 };
