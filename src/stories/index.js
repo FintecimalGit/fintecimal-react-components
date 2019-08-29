@@ -7,6 +7,8 @@ import lib from '../lib';
 import ui from '../ui';
 import tables from '../commons/exampleTable';
 import { listWithCategories, listWithoutCategories } from '../commons/exampleList';
+import { longText, mediumText, shortText } from '../commons/exampleLongText';
+
 const { 
   Input, Button, Pagination, Tables, Dropdown, Loader, Switch, 
   TextInput, EmailInput, RFCInput, CURPInput, NumberInput, CellPhoneInput,
@@ -83,9 +85,9 @@ storiesOf('Components|Inputs', module).add('TextInput', () => <TextInput
   clear={true}
   //value={'Este input viene lleno'}
 />).add('Email Input', () => <EmailInput
-  label={'Correo electrónico'}
+  label={longText}
   handleChange={action('handleChange')}
-  required={false}
+  required={true}
   error={false}
   //errorMessage={'Este es un mensaje de error que puede tener cualquier cosa'}
 />).add('RFC Input', () => <RFCInput
@@ -104,15 +106,23 @@ storiesOf('Components|Inputs', module).add('TextInput', () => <TextInput
   required={false}
   error={false}
 />).add('Cellphone Input', () => <CellPhoneInput
+  label={longText}
   handleChange={action('handleChange')}
   required={false}
   error={false}
 />).add('Select Input', () => <SelectInput
-  label={'Selector de opciones'}
+  label={longText}
   handleChange={action('handleChange')}
   required={true}
   error={false}
   errorMessage={'Seleccionaste algo que no era'}
+  //value={'Seleccion mal'}
+  options={listWithCategories}
+/>).add('Long Text Input', () => <TextInput
+  label={longText}
+  handleChange={action('handleChange')}
+  required={true}
+  error={false}
   //value={'Seleccion mal'}
   options={listWithCategories}
 />);
