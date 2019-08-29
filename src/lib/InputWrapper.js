@@ -24,7 +24,7 @@ const InputWrapper = ({ config, errors, isValid }) => {
         setValue('');
     }
 
-    const onBlur = () => {
+    const mOnBlur = () => {
         const { validation, empty } = errorMessages;
         if(isEmpty(mValue) && required) {
             setError(true);
@@ -34,12 +34,13 @@ const InputWrapper = ({ config, errors, isValid }) => {
             setErrorMessage(validation);
         } else {
             setError(false);
+            setErrorMessage('');
         }
     };
 
     useEffect(() => {
         handleChange(mValue);
-    }, [mValue]);
+    }, [mValue, mError]);
 
     return (
         <BaseInput
@@ -47,7 +48,7 @@ const InputWrapper = ({ config, errors, isValid }) => {
         handleChange={mHandleChange}
         label={label}
         type={type}
-        onBlur={onBlur}
+        onBlur={mOnBlur}
         error={mError}
         errorMessage={mErrorMessage}
         required={required}
