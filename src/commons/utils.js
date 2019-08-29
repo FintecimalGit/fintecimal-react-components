@@ -13,9 +13,9 @@ export const status = {
 export const isEmpty = (data) => !data || data.length < 1;
 
 export const isNumber = (data) => !isNaN(Number(data));
-const TEXT_TH = 100;
+const MAX_LENGTH_LABEL = 100;
 export const defaultPlaceHolder = 'Escribe aquí';
-export const isTextLong = (text) => text.length > TEXT_TH;
+export const isTextLong = (text) => text.length > MAX_LENGTH_LABEL;
 
 export const removeNan = (text) => {
     while(text.length > 0) {

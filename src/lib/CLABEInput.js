@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { clabe } from './InputStrings';
 import InputWrapper from './InputWrapper';
-import { textFormats, isEmpty, validateRegex } from '../commons/utils';
+import { textFormats, isEmpty } from '../commons/utils';
 import { validateClabe, getBank } from '../commons/clabehelper';
 const CLABE_LENGTH = 18;
 
