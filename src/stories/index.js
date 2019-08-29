@@ -12,7 +12,7 @@ import { longText, mediumText, shortText } from '../commons/exampleLongText';
 const { 
   Input, Button, Pagination, Tables, Dropdown, Loader, Switch, 
   TextInput, EmailInput, RFCInput, CURPInput, NumberInput, CellPhoneInput,
-  SelectInput,
+  SelectInput, CLABEInput,
 } = lib;
 const { LoginUI, MultiDrop } = ui
 
@@ -107,6 +107,11 @@ storiesOf('Components|Inputs', module).add('TextInput', () => <TextInput
   error={false}
 />).add('Cellphone Input', () => <CellPhoneInput
   label={longText}
+  handleChange={action('handleChange')}
+  required={false}
+  error={false}
+/>).add('CLABE Input', () => <CLABEInput
+  label={'CLABE'}
   handleChange={action('handleChange')}
   required={false}
   error={false}

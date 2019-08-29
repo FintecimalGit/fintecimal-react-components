@@ -60,3 +60,12 @@ export const list = {
     },
     type: 'list'
 };
+
+export const clabe = {
+    label: 'CLABE',
+    errorMessages: {
+        validation: 'CLABE incompleta o no válida',
+        empty: 'El campo CLABE es requerido'
+    },
+    type: 'text'
+};
