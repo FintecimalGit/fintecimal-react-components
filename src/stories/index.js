@@ -6,10 +6,11 @@ import { action } from '@storybook/addon-actions';
 import lib from '../lib';
 import ui from '../ui';
 import tables from '../commons/exampleTable';
-
+import { listWithCategories, listWithoutCategories } from '../commons/exampleList';
 const { 
   Input, Button, Pagination, Tables, Dropdown, Loader, Switch, 
-  TextInput, EmailInput, RFCInput, CURPInput, NumberInput, CellPhoneInput
+  TextInput, EmailInput, RFCInput, CURPInput, NumberInput, CellPhoneInput,
+  SelectInput,
 } = lib;
 const { LoginUI, MultiDrop } = ui
 
@@ -103,10 +104,17 @@ storiesOf('Components|Inputs', module).add('TextInput', () => <TextInput
   required={false}
   error={false}
 />).add('Cellphone Input', () => <CellPhoneInput
-  //label={'Código Postal'}
   handleChange={action('handleChange')}
   required={false}
   error={false}
+/>).add('Select Input', () => <SelectInput
+  label={'Selector de opciones'}
+  handleChange={action('handleChange')}
+  required={true}
+  error={false}
+  errorMessage={'Seleccionaste algo que no era'}
+  //value={'Seleccion mal'}
+  options={listWithCategories}
 />);
 
 storiesOf('Components|Button', module)

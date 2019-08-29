@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.cellphone = exports.number = exports.curp = exports.rfc = exports.email = exports.text = void 0;
+exports.list = exports.cellphone = exports.number = exports.curp = exports.rfc = exports.email = exports.text = void 0;
 var text = {
   label: 'Texto',
   errorMessages: {
@@ -58,3 +58,12 @@ var cellphone = {
   type: 'tel'
 };
 exports.cellphone = cellphone;
+var list = {
+  label: 'Selecciona una opción',
+  errorMessages: {
+    validation: 'Selección no válida',
+    empty: 'Debes seleccionar una opción'
+  },
+  type: 'list'
+};
+exports.list = list;

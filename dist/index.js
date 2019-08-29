@@ -31,6 +31,8 @@ var _NumberInput = _interopRequireDefault(require("./NumberInput"));
 
 var _CellPhoneInput = _interopRequireDefault(require("./CellPhoneInput"));
 
+var _SelectInput = _interopRequireDefault(require("./SelectInput"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var _default = {
@@ -46,6 +48,7 @@ var _default = {
   CURPInput: _CURPInput.default,
   EmailInput: _EmailInput.default,
   NumberInput: _NumberInput.default,
+  SelectInput: _SelectInput.default,
   CellPhoneInput: _CellPhoneInput.default
 };
 exports.default = _default;

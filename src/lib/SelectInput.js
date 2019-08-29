@@ -1,0 +1,250 @@
+import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
+import {
+  FormControl, InputLabel, makeStyles, Select, MenuItem, OutlinedInput, Icon,
+} from '@material-ui/core';
+import { KeyboardArrowDown, KeyboardArrowUp } from '@material-ui/icons';
+import { status, isEmpty } from '../commons/utils';
+import { list } from './InputStrings';
+import '../styles/BaseInput.css';
+
+const useStyles = makeStyles(theme => ({
+  root: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    margin: theme.spacing(1),
+    fontFamily: '"Open Sans", sans-serif',
+  },
+  label: {
+    fontSize: 14,
+    fontWeight: 500,
+    opacity: 1,
+    color: 'gray',
+  },
+  input: {
+    paddingTop: 25,
+    paddingBottom: 12,
+  },
+  notchedOutline: {
+    borderWidth: 2,
+    borderColor: 'lightgray',
+    opacity: 0.7,
+  },
+  focusNotchedOutline: {
+    borderWidth: 3,
+    borderColor: '#0099ff',
+    opacity: 1,
+  },
+  asterisk: {
+    color: 'red',
+    fontSize: 13,
+    verticalAlign: 'super',
+  },
+  icon: {
+    marginRight: 10,
+  },
+  item: {
+    paddingLeft: theme.spacing(3),
+  },
+  category: {
+    fontWeight: theme.typography.fontWeightBold,
+    opacity: 1,
+  },
+  selectMenu: {
+    border: '2px solid red',
+  },
+  normal: {
+    marginTop: 3,
+    borderTop: '2px solid lightgray',
+    borderLeft: '2px solid lightgray',
+    borderRight: '2px solid lightgray',
+    borderBottom: '2px solid lightgray',
+  },
+  focus: {
+    marginTop: 3,
+    borderTop: '2px solid rgba(63,81,181,0.7)',
+    borderLeft: '2px solid rgba(63,81,181,0.7)',
+    borderRight: '2px solid rgba(63,81,181,0.7)',
+    borderBottom: '2px solid rgba(63,81,181,0.7)',
+  },
+  error: {
+    marginTop: 3,
+    borderTop: '2px solid rgba(244,67,54,0.7)',
+    borderLeft: '2px solid rgba(244,67,54,0.7)',
+    borderRight: '2px solid rgba(244,67,54,0.7)',
+    borderBottom: '2px solid rgba(244,67,54,0.7)',
+  }
+}));
+
+const isCategory = (option) => option.children && option.children.length > 0;
+const getClassByStatus = (inputStatus, classes) => {
+  switch(inputStatus) {
+      case status.FOCUS: return classes.focus;
+      case status.ERROR: return classes.error;
+      default: return classes.normal;
+  }
+};
+
+const SelectInput = ({
+  label, value, handleChange, required, error, errorMessage, options,
+}) => {
+  const classes = useStyles();
+  const { errorMessages } = list;
+  const [mValue, setValue] = useState(value);
+  const [mError, setError] = useState(error);
+  const [mErrorMessage, setErrorMessage] = useState(errorMessage);
+  const [mStatus, setStatus] = useState(status.NORMAL);
+  const [mOpen, setOpen] = useState(false);
+
+  const renderItem = (info) => {
+    const { name, index, category = true, parentName = ''} = info;
+    return (
+      <MenuItem
+        disabled={category}
+        key={`${parentName}_${name}_${index}`}
+        className={category ? classes.category: classes.item}
+        value={parentName ? `${parentName} - ${name}`: name}
+        classes={{
+          disabled: classes.disabled,
+        }}
+      >
+      { name }
+      </MenuItem>
+    )
+  };
+
+  const open = () => {
+    setOpen(true);
+  };
+
+  const close = () => {
+    setOpen(false);
+  };
+  
+  const renderChildren = (children, items, parentName = '') => {
+    children.map((child, index) => {
+      const { name, children } = child;
+      const info = { name, index, parentName };
+      if (isCategory(child)) {
+        items.push(renderItem(info));
+        return renderChildren(children, items, name);
+      } else {
+        const newInfo = { ...info, category: false };
+        items.push(renderItem(newInfo));
+      }
+    });
+  };
+  
+  const renderOptions = (listOptions) => {
+    const items = [];
+    renderChildren(listOptions, items);
+    return items;
+  };
+
+  const mHandleChange = (event) => {
+    const { target: { value } } = event;
+    setError(false);
+    setValue(value);
+    setStatus(status.NORMAL);
+  };
+
+  const mOnFocus = () => {
+    setStatus(status.FOCUS);
+  };
+
+  const mOnBlur = () => {
+    const { empty } = errorMessages;
+    if(isEmpty(mValue) && required) {
+      setError(true);
+      setErrorMessage(empty);
+    } else {
+        setError(false);
+    }
+    setStatus(status.NORMAL);
+  };
+
+  useEffect(() => {
+    handleChange(mValue);
+  }, [mValue]);
+
+
+  return (
+    <FormControl
+      className={classes.root}
+      margin="normal"
+      required={required}
+      error={mError}>
+      <InputLabel
+        className={classes.label}
+        htmlFor="component-simple"
+        variant="filled"
+        classes={{
+          asterisk: classes.asterisk,
+        }}
+      >{(mError && mErrorMessage) || label}
+      </InputLabel>
+      <Select
+        renderValue={() => mValue}
+        value={mValue}
+        onChange={mHandleChange}
+        onBlur={mOnBlur}
+        onFocus={mOnFocus}
+        onOpen={open}
+        onClose={close}
+        IconComponent={mOpen ? KeyboardArrowUp : KeyboardArrowDown}
+        classes={{
+          icon: classes.icon,
+        }}
+        MenuProps={{
+          getContentAnchorEl: null,
+          anchorOrigin: {
+            vertical: "bottom",
+            horizontal: "left",
+          },
+          classes: {
+            paper: (mError 
+            ? getClassByStatus(status.ERROR, classes)
+            : getClassByStatus(mStatus, classes))
+          },
+        }}
+        input={
+          <OutlinedInput
+            inputProps={{
+              className: classes.input,
+            }}
+            classes={{
+              notchedOutline: classes.notchedOutline,
+              focused: classes.focusNotchedOutline,
+            }}
+          />
+        }
+      >
+        {renderOptions(options)}
+      </Select>
+    </FormControl>
+  );
+};
+
+SelectInput.defaultProps = {
+  value: '',
+  required: false,
+  error: false,
+  type: 'text',
+  clear: true,
+  errorMessage: '',
+};
+
+SelectInput.propTypes = {
+  label: PropTypes.string.isRequired,
+  value: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.string,
+  ]),
+  required: PropTypes.bool,
+  error: PropTypes.bool,
+  clear: PropTypes.bool,
+  errorMessage: PropTypes.string,
+  handleChange: PropTypes.func.isRequired,
+};
+
+export default SelectInput;
