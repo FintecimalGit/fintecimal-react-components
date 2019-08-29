@@ -1,3 +1,4 @@
+const CLABE_LENGTH = 18;
 const clabeWeights = [3,7,1,3,7,1,3,7,1,3,7,1,3,7,1,3,7];
 export const BANKS = {
     '002': 'BANAMEX',
@@ -82,7 +83,7 @@ export const BANKS = {
 };
 
 export const getBank = (CLABE) => {
-    if (!CLABE || CLABE.length !== 18) return ' ';
+    if (!CLABE || CLABE.length !== CLABE_LENGTH) return ' ';
     const bank = BANKS[CLABE.slice(0, 3)];
     return (bank || ' ');
 };
@@ -94,7 +95,7 @@ export const validateClabe = (clabe) => {
     const key = getClabeKey(clabe).split('');
     const control = parseInt(getClabeControlDigit(clabe),10);
     if (isNaN(control)) return false;
-    for(let i = 0; i <key.length; i++) {
+    for(let i = 0; i < key.length; i++) {
         const intElement = parseInt(key[i], 10);
         if (isNaN(intElement)) return false;
         const mult = (intElement * clabeWeights[i]) % 10;
