@@ -13,7 +13,11 @@ var _core = require("@material-ui/core");
 
 var _icons = require("@material-ui/icons");
 
-var _utils = require("../commons/utils");
+var _utils = require("./commons/utils");
+
+var _LongPlaceHolder = _interopRequireDefault(require("./LongPlaceHolder"));
+
+var _LongError = _interopRequireDefault(require("./LongError"));
 
 var _InputStrings = require("./InputStrings");
 
@@ -39,9 +43,13 @@ var useStyles = (0, _core.makeStyles)(function (theme) {
   return {
     root: {
       display: 'flex',
+      flexDirection: 'column',
       flexWrap: 'wrap',
       margin: theme.spacing(1),
       fontFamily: '"Open Sans", sans-serif'
+    },
+    form: {
+      alignSelf: 'stretch'
     },
     label: {
       fontSize: 14,
@@ -131,7 +139,8 @@ var SelectInput = function SelectInput(_ref) {
       errorMessage = _ref.errorMessage,
       options = _ref.options;
   var classes = useStyles();
-  var errorMessages = _InputStrings.list.errorMessages;
+  var errorMessages = _InputStrings.list.errorMessages,
+      defaultPlaceHolder = _InputStrings.list.label;
 
   var _useState = (0, _react.useState)(value),
       _useState2 = _slicedToArray(_useState, 2),
@@ -176,6 +185,20 @@ var SelectInput = function SelectInput(_ref) {
     }, name);
   };
 
+  var selectLabel = function selectLabel() {
+    if (mError) {
+      if ((0, _utils.isTextLong)(mErrorMessage)) {
+        if ((0, _utils.isTextLong)(label)) return defaultPlaceHolder;
+        return label;
+      }
+
+      return mErrorMessage;
+    } else {
+      if ((0, _utils.isTextLong)(label)) return defaultPlaceHolder;
+      return label;
+    }
+  };
+
   var open = function open() {
     setOpen(true);
   };
@@ -198,13 +221,13 @@ var SelectInput = function SelectInput(_ref) {
       if (isCategory(child)) {
         items.push(renderItem(info));
         return renderChildren(children, items, name);
-      } else {
-        var newInfo = _objectSpread({}, info, {
-          category: false
-        });
-
-        items.push(renderItem(newInfo));
       }
+
+      var newInfo = _objectSpread({}, info, {
+        category: false
+      });
+
+      items.push(renderItem(newInfo));
     });
   };
 
@@ -241,8 +264,12 @@ var SelectInput = function SelectInput(_ref) {
   (0, _react.useEffect)(function () {
     handleChange(mValue);
   }, [mValue]);
-  return _react.default.createElement(_core.FormControl, {
-    className: classes.root,
+  return _react.default.createElement("div", {
+    className: classes.root
+  }, (0, _utils.isTextLong)(label) && _react.default.createElement("div", null, _react.default.createElement(_LongPlaceHolder.default, {
+    text: label
+  })), _react.default.createElement(_core.FormControl, {
+    className: classes.form,
     margin: "normal",
     required: required,
     error: mError
@@ -253,7 +280,7 @@ var SelectInput = function SelectInput(_ref) {
     classes: {
       asterisk: classes.asterisk
     }
-  }, mError && mErrorMessage || label), _react.default.createElement(_core.Select, {
+  }, selectLabel()), _react.default.createElement(_core.Select, {
     renderValue: function renderValue() {
       return mValue;
     },
@@ -270,8 +297,8 @@ var SelectInput = function SelectInput(_ref) {
     MenuProps: {
       getContentAnchorEl: null,
       anchorOrigin: {
-        vertical: "bottom",
-        horizontal: "left"
+        vertical: 'bottom',
+        horizontal: 'left'
       },
       classes: {
         paper: mError ? getClassByStatus(_utils.status.ERROR, classes) : getClassByStatus(mStatus, classes)
@@ -286,7 +313,9 @@ var SelectInput = function SelectInput(_ref) {
         focused: classes.focusNotchedOutline
       }
     })
-  }, renderOptions(options)));
+  }, renderOptions(options))), mError && (0, _utils.isTextLong)(mErrorMessage) && _react.default.createElement(_LongError.default, {
+    text: mErrorMessage
+  }));
 };
 
 SelectInput.defaultProps = {

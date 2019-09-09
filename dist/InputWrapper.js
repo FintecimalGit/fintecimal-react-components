@@ -11,7 +11,7 @@ var _propTypes = _interopRequireDefault(require("prop-types"));
 
 var _BaseInput = _interopRequireDefault(require("./BaseInput"));
 
-var _utils = require("../commons/utils");
+var _utils = require("./commons/utils");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -69,7 +69,7 @@ var InputWrapper = function InputWrapper(_ref) {
     setValue('');
   };
 
-  var onBlur = function onBlur() {
+  var mOnBlur = function mOnBlur() {
     var validation = errorMessages.validation,
         empty = errorMessages.empty;
 
@@ -81,18 +81,19 @@ var InputWrapper = function InputWrapper(_ref) {
       setErrorMessage(validation);
     } else {
       setError(false);
+      setErrorMessage('');
     }
   };
 
   (0, _react.useEffect)(function () {
     handleChange(mValue);
-  }, [mValue]);
+  }, [mValue, mError]);
   return _react.default.createElement(_BaseInput.default, {
     value: mValue,
     handleChange: mHandleChange,
     label: label,
     type: type,
-    onBlur: onBlur,
+    onBlur: mOnBlur,
     error: mError,
     errorMessage: mErrorMessage,
     required: required,

@@ -13,6 +13,12 @@ var _core = require("@material-ui/core");
 
 var _icons = require("@material-ui/icons");
 
+var _LongPlaceHolder = _interopRequireDefault(require("./LongPlaceHolder"));
+
+var _LongError = _interopRequireDefault(require("./LongError"));
+
+var _utils = require("./commons/utils");
+
 require("../styles/BaseInput.css");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -21,9 +27,13 @@ var useStyles = (0, _core.makeStyles)(function (theme) {
   return {
     root: {
       display: 'flex',
+      flexDirection: 'column',
       flexWrap: 'wrap',
       margin: theme.spacing(1),
       fontFamily: '"Open Sans", sans-serif'
+    },
+    form: {
+      alignSelf: 'stretch'
     },
     label: {
       fontSize: 14,
@@ -63,11 +73,29 @@ var BaseInput = function BaseInput(_ref) {
       type = _ref.type,
       clear = _ref.clear,
       onBlur = _ref.onBlur,
-      onClear = _ref.onClear,
-      onKeyDown = _ref.onKeyDown;
+      onClear = _ref.onClear;
   var classes = useStyles();
-  return _react.default.createElement(_core.FormControl, {
-    className: classes.root,
+
+  var selectLabel = function selectLabel() {
+    if (error) {
+      if ((0, _utils.isTextLong)(errorMessage)) {
+        if ((0, _utils.isTextLong)(label)) return _utils.defaultPlaceHolder;
+        return label;
+      }
+
+      return errorMessage;
+    } else {
+      if ((0, _utils.isTextLong)(label)) return _utils.defaultPlaceHolder;
+      return label;
+    }
+  };
+
+  return _react.default.createElement("div", {
+    className: classes.root
+  }, (0, _utils.isTextLong)(label) && _react.default.createElement("div", null, _react.default.createElement(_LongPlaceHolder.default, {
+    text: label
+  })), _react.default.createElement(_core.FormControl, {
+    className: classes.form,
     margin: "normal",
     required: required,
     error: error
@@ -78,7 +106,7 @@ var BaseInput = function BaseInput(_ref) {
     classes: {
       asterisk: classes.asterisk
     }
-  }, error && errorMessage || label), _react.default.createElement(_core.OutlinedInput, {
+  }, selectLabel()), _react.default.createElement(_core.OutlinedInput, {
     id: "component-simple",
     value: value,
     onChange: handleChange,
@@ -97,6 +125,8 @@ var BaseInput = function BaseInput(_ref) {
       focused: classes.focusNotchedOutline
     },
     type: type
+  })), error && (0, _utils.isTextLong)(errorMessage) && _react.default.createElement(_LongError.default, {
+    text: errorMessage
   }));
 };
 
