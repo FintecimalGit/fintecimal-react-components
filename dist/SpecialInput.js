@@ -15,9 +15,7 @@ var _icons = require("@material-ui/icons");
 
 var _LongPlaceHolder = _interopRequireDefault(require("./LongPlaceHolder"));
 
-var _LongError = _interopRequireDefault(require("./LongError"));
-
-var _utils = require("../commons/utils");
+var _utils = require("./commons/utils");
 
 require("../styles/BaseInput.css");
 
@@ -97,17 +95,7 @@ var SpecialInput = function SpecialInput(_ref) {
   var classes = useStyles();
 
   var selectLabel = function selectLabel() {
-    if (error) {
-      if ((0, _utils.isTextLong)(errorMessage)) {
-        if ((0, _utils.isTextLong)(label)) return _utils.defaultPlaceHolder;
-        return label;
-      }
-
-      return errorMessage;
-    } else {
-      if ((0, _utils.isTextLong)(label)) return _utils.defaultPlaceHolder;
-      return label;
-    }
+    return error && errorMessage || !(0, _utils.isTextLong)(label) && label || _utils.defaultPlaceHolder;
   };
 
   return _react.default.createElement("div", {
@@ -154,9 +142,7 @@ var SpecialInput = function SpecialInput(_ref) {
       focused: classes.focusNotchedOutline
     },
     type: type
-  }))), error && (0, _utils.isTextLong)(errorMessage) && _react.default.createElement(_LongError.default, {
-    text: errorMessage
-  }));
+  }))));
 };
 
 SpecialInput.defaultProps = {

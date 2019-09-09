@@ -15,19 +15,19 @@ import CLABEInput from './CLABEInput';
 import SelectInput from './SelectInput';
 
 export default {
-	Input, 
-	Button,
-	Pagination,
-	Tables,
-	Dropdown,
-	Loader,
-	Switch,
-	RFCInput,
-	TextInput,
-	CURPInput,
-	EmailInput,
-	CLABEInput,
-	NumberInput,
-	SelectInput,
-	CellPhoneInput,
-}
+  Input,
+  Button,
+  Pagination,
+  Tables,
+  Dropdown,
+  Loader,
+  Switch,
+  RFCInput,
+  TextInput,
+  CURPInput,
+  EmailInput,
+  CLABEInput,
+  NumberInput,
+  SelectInput,
+  CellPhoneInput
+};

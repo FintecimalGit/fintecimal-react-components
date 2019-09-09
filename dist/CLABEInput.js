@@ -13,9 +13,9 @@ var _InputStrings = require("./InputStrings");
 
 var _InputWrapper = _interopRequireDefault(require("./InputWrapper"));
 
-var _utils = require("../commons/utils");
+var _utils = require("./commons/utils");
 
-var _clabehelper = require("../commons/clabehelper");
+var _clabehelper = require("./commons/clabehelper");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 

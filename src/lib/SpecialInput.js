@@ -84,18 +84,8 @@ const SpecialInput = ({
   startAdornment
 }) => {
   const classes = useStyles();
-  const selectLabel = () => {
-    if (error) {
-      if (isTextLong(errorMessage)) {
-        if (isTextLong(label)) return defaultPlaceHolder;
-        return label;
-      }
-      return errorMessage;
-    } else {
-      if (isTextLong(label)) return defaultPlaceHolder;
-      return label;
-    }
-  };
+  const selectLabel = () =>
+    (error && errorMessage) || (!isTextLong(label) && label) || defaultPlaceHolder;
   return (
     <div className={classes.root}>
       {isTextLong(label) && (
@@ -149,7 +139,6 @@ const SpecialInput = ({
           />
         </FormControl>
       </div>
-      {error && isTextLong(errorMessage) && <LongError text={errorMessage}></LongError>}
     </div>
   );
 };

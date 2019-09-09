@@ -15,9 +15,7 @@ var _icons = require("@material-ui/icons");
 
 var _LongPlaceHolder = _interopRequireDefault(require("./LongPlaceHolder"));
 
-var _LongError = _interopRequireDefault(require("./LongError"));
-
-var _utils = require("../commons/utils");
+var _utils = require("./commons/utils");
 
 require("../styles/BaseInput.css");
 
@@ -125,7 +123,7 @@ var BaseInput = function BaseInput(_ref) {
       focused: classes.focusNotchedOutline
     },
     type: type
-  })), error && (0, _utils.isTextLong)(errorMessage) && _react.default.createElement(_LongError.default, {
+  })), error && (0, _utils.isTextLong)(errorMessage) && _react.default.createElement(LongError, {
     text: errorMessage
   }));
 };

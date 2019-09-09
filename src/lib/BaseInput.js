@@ -10,6 +10,7 @@ import {
 } from '@material-ui/core';
 import { Clear } from '@material-ui/icons';
 import LongPlaceHolder from './LongPlaceHolder';
+import LongError from './LongError';
 import { isTextLong, defaultPlaceHolder } from './commons/utils';
 import '../styles/BaseInput.css';
 
@@ -52,25 +53,33 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const BaseInput = ({
-    label, value, handleChange, required, error, errorMessage, type, 
-    clear, onBlur, onClear,
-  }) => {
-    const classes = useStyles();
-    const selectLabel = () => {
-      if (error) {
-        if (isTextLong(errorMessage)){
-          if (isTextLong(label)) return defaultPlaceHolder;
-          return label;
-        }
-        return errorMessage;
-      } else {
+  label,
+  value,
+  handleChange,
+  required,
+  error,
+  errorMessage,
+  type,
+  clear,
+  onBlur,
+  onClear
+}) => {
+  const classes = useStyles();
+  const selectLabel = () => {
+    if (error) {
+      if (isTextLong(errorMessage)) {
         if (isTextLong(label)) return defaultPlaceHolder;
         return label;
       }
-    };
-    return (
-      <div className={classes.root}>
-        {isTextLong(label) && 
+      return errorMessage;
+    } else {
+      if (isTextLong(label)) return defaultPlaceHolder;
+      return label;
+    }
+  };
+  return (
+    <div className={classes.root}>
+      {isTextLong(label) && (
         <div>
           <LongPlaceHolder text={label} />
         </div>
@@ -110,11 +119,9 @@ const BaseInput = ({
           type={type}
         />
       </FormControl>
-      { error && isTextLong(errorMessage) &&
-        <LongError text={errorMessage}></LongError>
-      }
-      </div>
-    );
+      {error && isTextLong(errorMessage) && <LongError text={errorMessage}></LongError>}
+    </div>
+  );
 };
 
 BaseInput.defaultProps = {
