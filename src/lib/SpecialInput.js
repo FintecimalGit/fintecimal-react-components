@@ -1,12 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  FormControl, OutlinedInput, InputLabel, makeStyles, InputAdornment,
-  IconButton,
+  FormControl,
+  OutlinedInput,
+  InputLabel,
+  makeStyles,
+  InputAdornment,
+  IconButton
 } from '@material-ui/core';
 import { Clear } from '@material-ui/icons';
 import LongPlaceHolder from './LongPlaceHolder';
-import { isTextLong, defaultPlaceHolder } from '../commons/utils';
+import { isTextLong, defaultPlaceHolder } from './commons/utils';
 import '../styles/BaseInput.css';
 
 const useStyles = makeStyles(theme => ({
@@ -15,7 +19,7 @@ const useStyles = makeStyles(theme => ({
     flexDirection: 'column',
     flexWrap: 'wrap',
     margin: theme.spacing(1),
-    fontFamily: '"Open Sans", sans-serif',
+    fontFamily: '"Open Sans", sans-serif'
   },
   inputBox: {
     alignSelf: 'stretch',
@@ -23,78 +27,84 @@ const useStyles = makeStyles(theme => ({
     flexDirection: 'row',
     alignContent: 'stretch',
     alignItems: 'center',
-    margin: 0,
+    margin: 0
   },
   icon: {
-    flex: 1,
+    flex: 1
   },
   form: {
-    flex: 20,
+    flex: 20
   },
   label: {
     fontFamily: '"Open Sans", sans-serif',
     fontSize: 14,
     fontWeight: 600,
     opacity: 1,
-    color: 'gray',
+    color: 'gray'
   },
   input: {
     paddingTop: 25,
-    paddingBottom: 12,
+    paddingBottom: 12
   },
   notchedOutline: {
     // borderLeft: '1px solid lightgray',
     borderRight: '2px solid lightgray',
     borderTop: '2px solid lightgray',
     borderBottom: '2px solid lightgray',
-    opacity: 0.7,
+    opacity: 0.7
   },
   focusNotchedOutline: {
     borderWidth: 3,
     borderColor: '#0099ff',
-    opacity: 1,
+    opacity: 1
   },
   asterisk: {
     color: 'red',
     fontSize: 11,
-    verticalAlign: 'super',
+    verticalAlign: 'super'
   },
   adornment: {
-    marginTop: 12,
-  },
+    marginTop: 12
+  }
 }));
 
 const SpecialInput = ({
-  label, value, handleChange, required, error, errorMessage, type,
-  clear, onBlur, onClear, children, onFocus, startAdornment,
+  label,
+  value,
+  handleChange,
+  required,
+  error,
+  errorMessage,
+  type,
+  clear,
+  onBlur,
+  onClear,
+  children,
+  onFocus,
+  startAdornment
 }) => {
   const classes = useStyles();
-  const selectLabel = () => ((error && errorMessage)
-  || (!isTextLong(label) && label)
-  || defaultPlaceHolder);
+  const selectLabel = () =>
+    (error && errorMessage) || (!isTextLong(label) && label) || defaultPlaceHolder;
   return (
     <div className={classes.root}>
-      {isTextLong(label)
-        && <div>
+      {isTextLong(label) && (
+        <div>
           <LongPlaceHolder text={label} />
-        </div>}
-      <div className={classes.inputBox}>
-        <div className={classes.icon}>
-          { children }
         </div>
-        <FormControl
-          className={classes.form}
-          margin="normal"
-          required={required}
-          error={error}>
+      )}
+      <div className={classes.inputBox}>
+        <div className={classes.icon}>{children}</div>
+        <FormControl className={classes.form} margin="normal" required={required} error={error}>
           <InputLabel
             className={classes.label}
             htmlFor="component-simple"
             variant="filled"
             classes={{
-              asterisk: classes.asterisk,
+              asterisk: classes.asterisk
             }}
-          >{selectLabel()}
+          >
+            {selectLabel()}
           </InputLabel>
           <OutlinedInput
             id="component-simple"
@@ -103,26 +113,27 @@ const SpecialInput = ({
             onBlur={onBlur}
             onFocus={onFocus}
             startAdornment={
-              startAdornment
-                && <InputAdornment position="start" className={classes.adornment}>
-                    { startAdornment }
+              startAdornment && (
+                <InputAdornment position="start" className={classes.adornment}>
+                  {startAdornment}
                 </InputAdornment>
+              )
             }
-            endAdornment={ clear
-                && <InputAdornment position="end">
-                    <IconButton
-                    aria-label="clear input"
-                    onClick={onClear}
-                    >
-                    <Clear/>
-                    </IconButton>
-                </InputAdornment>}
+            endAdornment={
+              clear && (
+                <InputAdornment position="end">
+                  <IconButton aria-label="clear input" onClick={onClear}>
+                    <Clear />
+                  </IconButton>
+                </InputAdornment>
+              )
+            }
             inputProps={{
-              className: classes.input,
+              className: classes.input
             }}
             classes={{
               notchedOutline: classes.notchedOutline,
-              focused: classes.focusNotchedOutline,
+              focused: classes.focusNotchedOutline
             }}
             type={type}
           />
@@ -138,15 +149,12 @@ SpecialInput.defaultProps = {
   error: false,
   type: 'text',
   clear: true,
-  errorMessage: '',
+  errorMessage: ''
 };
 
 SpecialInput.propTypes = {
   label: PropTypes.string.isRequired,
-  value: PropTypes.oneOfType([
-    PropTypes.number,
-    PropTypes.string,
-  ]),
+  value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   required: PropTypes.bool,
   error: PropTypes.bool,
   type: PropTypes.string,
@@ -155,7 +163,7 @@ SpecialInput.propTypes = {
   handleChange: PropTypes.func.isRequired,
   onBlur: PropTypes.func,
   onFocus: PropTypes.func,
-  startAdornment: PropTypes.string,
+  startAdornment: PropTypes.string
 };
 
 export default SpecialInput;
