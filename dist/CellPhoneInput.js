@@ -13,11 +13,11 @@ var _SpecialInput = _interopRequireDefault(require("./SpecialInput"));
 
 var _InputStrings = require("./InputStrings");
 
-var _utils = require("../commons/utils");
+var _utils = require("./commons/utils");
 
 var _IconText = _interopRequireDefault(require("./IconText"));
 
-var _mexicoflag = _interopRequireDefault(require("../assets/mexicoflag.png"));
+var _mexicoflag = _interopRequireDefault(require("./assets/mexicoflag.png"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 

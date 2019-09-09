@@ -17,7 +17,7 @@ var _LongPlaceHolder = _interopRequireDefault(require("./LongPlaceHolder"));
 
 var _LongError = _interopRequireDefault(require("./LongError"));
 
-var _utils = require("../commons/utils");
+var _utils = require("./commons/utils");
 
 require("../styles/BaseInput.css");
 

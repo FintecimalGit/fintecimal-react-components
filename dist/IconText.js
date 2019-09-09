@@ -13,7 +13,7 @@ var _styles = require("@material-ui/styles");
 
 var _system = require("@material-ui/system");
 
-var _utils = require("../commons/utils");
+var _utils = require("./commons/utils");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 

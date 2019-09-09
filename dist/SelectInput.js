@@ -13,7 +13,7 @@ var _core = require("@material-ui/core");
 
 var _icons = require("@material-ui/icons");
 
-var _utils = require("../commons/utils");
+var _utils = require("./commons/utils");
 
 var _LongPlaceHolder = _interopRequireDefault(require("./LongPlaceHolder"));
 

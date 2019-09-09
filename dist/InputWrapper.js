@@ -11,7 +11,7 @@ var _propTypes = _interopRequireDefault(require("prop-types"));
 
 var _BaseInput = _interopRequireDefault(require("./BaseInput"));
 
-var _utils = require("../commons/utils");
+var _utils = require("./commons/utils");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
