@@ -15,8 +15,6 @@ var _icons = require("@material-ui/icons");
 
 var _LongPlaceHolder = _interopRequireDefault(require("./LongPlaceHolder"));
 
-var _LongError = _interopRequireDefault(require("./LongError"));
-
 var _utils = require("../commons/utils");
 
 require("../styles/BaseInput.css");
@@ -32,12 +30,24 @@ var useStyles = (0, _core.makeStyles)(function (theme) {
       margin: theme.spacing(1),
       fontFamily: '"Open Sans", sans-serif'
     },
+    inputBox: {
+      alignSelf: 'stretch',
+      display: 'flex',
+      flexDirection: 'row',
+      alignContent: 'stretch',
+      alignItems: 'center',
+      margin: 0
+    },
+    icon: {
+      flex: 1
+    },
     form: {
-      alignSelf: 'stretch'
+      flex: 20
     },
     label: {
+      fontFamily: '"Open Sans", sans-serif',
       fontSize: 14,
-      fontWeight: 500,
+      fontWeight: 600,
       opacity: 1,
       color: 'gray'
     },
@@ -46,8 +56,10 @@ var useStyles = (0, _core.makeStyles)(function (theme) {
       paddingBottom: 12
     },
     notchedOutline: {
-      borderWidth: 2,
-      borderColor: 'lightgray',
+      // borderLeft: '1px solid lightgray',
+      borderRight: '2px solid lightgray',
+      borderTop: '2px solid lightgray',
+      borderBottom: '2px solid lightgray',
       opacity: 0.7
     },
     focusNotchedOutline: {
@@ -57,13 +69,16 @@ var useStyles = (0, _core.makeStyles)(function (theme) {
     },
     asterisk: {
       color: 'red',
-      fontSize: 13,
+      fontSize: 11,
       verticalAlign: 'super'
+    },
+    adornment: {
+      marginTop: 12
     }
   };
 });
 
-var BaseInput = function BaseInput(_ref) {
+var SpecialInput = function SpecialInput(_ref) {
   var label = _ref.label,
       value = _ref.value,
       handleChange = _ref.handleChange,
@@ -73,28 +88,25 @@ var BaseInput = function BaseInput(_ref) {
       type = _ref.type,
       clear = _ref.clear,
       onBlur = _ref.onBlur,
-      onClear = _ref.onClear;
+      onClear = _ref.onClear,
+      children = _ref.children,
+      onFocus = _ref.onFocus,
+      startAdornment = _ref.startAdornment;
   var classes = useStyles();
 
   var selectLabel = function selectLabel() {
-    if (error) {
-      if ((0, _utils.isTextLong)(errorMessage)) {
-        if ((0, _utils.isTextLong)(label)) return _utils.defaultPlaceHolder;
-        return label;
-      }
-
-      return errorMessage;
-    } else {
-      if ((0, _utils.isTextLong)(label)) return _utils.defaultPlaceHolder;
-      return label;
-    }
+    return error && errorMessage || !(0, _utils.isTextLong)(label) && label || _utils.defaultPlaceHolder;
   };
 
   return _react.default.createElement("div", {
     className: classes.root
   }, (0, _utils.isTextLong)(label) && _react.default.createElement("div", null, _react.default.createElement(_LongPlaceHolder.default, {
     text: label
-  })), _react.default.createElement(_core.FormControl, {
+  })), _react.default.createElement("div", {
+    className: classes.inputBox
+  }, _react.default.createElement("div", {
+    className: classes.icon
+  }, children), _react.default.createElement(_core.FormControl, {
     className: classes.form,
     margin: "normal",
     required: required,
@@ -111,6 +123,11 @@ var BaseInput = function BaseInput(_ref) {
     value: value,
     onChange: handleChange,
     onBlur: onBlur,
+    onFocus: onFocus,
+    startAdornment: startAdornment && _react.default.createElement(_core.InputAdornment, {
+      position: "start",
+      className: classes.adornment
+    }, startAdornment),
     endAdornment: clear && _react.default.createElement(_core.InputAdornment, {
       position: "end"
     }, _react.default.createElement(_core.IconButton, {
@@ -125,12 +142,10 @@ var BaseInput = function BaseInput(_ref) {
       focused: classes.focusNotchedOutline
     },
     type: type
-  })), error && (0, _utils.isTextLong)(errorMessage) && _react.default.createElement(_LongError.default, {
-    text: errorMessage
-  }));
+  }))));
 };
 
-BaseInput.defaultProps = {
+SpecialInput.defaultProps = {
   value: '',
   required: false,
   error: false,
@@ -138,7 +153,7 @@ BaseInput.defaultProps = {
   clear: true,
   errorMessage: ''
 };
-BaseInput.propTypes = {
+SpecialInput.propTypes = {
   label: _propTypes.default.string.isRequired,
   value: _propTypes.default.oneOfType([_propTypes.default.number, _propTypes.default.string]),
   required: _propTypes.default.bool,
@@ -147,7 +162,9 @@ BaseInput.propTypes = {
   clear: _propTypes.default.bool,
   errorMessage: _propTypes.default.string,
   handleChange: _propTypes.default.func.isRequired,
-  onBlur: _propTypes.default.func
+  onBlur: _propTypes.default.func,
+  onFocus: _propTypes.default.func,
+  startAdornment: _propTypes.default.string
 };
-var _default = BaseInput;
+var _default = SpecialInput;
 exports.default = _default;

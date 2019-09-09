@@ -17,8 +17,6 @@ var _utils = require("../commons/utils");
 
 var _LongPlaceHolder = _interopRequireDefault(require("./LongPlaceHolder"));
 
-var _LongError = _interopRequireDefault(require("./LongError"));
-
 var _InputStrings = require("./InputStrings");
 
 require("../styles/BaseInput.css");
@@ -186,17 +184,7 @@ var SelectInput = function SelectInput(_ref) {
   };
 
   var selectLabel = function selectLabel() {
-    if (mError) {
-      if ((0, _utils.isTextLong)(mErrorMessage)) {
-        if ((0, _utils.isTextLong)(label)) return defaultPlaceHolder;
-        return label;
-      }
-
-      return mErrorMessage;
-    } else {
-      if ((0, _utils.isTextLong)(label)) return defaultPlaceHolder;
-      return label;
-    }
+    return mError && mErrorMessage || !(0, _utils.isTextLong)(label) && label || defaultPlaceHolder;
   };
 
   var open = function open() {
@@ -313,9 +301,7 @@ var SelectInput = function SelectInput(_ref) {
         focused: classes.focusNotchedOutline
       }
     })
-  }, renderOptions(options))), mError && (0, _utils.isTextLong)(mErrorMessage) && _react.default.createElement(_LongError.default, {
-    text: mErrorMessage
-  }));
+  }, renderOptions(options))));
 };
 
 SelectInput.defaultProps = {

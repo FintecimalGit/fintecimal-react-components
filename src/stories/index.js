@@ -123,10 +123,11 @@ storiesOf('Components|Inputs', module)
   ))
   .add('Cellphone Input', () => (
     <CellPhoneInput
-      label={longText}
+      label={shortText}
       handleChange={action('handleChange')}
-      required={false}
-      error={false}
+      required={true}
+      error={true}
+      errorMessage={longText}
     />
   ))
   .add('CLABE Input', () => (
@@ -142,8 +143,8 @@ storiesOf('Components|Inputs', module)
       label={longText}
       handleChange={action('handleChange')}
       required={true}
-      error={false}
-      errorMessage={'Seleccionaste algo que no era'}
+      error={true}
+      errorMessage={longText}
       //value={'Seleccion mal'}
       options={listWithCategories}
     />
@@ -153,7 +154,8 @@ storiesOf('Components|Inputs', module)
       label={longText}
       handleChange={action('handleChange')}
       required={true}
-      error={false}
+      error={true}
+      errorMessage={longText}
       //value={'Seleccion mal'}
       options={listWithCategories}
     />

@@ -70,7 +70,7 @@ exports.list = list;
 var clabe = {
   label: 'CLABE',
   errorMessages: {
-    validation: 'CLABE interbancaria incompleta o no válida',
+    validation: 'CLABE incompleta o no válida',
     empty: 'El campo CLABE es requerido'
   },
   type: 'text'

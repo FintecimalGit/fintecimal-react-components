@@ -9,9 +9,15 @@ var _react = _interopRequireWildcard(require("react"));
 
 var _propTypes = _interopRequireDefault(require("prop-types"));
 
-var _BaseInput = _interopRequireDefault(require("./BaseInput"));
+var _SpecialInput = _interopRequireDefault(require("./SpecialInput"));
+
+var _InputStrings = require("./InputStrings");
 
 var _utils = require("../commons/utils");
+
+var _IconText = _interopRequireDefault(require("./IconText"));
+
+var _mexicoflag = _interopRequireDefault(require("../assets/mexicoflag.png"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -25,19 +31,15 @@ function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = 
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
-var InputWrapper = function InputWrapper(_ref) {
-  var config = _ref.config,
-      errors = _ref.errors,
-      isValid = _ref.isValid;
-  var value = config.value,
-      handleChange = config.handleChange,
-      label = config.label,
-      type = config.type,
-      required = config.required,
-      format = config.format;
-  var error = errors.error,
-      errorMessage = errors.errorMessage,
-      errorMessages = errors.errorMessages;
+var CellPhoneInput = function CellPhoneInput(_ref) {
+  var value = _ref.value,
+      handleChange = _ref.handleChange,
+      label = _ref.label,
+      type = _ref.type,
+      required = _ref.required,
+      error = _ref.error,
+      errorMessage = _ref.errorMessage;
+  var errorMessages = _InputStrings.cellphone.errorMessages;
 
   var _useState = (0, _react.useState)(error),
       _useState2 = _slicedToArray(_useState, 2),
@@ -54,22 +56,50 @@ var InputWrapper = function InputWrapper(_ref) {
       mValue = _useState6[0],
       setValue = _useState6[1];
 
+  var _useState7 = (0, _react.useState)(_utils.status.NORMAL),
+      _useState8 = _slicedToArray(_useState7, 2),
+      mStatus = _useState8[0],
+      setStatus = _useState8[1];
+
+  var _useState9 = (0, _react.useState)(''),
+      _useState10 = _slicedToArray(_useState9, 2),
+      mAdornment = _useState10[0],
+      setAdornment = _useState10[1];
+
+  var addParenthesis = function addParenthesis(number) {
+    number = formatValue(number);
+
+    if (number.length > 2) {
+      var fNumber = "(".concat(number.substr(0, 2), ")").concat(number.substr(2, number.length - 1));
+      return fNumber;
+    }
+
+    return number;
+  };
+
   var mHandleChange = function mHandleChange(event) {
     var value = event.target.value;
-
-    if (format) {
-      var formattedText = (0, _utils.formatText)(value, format);
-      setValue(formattedText);
-    } else {
-      setValue(value);
-    }
+    var formattedNumber = addParenthesis(value);
+    setValue(formattedNumber);
   };
 
   var onClear = function onClear() {
     setValue('');
   };
 
-  var mOnBlur = function mOnBlur() {
+  var isValid = function isValid(data) {
+    if ((0, _utils.isEmpty)(data) && !required) return true;
+    return (0, _utils.validateRegex)(data, /\(?([0-9]{2})\)([0-9]{8})$/);
+  };
+
+  var onFocus = function onFocus() {
+    setStatus(_utils.status.FOCUS);
+    setAdornment('+52');
+  };
+
+  var onBlur = function onBlur() {
+    setStatus(_utils.status.NORMAL);
+    setAdornment('');
     var validation = errorMessages.validation,
         empty = errorMessages.empty;
 
@@ -81,30 +111,49 @@ var InputWrapper = function InputWrapper(_ref) {
       setErrorMessage(validation);
     } else {
       setError(false);
-      setErrorMessage('');
     }
   };
 
+  var formatValue = function formatValue(rValue) {
+    if (rValue) return rValue.replace(/[{()}]/g, '');
+    return '';
+  };
+
   (0, _react.useEffect)(function () {
-    handleChange(mValue);
-  }, [mValue, mError]);
-  return _react.default.createElement(_BaseInput.default, {
+    handleChange(formatValue(mValue));
+  }, [mValue]);
+  return _react.default.createElement(_SpecialInput.default, {
     value: mValue,
     handleChange: mHandleChange,
     label: label,
     type: type,
-    onBlur: mOnBlur,
+    onBlur: onBlur,
     error: mError,
     errorMessage: mErrorMessage,
     required: required,
-    onClear: onClear
-  });
+    onClear: onClear,
+    onFocus: onFocus,
+    startAdornment: mAdornment
+  }, _react.default.createElement(_IconText.default, {
+    inputStatus: mError ? _utils.status.ERROR : mStatus,
+    imgSrc: _mexicoflag.default,
+    text: 'MXN'
+  }));
 };
 
-InputWrapper.propTypes = {
-  config: _propTypes.default.object.isRequired,
-  errors: _propTypes.default.object.isRequired,
-  isValid: _propTypes.default.func.isRequired
+CellPhoneInput.defaultProps = {
+  label: _InputStrings.cellphone.label,
+  type: _InputStrings.cellphone.type,
+  error: false,
+  errorMessage: '',
+  required: false
 };
-var _default = InputWrapper;
+CellPhoneInput.propTypes = {
+  label: _propTypes.default.string,
+  type: _propTypes.default.string,
+  error: _propTypes.default.bool,
+  errorMessage: _propTypes.default.string,
+  required: _propTypes.default.bool
+};
+var _default = CellPhoneInput;
 exports.default = _default;

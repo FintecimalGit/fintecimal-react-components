@@ -52,25 +52,26 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const BaseInput = ({
-  label,
-  value,
-  handleChange,
-  required,
-  error,
-  errorMessage,
-  type,
-  clear,
-  onBlur,
-  onClear
-}) => {
-  const classes = useStyles();
-  const selectLabel = () => {
-    return (error && errorMessage) || (!isTextLong(label) && label) || defaultPlaceHolder;
-  };
-  return (
-    <div className={classes.root}>
-      {isTextLong(label) && (
-        <div className={classes.longText}>
+    label, value, handleChange, required, error, errorMessage, type, 
+    clear, onBlur, onClear,
+  }) => {
+    const classes = useStyles();
+    const selectLabel = () => {
+      if (error) {
+        if (isTextLong(errorMessage)){
+          if (isTextLong(label)) return defaultPlaceHolder;
+          return label;
+        }
+        return errorMessage;
+      } else {
+        if (isTextLong(label)) return defaultPlaceHolder;
+        return label;
+      }
+    };
+    return (
+      <div className={classes.root}>
+        {isTextLong(label) && 
+        <div>
           <LongPlaceHolder text={label} />
         </div>
       )}
@@ -109,8 +110,11 @@ const BaseInput = ({
           type={type}
         />
       </FormControl>
-    </div>
-  );
+      { error && isTextLong(errorMessage) &&
+        <LongError text={errorMessage}></LongError>
+      }
+      </div>
+    );
 };
 
 BaseInput.defaultProps = {

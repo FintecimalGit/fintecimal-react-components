@@ -10,10 +10,11 @@ import {
   Icon
 } from '@material-ui/core';
 import { KeyboardArrowDown, KeyboardArrowUp } from '@material-ui/icons';
-import { status, isEmpty, isTextLong } from './commons/utils';
-import LongPlaceHolder from './LongPlaceHolder';
-import { list } from './InputStrings';
-import '../styles/BaseInput.css';
+import { status, isEmpty, isTextLong } from '../../commons/utils';
+import LongPlaceHolder from '../LongPlaceHolder';
+import LongError from '../LongError';
+import { list } from '../InputStrings';
+import '../../styles/BaseInput.css';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -125,8 +126,18 @@ const SelectInput = ({ label, value, handleChange, required, error, errorMessage
     );
   };
 
-  const selectLabel = () =>
-    (mError && mErrorMessage) || (!isTextLong(label) && label) || defaultPlaceHolder;
+  const selectLabel = () => {
+    if (mError) {
+      if (isTextLong(mErrorMessage)) {
+        if (isTextLong(label)) return defaultPlaceHolder;
+        return label;
+      }
+      return mErrorMessage;
+    } else {
+      if (isTextLong(label)) return defaultPlaceHolder;
+      return label;
+    }
+  };
 
   const open = () => {
     setOpen(true);
@@ -240,6 +251,7 @@ const SelectInput = ({ label, value, handleChange, required, error, errorMessage
           {renderOptions(options)}
         </Select>
       </FormControl>
+      {mError && isTextLong(mErrorMessage) && <LongError text={mErrorMessage}></LongError>}
     </div>
   );
 };
