@@ -12,7 +12,7 @@ import { Clear } from '@material-ui/icons';
 import LongPlaceHolder from './LongPlaceHolder';
 import LongError from './LongError';
 import { isTextLong, defaultPlaceHolder } from './commons/utils';
-import '../styles/BaseInput.css';
+import './styles/BaseInput.css';
 
 const useStyles = makeStyles(theme => ({
   root: {

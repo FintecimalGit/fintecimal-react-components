@@ -19,7 +19,7 @@ var _LongError = _interopRequireDefault(require("./LongError"));
 
 var _utils = require("./commons/utils");
 
-require("../styles/BaseInput.css");
+require("./styles/BaseInput.css");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
