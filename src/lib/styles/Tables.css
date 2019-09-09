@@ -1,0 +1,43 @@
+.fnt-tables {
+  width: 100%;
+}
+
+.fnt-tables-body-col {
+  display: inline-block;
+  width: 25%;
+  padding-left: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.50px;
+  color: #4C5C68;
+}
+
+.fnt-tables-body-row {
+  display: flex;
+  width: 100%;
+  height: 60px;
+  align-items: center;
+  border-bottom: 1px solid #ddd;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
+.fnt-tables-header-col {
+  display: inline-block;
+  width: 25%;
+  padding-left: 20px;
+  font-size: 15px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.50px;
+}
+
+.fnt-tables-header-row {
+  display: flex;
+  width: 100%;
+  height: 60px;
+  align-items: center;
+  border-bottom: 1px solid #ddd;
+  background-color: #fff;
+  box-sizing: border-box;
+}

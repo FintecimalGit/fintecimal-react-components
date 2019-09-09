@@ -1,42 +1,41 @@
 import React, { Component } from 'react';
-import '../styles/Switch.css';
+import './styles/Switch.css';
 
 class Switch extends Component {
-
   constructor(props) {
-    super(props)
+    super(props);
 
     this.state = {
       active: props.active
-    }
+    };
   }
 
   onClick(e) {
-    this.setState((state) => {
-      return {
-        active: !state.active
-      }
-    }, this.props.onClick({
-      event: e,
-      active: this.state.active
-    }));
+    this.setState(
+      state => {
+        return {
+          active: !state.active
+        };
+      },
+      this.props.onClick({
+        event: e,
+        active: this.state.active
+      })
+    );
   }
 
   render() {
-
     const { parentClass, colors } = this.props;
-    const {
-      activeColorBG, activeColorBorder, inactiveColorBG, inactiveColorBorder 
-    } = colors;
+    const { activeColorBG, activeColorBorder, inactiveColorBG, inactiveColorBorder } = colors;
     const { active } = this.state;
 
     return (
-      <div className={`${parentClass}`} onClick={(e) => this.onClick(e)}>
+      <div className={`${parentClass}`} onClick={e => this.onClick(e)}>
         <div
           className={`fnt-switch-bar`}
           style={{
             backgroundColor: active ? activeColorBG : inactiveColorBG,
-            border: `1px solid ${ active ? activeColorBorder : inactiveColorBorder }`
+            border: `1px solid ${active ? activeColorBorder : inactiveColorBorder}`
           }}
         ></div>
         <div
@@ -46,9 +45,8 @@ class Switch extends Component {
           }}
         ></div>
       </div>
-    )
+    );
   }
-
 }
 
 Switch.defaultProps = {
@@ -60,6 +58,6 @@ Switch.defaultProps = {
     inactiveColorBG: '#E66868',
     inactiveColorBorder: '#D55353'
   }
-}
+};
 
 export default Switch;

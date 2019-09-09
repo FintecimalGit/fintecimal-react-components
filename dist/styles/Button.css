@@ -1,0 +1,21 @@
+.fnt-btn-general, .fnt-btn-general-error, .fnt-btn-general-cancel {
+  height: 45px;
+  padding: 0 40px;
+  border: 0;
+  border-radius: 3px;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.80px;
+  color: #4C5C68;
+  background-color: #37E7C8;
+}
+
+.fnt-btn-general-error {
+  color: #fff;
+  background-color: #D55353;
+}
+
+.fnt-btn-general-cancel {
+  color: #fff;
+  background-color: #979797;
+}

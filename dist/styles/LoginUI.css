@@ -1,0 +1,45 @@
+.fnt-login-ui-body {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+}
+
+.fnt-login-ui-background-top {
+  width: 100vw;
+  height: 50vh;
+  background-color: #4C5C68;
+}
+
+.fnt-login-ui-background-bottom {
+  width: 100vw;
+  height: 50vh;
+  background-color: #F3F2F2;
+}
+
+.fnt-login-ui-btn-container {
+  width: 100%;
+  padding: 45px 0 20px 0;
+  text-align: center;
+}
+
+.fnt-login-ui-form {
+  position: absolute;
+  width: 350px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+  padding: 12px;
+  background-color: #fff;
+  box-shadow: 1px 1px 3px 3px rgba(0,0,0,0.1);
+}
+
+.fnt-login-ui-form-img-content {
+  width: 100%;
+  text-align: center;
+}
+
+.fnt-login-ui-form-input-content {
+  position: relative;
+  padding: 0;
+}

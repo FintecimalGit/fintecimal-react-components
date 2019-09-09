@@ -1,0 +1,26 @@
+.fnt-pagination {
+  display: flex;
+}
+
+.ftn-pagination-arrow-left {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.ftn-pagination-arrow-right {
+  display: flex;
+  align-items: center;
+  transform: rotateZ(180deg);
+  cursor: pointer;
+}
+
+.ftn-pagination-body {
+  display: flex;
+  align-items: center;
+}
+
+.ftn-pagination-text {
+  font-size: 15px;
+  color: #4C5C68;
+}

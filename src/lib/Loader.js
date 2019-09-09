@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
-import '../styles/Loader.css';
+import './styles/Loader.css';
 
 class Loader extends Component {
-
   render() {
-
     const { colors, className, style, displayed } = this.props;
     const { first, secound } = colors;
 
@@ -13,26 +11,25 @@ class Loader extends Component {
         className={`fnt-loader ${className}`}
         style={{
           ...style,
-          display: displayed ? 'block': 'none',
+          display: displayed ? 'block' : 'none',
           backgroundColor: first
         }}
       >
         <div
-          className='fnt-loader-bar'
+          className="fnt-loader-bar"
           style={{
             backgroundColor: first
           }}
         ></div>
         <div
-          className='fnt-loader-bar'
+          className="fnt-loader-bar"
           style={{
             backgroundColor: secound
           }}
         ></div>
       </div>
-    )
+    );
   }
-
 }
 
 Loader.defaultProps = {
@@ -40,9 +37,9 @@ Loader.defaultProps = {
     first: '#ddd',
     secound: '#31DDBF'
   },
-  className:'',
+  className: '',
   style: {},
   displayed: true
-}
+};
 
 export default Loader;

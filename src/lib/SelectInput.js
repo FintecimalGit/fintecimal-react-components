@@ -14,7 +14,7 @@ import { status, isEmpty, isTextLong } from './commons/utils';
 import LongPlaceHolder from './LongPlaceHolder';
 import LongError from './LongError';
 import { list } from './InputStrings';
-import '../styles/BaseInput.css';
+import './styles/BaseInput.css';
 
 const useStyles = makeStyles(theme => ({
   root: {
