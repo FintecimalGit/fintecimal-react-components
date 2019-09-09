@@ -1,0 +1,19 @@
+.fnt-switch-bar {
+  width: 28px;
+  height: 13px;
+  border-radius: 6px;
+  transition: all 1s;
+  box-sizing: border-box;
+}
+
+.fnt-switch-circle {
+  width: 16px;
+  height: 16px;
+  margin-top: -15px;
+  border: 1px solid #E9E9E9;
+  border-radius: 8px;
+  box-sizing: border-box;
+  background-color: #fff;
+  transition: all 0.5s;
+}
+
