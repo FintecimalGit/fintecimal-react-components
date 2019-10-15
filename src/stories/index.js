@@ -24,7 +24,8 @@ const {
   NumberInput,
   CellPhoneInput,
   SelectInput,
-  CLABEInput
+  CLABEInput,
+  RadioSwitch
 } = lib;
 const { LoginUI, MultiDrop } = ui;
 
@@ -95,7 +96,7 @@ storiesOf('Components|Inputs', module)
       //errorMessage={'Este es un mensaje de error que puede tener cualquier cosa'}
       required={true}
       clear={true}
-      //value={'Este input viene lleno'}
+    //value={'Este input viene lleno'}
     />
   ))
   .add('Email Input', () => (
@@ -104,7 +105,7 @@ storiesOf('Components|Inputs', module)
       handleChange={action('handleChange')}
       required={true}
       error={false}
-      //errorMessage={'Este es un mensaje de error que puede tener cualquier cosa'}
+    //errorMessage={'Este es un mensaje de error que puede tener cualquier cosa'}
     />
   ))
   .add('RFC Input', () => (
@@ -176,3 +177,23 @@ storiesOf('Components|Button', module)
     () => <Button onClick={action('clicked')} type="error" textBtn="Error"></Button>,
     { notes: '' }
   );
+
+storiesOf('Components|RadioSwitch', module)
+  .add('Radio Switch', () => (
+    <div style={{ height: '35px', width: '250px' }}>
+      <RadioSwitch
+        options={[{ key: 'fintecimal', value: 'Fintecimal' }, { key: 'client', value: 'Cliente' }]}
+        selected={'fintecimal'}
+        handleChange={action('clicked')}
+      />
+    </div>
+  ))
+  .add('Radio Switch Custom', () => (
+    <div style={{ height: '50px', width: '300px' }}>
+      <RadioSwitch
+        options={[{ key: 'true', value: 'True' }, { key: 'false', value: 'False' }]}
+        selected={'true'}
+        handleChange={action('clicked')}
+      />
+    </div>
+  ));

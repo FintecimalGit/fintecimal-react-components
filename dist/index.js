@@ -35,6 +35,8 @@ var _CLABEInput = _interopRequireDefault(require("./CLABEInput"));
 
 var _SelectInput = _interopRequireDefault(require("./SelectInput"));
 
+var _RadioSwitch = _interopRequireDefault(require("./RadioSwitch"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var _default = {
@@ -52,6 +54,7 @@ var _default = {
   CLABEInput: _CLABEInput.default,
   NumberInput: _NumberInput.default,
   SelectInput: _SelectInput.default,
-  CellPhoneInput: _CellPhoneInput.default
+  CellPhoneInput: _CellPhoneInput.default,
+  RadioSwitch: _RadioSwitch.default
 };
 exports.default = _default;

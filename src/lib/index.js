@@ -13,6 +13,7 @@ import NumberInput from './NumberInput';
 import CellPhoneInput from './CellPhoneInput';
 import CLABEInput from './CLABEInput';
 import SelectInput from './SelectInput';
+import RadioSwitch from './RadioSwitch';
 
 export default {
   Input,
@@ -29,5 +30,6 @@ export default {
   CLABEInput,
   NumberInput,
   SelectInput,
-  CellPhoneInput
+  CellPhoneInput,
+  RadioSwitch
 };
