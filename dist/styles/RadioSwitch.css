@@ -1,0 +1,42 @@
+.radio-switch-content {
+  display: inline-block;
+  border-radius: 35px;
+  height: 100%;
+  width: 100%;
+}
+
+.radio-switch-wrapper {
+  height: 100%;
+  width: 50%;
+  display: inline-block;
+  cursor: pointer;
+  color: #979797;
+  position: relative;
+  display: -webkit-inline-box;
+  font-size: 15px;	
+  font-weight: 600;	
+  letter-spacing: 0.31px;	
+  text-align: center;
+  border-radius: 35px;
+}
+
+.radio-switch-wrapper-checked {
+  color: #4C5C68;
+  z-index: 1;
+  transition: all 0.3s ease-in;
+}
+
+.radio-switch-wrapper input[type='radio'] {
+  opacity: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+.radio-switch-wrapper > .radio-switch {
+  display: block;
+  position: absolute;
+  top: 48%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+}
