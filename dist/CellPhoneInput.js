@@ -78,7 +78,9 @@ var CellPhoneInput = function CellPhoneInput(_ref) {
   };
 
   var mHandleChange = function mHandleChange(event) {
-    var value = event.target.value;
+    var value = event.target.value,
+        target = event.target;
+    if (isValid(value)) target.setCustomValidity("");else target.setCustomValidity(errorMessage || errorMessages.validation);
     var formattedNumber = addParenthesis(value);
     setValue(formattedNumber);
   };

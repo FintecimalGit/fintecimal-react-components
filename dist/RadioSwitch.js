@@ -25,45 +25,47 @@ function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = 
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
-const ITEMS_SIZE = 2;
-const GRAY = '#F2F2F2';
-const GRAY_LIGHT = '#989898';
-const useStyles = (0, _core.makeStyles)(theme => ({
-  content: {
-    backgroundColor: GRAY
-  },
-  wrapperChecked: {
-    backgroundColor: theme.palette.primary.main,
-    color: theme.palette.primary.contrastText
-  },
-  wrapperUnchecked: {
-    backgroundColor: GRAY,
-    color: GRAY_LIGHT
-  }
-}));
+var ITEMS_SIZE = 2;
+var GRAY = '#F2F2F2';
+var GRAY_LIGHT = '#989898';
+var useStyles = (0, _core.makeStyles)(function (theme) {
+  return {
+    content: {
+      backgroundColor: GRAY
+    },
+    wrapperChecked: {
+      backgroundColor: theme.palette.primary.main,
+      color: theme.palette.primary.contrastText
+    },
+    wrapperUnchecked: {
+      backgroundColor: GRAY,
+      color: GRAY_LIGHT
+    }
+  };
+});
 
-const RadioSwitch = props => {
-  const _useState = (0, _react.useState)(props.selected),
-        _useState2 = _slicedToArray(_useState, 2),
-        selected = _useState2[0],
-        setSelected = _useState2[1];
+var RadioSwitch = function RadioSwitch(props) {
+  var _useState = (0, _react.useState)(props.selected),
+      _useState2 = _slicedToArray(_useState, 2),
+      selected = _useState2[0],
+      setSelected = _useState2[1];
 
-  const onClick = value => {
-    const handleChange = props.handleChange;
+  var onClick = function onClick(value) {
+    var handleChange = props.handleChange;
     setSelected(value);
     handleChange(value);
   };
 
-  const options = props.options,
-        checkedColor = props.checkedColor,
-        uncheckedColor = props.uncheckedColor;
-  const classes = useStyles();
+  var options = props.options,
+      checkedColor = props.checkedColor,
+      uncheckedColor = props.uncheckedColor;
+  var classes = useStyles();
   return _react.default.createElement("div", {
     className: "radio-switch-content ".concat(classes.content)
-  }, options.map(item => {
-    const key = item.key,
-          value = item.value;
-    const checked = key === selected;
+  }, options.map(function (item) {
+    var key = item.key,
+        value = item.value;
+    var checked = key === selected;
     return _react.default.createElement("label", {
       key: key,
       htmlFor: key,
@@ -76,7 +78,9 @@ const RadioSwitch = props => {
       className: "radio-switch-input",
       checked: checked,
       value: key,
-      onChange: ev => onClick(ev.target.value)
+      onChange: function onChange(ev) {
+        return onClick(ev.target.value);
+      }
     })), _react.default.createElement("span", {
       className: "radio-switch"
     }, value));
@@ -86,11 +90,11 @@ const RadioSwitch = props => {
 RadioSwitch.defaultProps = {
   options: [],
   selected: '',
-  handleChange: () => {}
+  handleChange: function handleChange() {}
 };
 RadioSwitch.propTypes = {
-  options: (props, propName) => {
-    const propLength = props[propName].length;
+  options: function options(props, propName) {
+    var propLength = props[propName].length;
 
     if (propLength !== ITEMS_SIZE) {
       return new Error("Invalid array length ".concat(propLength, " (the length must be ").concat(ITEMS_SIZE, ")"));
