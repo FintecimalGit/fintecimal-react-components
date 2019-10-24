@@ -19,7 +19,7 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     flexDirection: 'column',
     flexWrap: 'wrap',
-    margin: theme.spacing(1),
+    margin: theme.spacing(1)
   },
   form: {
     alignSelf: 'stretch'
@@ -27,7 +27,7 @@ const useStyles = makeStyles(theme => ({
   label: {
     fontSize: 14,
     fontWeight: 500,
-    opacity: 1,
+    opacity: 1
   },
   input: {
     paddingTop: 25,
@@ -45,6 +45,9 @@ const useStyles = makeStyles(theme => ({
     color: theme.palette.error.main,
     fontSize: 13,
     verticalAlign: 'super'
+  },
+  icon: {
+    fontSize: 22
   }
 }));
 
@@ -100,7 +103,7 @@ const BaseInput = ({
             clear && (
               <InputAdornment position="end">
                 <IconButton aria-label="clear input" onClick={onClear}>
-                  <Clear />
+                  <Clear /*className={classes.icon}*/ />
                 </IconButton>
               </InputAdornment>
             )

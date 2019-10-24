@@ -54,8 +54,7 @@ var useStyles = (0, _core.makeStyles)(function (theme) {
     label: {
       fontSize: 14,
       fontWeight: 500,
-      opacity: 1,
-      color: 'gray'
+      opacity: 1
     },
     input: {
       paddingTop: 25,
@@ -63,16 +62,14 @@ var useStyles = (0, _core.makeStyles)(function (theme) {
     },
     notchedOutline: {
       borderWidth: 2,
-      borderColor: 'lightgray',
       opacity: 0.7
     },
     focusNotchedOutline: {
       borderWidth: 3,
-      borderColor: '#0099ff',
       opacity: 1
     },
     asterisk: {
-      color: 'red',
+      color: theme.palette.error.main,
       fontSize: 13,
       verticalAlign: 'super'
     },
