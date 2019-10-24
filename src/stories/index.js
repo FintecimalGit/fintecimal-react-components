@@ -197,3 +197,34 @@ storiesOf('Components|RadioSwitch', module)
       />
     </div>
   ));
+
+storiesOf('Components|Form', module)
+  .add('Validations', () => (
+    <div style={{ height: '35px', width: '250px' }}>
+      <form
+        onSubmit={(event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            // const { target } = event;
+            // console.log({ formIsValid: target.checkValidity() })
+        }}
+      >
+        <CellPhoneInput
+          handleChange={action('handleChange')}
+          required={true}
+          error={false}
+          //errorMessage={'Este es un mensaje de error que puede tener cualquier cosa'}
+        />
+        <button
+          type="submit"
+          onClick={(event) => {
+            const { target } = event;
+            const form = target.parentNode;
+            action('onClickSubmit')(JSON.stringify({ formIsValid: form.checkValidity() }));
+          }}
+        >
+          Submit
+        </button>
+      </form>
+    </div>
+  ));

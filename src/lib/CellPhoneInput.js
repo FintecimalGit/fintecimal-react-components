@@ -25,8 +25,13 @@ const CellPhoneInput = ({ value, handleChange, label, type, required, error, err
 
   const mHandleChange = event => {
     const {
-      target: { value }
+      target: { value },
+      target,
     } = event;
+
+    if (isValid(value)) target.setCustomValidity("");
+    else target.setCustomValidity(errorMessage || errorMessages.validation);
+  
     const formattedNumber = addParenthesis(value);
     setValue(formattedNumber);
   };
