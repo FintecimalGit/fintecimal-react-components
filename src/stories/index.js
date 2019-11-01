@@ -209,7 +209,7 @@ storiesOf('Components|Form', module)
             // console.log({ formIsValid: target.checkValidity() })
         }}
       >
-        <CellPhoneInput
+        <RFCInput
           handleChange={action('handleChange')}
           required={true}
           error={false}

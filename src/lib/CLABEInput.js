@@ -10,6 +10,7 @@ const CLABEInput = ({ value, handleChange, label, error, errorMessage, type, req
   const [mValue, setValue] = useState(value);
   const mHandleChange = newValue => {
     setValue(newValue);
+    handleChange(value);
     if (!isEmpty(newValue) && isValid(newValue)) {
       const { label: currentLabel } = mConfig;
       setConfig({ ...mConfig, label: `${currentLabel} ${getBank(newValue)}` });
@@ -25,8 +26,8 @@ const CLABEInput = ({ value, handleChange, label, error, errorMessage, type, req
   });
 
   useEffect(() => {
-    handleChange(mValue);
-  }, [mValue]);
+    setValue(value);
+  }, [value]);
 
   const errors = {
     error,

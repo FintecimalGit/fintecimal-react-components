@@ -55,6 +55,7 @@ var CLABEInput = function CLABEInput(_ref) {
 
   var mHandleChange = function mHandleChange(newValue) {
     setValue(newValue);
+    handleChange(value);
 
     if (!(0, _utils.isEmpty)(newValue) && isValid(newValue)) {
       var currentLabel = mConfig.label;
@@ -77,8 +78,8 @@ var CLABEInput = function CLABEInput(_ref) {
       setConfig = _useState4[1];
 
   (0, _react.useEffect)(function () {
-    handleChange(mValue);
-  }, [mValue]);
+    setValue(value);
+  }, [value]);
   var errors = {
     error: error,
     errorMessage: errorMessage,

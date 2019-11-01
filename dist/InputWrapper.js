@@ -57,11 +57,14 @@ var InputWrapper = function InputWrapper(_ref) {
       setValue = _useState6[1];
 
   var mHandleChange = function mHandleChange(event) {
-    var value = event.target.value;
+    var target = event.target,
+        value = event.target.value;
 
     if (format) {
       var formattedText = (0, _utils.formatText)(value, format);
+      if (isValid(formattedText)) target.setCustomValidity("");else target.setCustomValidity(errorMessage || errorMessages.validation);
       setValue(formattedText);
+      handleChange(formattedText);
     } else {
       setValue(value);
     }
@@ -69,6 +72,7 @@ var InputWrapper = function InputWrapper(_ref) {
 
   var onClear = function onClear() {
     setValue('');
+    handleChange('');
   };
 
   var mOnBlur = function mOnBlur() {
@@ -88,8 +92,17 @@ var InputWrapper = function InputWrapper(_ref) {
   };
 
   (0, _react.useEffect)(function () {
-    handleChange(mValue);
-  }, [mValue, mError]);
+    var newMvalue = format ? (0, _utils.formatText)(value, format) : value;
+    setValue(newMvalue);
+
+    if (!newMvalue || isValid(newMvalue)) {
+      setError(false);
+      setErrorMessage('');
+    } else {
+      setError(true);
+      setErrorMessage(errorMessages.validation);
+    }
+  }, [value]);
   return _react.default.createElement(_BaseInput.default, {
     value: mValue,
     handleChange: mHandleChange,
