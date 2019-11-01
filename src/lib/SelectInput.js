@@ -170,6 +170,7 @@ const SelectInput = ({ label, value, handleChange, required, error, errorMessage
     const {
       target: { value }
     } = event;
+    handleChange(value);
     setError(false);
     setValue(value);
     setStatus(status.NORMAL);
@@ -191,8 +192,9 @@ const SelectInput = ({ label, value, handleChange, required, error, errorMessage
   };
 
   useEffect(() => {
-    handleChange(mValue);
-  }, [mValue]);
+    console.log({ value })
+    setValue(value);
+  }, [value]);
 
   return (
     <div className={classes.root}>
