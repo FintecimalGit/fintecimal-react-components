@@ -34,6 +34,7 @@ const CellPhoneInput = ({ value, handleChange, label, type, required, error, err
   
     const formattedNumber = addParenthesis(value);
     setValue(formattedNumber);
+    handleChange(formatValue(value));
   };
 
   const onClear = () => {
@@ -71,8 +72,17 @@ const CellPhoneInput = ({ value, handleChange, label, type, required, error, err
   };
 
   useEffect(() => {
-    handleChange(formatValue(mValue));
-  }, [mValue]);
+    const newMvalue = addParenthesis(formatValue(value));
+    setValue(newMvalue);
+    if (!newMvalue || isValid(newMvalue)) {
+      setError(false);
+      setErrorMessage('');
+    }
+    else {
+      setError(true);
+      setErrorMessage(errorMessages.validation);
+    }
+  }, [value]);
 
   return (
     <SpecialInput

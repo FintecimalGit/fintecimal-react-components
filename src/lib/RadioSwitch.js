@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './styles/RadioSwitch.css';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core';
@@ -30,6 +30,10 @@ const RadioSwitch = (props) => {
     setSelected(value);
     handleChange(value)
   }
+
+  useEffect(() => {
+    setSelected(props.selected);
+  }, [props.selected]);
 
   const { options, checkedColor, uncheckedColor } = props;
   const classes = useStyles();
@@ -83,7 +87,7 @@ RadioSwitch.propTypes = {
   options: (props, propName) => {
     const propLength = props[propName].length;
 
-    if (propLength !== ITEMS_SIZE) {
+    if (propLength !== ITEMS_SIZE && propLength > 0) {
       return new Error(
         `Invalid array length ${propLength} (the length must be ${ITEMS_SIZE})`
       );
