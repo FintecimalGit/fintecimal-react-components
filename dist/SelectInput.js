@@ -264,9 +264,6 @@ var SelectInput = function SelectInput(_ref) {
   };
 
   (0, _react.useEffect)(function () {
-    console.log({
-      value: value
-    });
     setValue(value);
   }, [value]);
   return _react.default.createElement("div", {

@@ -192,7 +192,6 @@ const SelectInput = ({ label, value, handleChange, required, error, errorMessage
   };
 
   useEffect(() => {
-    console.log({ value })
     setValue(value);
   }, [value]);
 

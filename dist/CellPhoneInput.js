@@ -90,6 +90,7 @@ var CellPhoneInput = function CellPhoneInput(_ref) {
 
   var onClear = function onClear() {
     setValue('');
+    handleChange('');
   };
 
   var isValid = function isValid(data) {

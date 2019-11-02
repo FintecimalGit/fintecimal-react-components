@@ -39,6 +39,7 @@ const CellPhoneInput = ({ value, handleChange, label, type, required, error, err
 
   const onClear = () => {
     setValue('');
+    handleChange('');
   };
 
   const isValid = data => {
