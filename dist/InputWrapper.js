@@ -67,7 +67,7 @@ var InputWrapper = function InputWrapper(_ref) {
       handleChange(formattedText);
     } else {
       setValue(value);
-      setValue(value);
+      handleChange(value);
     }
   };
 
