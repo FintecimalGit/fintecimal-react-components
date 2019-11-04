@@ -25,6 +25,7 @@ const InputWrapper = ({ config, errors, isValid }) => {
       handleChange(formattedText);
     } else {
       setValue(value);
+      setValue(value);
     }
   };
 
