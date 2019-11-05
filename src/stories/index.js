@@ -142,6 +142,7 @@ storiesOf('Components|Inputs', module)
   .add('Select Input', () => (
     <SelectInput
       label={longText}
+      placeholder="Placeholder"
       handleChange={action('handleChange')}
       required={true}
       error={true}

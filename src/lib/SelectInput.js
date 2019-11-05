@@ -100,7 +100,7 @@ const getClassByStatus = (inputStatus, classes) => {
   }
 };
 
-const SelectInput = ({ label, value, handleChange, required, error, errorMessage, options }) => {
+const SelectInput = ({ label, value, handleChange, required, error, errorMessage, options, placeholder }) => {
   const classes = useStyles();
   const { errorMessages, label: defaultPlaceHolder } = list;
   const [mValue, setValue] = useState(value);
@@ -160,8 +160,20 @@ const SelectInput = ({ label, value, handleChange, required, error, errorMessage
     });
   };
 
+  const renderPlaceholder = ({ name }) => (
+    <MenuItem
+      disabled
+      key={`placeholder_${name}_-1`}
+      className={classes.item}
+      value=""
+    >
+      {name}
+    </MenuItem>
+  )
+
   const renderOptions = listOptions => {
     const items = [];
+    if (placeholder) items.push(renderPlaceholder({ name: placeholder }));
     renderChildren(listOptions, items);
     return items;
   };
@@ -214,7 +226,8 @@ const SelectInput = ({ label, value, handleChange, required, error, errorMessage
           {selectLabel()}
         </InputLabel>
         <Select
-          renderValue={() => mValue}
+          displayEmpty
+          renderValue={() => (mValue === "" && placeholder !== "" ? placeholder : mValue)}
           value={mValue}
           onChange={mHandleChange}
           onBlur={mOnBlur}
@@ -263,7 +276,8 @@ SelectInput.defaultProps = {
   error: false,
   type: 'text',
   clear: true,
-  errorMessage: ''
+  errorMessage: '',
+  placeholder: '',
 };
 
 SelectInput.propTypes = {
@@ -273,7 +287,8 @@ SelectInput.propTypes = {
   error: PropTypes.bool,
   clear: PropTypes.bool,
   errorMessage: PropTypes.string,
-  handleChange: PropTypes.func.isRequired
+  handleChange: PropTypes.func.isRequired,
+  placeholder: PropTypes.string,
 };
 
 export default SelectInput;
