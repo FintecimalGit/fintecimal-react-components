@@ -138,7 +138,8 @@ var SelectInput = function SelectInput(_ref) {
       required = _ref.required,
       error = _ref.error,
       errorMessage = _ref.errorMessage,
-      options = _ref.options;
+      options = _ref.options,
+      placeholder = _ref.placeholder;
   var classes = useStyles();
   var errorMessages = _InputStrings.list.errorMessages,
       defaultPlaceHolder = _InputStrings.list.label;
@@ -232,8 +233,21 @@ var SelectInput = function SelectInput(_ref) {
     });
   };
 
+  var renderPlaceholder = function renderPlaceholder(_ref2) {
+    var name = _ref2.name;
+    return _react.default.createElement(_core.MenuItem, {
+      disabled: true,
+      key: "placeholder_".concat(name, "_-1"),
+      className: classes.item,
+      value: ""
+    }, name);
+  };
+
   var renderOptions = function renderOptions(listOptions) {
     var items = [];
+    if (placeholder) items.push(renderPlaceholder({
+      name: placeholder
+    }));
     renderChildren(listOptions, items);
     return items;
   };
@@ -283,8 +297,9 @@ var SelectInput = function SelectInput(_ref) {
       asterisk: classes.asterisk
     }
   }, selectLabel()), _react.default.createElement(_core.Select, {
+    displayEmpty: true,
     renderValue: function renderValue() {
-      return mValue;
+      return mValue === "" && placeholder !== "" ? placeholder : mValue;
     },
     value: mValue,
     onChange: mHandleChange,
@@ -326,7 +341,8 @@ SelectInput.defaultProps = {
   error: false,
   type: 'text',
   clear: true,
-  errorMessage: ''
+  errorMessage: '',
+  placeholder: ''
 };
 SelectInput.propTypes = {
   label: _propTypes.default.string.isRequired,
@@ -335,7 +351,8 @@ SelectInput.propTypes = {
   error: _propTypes.default.bool,
   clear: _propTypes.default.bool,
   errorMessage: _propTypes.default.string,
-  handleChange: _propTypes.default.func.isRequired
+  handleChange: _propTypes.default.func.isRequired,
+  placeholder: _propTypes.default.string
 };
 var _default = SelectInput;
 exports.default = _default;
