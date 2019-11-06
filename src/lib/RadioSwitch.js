@@ -20,6 +20,9 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: GRAY,
     color: GRAY_LIGHT
   },
+  bgTransparent: {
+    backgroundColor: 'transparent',
+  }
 }));
 
 const RadioSwitch = (props) => {
@@ -31,6 +34,14 @@ const RadioSwitch = (props) => {
     handleChange(value)
   }
 
+  const isOne = () => {
+    let exist = false;
+    options.forEach((option) => {
+      if(option.key === "" && option.value === "" ) exist = true;
+    })
+    return exist;
+  }
+
   useEffect(() => {
     setSelected(props.selected);
   }, [props.selected]);
@@ -40,7 +51,7 @@ const RadioSwitch = (props) => {
 
   return (
     <div
-      className={`radio-switch-content ${classes.content}`}
+      className={`radio-switch-content ${classes.content} ${isOne() ? classes.bgTransparent : "" }`}
     >
       {
         options.map((item) => {
@@ -54,7 +65,9 @@ const RadioSwitch = (props) => {
               className={`
               radio-switch-wrapper 
               ${checked ? 'radio-switch-wrapper-checked' : ''}
-              ${checked ? classes.wrapperChecked : classes.wrapperUnchecked}`}
+              ${checked ? classes.wrapperChecked : classes.wrapperUnchecked}
+              ${key === "" && value === "" ? classes.bgTransparent : "" }
+              `}
             >
               <span className="radio-switch">
                 <input
