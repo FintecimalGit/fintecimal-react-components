@@ -42,6 +42,9 @@ var useStyles = (0, _core.makeStyles)(function (theme) {
     wrapperUnchecked: {
       backgroundColor: GRAY,
       color: GRAY_LIGHT
+    },
+    bgTransparent: {
+      backgroundColor: 'transparent'
     }
   };
 });
@@ -58,6 +61,14 @@ var RadioSwitch = function RadioSwitch(props) {
     handleChange(value);
   };
 
+  var isOne = function isOne() {
+    var exist = false;
+    options.forEach(function (option) {
+      if (option.key === "" && option.value === "") exist = true;
+    });
+    return exist;
+  };
+
   (0, _react.useEffect)(function () {
     setSelected(props.selected);
   }, [props.selected]);
@@ -66,7 +77,7 @@ var RadioSwitch = function RadioSwitch(props) {
       uncheckedColor = props.uncheckedColor;
   var classes = useStyles();
   return _react.default.createElement("div", {
-    className: "radio-switch-content ".concat(classes.content)
+    className: "radio-switch-content ".concat(classes.content, " ").concat(isOne() ? classes.bgTransparent : "")
   }, options.map(function (item) {
     var key = item.key,
         value = item.value;
@@ -74,7 +85,7 @@ var RadioSwitch = function RadioSwitch(props) {
     return _react.default.createElement("label", {
       key: key,
       htmlFor: key,
-      className: "\n              radio-switch-wrapper \n              ".concat(checked ? 'radio-switch-wrapper-checked' : '', "\n              ").concat(checked ? classes.wrapperChecked : classes.wrapperUnchecked)
+      className: "\n              radio-switch-wrapper \n              ".concat(checked ? 'radio-switch-wrapper-checked' : '', "\n              ").concat(checked ? classes.wrapperChecked : classes.wrapperUnchecked, "\n              ").concat(key === "" && value === "" ? classes.bgTransparent : "", "\n              ")
     }, _react.default.createElement("span", {
       className: "radio-switch"
     }, _react.default.createElement("input", {
