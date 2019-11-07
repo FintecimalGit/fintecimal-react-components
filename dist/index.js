@@ -37,6 +37,8 @@ var _SelectInput = _interopRequireDefault(require("./SelectInput"));
 
 var _RadioSwitch = _interopRequireDefault(require("./RadioSwitch"));
 
+var _SelectBasic = _interopRequireDefault(require("./SelectBasic"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var _default = {
@@ -55,6 +57,7 @@ var _default = {
   NumberInput: _NumberInput.default,
   SelectInput: _SelectInput.default,
   CellPhoneInput: _CellPhoneInput.default,
-  RadioSwitch: _RadioSwitch.default
+  RadioSwitch: _RadioSwitch.default,
+  SelectBasic: _SelectBasic.default
 };
 exports.default = _default;
