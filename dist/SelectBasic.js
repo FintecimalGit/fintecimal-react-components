@@ -1,0 +1,114 @@
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _propTypes = _interopRequireDefault(require("prop-types"));
+
+var _MenuItem = _interopRequireDefault(require("@material-ui/core/MenuItem"));
+
+var _Select = _interopRequireDefault(require("@material-ui/core/Select"));
+
+var _FormControl = _interopRequireDefault(require("@material-ui/core/FormControl"));
+
+var _KeyboardArrowDown = _interopRequireDefault(require("@material-ui/icons/KeyboardArrowDown"));
+
+var _core = require("@material-ui/core");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
+
+function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+var useStyles = (0, _core.makeStyles)(function (theme) {
+  return {
+    content: {
+      position: 'relative',
+      width: '100%'
+    },
+    placeholder: {
+      position: 'absolute',
+      top: 'calc(50% - 12px)',
+      color: theme.palette.text.primary
+    },
+    placeholderHidden: {
+      display: 'none'
+    },
+    paper: {
+      top: '40px !important',
+      left: '8px !important',
+      maxHeight: '180px !important'
+    }
+  };
+});
+
+var SelectBasic = function SelectBasic(props) {
+  var _useState = (0, _react.useState)(props.selected),
+      _useState2 = _slicedToArray(_useState, 2),
+      selected = _useState2[0],
+      setSelected = _useState2[1];
+
+  var _useState3 = (0, _react.useState)(!props.selected),
+      _useState4 = _slicedToArray(_useState3, 2),
+      showLabel = _useState4[0],
+      setShowLabel = _useState4[1];
+
+  var handleChange = function handleChange(event) {
+    setSelected(event.target.value);
+    setShowLabel(false);
+  };
+
+  (0, _react.useEffect)(function () {
+    setSelected(props.selected);
+  }, [props.selected]);
+  var options = props.options,
+      placeholder = props.placeholder;
+  var classes = useStyles();
+  return _react.default.createElement("div", null, _react.default.createElement(_FormControl.default, {
+    className: classes.content
+  }, _react.default.createElement("div", {
+    className: showLabel ? classes.placeholder : classes.placeholderHidden
+  }, placeholder), _react.default.createElement(_Select.default, {
+    value: selected,
+    onChange: handleChange,
+    onClose: function onClose() {
+      return setShowLabel(!selected);
+    },
+    MenuProps: {
+      classes: {
+        paper: classes.paper
+      }
+    },
+    IconComponent: _KeyboardArrowDown.default
+  }, options.map(function (option) {
+    var value = option.value,
+        name = option.name;
+    return _react.default.createElement(_MenuItem.default, {
+      value: value
+    }, name);
+  }))));
+};
+
+SelectBasic.defaultProps = {
+  placeholder: '',
+  options: [],
+  selected: ''
+};
+SelectBasic.propTypes = {
+  options: _propTypes.default.array,
+  selected: _propTypes.default.string,
+  placeholder: _propTypes.default.string
+};
+var _default = SelectBasic;
+exports.default = _default;
