@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
-import './styles/SelectBasic.css';
-
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import FormControl from '@material-ui/core/FormControl';
@@ -17,15 +15,21 @@ const useStyles = makeStyles(theme => ({
   placeholder: {
     position: 'absolute',
     top: 'calc(50% - 12px)',
+    color: theme.palette.text.primary
   },
   placeholderHidden: {
     display: 'none',
   },
+  paper: {
+    top: '40px !important',
+    left: '8px !important',
+    maxHeight: '180px !important',
+  }
 }));
 
 const SelectBasic = (props) => {
-  const [selected, setSelected] = useState('');
-  const [showLabel, setShowLabel] = useState(true);
+  const [selected, setSelected] = useState(props.selected);
+  const [showLabel, setShowLabel] = useState(!props.selected);
 
   const handleChange = event => {
     setSelected(event.target.value);
@@ -46,10 +50,10 @@ const SelectBasic = (props) => {
         <Select
           value={selected}
           onChange={handleChange}
-          onClose={() => setShowLabel(!Boolean(selected))}
+          onClose={() => setShowLabel(!selected)}
           MenuProps={{
             classes: {
-              paper: 'select-basic-paper'
+              paper: classes.paper
             },
           }}
           IconComponent={KeyboardArrowDownIcon}
@@ -68,11 +72,14 @@ const SelectBasic = (props) => {
 
 SelectBasic.defaultProps = {
   placeholder: '',
-  options: []
+  options: [],
+  selected: ''
 };
 
 SelectBasic.propTypes = {
-  options: PropTypes
+  options: PropTypes.array,
+  selected: PropTypes.string,
+  placeholder: PropTypes.string,
 };
 
 export default SelectBasic;

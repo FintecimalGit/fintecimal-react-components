@@ -232,7 +232,7 @@ storiesOf('Components|Form', module)
   ));
 
 storiesOf('Components|SelectBasic', module)
-  .add('SelectBasic', () => (
+  .add('Select Basic', () => (
     <div style={{ height: '35px', width: '250px' }}>
       <SelectBasic
         placeholder="Razón del rechazo"
