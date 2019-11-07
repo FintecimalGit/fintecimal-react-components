@@ -1,0 +1,19 @@
+.select-basic-content {
+  position: relative;
+  width: 100%;
+}
+
+.select-basic-placeholder {
+  position: absolute;
+  top: calc(50% - 12px);
+}
+
+.select-basic-placeholder-hidden {
+  display: none;
+}
+
+.select-basic-paper {
+  top: 40px !important;
+  left: 8px !important;
+  max-height: 180px !important;
+}

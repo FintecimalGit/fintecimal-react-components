@@ -25,7 +25,8 @@ const {
   CellPhoneInput,
   SelectInput,
   CLABEInput,
-  RadioSwitch
+  RadioSwitch,
+  SelectBasic,
 } = lib;
 const { LoginUI, MultiDrop } = ui;
 
@@ -204,17 +205,17 @@ storiesOf('Components|Form', module)
     <div style={{ height: '35px', width: '250px' }}>
       <form
         onSubmit={(event) => {
-            event.preventDefault();
-            event.stopPropagation();
-            // const { target } = event;
-            // console.log({ formIsValid: target.checkValidity() })
+          event.preventDefault();
+          event.stopPropagation();
+          // const { target } = event;
+          // console.log({ formIsValid: target.checkValidity() })
         }}
       >
         <RFCInput
           handleChange={action('handleChange')}
           required={true}
           error={false}
-          //errorMessage={'Este es un mensaje de error que puede tener cualquier cosa'}
+        //errorMessage={'Este es un mensaje de error que puede tener cualquier cosa'}
         />
         <button
           type="submit"
@@ -227,5 +228,22 @@ storiesOf('Components|Form', module)
           Submit
         </button>
       </form>
+    </div>
+  ));
+
+storiesOf('Components|SelectBasic', module)
+  .add('SelectBasic', () => (
+    <div style={{ height: '35px', width: '250px' }}>
+      <SelectBasic
+        placeholder="Razón del rechazo"
+        options={[
+          { value: 'fillingError', name: 'Error de llenado' },
+          { value: 'unreadableDocument', name: 'Documento ilegible' },
+          { value: 'labelError', name: 'Error de Etiqueta' },
+          { value: 'captureError', name: 'Error de captura' },
+          { value: 'wrongDocument', name: 'Documentación de otro cliente' },
+          { value: 'whiteFields', name: 'Campos en blanco' }
+        ]}
+      />
     </div>
   ));
