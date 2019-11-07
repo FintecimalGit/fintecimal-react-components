@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import MenuItem from '@material-ui/core/MenuItem';
@@ -35,6 +35,10 @@ const SelectBasic = (props) => {
     setSelected(event.target.value);
     setShowLabel(false);
   };
+
+  useEffect(() => {
+    setSelected(props.selected);
+  }, [props.selected]);
 
   const { options, placeholder } = props;
   const classes = useStyles();
