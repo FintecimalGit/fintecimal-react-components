@@ -21,8 +21,6 @@ const useStyles = makeStyles(theme => ({
     display: 'none',
   },
   paper: {
-    top: '40px !important',
-    left: '8px !important',
     maxHeight: '180px !important',
   }
 }));
