@@ -71,7 +71,9 @@ var SelectBasic = function SelectBasic(props) {
     setSelected(props.selected);
   }, [props.selected]);
   var options = props.options,
-      placeholder = props.placeholder;
+      placeholder = props.placeholder,
+      _onClose = props.onClose;
+  var _onOpen = props.onOpen;
   var classes = useStyles();
   return _react.default.createElement("div", null, _react.default.createElement(_FormControl.default, {
     className: classes.content
@@ -81,7 +83,12 @@ var SelectBasic = function SelectBasic(props) {
     value: selected,
     onChange: handleChange,
     onClose: function onClose() {
-      return setShowLabel(!selected);
+      setShowLabel(!selected);
+
+      _onClose();
+    },
+    onOpen: function onOpen() {
+      return _onOpen();
     },
     MenuProps: {
       classes: {
@@ -89,10 +96,11 @@ var SelectBasic = function SelectBasic(props) {
       }
     },
     IconComponent: _KeyboardArrowDown.default
-  }, options.map(function (option) {
+  }, options.map(function (option, index) {
     var value = option.value,
         name = option.name;
     return _react.default.createElement(_MenuItem.default, {
+      key: index,
       value: value
     }, name);
   }))));
@@ -101,12 +109,16 @@ var SelectBasic = function SelectBasic(props) {
 SelectBasic.defaultProps = {
   placeholder: '',
   options: [],
-  selected: ''
+  selected: '',
+  onClose: function onClose() {},
+  onOpen: function onOpen() {}
 };
 SelectBasic.propTypes = {
   options: _propTypes.default.array,
   selected: _propTypes.default.string,
-  placeholder: _propTypes.default.string
+  placeholder: _propTypes.default.string,
+  onClose: _propTypes.default.func,
+  onOpen: _propTypes.default.func
 };
 var _default = SelectBasic;
 exports.default = _default;

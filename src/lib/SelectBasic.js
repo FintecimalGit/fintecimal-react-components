@@ -38,7 +38,8 @@ const SelectBasic = (props) => {
     setSelected(props.selected);
   }, [props.selected]);
 
-  const { options, placeholder } = props;
+  const { options, placeholder, onClose } = props;
+  const { onOpen } = props;
   const classes = useStyles();
 
   return (
@@ -52,7 +53,11 @@ const SelectBasic = (props) => {
         <Select
           value={selected}
           onChange={handleChange}
-          onClose={() => setShowLabel(!selected)}
+          onClose={() => {
+            setShowLabel(!selected);
+            onClose();
+          }}
+          onOpen={() => onOpen()}
           MenuProps={{
             classes: {
               paper: classes.paper
@@ -61,9 +66,9 @@ const SelectBasic = (props) => {
           IconComponent={KeyboardArrowDownIcon}
         >
           {
-            options.map(option => {
+            options.map((option, index) => {
               const { value, name } = option;
-              return <MenuItem value={value}>{name}</MenuItem>
+              return <MenuItem key={index} value={value}>{name}</MenuItem>
             })
           }
         </Select>
@@ -75,13 +80,17 @@ const SelectBasic = (props) => {
 SelectBasic.defaultProps = {
   placeholder: '',
   options: [],
-  selected: ''
+  selected: '',
+  onClose: () => {},
+  onOpen: () => {},
 };
 
 SelectBasic.propTypes = {
   options: PropTypes.array,
   selected: PropTypes.string,
   placeholder: PropTypes.string,
+  onClose: PropTypes.func,
+  onOpen: PropTypes.func,
 };
 
 export default SelectBasic;
