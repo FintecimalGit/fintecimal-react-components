@@ -63,7 +63,9 @@ var SelectBasic = function SelectBasic(props) {
       setShowLabel = _useState4[1];
 
   var handleChange = function handleChange(event) {
+    var onChange = props.onChange;
     setSelected(event.target.value);
+    onChange(event.target.value);
     setShowLabel(false);
   };
 
@@ -111,14 +113,16 @@ SelectBasic.defaultProps = {
   options: [],
   selected: '',
   onClose: function onClose() {},
-  onOpen: function onOpen() {}
+  onOpen: function onOpen() {},
+  onChange: function onChange() {}
 };
 SelectBasic.propTypes = {
   options: _propTypes.default.array,
   selected: _propTypes.default.string,
   placeholder: _propTypes.default.string,
   onClose: _propTypes.default.func,
-  onOpen: _propTypes.default.func
+  onOpen: _propTypes.default.func,
+  onChange: _propTypes.default.func
 };
 var _default = SelectBasic;
 exports.default = _default;
