@@ -46,8 +46,6 @@ var useStyles = (0, _core.makeStyles)(function (theme) {
       display: 'none'
     },
     paper: {
-      top: '40px !important',
-      left: '8px !important',
       maxHeight: '180px !important'
     }
   };
