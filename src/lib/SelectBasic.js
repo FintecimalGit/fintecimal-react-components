@@ -38,6 +38,7 @@ const SelectBasic = (props) => {
 
   useEffect(() => {
     setSelected(props.selected);
+    setShowLabel(!props.selected);
   }, [props.selected]);
 
   const { options, placeholder, onClose } = props;

@@ -71,6 +71,7 @@ var SelectBasic = function SelectBasic(props) {
 
   (0, _react.useEffect)(function () {
     setSelected(props.selected);
+    setShowLabel(!props.selected);
   }, [props.selected]);
   var options = props.options,
       placeholder = props.placeholder,
