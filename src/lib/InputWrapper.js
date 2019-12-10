@@ -12,18 +12,26 @@ const InputWrapper = ({ config, errors, isValid }) => {
 
   const mHandleChange = event => {
     const {
+      target,
       target: { value }
     } = event;
     if (format) {
       const formattedText = formatText(value, format);
+
+      if (isValid(formattedText)) target.setCustomValidity("");
+      else target.setCustomValidity(errorMessage || errorMessages.validation);
+
       setValue(formattedText);
+      handleChange(formattedText);
     } else {
       setValue(value);
+      handleChange(value);
     }
   };
 
   const onClear = () => {
     setValue('');
+    handleChange('');
   };
 
   const mOnBlur = () => {
@@ -41,8 +49,17 @@ const InputWrapper = ({ config, errors, isValid }) => {
   };
 
   useEffect(() => {
-    handleChange(mValue);
-  }, [mValue, mError]);
+    const newMvalue = format ? formatText(value, format) : value;
+    setValue(newMvalue);
+    if (!newMvalue || isValid(newMvalue)) {
+      setError(false);
+      setErrorMessage('');
+    }
+    else {
+      setError(true);
+      setErrorMessage(errorMessages.validation);
+    }
+  }, [value]);
 
   return (
     <BaseInput

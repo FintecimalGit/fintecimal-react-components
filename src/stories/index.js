@@ -26,7 +26,8 @@ const {
   CellPhoneInput,
   SelectInput,
   CLABEInput,
-  RadioSwitch
+  RadioSwitch,
+  SelectBasic
 } = lib;
 const { LoginUI, MultiDrop } = ui;
 
@@ -143,6 +144,7 @@ storiesOf('Components|Inputs', module)
   .add('Select Input', () => (
     <SelectInput
       label={longText}
+      placeholder="Placeholder"
       handleChange={action('handleChange')}
       required={true}
       error={true}
@@ -242,5 +244,21 @@ storiesOf('Components|Form', module).add('Validations', () => (
         Submit
       </button>
     </form>
+  </div>
+));
+
+storiesOf('Components|SelectBasic', module).add('Select Basic', () => (
+  <div style={{ height: '35px', width: '250px' }}>
+    <SelectBasic
+      placeholder="Razón del rechazo"
+      options={[
+        { value: 'fillingError', name: 'Error de llenado' },
+        { value: 'unreadableDocument', name: 'Documento ilegible' },
+        { value: 'labelError', name: 'Error de Etiqueta' },
+        { value: 'captureError', name: 'Error de captura' },
+        { value: 'wrongDocument', name: 'Documentación de otro cliente' },
+        { value: 'whiteFields', name: 'Campos en blanco' }
+      ]}
+    />
   </div>
 ));

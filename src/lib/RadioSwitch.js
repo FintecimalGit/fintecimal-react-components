@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './styles/RadioSwitch.css';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core';
@@ -20,6 +20,9 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: GRAY,
     color: GRAY_LIGHT
   },
+  bgTransparent: {
+    backgroundColor: 'transparent',
+  }
 }));
 
 const RadioSwitch = (props) => {
@@ -31,12 +34,24 @@ const RadioSwitch = (props) => {
     handleChange(value)
   }
 
+  const isOne = () => {
+    let exist = false;
+    options.forEach((option) => {
+      if(option.key === "" && option.value === "" ) exist = true;
+    })
+    return exist;
+  }
+
+  useEffect(() => {
+    setSelected(props.selected);
+  }, [props.selected]);
+
   const { options, checkedColor, uncheckedColor } = props;
   const classes = useStyles();
 
   return (
     <div
-      className={`radio-switch-content ${classes.content}`}
+      className={`radio-switch-content ${classes.content} ${isOne() ? classes.bgTransparent : "" }`}
     >
       {
         options.map((item) => {
@@ -50,7 +65,9 @@ const RadioSwitch = (props) => {
               className={`
               radio-switch-wrapper 
               ${checked ? 'radio-switch-wrapper-checked' : ''}
-              ${checked ? classes.wrapperChecked : classes.wrapperUnchecked}`}
+              ${checked ? classes.wrapperChecked : classes.wrapperUnchecked}
+              ${key === "" && value === "" ? classes.bgTransparent : "" }
+              `}
             >
               <span className="radio-switch">
                 <input
@@ -83,7 +100,7 @@ RadioSwitch.propTypes = {
   options: (props, propName) => {
     const propLength = props[propName].length;
 
-    if (propLength !== ITEMS_SIZE) {
+    if (propLength !== ITEMS_SIZE && propLength > 0) {
       return new Error(
         `Invalid array length ${propLength} (the length must be ${ITEMS_SIZE})`
       );
