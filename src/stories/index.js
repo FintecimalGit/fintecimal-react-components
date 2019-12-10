@@ -247,3 +247,27 @@ storiesOf('Components|SelectBasic', module)
       />
     </div>
   ));
+
+import Table from '../lib/Table';
+import Container from '@material-ui/core/Container';
+storiesOf('NewComponents', module)
+  .add('Table', () => {
+      const headers = Array(4)
+        .fill(null)
+        .map((item, index) => ({ key: `item${index}`, value:`Header ${index}` }));
+
+      const items = Array(10)
+        .fill(null)
+        .map(() => headers.reduce(
+          (accumulator, { key, value }) => ({ ...accumulator, [key]: <span>{ key }</span> }), {})
+        );
+      return (
+        <Container style={{ paddingTop: '5vh', paddingBottom: '5vh' }}>
+          <Table
+            headers={headers}
+            items={items}
+            onClickRow={action('onClickRow')}
+          />
+        </Container>
+    )}
+  );
