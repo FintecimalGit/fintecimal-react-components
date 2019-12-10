@@ -8,6 +8,7 @@ import ui from '../ui';
 import tables from '../commons/exampleTable';
 import { listWithCategories, listWithoutCategories } from '../lib/commons/exampleList';
 import { longText, mediumText, shortText } from '../lib/commons/exampleLongText';
+import { SearchBar, BaseInput } from '../lib/nodes';
 
 const {
   Input,
@@ -96,7 +97,7 @@ storiesOf('Components|Inputs', module)
       //errorMessage={'Este es un mensaje de error que puede tener cualquier cosa'}
       required={true}
       clear={true}
-    //value={'Este input viene lleno'}
+      //value={'Este input viene lleno'}
     />
   ))
   .add('Email Input', () => (
@@ -105,7 +106,7 @@ storiesOf('Components|Inputs', module)
       handleChange={action('handleChange')}
       required={true}
       error={false}
-    //errorMessage={'Este es un mensaje de error que puede tener cualquier cosa'}
+      //errorMessage={'Este es un mensaje de error que puede tener cualquier cosa'}
     />
   ))
   .add('RFC Input', () => (
@@ -162,6 +163,22 @@ storiesOf('Components|Inputs', module)
     />
   ));
 
+storiesOf('Components|Nodes', module)
+  .add('Search bar', () => (
+    <SearchBar placeholder={'Búsqueda de expedientes'} onEnter={action('handleSearch')} />
+  ))
+  .add('Base Input', () => (
+    <BaseInput
+      label={'Cualquier label'}
+      handleChange={action('handleChange')}
+      //error={true}
+      //errorMessage={'Este es un mensaje de error que puede tener cualquier cosa'}
+      required={true}
+      clear={true}
+      value={'Text'}
+    />
+  ));
+
 storiesOf('Components|Button', module)
   .add('Classic Button', () => <Button onClick={action('clicked')}></Button>, {
     notes:
@@ -198,33 +215,32 @@ storiesOf('Components|RadioSwitch', module)
     </div>
   ));
 
-storiesOf('Components|Form', module)
-  .add('Validations', () => (
-    <div style={{ height: '35px', width: '250px' }}>
-      <form
-        onSubmit={(event) => {
-            event.preventDefault();
-            event.stopPropagation();
-            // const { target } = event;
-            // console.log({ formIsValid: target.checkValidity() })
+storiesOf('Components|Form', module).add('Validations', () => (
+  <div style={{ height: '35px', width: '250px' }}>
+    <form
+      onSubmit={event => {
+        event.preventDefault();
+        event.stopPropagation();
+        // const { target } = event;
+        // console.log({ formIsValid: target.checkValidity() })
+      }}
+    >
+      <CellPhoneInput
+        handleChange={action('handleChange')}
+        required={true}
+        error={false}
+        //errorMessage={'Este es un mensaje de error que puede tener cualquier cosa'}
+      />
+      <button
+        type="submit"
+        onClick={event => {
+          const { target } = event;
+          const form = target.parentNode;
+          action('onClickSubmit')(JSON.stringify({ formIsValid: form.checkValidity() }));
         }}
       >
-        <CellPhoneInput
-          handleChange={action('handleChange')}
-          required={true}
-          error={false}
-          //errorMessage={'Este es un mensaje de error que puede tener cualquier cosa'}
-        />
-        <button
-          type="submit"
-          onClick={(event) => {
-            const { target } = event;
-            const form = target.parentNode;
-            action('onClickSubmit')(JSON.stringify({ formIsValid: form.checkValidity() }));
-          }}
-        >
-          Submit
-        </button>
-      </form>
-    </div>
-  ));
+        Submit
+      </button>
+    </form>
+  </div>
+));
