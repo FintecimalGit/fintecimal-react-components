@@ -277,6 +277,7 @@ storiesOf('Components|SelectBasic', module)
   ));
 
 import Table from '../lib/Table';
+import Paginator from '../lib/Paginator';
 import Container from '@material-ui/core/Container';
 storiesOf('NewComponents', module)
   .add('Table', () => {
@@ -298,7 +299,18 @@ storiesOf('NewComponents', module)
           />
         </Container>
     )}
+  )
+  .add('Paginator', () => {
+      return (
+        <Container style={{ paddingTop: '5vh', paddingBottom: '5vh' }}>
+          <Paginator
+            totalPages={50}
+            onChangePage={action('onChangePage')}
+          />
+        </Container>
+    )}
   );
+
 storiesOf('Components|SelectBasic', module).add('Select Basic', () => (
   <div style={{ height: '35px', width: '250px' }}>
     <SelectBasic
