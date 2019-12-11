@@ -276,9 +276,10 @@ storiesOf('Components|SelectBasic', module)
     </div>
   ));
 
+import Container from '@material-ui/core/Container';
 import Table from '../lib/Table';
 import Paginator from '../lib/Paginator';
-import Container from '@material-ui/core/Container';
+import DatePicker from '../lib/DatePicker';
 storiesOf('NewComponents', module)
   .add('Table', () => {
       const headers = Array(4)
@@ -309,7 +310,18 @@ storiesOf('NewComponents', module)
           />
         </Container>
     )}
-  );
+  )
+  .add('DatePicker', () => {
+    return (
+      <Container style={{ paddingTop: '5vh', paddingBottom: '5vh' }}>
+        <DatePicker
+          label="Label"
+          value={new Date()}
+          onDateChange={action('onDateChange')}
+        />
+      </Container>
+  )}
+);
 
 storiesOf('Components|SelectBasic', module).add('Select Basic', () => (
   <div style={{ height: '35px', width: '250px' }}>
