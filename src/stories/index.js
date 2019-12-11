@@ -305,8 +305,9 @@ storiesOf('NewComponents', module)
       return (
         <Container style={{ paddingTop: '5vh', paddingBottom: '5vh' }}>
           <Paginator
-            totalPages={50}
-            onChangePage={action('onChangePage')}
+            currentPage={11}
+            totalPages={51}
+            onPageChange={action('onPageChange')}
           />
         </Container>
     )}
