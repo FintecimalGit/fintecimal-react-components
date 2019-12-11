@@ -323,7 +323,7 @@ storiesOf('NewComponents', module)
         />
       </Container>
   )})
-  .add('DatePicker', () => {
+  .add('RejectionNote', () => {
     const [anchorElement, setAnchorElement] = React.useState(null);
 
     const openNote = (event) => {
