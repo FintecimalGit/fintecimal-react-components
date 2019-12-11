@@ -156,7 +156,6 @@ const SelectInput = ({
           htmlFor="component-simple"
           classes={{
             root: classes.inputContainer,
-            input: classes.input,
             asterisk: classes.asterisk
           }}
         >

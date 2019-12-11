@@ -192,7 +192,13 @@ storiesOf('Components|Nodes', module)
       options={listWithoutCategories}
     />
   ))
-  .add('Reject button', () => <RejectButton />);
+  .add('Reject button', () => (
+    <RejectButton
+      onClick={action('onClick')}
+      onClickMessage={action('onClickMessage')}
+      rejected={false}
+    />
+  ));
 
 storiesOf('Components|Button', module)
   .add('Classic Button', () => <Button onClick={action('clicked')}></Button>, {
