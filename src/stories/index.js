@@ -8,7 +8,7 @@ import ui from '../ui';
 import tables from '../commons/exampleTable';
 import { listWithCategories, listWithoutCategories } from '../lib/commons/exampleList';
 import { longText, mediumText, shortText } from '../lib/commons/exampleLongText';
-import { SearchBar, BaseInput } from '../lib/nodes';
+import { SearchBar, BaseInput, Select } from '../lib/nodes';
 
 const {
   Input,
@@ -178,6 +178,18 @@ storiesOf('Components|Nodes', module)
       required={true}
       clear={true}
       value={'Text'}
+    />
+  ))
+  .add('Select', () => (
+    <Select
+      label={'Estatus'}
+      placeholder={'Estatus'}
+      handleChange={action('handleChange')}
+      required={true}
+      //error={true}
+      errorMessage={shortText}
+      //value={'Seleccion mal'}
+      options={listWithoutCategories}
     />
   ));
 
