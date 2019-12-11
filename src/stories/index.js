@@ -266,6 +266,70 @@ storiesOf('Components|Form', module).add('Validations', () => (
   </div>
 ));
 
+storiesOf('Components|SelectBasic', module)
+  .add('Select Basic', () => (
+    <div style={{ height: '35px', width: '250px' }}>
+      <SelectBasic
+        placeholder="Razón del rechazo"
+        options={[
+          { value: 'fillingError', name: 'Error de llenado' },
+          { value: 'unreadableDocument', name: 'Documento ilegible' },
+          { value: 'labelError', name: 'Error de Etiqueta' },
+          { value: 'captureError', name: 'Error de captura' },
+          { value: 'wrongDocument', name: 'Documentación de otro cliente' },
+          { value: 'whiteFields', name: 'Campos en blanco' }
+        ]}
+      />
+    </div>
+  ));
+
+import Container from '@material-ui/core/Container';
+import Table from '../lib/Table';
+import Paginator from '../lib/Paginator';
+import DatePicker from '../lib/DatePicker';
+storiesOf('NewComponents', module)
+  .add('Table', () => {
+      const headers = Array(4)
+        .fill(null)
+        .map((item, index) => ({ key: `item${index}`, value:`Header ${index}` }));
+
+      const items = Array(10)
+        .fill(null)
+        .map(() => headers.reduce(
+          (accumulator, { key, value }) => ({ ...accumulator, [key]: <span>{ key }</span> }), {})
+        );
+      return (
+        <Container style={{ paddingTop: '5vh', paddingBottom: '5vh' }}>
+          <Table
+            headers={headers}
+            items={items}
+            onClickRow={action('onClickRow')}
+          />
+        </Container>
+    )}
+  )
+  .add('Paginator', () => {
+      return (
+        <Container style={{ paddingTop: '5vh', paddingBottom: '5vh' }}>
+          <Paginator
+            totalPages={50}
+            onChangePage={action('onChangePage')}
+          />
+        </Container>
+    )}
+  )
+  .add('DatePicker', () => {
+    return (
+      <Container style={{ paddingTop: '5vh', paddingBottom: '5vh' }}>
+        <DatePicker
+          label="Label"
+          value={new Date()}
+          onDateChange={action('onDateChange')}
+        />
+      </Container>
+  )}
+);
+
 storiesOf('Components|SelectBasic', module).add('Select Basic', () => (
   <div style={{ height: '35px', width: '250px' }}>
     <SelectBasic
