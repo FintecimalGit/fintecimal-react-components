@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import moment from 'moment';
-import "moment/locale/es";
+import 'moment/locale/es';
 
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from "@material-ui/pickers";
 import DateMomentUtils from '@date-io/moment';
@@ -16,19 +15,14 @@ const DatePicker = ({ label, value, onDateChange, format }) => {
   /**
    *
    * @param {Date} _date
-   * @returns {Date}
    */
-  const formatDate = _date => moment(_date).format(format);
-
-  const handleDateChange = (date) =>  {
-    const _date = formatDate(date);
+  const handleDateChange = (_date) =>  {
     setDate(_date);
     onDateChange(_date);
   };
 
   useEffect(() => {
-    const newDate = formatDate(value);
-    setDate(newDate);
+    setDate(value);
   }, [value])
 
   return (
@@ -38,9 +32,13 @@ const DatePicker = ({ label, value, onDateChange, format }) => {
           variant="inline"
           inputVariant="outlined"
           label={label}
-          value={formatDate(date)}
+          value={date}
           format={format}
           onChange={handleDateChange}
+          disableToolbar
+          KeyboardButtonProps={{
+            'aria-label': 'change date',
+          }}
       />
     </MuiPickersUtilsProvider>
   );
