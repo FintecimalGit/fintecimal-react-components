@@ -3,6 +3,8 @@ import { makeStyles } from '@material-ui/core';
 export default makeStyles(theme => ({
   content: {
     display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'stretch',
     height: 244,
     width: 326,
     backgroundColor: '#FFFFFF',
@@ -24,30 +26,33 @@ export default makeStyles(theme => ({
     transition: 'opacity 15s ease-in-out'
   },
   select: {
-    margin: theme.spacing(2),
-    paddingTop: theme.spacing(2)
+    margin: theme.spacing(2)
   },
   textAreaContent: {
-    margin: theme.spacing(2),
-    height: 85,
-    flexGrow: 1
+    margin: theme.spacing(0, 4, 2, 2),
+    flex: 1
   },
   textarea: {
     width: '100%',
     height: '100%',
     outline: 'none',
     resize: 'none',
+    padding: theme.spacing(1),
     border: '1px solid #ebebeb',
     borderRadius: '4px',
-    marginTop: '5px',
-    fontWeight: 'bold',
-    color: theme.palette.text.primary
+    fontSize: 14.2,
+    letterSpacing: 0.25,
+    lineHeight: 1.41,
+    fontWeight: 'normal',
+    color: theme.palette.text.primary,
+    '&::placeholder': {
+      color: theme.palette.text.secondary
+    }
   },
   footer: {
-    marginTop: theme.spacing(2),
     display: 'flex',
-    padding: 10,
-    bottom: 0,
+    height: 49,
+    marginTop: theme.spacing(2),
     borderTop: '1px solid #f2f2f2',
     flexDirection: 'row',
     justifyContent: 'flex-end',

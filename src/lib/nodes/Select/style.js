@@ -16,12 +16,12 @@ export default makeStyles(theme => ({
   },
   inputContainer: {
     flex: '1px',
-    backgroundColor: '#fff'
+    backgroundColor: '#fff',
+    fontSize: 14
   },
   input: {
     width: '100%',
-    boxSizing: 'border-box',
-    fontSize: '1rem'
+    boxSizing: 'border-box'
   },
   notchedOutline: {
     borderWidth: 1,

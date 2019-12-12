@@ -199,7 +199,18 @@ storiesOf('Components|Nodes', module)
       rejected={false}
     />
   ))
-  .add('Reject tooltip', () => <RejectTooltip active={true} />);
+  .add('Reject tooltip', () => (
+    <RejectTooltip
+      active={true}
+      handleReject={action('onReject')}
+      rejectionOptions={[
+        { name: 'Calidad baja' },
+        { name: 'Sin imagen' },
+        { name: 'Sin sonido' },
+        { name: 'Sin audio' }
+      ]}
+    />
+  ));
 
 storiesOf('Components|Button', module)
   .add('Classic Button', () => <Button onClick={action('clicked')}></Button>, {
