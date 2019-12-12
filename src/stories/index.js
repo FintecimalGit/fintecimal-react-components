@@ -8,7 +8,7 @@ import ui from '../ui';
 import tables from '../commons/exampleTable';
 import { listWithCategories, listWithoutCategories } from '../lib/commons/exampleList';
 import { longText, mediumText, shortText } from '../lib/commons/exampleLongText';
-import { SearchBar, BaseInput, Select } from '../lib/nodes';
+import { SearchBar, BaseInput, Select, RejectButton } from '../lib/nodes';
 
 const {
   Input,
@@ -190,6 +190,13 @@ storiesOf('Components|Nodes', module)
       errorMessage={shortText}
       //value={'Seleccion mal'}
       options={listWithoutCategories}
+    />
+  ))
+  .add('Reject button', () => (
+    <RejectButton
+      onClick={action('onClick')}
+      onClickMessage={action('onClickMessage')}
+      rejected={false}
     />
   ));
 

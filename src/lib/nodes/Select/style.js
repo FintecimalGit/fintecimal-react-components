@@ -52,12 +52,14 @@ export default makeStyles(theme => ({
   },
   normal: {
     marginTop: 3,
-    border: '1px solid #E0E0E0',
+    borderWidth: 1,
+    borderStyle: 'solid',
+    borderColor: theme.palette.status.danger.main,
     borderRadius: 4
   },
   focus: {
     marginTop: 3,
-    borderColor: theme.palette.primary.main
+    borderColor: theme.palette.status.danger.main
   },
   error: {
     marginTop: 3,
