@@ -8,7 +8,7 @@ import ui from '../ui';
 import tables from '../commons/exampleTable';
 import { listWithCategories, listWithoutCategories } from '../lib/commons/exampleList';
 import { longText, mediumText, shortText } from '../lib/commons/exampleLongText';
-import { SearchBar, BaseInput, Select, RejectButton } from '../lib/nodes';
+import { SearchBar, BaseInput, Select, RejectButton, RejectTooltip } from '../lib/nodes';
 
 const {
   Input,
@@ -198,6 +198,18 @@ storiesOf('Components|Nodes', module)
       onClickMessage={action('onClickMessage')}
       rejected={false}
     />
+  ))
+  .add('Reject tooltip', () => (
+    <RejectTooltip
+      active={true}
+      handleReject={action('onReject')}
+      rejectionOptions={[
+        { name: 'Calidad baja' },
+        { name: 'Sin imagen' },
+        { name: 'Sin sonido' },
+        { name: 'Sin audio' }
+      ]}
+    />
   ));
 
 storiesOf('Components|Button', module)
@@ -266,22 +278,21 @@ storiesOf('Components|Form', module).add('Validations', () => (
   </div>
 ));
 
-storiesOf('Components|SelectBasic', module)
-  .add('Select Basic', () => (
-    <div style={{ height: '35px', width: '250px' }}>
-      <SelectBasic
-        placeholder="Razón del rechazo"
-        options={[
-          { value: 'fillingError', name: 'Error de llenado' },
-          { value: 'unreadableDocument', name: 'Documento ilegible' },
-          { value: 'labelError', name: 'Error de Etiqueta' },
-          { value: 'captureError', name: 'Error de captura' },
-          { value: 'wrongDocument', name: 'Documentación de otro cliente' },
-          { value: 'whiteFields', name: 'Campos en blanco' }
-        ]}
-      />
-    </div>
-  ));
+storiesOf('Components|SelectBasic', module).add('Select Basic', () => (
+  <div style={{ height: '35px', width: '250px' }}>
+    <SelectBasic
+      placeholder="Razón del rechazo"
+      options={[
+        { value: 'fillingError', name: 'Error de llenado' },
+        { value: 'unreadableDocument', name: 'Documento ilegible' },
+        { value: 'labelError', name: 'Error de Etiqueta' },
+        { value: 'captureError', name: 'Error de captura' },
+        { value: 'wrongDocument', name: 'Documentación de otro cliente' },
+        { value: 'whiteFields', name: 'Campos en blanco' }
+      ]}
+    />
+  </div>
+));
 
 import Container from '@material-ui/core/Container';
 import ButtonMaterial from '@material-ui/core/Button';
@@ -291,63 +302,59 @@ import DatePicker from '../lib/DatePicker';
 import RejectionNote from '../lib/RejectionNote';
 storiesOf('NewComponents', module)
   .add('Table', () => {
-      const headers = Array(4)
-        .fill(null)
-        .map((item, index) => ({ key: `item${index}`, value:`Header ${index}` }));
+    const headers = Array(4)
+      .fill(null)
+      .map((item, index) => ({ key: `item${index}`, value: `Header ${index}` }));
 
-      const items = Array(10)
-        .fill(null)
-        .map(() => headers.reduce(
-          (accumulator, { key, value }) => ({ ...accumulator, [key]: <span>{ key }</span> }), {})
-        );
-      return (
-        <Container style={{ paddingTop: '5vh', paddingBottom: '5vh' }}>
-          <Table
-            headers={headers}
-            items={items}
-            onClickRow={action('onClickRow')}
-          />
-        </Container>
-    )}
-  )
+    const items = Array(10)
+      .fill(null)
+      .map(() =>
+        headers.reduce(
+          (accumulator, { key, value }) => ({ ...accumulator, [key]: <span>{key}</span> }),
+          {}
+        )
+      );
+    return (
+      <Container style={{ paddingTop: '5vh', paddingBottom: '5vh' }}>
+        <Table headers={headers} items={items} onClickRow={action('onClickRow')} />
+      </Container>
+    );
+  })
   .add('Paginator', () => {
-      return (
-        <Container style={{ paddingTop: '5vh', paddingBottom: '5vh' }}>
-          <Paginator
-            currentPage={11}
-            totalPages={51}
-            onPageChange={action('onPageChange')}
-          />
-        </Container>
-    )}
-  )
+    return (
+      <Container style={{ paddingTop: '5vh', paddingBottom: '5vh' }}>
+        <Paginator currentPage={11} totalPages={51} onPageChange={action('onPageChange')} />
+      </Container>
+    );
+  })
   .add('DatePicker', () => {
     return (
       <Container style={{ paddingTop: '5vh', paddingBottom: '5vh' }}>
-        <DatePicker
-          label="Label"
-          value={new Date()}
-          onDateChange={action('onDateChange')}
-        />
+        <DatePicker label="Label" value={new Date()} onDateChange={action('onDateChange')} />
       </Container>
-  )})
+    );
+  })
   .add('RejectionNote', () => {
     const [anchorElement, setAnchorElement] = React.useState(null);
 
-    const openNote = (event) => {
+    const openNote = event => {
       action('onOpenNote')(event.currentTarget);
       setAnchorElement(event.currentTarget);
-    }
+    };
 
     const closeNote = () => {
       action('onCloseNote')(null);
       setAnchorElement(null);
-    }
+    };
 
     return (
       <Container style={{ paddingTop: '5vh', paddingBottom: '5vh', height: '200vh' }}>
-        <div style={{ display: 'flex', justifyContent: 'center', width: '100%', padding: '25vw 0px' }}>
-          <ButtonMaterial variant="contained" color="primary" onClick={openNote}>Anchor</ButtonMaterial>
+        <div
+          style={{ display: 'flex', justifyContent: 'center', width: '100%', padding: '25vw 0px' }}
+        >
+          <ButtonMaterial variant="contained" color="primary" onClick={openNote}>
+            Anchor
+          </ButtonMaterial>
           <RejectionNote
             anchorElement={anchorElement}
             onClose={closeNote}
@@ -356,11 +363,11 @@ storiesOf('NewComponents', module)
             date={new Date()}
             reason="Video no corresponde a documento."
             comments="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
-
           />
         </div>
       </Container>
-  )});
+    );
+  });
 
 storiesOf('Components|SelectBasic', module).add('Select Basic', () => (
   <div style={{ height: '35px', width: '250px' }}>
