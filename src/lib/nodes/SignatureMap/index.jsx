@@ -75,21 +75,13 @@ SignatureMap.propTypes = {
     lat: PropTypes.number,
     lng: PropTypes.number
   }),
-  date: PropTypes.string,
-  handleAccept: PropTypes.func,
-  handleReject: PropTypes.func,
-  rejectionOptions: PropTypes.array,
-  status: PropTypes.string
+  date: PropTypes.string
 };
 
 SignatureMap.defaultProps = {
   title: 'Ubicación de video',
   location: DEFAULT_LOCATION,
-  date: new Date(),
-  handleAccept: () => {},
-  handleReject: () => {},
-  rejectionOptions: [],
-  status: ''
+  date: new Date()
 };
 
 export default SignatureMap;
