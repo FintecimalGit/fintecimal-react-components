@@ -295,9 +295,11 @@ storiesOf('Components|SelectBasic', module).add('Select Basic', () => (
 ));
 
 import Container from '@material-ui/core/Container';
+import ButtonMaterial from '@material-ui/core/Button';
 import Table from '../lib/Table';
 import Paginator from '../lib/Paginator';
 import DatePicker from '../lib/DatePicker';
+import RejectionNote from '../lib/RejectionNote';
 storiesOf('NewComponents', module)
   .add('Table', () => {
     const headers = Array(4)
@@ -321,7 +323,7 @@ storiesOf('NewComponents', module)
   .add('Paginator', () => {
     return (
       <Container style={{ paddingTop: '5vh', paddingBottom: '5vh' }}>
-        <Paginator totalPages={50} onChangePage={action('onChangePage')} />
+        <Paginator currentPage={11} totalPages={51} onPageChange={action('onPageChange')} />
       </Container>
     );
   })
@@ -329,6 +331,40 @@ storiesOf('NewComponents', module)
     return (
       <Container style={{ paddingTop: '5vh', paddingBottom: '5vh' }}>
         <DatePicker label="Label" value={new Date()} onDateChange={action('onDateChange')} />
+      </Container>
+    );
+  })
+  .add('RejectionNote', () => {
+    const [anchorElement, setAnchorElement] = React.useState(null);
+
+    const openNote = event => {
+      action('onOpenNote')(event.currentTarget);
+      setAnchorElement(event.currentTarget);
+    };
+
+    const closeNote = () => {
+      action('onCloseNote')(null);
+      setAnchorElement(null);
+    };
+
+    return (
+      <Container style={{ paddingTop: '5vh', paddingBottom: '5vh', height: '200vh' }}>
+        <div
+          style={{ display: 'flex', justifyContent: 'center', width: '100%', padding: '25vw 0px' }}
+        >
+          <ButtonMaterial variant="contained" color="primary" onClick={openNote}>
+            Anchor
+          </ButtonMaterial>
+          <RejectionNote
+            anchorElement={anchorElement}
+            onClose={closeNote}
+            name="Valerie Baumbach"
+            image="http://usagibaru.com/wp-content/uploads/2019/06/3822333_0.jpg"
+            date={new Date()}
+            reason="Video no corresponde a documento."
+            comments="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+          />
+        </div>
       </Container>
     );
   });
