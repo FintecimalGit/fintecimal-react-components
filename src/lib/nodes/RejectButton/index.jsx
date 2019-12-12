@@ -5,15 +5,15 @@ import { ThumbDownRounded, Chat } from '@material-ui/icons';
 import classnames from 'classnames';
 import useStyles from './style';
 
-const RejectIcon = ({ onClick, onClickMessage, rejected }) => {
+const RejectIcon = ({ onClick, onClickMessage, rejected, noteOpen }) => {
   const classes = useStyles();
   const clickBadge = event => {
     event.stopPropagation();
-    onClickMessage();
+    onClickMessage(event);
   };
   const clickButton = event => {
     event.stopPropagation();
-    if (!rejected) onClick();
+    if (!rejected) onClick(event);
   };
   return (
     <div className={classes.root}>
@@ -21,7 +21,7 @@ const RejectIcon = ({ onClick, onClickMessage, rejected }) => {
         color="default"
         overlap="circle"
         badgeContent={<Chat />}
-        className={classes.badge}
+        className={classnames(classes.badge, { [classes.noteOpen]: noteOpen })}
         invisible={!rejected}
         onClick={clickBadge}
       >
@@ -43,11 +43,13 @@ const RejectIcon = ({ onClick, onClickMessage, rejected }) => {
 };
 
 RejectIcon.defaultProps = {
-  rejected: true
+  rejected: true,
+  noteOpen: true
 };
 
 RejectIcon.propTypes = {
   rejected: PropTypes.bool,
+  noteOpen: PropTypes.bool,
   onClick: PropTypes.func.isRequired,
   onClickMessage: PropTypes.func.isRequired
 };

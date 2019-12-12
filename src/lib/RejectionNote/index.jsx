@@ -15,15 +15,7 @@ import CloseIcon from '@material-ui/icons/Close';
 
 import useStyles from './style';
 
-const RejectionNote = ({
-  anchorElement,
-  onClose,
-  name,
-  image,
-  date,
-  reason,
-  comments,
-}) => {
+const RejectionNote = ({ onClose, name, image, date, reason, comments }) => {
   const classes = useStyles();
 
   /**
@@ -34,90 +26,68 @@ const RejectionNote = ({
   const avatarLetter = string => string.charAt(0).toUpperCase();
 
   /**
-   * 
+   *
    * @param {Date|String} _date
    * @returns {String}
    */
-  const formatDate = _date => moment(_date).format('LT, MMM, DD - YYYY').replace('-', 'del');
+  const formatDate = _date =>
+    moment(_date)
+      .format('LT, MMM, DD - YYYY')
+      .replace('-', 'del');
 
   return (
-    <Popover
-      anchorEl={anchorElement}
-      open={Boolean(anchorElement)}
-      anchorOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
-      }}
-      transformOrigin={{
-        vertical: 'bottom',
-        horizontal: 'left',
-      }}
-    >
-      <Card className={classes.card}>
-        <CardHeader
-          className={classes.cardHeader}
-          avatar={
-            image
-              ? (
-                <Avatar alt={name} src={image} />
-              )
-              : (
-                <Avatar aria-label="recipe" className={classes.avatar}>
-                  <span>
-                    { avatarLetter(name) }
-                  </span>
-                </Avatar>
-              )
-          }
-          action={
-            <IconButton
-              className={classes.iconButton}
-              aria-label="settings"
-              onClick={onClose}
-            >
-              <CloseIcon className={classes.closeIcon} />
-            </IconButton>
-          }
-          title={name}
-          subheader={formatDate(date)}
-        />
-        <CardContent className={classes.cardContent}>
+    <Card className={classes.card}>
+      <CardHeader
+        className={classes.cardHeader}
+        avatar={
+          image ? (
+            <Avatar alt={name} src={image} />
+          ) : (
+            <Avatar aria-label="recipe" className={classes.avatar}>
+              <span>{avatarLetter(name)}</span>
+            </Avatar>
+          )
+        }
+        action={
+          <IconButton className={classes.iconButton} aria-label="settings" onClick={onClose}>
+            <CloseIcon className={classes.closeIcon} />
+          </IconButton>
+        }
+        title={name}
+        subheader={formatDate(date)}
+      />
+      <CardContent className={classes.cardContent}>
+        <Typography variant="body1" component="div">
+          <div>Motivo de rechazo:</div>
+          <div>{reason}</div>
+        </Typography>
+        {comments && (
           <Typography variant="body1" component="div">
-            <div>Motivo de rechazo:</div>
-            <div>{ reason }</div>
+            <div>Comentarios: </div>
+            <div>{comments}</div>
           </Typography>
-          {
-            comments && (
-              <Typography variant="body1" component="div">
-                <div>Comentarios: </div>
-                <div>{ comments }</div>
-              </Typography>
-            )
-          }
-        </CardContent>
-      </Card>
-    </Popover>
+        )}
+      </CardContent>
+    </Card>
   );
 };
 
 RejectionNote.propTypes = {
-  anchorElement: PropTypes.any,
   onClose: PropTypes.func,
   name: PropTypes.string,
   image: PropTypes.string,
   date: PropTypes.instanceOf(Date),
   reason: PropTypes.string,
-  comments: PropTypes.string,
+  comments: PropTypes.string
 };
 
 RejectionNote.defaultProps = {
-  anchorElement: null,
   onClose: () => {},
   name: '',
   image: '',
   date: new Date(),
   reason: '',
-  comments: '',
+  comments: ''
 };
 
 export default RejectionNote;
