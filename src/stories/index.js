@@ -284,6 +284,8 @@ import DatePicker from '../lib/DatePicker';
 import RejectionNote from '../lib/RejectionNote';
 import HeaderCollapse from '../lib/HeaderCollapse';
 import DocumentList from '../lib/DocumentList';
+import HeaderCard from '../lib/HeaderCard';
+import VideoCard from '../lib/VideoCard';
 storiesOf('NewComponents', module)
   .add('Table', () => {
       const headers = Array(4)
@@ -384,6 +386,26 @@ storiesOf('NewComponents', module)
           ]}
           onClickDocument={action('onClickDocument')}
           onDownload={action('onDownload')}
+        />
+      </Container>
+  )})
+  .add('HeaderCard', () => {
+    return (
+      <Container style={{ paddingTop: '5vh', paddingBottom: '5vh' }}>
+        <HeaderCard
+          title="Title"
+          subheader="SubHeader"
+        >
+          <h1>Child :3</h1>
+        </HeaderCard>
+      </Container>
+  )})
+  .add('VideoHeader', () => {
+    return (
+      <Container style={{ paddingTop: '5vh', paddingBottom: '5vh' }}>
+        <VideoCard
+          title="Firma en video"
+          video="http://clips.vorwaerts-gmbh.de/VfE_html5.mp4"
         />
       </Container>
   )});
