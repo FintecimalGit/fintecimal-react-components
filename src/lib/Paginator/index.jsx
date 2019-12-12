@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo } from 'react';
-import PropTypes from 'prop-types';
+import PropTypes, { array } from 'prop-types';
 import classnames from 'classnames';
 
 import IconButton from '@material-ui/core/IconButton';
@@ -11,71 +11,70 @@ import LastPageIcon from '@material-ui/icons/LastPage';
 
 import useStyles from './style';
 
-const Paginator = ({ currentPage, totalPages, onChangePage }) => {
+const Paginator = ({
+  currentPage,
+  totalPages,
+  step,
+  onPageChange,
+}) => {
   const classes = useStyles();
 
   const [page, setPage] = useState(currentPage);
 
   const pages = useMemo(() => {
-    let _totalPages = totalPages;
-    let factor = 1;
-    let accumulator = 1;
-    const values = [];
-    while(_totalPages > 0) {
-      values.push(accumulator);
-      accumulator += factor < 10 ? 1 : 10;
-      _totalPages -= factor <= 10 ? 1 : 10;
-      factor++;
-    }
-    return values;
-  }, [totalPages]);
+    const mod = page % step;
+    const initial = page - mod;
+    const final = initial + step;
 
-  /**
-   *
-   * @param {Number} _page
-   * @returns {Number}
-   */
-  const findIndexPage = (_page) => {
-    const foundIndex = pages.findIndex((element, index) => (
-      _page >= element && (_page < pages[index + 1] || index === pages.length - 1)
-    ));
-    return foundIndex === -1 ? 0 : foundIndex;
-  }
+    let acumulator = 0;
+    const values = [];
+
+    while(acumulator < totalPages) {
+      const nextAcumulator = acumulator + step;
+
+      if (initial === acumulator && final === nextAcumulator) {
+        Array(step - 1).fill(null).forEach((value, index) => {
+          const element = initial + index + 1;
+          if (element <= totalPages) values.push(initial + index + 1)
+        })
+      }
+
+      if (values.length === 0) values.push(1);
+      if (nextAcumulator <= totalPages) values.push(nextAcumulator);
+
+      acumulator = nextAcumulator;
+    }
+
+    return values;
+  }, [page]);
 
   const onFirstPage = () => {
-    const _page = pages[0];
-    setPage(_page);
-    onChangePage(_page);
+    const firstPage = 1;
+    setPage(firstPage);
+    onPageChange(firstPage);
   };
 
   const onBeforePage = () => {
-    const index = findIndexPage(page);
-    if (index > 0) {
-      const _page = pages[index - 1];
-      setPage(_page);
-      onChangePage(_page);
-    }
+    const beforePage = page > 1 ? page - 1 : 1;
+    setPage(beforePage);
+    onPageChange(beforePage);
   };
 
-  const onSelectPage = _page => () => {
-    setPage(_page);
-    onChangePage(_page);
+  const onSelectPage = selectedPage => () => {
+    setPage(selectedPage);
+    onPageChange(selectedPage);
   };
 
   const onNextPage = () => {
-    const index = findIndexPage(page);
-    if (index < pages.length - 1) {
-      const _page = pages[index + 1];
-      setPage(_page);
-      onChangePage(_page);
-    }
+    const nextPage = page < totalPages ? page + 1 : totalPages;
+    setPage(nextPage);
+    onPageChange(nextPage);
   };
 
   const onLastPage = () => {
-    const lasIndex = pages.length - 1;
-    const _page = pages[lasIndex];
-    setPage(_page);
-    onChangePage(_page);
+    const lastPage = totalPages
+    setPage(lastPage);
+    onPageChange(lastPage);
   };
 
   useState(() => {
@@ -131,13 +130,15 @@ const Paginator = ({ currentPage, totalPages, onChangePage }) => {
 Paginator.propTypes = {
   currentPage: PropTypes.number,
   totalPages: PropTypes.number,
-  onChangePage: PropTypes.func,
+  step: PropTypes.number,
+  onPageChange: PropTypes.func,
 };
 
 Paginator.defaultProps = {
   currentPage: 1,
   totalPages: 1,
-  onChangePage: () => {},
+  step: 10,
+  onPageChange: () => {},
 };
 
 export default Paginator;
