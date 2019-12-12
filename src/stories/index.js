@@ -8,7 +8,14 @@ import ui from '../ui';
 import tables from '../commons/exampleTable';
 import { listWithCategories, listWithoutCategories } from '../lib/commons/exampleList';
 import { longText, mediumText, shortText } from '../lib/commons/exampleLongText';
-import { SearchBar, BaseInput, Select, RejectButton, RejectTooltip } from '../lib/nodes';
+import {
+  SearchBar,
+  BaseInput,
+  Select,
+  RejectButton,
+  RejectTooltip,
+  RejectActions
+} from '../lib/nodes';
 
 const {
   Input,
@@ -210,6 +217,26 @@ storiesOf('Components|Nodes', module)
         { name: 'Sin audio' }
       ]}
     />
+  ))
+  .add('Reject actions', () => (
+    <RejectActions
+      rejectionOptions={[
+        { name: 'Calidad baja' },
+        { name: 'Sin imagen' },
+        { name: 'Sin sonido' },
+        { name: 'Sin audio' }
+      ]}
+      rejected={false}
+      handlerReject={action('Reject')}
+      rejectionData={{
+        name: 'Valerie Baumbach',
+        image: 'http://usagibaru.com/wp-content/uploads/2019/06/3822333_0.jpg',
+        date: new Date(),
+        reason: 'Video no corresponde a documento.',
+        comments:
+          'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
+      }}
+    />
   ));
 
 storiesOf('Components|Button', module)
@@ -300,6 +327,7 @@ import Table from '../lib/Table';
 import Paginator from '../lib/Paginator';
 import DatePicker from '../lib/DatePicker';
 import RejectionNote from '../lib/RejectionNote';
+import { actions } from '@storybook/addon-actions/dist/preview';
 storiesOf('NewComponents', module)
   .add('Table', () => {
     const headers = Array(4)
