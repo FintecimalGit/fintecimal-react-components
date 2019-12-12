@@ -15,7 +15,7 @@ const RejectTooltip = props => {
 
   const [selectState, setSelectState] = useState(CLOSE);
   const [reason, setReason] = useState('');
-  const [message, setMessage] = useState('');
+  const [comments, setComments] = useState('');
 
   const isOtusidePopover = event =>
     Boolean(content.current && !content.current.contains(event.target));
@@ -25,7 +25,7 @@ const RejectTooltip = props => {
     const { onClose, active } = props;
     if (active && isOtusidePopover(event) && isSelectClick()) {
       setReason('');
-      setMessage('');
+      setComments('');
       onClose();
     }
   };
@@ -33,15 +33,15 @@ const RejectTooltip = props => {
   const handleClose = () => {
     const { onClose } = props;
     setReason('');
-    setMessage('');
+    setComments('');
     onClose();
   };
 
   const handleRejectReason = () => {
     const { handleReject } = props;
-    handleReject({ reason, message });
     setReason('');
-    setMessage('');
+    setComments('');
+    handleReject({ reason, comments });
   };
 
   useEffect(() => {
@@ -56,7 +56,7 @@ const RejectTooltip = props => {
   const classes = useStyles();
 
   return (
-    <div ref={content} className={classes.content}>
+    <div ref={content} className={classes.content} style={{ display: active ? 'flex' : 'none' }}>
       <div className={classes.select}>
         <Select
           selected={reason}
@@ -71,8 +71,8 @@ const RejectTooltip = props => {
         <textarea
           placeholder={ADD_COMMENT}
           className={classes.textarea}
-          value={message}
-          onChange={e => setMessage(e.target.value)}
+          value={comments}
+          onChange={e => setComments(e.target.value)}
         />
       </div>
       <div className={classes.footer}>
