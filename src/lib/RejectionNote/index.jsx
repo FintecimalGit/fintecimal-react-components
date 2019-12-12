@@ -82,13 +82,13 @@ const RejectionNote = ({
           subheader={formatDate(date)}
         />
         <CardContent className={classes.cardContent}>
-          <Typography variant="body1" component="p">
+          <Typography variant="body1" component="div">
             <div>Motivo de rechazo:</div>
             <div>{ reason }</div>
           </Typography>
           {
             comments && (
-              <Typography variant="body1" component="p">
+              <Typography variant="body1" component="div">
                 <div>Comentarios: </div>
                 <div>{ comments }</div>
               </Typography>

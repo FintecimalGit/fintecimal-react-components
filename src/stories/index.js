@@ -282,6 +282,8 @@ import Table from '../lib/Table';
 import Paginator from '../lib/Paginator';
 import DatePicker from '../lib/DatePicker';
 import RejectionNote from '../lib/RejectionNote';
+import HeaderCollapse from '../lib/HeaderCollapse';
+import DocumentList from '../lib/DocumentList';
 storiesOf('NewComponents', module)
   .add('Table', () => {
       const headers = Array(4)
@@ -352,6 +354,37 @@ storiesOf('NewComponents', module)
 
           />
         </div>
+      </Container>
+  )})
+  .add('HeaderCollapse', () => {
+    return (
+      <Container style={{ paddingTop: '5vh', paddingBottom: '5vh' }}>
+        <HeaderCollapse
+          title="Soy Un Collapse :3"
+        >
+          <h1>Soy El Children Del Collapse :3</h1>
+        </HeaderCollapse>
+        <HeaderCollapse
+          title="Soy Un Contenedor"
+          container
+        >
+          <h1>Soy El Children Del Contenedor</h1>
+        </HeaderCollapse>
+      </Container>
+  )})
+  .add('DocumentList', () => {
+    return (
+      <Container style={{ paddingTop: '5vh', paddingBottom: '5vh' }}>
+        <DocumentList
+          title="Titulo Documentos"
+          documents={[
+            { name: 'Documento 1', status: 'Aceptado' },
+            { name: 'Documento 2', status: 'Pendiente' },
+            { name: 'Documento 3', status: 'En espera' },
+          ]}
+          onClickDocument={action('onClickDocument')}
+          onDownload={action('onDownload')}
+        />
       </Container>
   )});
 
