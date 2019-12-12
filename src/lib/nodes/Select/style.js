@@ -4,7 +4,6 @@ export default makeStyles(theme => ({
   root: {
     display: 'flex',
     flexDirection: 'column',
-    margin: theme.spacing(1),
     height: '48px'
   },
   form: {
@@ -17,19 +16,19 @@ export default makeStyles(theme => ({
   },
   inputContainer: {
     flex: '1px',
-    backgroundColor: '#fff'
+    backgroundColor: '#fff',
+    fontSize: 14
   },
   input: {
     width: '100%',
-    boxSizing: 'border-box',
-    fontSize: '1rem'
+    boxSizing: 'border-box'
   },
   notchedOutline: {
-    borderWidth: 2,
+    borderWidth: 1,
     opacity: 0.7
   },
   focusNotchedOutline: {
-    borderWidth: 3,
+    borderWidth: 2,
     opacity: 1
   },
   asterisk: {
@@ -52,7 +51,9 @@ export default makeStyles(theme => ({
   },
   normal: {
     marginTop: 3,
-    border: '1px solid #E0E0E0',
+    borderWidth: 1,
+    borderStyle: 'solid',
+    borderColor: '#D5DCE0',
     borderRadius: 4
   },
   focus: {
@@ -61,9 +62,6 @@ export default makeStyles(theme => ({
   },
   error: {
     marginTop: 3,
-    borderTop: '2px solid rgba(244,67,54,0.7)',
-    borderLeft: '2px solid rgba(244,67,54,0.7)',
-    borderRight: '2px solid rgba(244,67,54,0.7)',
-    borderBottom: '2px solid rgba(244,67,54,0.7)'
+    borderColor: theme.palette.status.danger.main
   }
 }));

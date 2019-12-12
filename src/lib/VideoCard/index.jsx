@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import IconButton from '@material-ui/core/IconButton';
+
 import HeaderCard from '../HeaderCard';
 import useStyles from './style';
 
@@ -13,13 +15,20 @@ const SignatureVideo = ({
 }) => {
   const clasess = useStyles();
   return (
-    <HeaderCard title={title}>
-      <video
-        controls
-        src={video}
-        className={clasess.video}
-      />
-    </HeaderCard>
+    <div className={clasess.container}>
+      <HeaderCard title={title}>
+        <video
+          controls
+          src={video}
+          className={clasess.video}
+        />
+      </HeaderCard>
+      <div className={clasess.rejectContainer}>
+        <IconButton>
+          DisLIKE
+        </IconButton>
+      </div>
+    </div>
   );
 };
 
@@ -32,7 +41,7 @@ SignatureVideo.propTypes = {
 };
 
 SignatureVideo.defaultProps = {
-  title: 'FIRMA EN VIDEO',
+  title: '',
   video: '',
   onReject: () => {},
   rejectionOptions: [],
