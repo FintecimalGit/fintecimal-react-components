@@ -25,6 +25,9 @@ export default makeStyles(theme => ({
     backgroundColor: '#676767',
     cursor: 'auto'
   },
+  noteOpen: {
+    color: '#676767'
+  },
   hover: {
     '&:hover': {
       backgroundColor: '#FFF',
