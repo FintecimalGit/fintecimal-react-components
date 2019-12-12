@@ -4,6 +4,9 @@ const useStyles = makeStyles((theme) => ({
   listItem: {
     borderRadius: '4px',
     backgroundColor: '#fbfbfb',
+    '&:hover': {
+      backgroundColor: 'rgba(0, 0, 0, 0.03)',
+    }
   },
   listItemText: {
     '& > span': {
@@ -15,6 +18,9 @@ const useStyles = makeStyles((theme) => ({
   },
   iconButtonContainer: {
     margin: theme.spacing(0, 1),
+    '&:hover': {
+      backgroundColor: 'rgba(0, 0, 0, 0.03)',
+    },
     '& > span > svg': {
       color: theme.palette.primary.main,
       fontSize: '1rem',
