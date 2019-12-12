@@ -56,20 +56,20 @@ const RejectTooltip = props => {
   const classes = useStyles();
 
   return (
-    <div ref={content} className={classes.content} style={{ display: active ? 'block' : 'none' }}>
+    <div ref={content} className={classes.content}>
       <div className={classes.select}>
         <Select
           selected={reason}
-          onChange={value => setReason(value)}
+          handleChange={value => setReason(value)}
           onClose={() => setSelectState(CLOSE)}
           onOpen={() => setSelectState(OPEN)}
-          placeholder={REJECTION_REASON}
+          label={REJECTION_REASON}
           options={rejectionOptions}
         />
       </div>
       <div className={classes.textAreaContent}>
-        <span className={classes.textareaTitle}>{`${ADD_COMMENT}:`}</span>
         <textarea
+          placeholder={ADD_COMMENT}
           className={classes.textarea}
           value={message}
           onChange={e => setMessage(e.target.value)}

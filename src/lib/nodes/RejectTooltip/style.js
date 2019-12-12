@@ -2,16 +2,14 @@ import { makeStyles } from '@material-ui/core';
 
 export default makeStyles(theme => ({
   content: {
-    height: '231px',
-    width: '328px',
+    display: 'flex',
+    height: 244,
+    width: 326,
     backgroundColor: '#FFFFFF',
-    boxShadow: '0 2px 20px 0 rgba(0,0,0,0.2)',
+    boxShadow: '0 -2px 20px 0 rgba(0, 0, 0, 0.2)',
     border: '0',
-    borderRadius: '10px',
+    borderRadius: 4,
     zIndex: '1',
-    position: 'absolute',
-    bottom: '90%',
-    right: '-28px',
     '&::before': {
       content: '""',
       position: 'absolute',
@@ -25,49 +23,46 @@ export default makeStyles(theme => ({
     },
     transition: 'opacity 15s ease-in-out'
   },
-  textAreaContent: {
-    margin: '10px 25px 10px 20px',
-    height: '68px'
+  select: {
+    margin: theme.spacing(2),
+    paddingTop: theme.spacing(2)
   },
-  textareaTitle: {
-    width: '100%',
-    color: theme.palette.text.primary,
-    fontSize: '0.875rem',
-    fontWeight: '500'
+  textAreaContent: {
+    margin: theme.spacing(2),
+    height: 85,
+    flexGrow: 1
   },
   textarea: {
     width: '100%',
     height: '100%',
     outline: 'none',
     resize: 'none',
-    border: '1px solid #D5DCE0',
-    borderRadius: '2px',
+    border: '1px solid #ebebeb',
+    borderRadius: '4px',
     marginTop: '5px',
     fontWeight: 'bold',
     color: theme.palette.text.primary
   },
   footer: {
-    width: '100%',
-    position: 'absolute',
-    bottom: '0',
-    right: '0',
-    borderTop: '1px solid #D5DCE0',
-    display: 'inline-flex',
-    textAlign: 'center',
-    height: '46px'
+    marginTop: theme.spacing(2),
+    display: 'flex',
+    padding: 10,
+    bottom: 0,
+    borderTop: '1px solid #f2f2f2',
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    backgroundColor: '#ffffff'
   },
   cancelContent: {
-    width: '50%',
+    flex: 1,
     borderRight: '1px solid #D5DCE0'
   },
   rejectContent: {
-    width: '50%'
+    flex: 1
   },
   button: {
     height: '100%',
     width: '100%'
-  },
-  select: {
-    margin: '20px 20px 12px 20px'
   }
 }));

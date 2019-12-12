@@ -199,9 +199,7 @@ storiesOf('Components|Nodes', module)
       rejected={false}
     />
   ))
-  .add('Reject tooltip', () => {
-    <RejectTooltip />;
-  });
+  .add('Reject tooltip', () => <RejectTooltip active={true} />);
 
 storiesOf('Components|Button', module)
   .add('Classic Button', () => <Button onClick={action('clicked')}></Button>, {
