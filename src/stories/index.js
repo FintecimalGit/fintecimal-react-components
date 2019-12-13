@@ -200,11 +200,19 @@ storiesOf('Components|Nodes', module)
     />
   ))
   .add('Reject button', () => (
-    <RejectButton
-      onClick={action('onClick')}
-      onClickMessage={action('onClickMessage')}
-      rejected={false}
-    />
+    <>
+      <RejectButton
+        onClick={action('onClick')}
+        onClickMessage={action('onClickMessage')}
+        rejected={false}
+      />
+      <RejectButton
+        onClick={action('onClick')}
+        onClickMessage={action('onClickMessage')}
+        rejected={false}
+        size="small"
+      />
+    </>
   ))
   .add('Reject tooltip', () => (
     <RejectTooltip

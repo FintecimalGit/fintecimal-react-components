@@ -5,7 +5,7 @@ import { ThumbDownRounded, Chat } from '@material-ui/icons';
 import classnames from 'classnames';
 import useStyles from './style';
 
-const RejectIcon = ({ onClick, onClickMessage, rejected, noteOpen }) => {
+const RejectIcon = ({ onClick, onClickMessage, rejected, noteOpen, size }) => {
   const classes = useStyles();
   const clickBadge = event => {
     event.stopPropagation();
@@ -15,13 +15,27 @@ const RejectIcon = ({ onClick, onClickMessage, rejected, noteOpen }) => {
     event.stopPropagation();
     if (!rejected) onClick(event);
   };
+
+  /**
+   * @returns {Boolean}
+   */
+  const sizeIsLarge = () => size === 'large';
+
+  /**
+   * @returns {Boolean}
+   */
+  const sizeIsSmall = () => size === 'small';
+
   return (
     <div className={classes.root}>
       <Badge
         color="default"
         overlap="circle"
         badgeContent={<Chat />}
-        className={classnames(classes.badge, { [classes.noteOpen]: noteOpen })}
+        className={classnames(
+          classes.badge,
+          { [classes.noteOpen]: noteOpen, }
+        )}
         invisible={!rejected}
         onClick={clickBadge}
       >
@@ -31,7 +45,9 @@ const RejectIcon = ({ onClick, onClickMessage, rejected, noteOpen }) => {
           className={classnames(
             classes.button,
             { [classes.disabled]: rejected },
-            { [classes.hover]: !rejected }
+            { [classes.hover]: !rejected },
+            { [classes.buttonLarge]: sizeIsLarge(), },
+            { [classes.buttonSmall]: sizeIsSmall(), }
           )}
           onClick={clickButton}
         >
@@ -44,14 +60,16 @@ const RejectIcon = ({ onClick, onClickMessage, rejected, noteOpen }) => {
 
 RejectIcon.defaultProps = {
   rejected: true,
-  noteOpen: true
+  noteOpen: true,
+  size: 'large',
 };
 
 RejectIcon.propTypes = {
   rejected: PropTypes.bool,
   noteOpen: PropTypes.bool,
   onClick: PropTypes.func.isRequired,
-  onClickMessage: PropTypes.func.isRequired
+  onClickMessage: PropTypes.func.isRequired,
+  size: PropTypes.oneOf(['large', 'small']),
 };
 
 export default RejectIcon;
