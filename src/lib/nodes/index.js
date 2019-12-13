@@ -5,5 +5,17 @@ import ButtonFlat from './Buttons/ButtonFlat';
 import RejectButton from './RejectButton';
 import RejectTooltip from './RejectTooltip';
 import RejectActions from './RejectActions';
+import Maps from './Maps';
+import SignatureMap from './SignatureMap';
 
-export { Select, SearchBar, BaseInput, RejectButton, RejectTooltip, ButtonFlat, RejectActions };
+export {
+  Maps,
+  Select,
+  SearchBar,
+  BaseInput,
+  RejectButton,
+  SignatureMap,
+  RejectTooltip,
+  ButtonFlat,
+  RejectActions
+};
