@@ -34,14 +34,14 @@ export default makeStyles((theme) => ({
   },
   cardContent: {
     paddingTop: 0,
-    '& > p:not(:last-child)': {
+    '& > div:not(:last-child)': {
       marginBottom: theme.spacing(1),
     },
-    '& > p': {
+    '& > div': {
       letterSpacing: '0.2px',
       lineHeight: '19px',
     },
-    '& > p > div:last-child': {
+    '& > div > div:last-child': {
       opacity: 0.8,
     },
   },

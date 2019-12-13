@@ -327,7 +327,10 @@ import Table from '../lib/Table';
 import Paginator from '../lib/Paginator';
 import DatePicker from '../lib/DatePicker';
 import RejectionNote from '../lib/RejectionNote';
-import { actions } from '@storybook/addon-actions/dist/preview';
+import HeaderCollapse from '../lib/HeaderCollapse';
+import DocumentList from '../lib/DocumentList';
+import HeaderCard from '../lib/HeaderCard';
+import VideoCard from '../lib/VideoCard';
 storiesOf('NewComponents', module)
   .add('Table', () => {
     const headers = Array(4)
@@ -394,8 +397,74 @@ storiesOf('NewComponents', module)
           />
         </div>
       </Container>
-    );
-  });
+  )})
+  .add('HeaderCollapse', () => {
+    return (
+      <Container style={{ paddingTop: '5vh', paddingBottom: '5vh' }}>
+        <HeaderCollapse
+          title="Soy Un Collapse :3"
+        >
+          <h1>Soy El Children Del Collapse :3</h1>
+        </HeaderCollapse>
+        <HeaderCollapse
+          title="Soy Un Contenedor"
+          container
+        >
+          <h1>Soy El Children Del Contenedor</h1>
+        </HeaderCollapse>
+      </Container>
+  )})
+  .add('DocumentList', () => {
+    return (
+      <Container style={{ paddingTop: '5vh', paddingBottom: '5vh' }}>
+        <DocumentList
+          title="Titulo Documentos"
+          documents={[
+            { name: 'Documento 1', status: 'Aceptado' },
+            { name: 'Documento 2', status: 'Pendiente' },
+            { name: 'Documento 3', status: 'En espera' },
+          ]}
+          onClickDocument={action('onClickDocument')}
+          onDownload={action('onDownload')}
+        />
+      </Container>
+  )})
+  .add('HeaderCard', () => {
+    return (
+      <Container style={{ paddingTop: '5vh', paddingBottom: '5vh' }}>
+        <HeaderCard
+          title="Title"
+          subheader="SubHeader"
+        >
+          <h1>Child :3</h1>
+        </HeaderCard>
+      </Container>
+  )})
+  .add('VideoHeader', () => {
+    return (
+      <Container style={{ paddingTop: '5vh', paddingBottom: '5vh' }}>
+        <VideoCard
+          title="Firma en video"
+          video="http://clips.vorwaerts-gmbh.de/VfE_html5.mp4"
+          onReject={action('onReject')}
+          rejectionOptions={[
+            { name: 'Calidad baja' },
+            { name: 'Sin imagen' },
+            { name: 'Sin sonido' },
+            { name: 'Sin audio' }
+          ]}
+          rejectionData={{
+            name: 'Valerie Baumbach',
+            image: 'http://usagibaru.com/wp-content/uploads/2019/06/3822333_0.jpg',
+            date: new Date(),
+            reason: 'Video no corresponde a documento.',
+            comments:
+              'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
+          }}
+          rejected={false}
+        />
+      </Container>
+  )});
 
 storiesOf('Components|SelectBasic', module).add('Select Basic', () => (
   <div style={{ height: '35px', width: '250px' }}>
