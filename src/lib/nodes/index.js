@@ -7,15 +7,17 @@ import RejectTooltip from './RejectTooltip';
 import RejectActions from './RejectActions';
 import Maps from './Maps';
 import SignatureMap from './SignatureMap';
+import ImageActions from './ImageActions';
 
 export {
   Maps,
   Select,
   SearchBar,
   BaseInput,
+  ButtonFlat,
   RejectButton,
   SignatureMap,
+  ImageActions,
   RejectTooltip,
-  ButtonFlat,
   RejectActions
 };
