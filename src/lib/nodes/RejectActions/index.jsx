@@ -4,18 +4,27 @@ import { RejectButton, RejectTooltip } from '../index';
 import { Popover } from '@material-ui/core';
 import RejectionNote from '../../RejectionNote';
 
-const RejectActions = ({ rejectionData, rejectionOptions, handlerReject, rejected }) => {
+const RejectActions = ({
+  rejectionData,
+  rejectionOptions,
+  handlerReject,
+  rejected,
+  onOpen,
+  onClose,
+}) => {
   const [mRejected, setRejected] = useState(rejected);
   const [mRejectionData, setRejectionData] = useState(rejectionData);
   const [anchorElement, setAnchorElement] = useState(null);
 
   const onClick = event => {
     event.stopPropagation();
+    onOpen(event);
     setAnchorElement(event.currentTarget);
   };
 
   const onClickMessage = event => {
     event.stopPropagation();
+    onOpen(event);
     setAnchorElement(event.currentTarget);
   };
 
@@ -26,7 +35,8 @@ const RejectActions = ({ rejectionData, rejectionOptions, handlerReject, rejecte
     handlerReject(data);
   };
 
-  const onClose = () => {
+  const onClosePopOver = (event) => {
+    onClose(event);
     setAnchorElement(null);
   };
 
@@ -51,11 +61,11 @@ const RejectActions = ({ rejectionData, rejectionOptions, handlerReject, rejecte
         }}
       >
         {mRejected ? (
-          <RejectionNote onClose={onClose} {...mRejectionData} />
+          <RejectionNote onClose={onClosePopOver} {...mRejectionData} />
         ) : (
           <RejectTooltip
             active={true}
-            onClose={onClose}
+            onClose={onClosePopOver}
             handleReject={handleReject}
             rejectionOptions={rejectionOptions}
           />
@@ -67,14 +77,18 @@ const RejectActions = ({ rejectionData, rejectionOptions, handlerReject, rejecte
 
 RejectActions.defaultProps = {
   rejectionData: {},
-  rejectionOptions: []
+  rejectionOptions: [],
+  onOpen: () => {},
+  onClose: () => {},
 };
 
 RejectActions.propTypes = {
   rejected: PropTypes.bool.isRequired,
   rejectionData: PropTypes.object,
   rejectionOptions: PropTypes.array,
-  handlerReject: PropTypes.func.isRequired
+  handlerReject: PropTypes.func.isRequired,
+  onOpen: PropTypes.func.isRequired,
+  onClose: PropTypes.func,
 };
 
 export default RejectActions;

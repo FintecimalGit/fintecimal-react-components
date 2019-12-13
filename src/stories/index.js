@@ -446,6 +446,22 @@ storiesOf('NewComponents', module)
         <VideoCard
           title="Firma en video"
           video="http://clips.vorwaerts-gmbh.de/VfE_html5.mp4"
+          onReject={action('onReject')}
+          rejectionOptions={[
+            { name: 'Calidad baja' },
+            { name: 'Sin imagen' },
+            { name: 'Sin sonido' },
+            { name: 'Sin audio' }
+          ]}
+          rejectionData={{
+            name: 'Valerie Baumbach',
+            image: 'http://usagibaru.com/wp-content/uploads/2019/06/3822333_0.jpg',
+            date: new Date(),
+            reason: 'Video no corresponde a documento.',
+            comments:
+              'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
+          }}
+          rejected={false}
         />
       </Container>
   )});

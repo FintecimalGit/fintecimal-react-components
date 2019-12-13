@@ -5,24 +5,21 @@ const useStyles = makeStyles((theme) => ({
     position: 'relative',
     display: 'inline-block',
     '&:hover $rejectContainer': {
-      display: 'flex',
-      justifyContent: 'center',
-      alignContent: 'center',
-      alignItems: 'center',
+      display: 'flex !important',
     }
   },
   rejectContainer: {
     position: 'absolute',
-    padding: theme.spacing(8),
+    padding: theme.spacing(0, 4),
     top: '0px',
-    right: theme.spacing(-13),
+    right: theme.spacing(-12),
     height: '100%',
     display: 'none',
+    justifyContent: 'center',
+    alignContent: 'center',
+    alignItems: 'center',
     '&:hover': {
-      display: 'flex',
-      justifyContent: 'center',
-      alignContent: 'center',
-      alignItems: 'center',
+      display: 'flex !important',
     },
   },
   video: {
