@@ -9,6 +9,11 @@ export default makeStyles((theme) => ({
     '&:hover $rejectionActions': {
       display: 'inline-block !important',
     },
+    borderRadius: '4px',
+  },
+  listBorder: {
+    border: 'solid 1px',
+    borderColor: theme.palette.status.danger.main,
   },
   listItemSecondaryContainer: {
     position: 'relative',

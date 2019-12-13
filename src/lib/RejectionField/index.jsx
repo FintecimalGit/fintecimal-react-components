@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import classnames from 'classnames';
 
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -34,7 +35,10 @@ const RejectionField = ({
   const getRejectionActionsDisplay = () => rejected ? 'inline-block' : forceDisplay;
 
   return (
-    <List className={classes.list}>
+    <List className={classnames(
+      classes.list,
+      { [classes.listBorder]: rejected && forceDisplay === 'inline-block' },
+    )}>
       <ListItem>
         <ListItemText primary={field.key} />
         <ListItemSecondaryAction>
