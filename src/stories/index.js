@@ -14,7 +14,9 @@ import {
   Select,
   RejectButton,
   RejectTooltip,
-  RejectActions
+  RejectActions,
+  SignatureMap,
+  ImageActions
 } from '../lib/nodes';
 
 const {
@@ -245,7 +247,9 @@ storiesOf('Components|Nodes', module)
           'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
       }}
     />
-  ));
+  ))
+  .add('Map', () => <SignatureMap />)
+  .add('Image Actions', () => <ImageActions />);
 
 storiesOf('Components|Button', module)
   .add('Classic Button', () => <Button onClick={action('clicked')}></Button>, {
@@ -406,23 +410,20 @@ storiesOf('NewComponents', module)
           />
         </div>
       </Container>
-  )})
+    );
+  })
   .add('HeaderCollapse', () => {
     return (
       <Container style={{ paddingTop: '5vh', paddingBottom: '5vh' }}>
-        <HeaderCollapse
-          title="Soy Un Collapse :3"
-        >
+        <HeaderCollapse title="Soy Un Collapse :3">
           <h1>Soy El Children Del Collapse :3</h1>
         </HeaderCollapse>
-        <HeaderCollapse
-          title="Soy Un Contenedor"
-          container
-        >
+        <HeaderCollapse title="Soy Un Contenedor" container>
           <h1>Soy El Children Del Contenedor</h1>
         </HeaderCollapse>
       </Container>
-  )})
+    );
+  })
   .add('DocumentList', () => {
     return (
       <Container style={{ paddingTop: '5vh', paddingBottom: '5vh' }}>
@@ -431,24 +432,23 @@ storiesOf('NewComponents', module)
           documents={[
             { name: 'Documento 1', status: 'Aceptado' },
             { name: 'Documento 2', status: 'Pendiente' },
-            { name: 'Documento 3', status: 'En espera' },
+            { name: 'Documento 3', status: 'En espera' }
           ]}
           onClickDocument={action('onClickDocument')}
           onDownload={action('onDownload')}
         />
       </Container>
-  )})
+    );
+  })
   .add('HeaderCard', () => {
     return (
       <Container style={{ paddingTop: '5vh', paddingBottom: '5vh' }}>
-        <HeaderCard
-          title="Title"
-          subheader="SubHeader"
-        >
+        <HeaderCard title="Title" subheader="SubHeader">
           <h1>Child :3</h1>
         </HeaderCard>
       </Container>
-  )})
+    );
+  })
   .add('VideoHeader', () => {
     return (
       <Container style={{ paddingTop: '5vh', paddingBottom: '5vh' }}>
