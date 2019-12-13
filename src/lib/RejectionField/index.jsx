@@ -28,6 +28,11 @@ const RejectionField = ({
     setForceDisplay('none');
   };
 
+  /**
+   * @returns {String}
+   */
+  const getRejectionActionsDisplay = () => rejected ? 'inline-block' : forceDisplay;
+
   return (
     <List className={classes.list}>
       <ListItem>
@@ -39,7 +44,7 @@ const RejectionField = ({
             </div>
             <div
               className={classes.rejectionActions}
-              style={{ display: rejected ? 'inline-block' : forceDisplay }}
+              style={{ display: getRejectionActionsDisplay() }}
             >
               <RejectActions
                 rejectionOptions={rejectionOptions}
