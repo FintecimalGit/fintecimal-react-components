@@ -14,7 +14,8 @@ import {
   Select,
   RejectButton,
   RejectTooltip,
-  RejectActions
+  RejectActions,
+  SignatureMap
 } from '../lib/nodes';
 
 const {
@@ -237,7 +238,8 @@ storiesOf('Components|Nodes', module)
           'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
       }}
     />
-  ));
+  ))
+  .add('Map', () => <SignatureMap />);
 
 storiesOf('Components|Button', module)
   .add('Classic Button', () => <Button onClick={action('clicked')}></Button>, {
