@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo } from 'react';
-import PropTypes, { array } from 'prop-types';
+import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
 import IconButton from '@material-ui/core/IconButton';
@@ -77,7 +77,7 @@ const Paginator = ({
     onPageChange(lastPage);
   };
 
-  useState(() => {
+  useEffect(() => {
     setPage(currentPage);
   }, [currentPage]);
 
