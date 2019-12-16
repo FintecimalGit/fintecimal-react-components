@@ -202,11 +202,19 @@ storiesOf('Components|Nodes', module)
     />
   ))
   .add('Reject button', () => (
-    <RejectButton
-      onClick={action('onClick')}
-      onClickMessage={action('onClickMessage')}
-      rejected={false}
-    />
+    <>
+      <RejectButton
+        onClick={action('onClick')}
+        onClickMessage={action('onClickMessage')}
+        rejected={false}
+      />
+      <RejectButton
+        onClick={action('onClick')}
+        onClickMessage={action('onClickMessage')}
+        rejected={false}
+        size="small"
+      />
+    </>
   ))
   .add('Reject tooltip', () => (
     <RejectTooltip
@@ -335,6 +343,7 @@ import HeaderCollapse from '../lib/HeaderCollapse';
 import DocumentList from '../lib/DocumentList';
 import HeaderCard from '../lib/HeaderCard';
 import VideoCard from '../lib/VideoCard';
+import RejectionField from '../lib/RejectionField';
 storiesOf('NewComponents', module)
   .add('Table', () => {
     const headers = Array(4)
@@ -464,8 +473,37 @@ storiesOf('NewComponents', module)
           rejected={false}
         />
       </Container>
-    );
-  });
+  )})
+  .add('RejectionField', () => {
+    return (
+      <Container maxWidth="sm" style={{ paddingTop: '5vh', paddingBottom: '5vh' }}>
+        {
+          Array(5).fill(null).map((value, index) => (
+            <RejectionField
+              field={{
+                key: 'Monto total del crédito', value: '$72,000.00',
+              }}
+              onReject={action('onReject')}
+              rejectionOptions={[
+                { name: 'Calidad baja' },
+                { name: 'Sin imagen' },
+                { name: 'Sin sonido' },
+                { name: 'Sin audio' }
+              ]}
+              rejectionData={{
+                name: 'Valerie Baumbach',
+                image: 'http://usagibaru.com/wp-content/uploads/2019/06/3822333_0.jpg',
+                date: new Date(),
+                reason: 'Video no corresponde a documento.',
+                comments:
+                  'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
+              }}
+              rejected={index === 0}
+            />
+          ))
+        }
+      </Container>
+  )});
 
 storiesOf('Components|SelectBasic', module).add('Select Basic', () => (
   <div style={{ height: '35px', width: '250px' }}>

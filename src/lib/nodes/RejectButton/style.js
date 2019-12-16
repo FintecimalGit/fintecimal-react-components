@@ -13,10 +13,20 @@ export default makeStyles(theme => ({
     cursor: 'pointer'
   },
   button: {
-    height: 48,
-    width: 48,
     marginTop: 10,
     backgroundColor: '#979797'
+  },
+  buttonLarge: {
+    height: 48,
+    width: 48,
+  },
+  buttonSmall: {
+    width: '24px',
+    height: '24px',
+    minHeight: '24px',
+    '& > span > svg': {
+      fontSize: '1em',
+    }
   },
   disabled: {
     '&:hover': {

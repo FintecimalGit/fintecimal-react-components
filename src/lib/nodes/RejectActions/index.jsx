@@ -11,6 +11,7 @@ const RejectActions = ({
   rejected,
   onOpen,
   onClose,
+  size,
 }) => {
   const [mRejected, setRejected] = useState(rejected);
   const [mRejectionData, setRejectionData] = useState(rejectionData);
@@ -47,6 +48,7 @@ const RejectActions = ({
         rejected={mRejected}
         onClick={onClick}
         onClickMessage={onClickMessage}
+        size={size}
       />
       <Popover
         anchorEl={anchorElement}
@@ -80,6 +82,7 @@ RejectActions.defaultProps = {
   rejectionOptions: [],
   onOpen: () => {},
   onClose: () => {},
+  size: 'large',
 };
 
 RejectActions.propTypes = {
@@ -89,6 +92,7 @@ RejectActions.propTypes = {
   handlerReject: PropTypes.func.isRequired,
   onOpen: PropTypes.func.isRequired,
   onClose: PropTypes.func,
+  size: PropTypes.oneOf(['large', 'small']),
 };
 
 export default RejectActions;
