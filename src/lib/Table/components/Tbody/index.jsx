@@ -43,7 +43,7 @@ const Table = ({
   const handleOnEdit = (item, index) => (event) => {
     event.preventDefault();
     event.stopPropagation();
-    onEdit(item, index);
+    onEdit(item, index, event);
   };
 
   return (
@@ -71,7 +71,7 @@ const Table = ({
                     edit && isLastIndex(headers, headerIndex) && (
                       <IconButton
                         className={classes.noPadding}
-                        onClick={handleOnEdit}
+                        onClick={handleOnEdit(item, index)}
                       >
                         <EditIcon />
                       </IconButton>

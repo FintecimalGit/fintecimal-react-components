@@ -360,7 +360,13 @@ storiesOf('NewComponents', module)
       );
     return (
       <Container style={{ paddingTop: '5vh', paddingBottom: '5vh' }}>
-        <Table headers={headers} items={items} onClickRow={action('onClickRow')} />
+        <Table
+          headers={headers}
+          items={items}
+          onClickRow={action('onClickRow')}
+          onEdit={action('onEdit')}
+          edit
+          />
       </Container>
     );
   })
