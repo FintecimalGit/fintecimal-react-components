@@ -6,7 +6,7 @@ export default makeStyles((theme) => ({
     paddingBottom: theme.spacing(2),
   },
   th: {
-    color: theme.palette.text.primary,
+    color: theme.palette.primary.main,
     fontWeight: 'bold',
     padding: theme.spacing(2, 1.5),
     textAlign: 'left',
