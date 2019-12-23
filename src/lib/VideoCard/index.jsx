@@ -27,11 +27,13 @@ const SignatureVideo = ({
   return (
     <div className={clasess.container}>
       <HeaderCard title={title}>
-        <video
-          controls
-          src={video}
-          className={clasess.video}
-        />
+        <div className={clasess.videoContainer}>
+          <video
+            controls
+            src={video}
+            className={clasess.video}
+          />
+        </div>
       </HeaderCard>
       <div className={clasess.rejectContainer} style={{ display: rejected ? 'flex' : forceDisplay }}>
         <RejectActions

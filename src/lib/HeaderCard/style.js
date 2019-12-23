@@ -2,10 +2,9 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
   card: {
-    display: 'inline-block',
-    boxShadow:
-      '0 11px 15px 2px rgba(141, 140, 140, 0.16), 0 9px 46px 8px rgba(225, 225, 225, 0.07), 0 24px 38px 25px rgba(3, 3, 3, 0.05)', // estandar
-    position: 'relative'
+    boxShadow: 'none',
+    position: 'relative',
+    border: 'solid 1px #fbfbfb',
   },
   cardHeader: {
     backgroundColor: theme.palette.background.main,

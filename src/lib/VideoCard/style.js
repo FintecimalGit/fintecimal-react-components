@@ -23,10 +23,14 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   video: {
-    width: '648px',
-    height: '367px',
-    objectFit: 'contain',
+    width: '100%',
+    maxWidth: '648px',
+    maxHeight: '367px',
+    objectFit: 'fill',
   },
+  videoContainer: {
+    padding: theme.spacing(2),
+  }
 }));
 
 export default useStyles;
