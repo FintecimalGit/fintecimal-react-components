@@ -4,6 +4,8 @@ import moment from 'moment';
 import { Maps } from '../index';
 import getGeocoding from './geoCoding';
 
+import HeaderCard from '../../HeaderCard';
+
 import useStyles from './style';
 
 const DEFAULT_LOCATION = { lat: 20.694292, lng: -103.375275 };
@@ -48,24 +50,21 @@ const SignatureMap = ({ location, title, date }) => {
 
   const formatDate = buildFormatDate(date);
   return (
-    <div className={classes.content}>
-      <div className={classes.header}>
-        <span className={classes.title}>{title}</span>
-      </div>
-      <div className={classes.map}>
+    <HeaderCard title={title}>
+      <div className={classes.container}>
         <Maps position={location} />
-      </div>
-      <div className={classes.footer}>
-        <div className={classes.location}>
-          <span>Ubicación:</span>
-          <span className={classes.info}>{locationName}</span>
+        <div className={classes.footer}>
+          <div>
+            <span>Ubicación:</span>
+            <span>{locationName}</span>
+          </div>
+          <div >
+            <span>Fecha:</span>
+            <span>{formatDate}</span>
+          </div>
         </div>
-        <div className={classes.date}>
-          <span>Fecha:</span>
-          <span className={classes.info}>{formatDate}</span>
-        </div>
       </div>
-    </div>
+    </HeaderCard>
   );
 };
 
@@ -75,7 +74,10 @@ SignatureMap.propTypes = {
     lat: PropTypes.number,
     lng: PropTypes.number
   }),
-  date: PropTypes.string
+  date: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.instanceOf(Date),
+  ]),
 };
 
 SignatureMap.defaultProps = {
