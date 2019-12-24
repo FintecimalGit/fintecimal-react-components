@@ -69,7 +69,6 @@ var RejectTooltip = function RejectTooltip(props) {
     if (active && isOtusidePopover(event) && isSelectClick()) {
       setReason('');
       setComments('');
-      onClose();
     }
   };
 

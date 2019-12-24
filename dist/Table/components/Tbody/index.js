@@ -60,7 +60,7 @@ var Table = function Table(_ref) {
     return function (event) {
       event.preventDefault();
       event.stopPropagation();
-      onEdit(item, index);
+      onEdit(item, index, event);
     };
   };
 
@@ -76,7 +76,7 @@ var Table = function Table(_ref) {
         className: (0, _classnames2.default)(classes.td, _defineProperty({}, classes.editButton, edit && isLastIndex(headers, headerIndex)))
       }, _react.default.createElement("span", null, item[key]), edit && isLastIndex(headers, headerIndex) && _react.default.createElement(_IconButton.default, {
         className: classes.noPadding,
-        onClick: handleOnEdit
+        onClick: handleOnEdit(item, index)
       }, _react.default.createElement(_Edit.default, null)));
     }));
   }));

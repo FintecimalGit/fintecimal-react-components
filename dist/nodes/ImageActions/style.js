@@ -10,8 +10,9 @@ var _styles = require("@material-ui/core/styles");
 var useStyles = (0, _styles.makeStyles)(function (theme) {
   return {
     image: {
+      width: '100%',
       height: 205,
-      flex: 1
+      objectFit: 'fill'
     },
     imageContainer: {
       overflow: 'auto',

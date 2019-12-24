@@ -36,19 +36,19 @@ var Maps = (0, _recompose.compose)((0, _recompose.withProps)({
   loadingElement: _react.default.createElement("div", {
     style: {
       width: '100%',
-      height: '100%'
+      height: '171px'
     }
   }),
   containerElement: _react.default.createElement("div", {
     style: {
       width: '100%',
-      height: '100%'
+      height: '171px'
     }
   }),
   mapElement: _react.default.createElement("div", {
     style: {
       width: '100%',
-      height: '100%'
+      height: '171px'
     }
   })
 }), _reactGoogleMaps.withScriptjs, _reactGoogleMaps.withGoogleMap)(function (props) {
