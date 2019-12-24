@@ -344,6 +344,7 @@ import DocumentList from '../lib/DocumentList';
 import HeaderCard from '../lib/HeaderCard';
 import VideoCard from '../lib/VideoCard';
 import RejectionField from '../lib/RejectionField';
+import PDFCard from '../lib/PDFCard';
 storiesOf('NewComponents', module)
   .add('Table', () => {
     const headers = Array(4)
@@ -455,7 +456,7 @@ storiesOf('NewComponents', module)
       </Container>
     );
   })
-  .add('VideoHeader', () => {
+  .add('VideoCard', () => {
     return (
       <Container style={{ paddingTop: '5vh', paddingBottom: '5vh' }}>
         <VideoCard
@@ -508,6 +509,15 @@ storiesOf('NewComponents', module)
             />
           ))
         }
+      </Container>
+  )})
+  .add('PDFCard', () => {
+    return (
+      <Container style={{ paddingTop: '5vh', paddingBottom: '5vh' }}>
+        <PDFCard
+          title="EL PDF"
+          pdf="https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf"
+        />
       </Container>
   )});
 

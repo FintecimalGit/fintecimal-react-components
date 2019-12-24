@@ -1,6 +1,9 @@
 import { makeStyles } from '@material-ui/core';
 
 export default makeStyles(theme => ({
+  container: {
+    padding: theme.spacing(2),
+  },
   content: {
     display: 'flex',
     flexDirection: 'column',
@@ -29,19 +32,22 @@ export default makeStyles(theme => ({
   footer: {
     display: 'flex',
     flexDirection: 'row',
-    fontSize: 16,
+    fontSize: '1rem',
     fontWeight: 500,
-    color: theme.palette.text.primary
+    color: theme.palette.text.primary,
+    marginTop: theme.spacing(2),
+    '& > div': {
+      flex: '50%',
+      display: 'inline-flex',
+      justifyContent: 'flex-start',
+      alignItems: 'flex-start',
+      '& > span': {
+        display: 'inline-block',
+        padding: theme.spacing(2),
+        '&:first-child': {
+          backgroundColor: '#fdfdfd',
+        }
+      }
+    }
   },
-  location: {
-    flex: 1,
-    margin: theme.spacing(2)
-  },
-  date: {
-    flex: 1,
-    margin: theme.spacing(2)
-  },
-  info: {
-    marginLeft: theme.spacing(2)
-  }
 }));

@@ -9,6 +9,9 @@ var _core = require("@material-ui/core");
 
 var _default = (0, _core.makeStyles)(function (theme) {
   return {
+    container: {
+      padding: theme.spacing(2)
+    },
     content: {
       display: 'flex',
       flexDirection: 'column',
@@ -37,20 +40,23 @@ var _default = (0, _core.makeStyles)(function (theme) {
     footer: {
       display: 'flex',
       flexDirection: 'row',
-      fontSize: 16,
+      fontSize: '1rem',
       fontWeight: 500,
-      color: theme.palette.text.primary
-    },
-    location: {
-      flex: 1,
-      margin: theme.spacing(2)
-    },
-    date: {
-      flex: 1,
-      margin: theme.spacing(2)
-    },
-    info: {
-      marginLeft: theme.spacing(2)
+      color: theme.palette.text.primary,
+      marginTop: theme.spacing(2),
+      '& > div': {
+        flex: '50%',
+        display: 'inline-flex',
+        justifyContent: 'flex-start',
+        alignItems: 'flex-start',
+        '& > span': {
+          display: 'inline-block',
+          padding: theme.spacing(2),
+          '&:first-child': {
+            backgroundColor: '#fdfdfd'
+          }
+        }
+      }
     }
   };
 });

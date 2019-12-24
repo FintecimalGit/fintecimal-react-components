@@ -20,9 +20,9 @@ const DEFAULT_CONFIG = {
 const Maps = compose(
   withProps({
     googleMapURL: `${config.URL.googleMaps}${config.KEY.googleKey}&v=3&libraries=geometry,drawing,places`,
-    loadingElement: <div style={{ width: '100%', height: '100%' }} />,
-    containerElement: <div style={{ width: '100%', height: '100%' }} />,
-    mapElement: <div style={{ width: '100%', height: '100%' }} />
+    loadingElement: <div style={{ width: '100%', height: '171px' }} />,
+    containerElement: <div style={{ width: '100%', height: '171px' }} />,
+    mapElement: <div style={{ width: '100%', height: '171px' }} />
   }),
   withScriptjs,
   withGoogleMap

@@ -9,12 +9,12 @@ var _styles = require("@material-ui/core/styles");
 
 var useStyles = (0, _styles.makeStyles)(function (theme) {
   return {
-    videoContainer: {
+    pdfContainer: {
       padding: theme.spacing(2)
     },
-    video: {
+    pdf: {
       width: '100%',
-      height: '367px',
+      height: '419px',
       objectFit: 'fill'
     }
   };
