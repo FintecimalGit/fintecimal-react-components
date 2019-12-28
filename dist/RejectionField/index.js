@@ -72,7 +72,9 @@ var RejectionField = function RejectionField(_ref) {
 
   return _react.default.createElement(_List.default, {
     className: (0, _classnames2.default)(classes.list, _defineProperty({}, classes.listBorder, rejected && forceDisplay === 'inline-block'))
-  }, _react.default.createElement(_ListItem.default, null, _react.default.createElement(_ListItemText.default, {
+  }, _react.default.createElement(_ListItem.default, {
+    className: classes.listItem
+  }, _react.default.createElement(_ListItemText.default, {
     primary: field.key
   }), _react.default.createElement(_ListItemSecondaryAction.default, null, _react.default.createElement("div", {
     className: classes.listItemSecondaryContainer
