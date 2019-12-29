@@ -7,7 +7,14 @@ import DateMomentUtils from '@date-io/moment';
 
 import useStyles from './style';
 
-const DatePicker = ({ label, value, onDateChange, format }) => {
+const DatePicker = ({
+  label,
+  value,
+  onDateChange,
+  format,
+  disabled,
+  minDate,
+}) => {
   const classes = useStyles();
 
   const [date, setDate] = useState(value);
@@ -36,9 +43,8 @@ const DatePicker = ({ label, value, onDateChange, format }) => {
           format={format}
           onChange={handleDateChange}
           disableToolbar
-          KeyboardButtonProps={{
-            'aria-label': 'change date',
-          }}
+          disabled={disabled}
+          minDate={minDate}
       />
     </MuiPickersUtilsProvider>
   );
@@ -52,13 +58,20 @@ DatePicker.propTypes = {
   ]),
   format: PropTypes.string,
   onDateChange: PropTypes.func,
+  disabled: PropTypes.bool,
+  minDate: PropTypes.oneOfType([
+    PropTypes.instanceOf(Date),
+    PropTypes.string,
+  ]),
 };
 
 DatePicker.defaultProps = {
   label: '',
-  value: new Date(),
-  format: 'D/M/Y',
+  value: null,
+  format: 'DD/MM/YYYY',
   onDateChange: () => {},
+  disabled: false,
+  minDate: '',
 };
 
 export default DatePicker;

@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import 'moment/locale/es';
 
-import Popover from '@material-ui/core/Popover';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
