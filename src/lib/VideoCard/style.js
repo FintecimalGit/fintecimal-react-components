@@ -7,7 +7,7 @@ const useStyles = makeStyles((theme) => ({
   video: {
     width: '100%',
     height: '367px',
-    objectFit: 'fill',
+    objectFit: 'contain',
   },
 }));
 
