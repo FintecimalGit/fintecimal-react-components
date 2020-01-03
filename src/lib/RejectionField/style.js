@@ -30,5 +30,8 @@ export default makeStyles((theme) => ({
     '&:hover': {
       display: 'inline-block !important',
     },
-   }
+  },
+  listItem: {
+    border: 'solid 0.5px #fbfbfb'
+  },
 }));

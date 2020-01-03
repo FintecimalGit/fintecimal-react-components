@@ -76,7 +76,7 @@ var Paginator = function Paginator(_ref) {
     }
 
     return values;
-  }, [page]);
+  }, [page, totalPages]);
 
   var onFirstPage = function onFirstPage() {
     var firstPage = 1;

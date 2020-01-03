@@ -38,6 +38,9 @@ var _default = (0, _styles.makeStyles)(function (theme) {
       '&:hover': {
         display: 'inline-block !important'
       }
+    },
+    listItem: {
+      border: 'solid 0.5px #fbfbfb'
     }
   };
 });

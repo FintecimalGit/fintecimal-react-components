@@ -381,7 +381,10 @@ storiesOf('NewComponents', module)
   .add('DatePicker', () => {
     return (
       <Container style={{ paddingTop: '5vh', paddingBottom: '5vh' }}>
-        <DatePicker label="Label" value={new Date()} onDateChange={action('onDateChange')} />
+        <DatePicker label="Value" value={new Date()} onDateChange={action('onDateChange')} />
+        <DatePicker label="No Value" onDateChange={action('onDateChange')} />
+        <DatePicker label="Min Date" minDate={new Date()} onDateChange={action('onDateChange')} />
+        <DatePicker label="Disabled" onDateChange={action('onDateChange')} disabled />
       </Container>
     );
   })

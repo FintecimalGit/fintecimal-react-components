@@ -13,8 +13,6 @@ var _moment = _interopRequireDefault(require("moment"));
 
 require("moment/locale/es");
 
-var _Popover = _interopRequireDefault(require("@material-ui/core/Popover"));
-
 var _Card = _interopRequireDefault(require("@material-ui/core/Card"));
 
 var _CardHeader = _interopRequireDefault(require("@material-ui/core/CardHeader"));

@@ -37,7 +37,9 @@ var DatePicker = function DatePicker(_ref) {
   var label = _ref.label,
       value = _ref.value,
       onDateChange = _ref.onDateChange,
-      format = _ref.format;
+      format = _ref.format,
+      disabled = _ref.disabled,
+      minDate = _ref.minDate;
   var classes = (0, _style.default)();
 
   var _useState = (0, _react.useState)(value),
@@ -70,9 +72,8 @@ var DatePicker = function DatePicker(_ref) {
     format: format,
     onChange: handleDateChange,
     disableToolbar: true,
-    KeyboardButtonProps: {
-      'aria-label': 'change date'
-    }
+    disabled: disabled,
+    minDate: minDate
   }));
 };
 
@@ -80,13 +81,17 @@ DatePicker.propTypes = {
   label: _propTypes.default.string,
   value: _propTypes.default.oneOfType([_propTypes.default.instanceOf(Date), _propTypes.default.string]),
   format: _propTypes.default.string,
-  onDateChange: _propTypes.default.func
+  onDateChange: _propTypes.default.func,
+  disabled: _propTypes.default.bool,
+  minDate: _propTypes.default.oneOfType([_propTypes.default.instanceOf(Date), _propTypes.default.string])
 };
 DatePicker.defaultProps = {
   label: '',
-  value: new Date(),
-  format: 'D/M/Y',
-  onDateChange: function onDateChange() {}
+  value: null,
+  format: 'DD/MM/YYYY',
+  onDateChange: function onDateChange() {},
+  disabled: false,
+  minDate: ''
 };
 var _default = DatePicker;
 exports.default = _default;

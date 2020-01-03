@@ -46,7 +46,7 @@ const Paginator = ({
     }
 
     return values;
-  }, [page]);
+  }, [page, totalPages]);
 
   const onFirstPage = () => {
     const firstPage = 1;
