@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
@@ -345,6 +345,9 @@ import HeaderCard from '../lib/HeaderCard';
 import VideoCard from '../lib/VideoCard';
 import RejectionField from '../lib/RejectionField';
 import PDFCard from '../lib/PDFCard';
+import DropZone from '../lib/DropZone';
+import FilePreview from '../lib/FilePreview';
+import UploadDocuments from '../lib/UploadDocuments';
 storiesOf('NewComponents', module)
   .add('Table', () => {
     const headers = Array(4)
@@ -520,6 +523,52 @@ storiesOf('NewComponents', module)
         <PDFCard
           title="EL PDF"
           pdf="https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf"
+        />
+      </Container>
+  )})
+  .add('DropZone', () => {
+    return (
+      <Container style={{ paddingTop: '5vh', paddingBottom: '5vh' }}>
+        <DropZone
+          title="DropZone"
+        />
+      </Container>
+  )})
+  .add('FilePreview', () => {
+    const [image, setImage] = useState(new File([''], 'test.png', { type: 'image/png' }))
+    const [pdf, setPdf] = useState(new File([''], 'test.pdf', { type: 'application/pdf' }))
+
+    useEffect(() => {
+      fetch('https://upload.wikimedia.org/wikipedia/commons/c/cc/Game_Boy_Color_Pikachu.jpg')
+        .then(response => response.blob())
+        .then((blob) => {
+            const file = new File([blob], "test.jpg", { type: blob.type })
+            setImage(file)
+        });
+
+        fetch('https://s1.q4cdn.com/806093406/files/doc_downloads/test.pdf')
+        .then(response => response.blob())
+        .then((blob) => {
+            const file = new File([blob], "test.pdf", { type: blob.type })
+            setPdf(file)
+        });
+    }, []);
+
+    return (
+      <Container style={{ paddingTop: '5vh', paddingBottom: '5vh' }}>
+        <FilePreview file={image} onDelete={action('onDelete')} />
+        <FilePreview file={pdf} onDelete={action('onDelete')} />
+      </Container>
+  )})
+  .add('UploadDocuments', () => {
+    return (
+      <Container style={{ paddingTop: '5vh', paddingBottom: '5vh' }}>
+        <UploadDocuments
+          title="DropZone"
+          multiple={false}
+          accept=""
+          onDrop={action('onDrop')}
+          onDelete={action('onDelete')}
         />
       </Container>
   )});
