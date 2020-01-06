@@ -8,6 +8,7 @@ import RejectActions from './RejectActions';
 import Maps from './Maps';
 import SignatureMap from './SignatureMap';
 import ImageActions from './ImageActions';
+import CardApp from './CardApp';
 
 export {
   Maps,
@@ -15,6 +16,7 @@ export {
   SearchBar,
   BaseInput,
   ButtonFlat,
+  CardApp,
   RejectButton,
   SignatureMap,
   ImageActions,
