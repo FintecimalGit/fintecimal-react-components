@@ -9,17 +9,19 @@ import Maps from './Maps';
 import SignatureMap from './SignatureMap';
 import ImageActions from './ImageActions';
 import CardApp from './CardApp';
+import CurrencyInput from './CurrencyInput';
 
 export {
   Maps,
   Select,
+  CardApp,
   SearchBar,
   BaseInput,
   ButtonFlat,
-  CardApp,
   RejectButton,
   SignatureMap,
   ImageActions,
+  CurrencyInput,
   RejectTooltip,
   RejectActions
 };

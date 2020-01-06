@@ -17,7 +17,8 @@ import {
   RejectActions,
   SignatureMap,
   ImageActions,
-  CardApp
+  CardApp,
+  CurrencyInput
 } from '../lib/nodes';
 
 const {
@@ -188,6 +189,14 @@ storiesOf('Components|Nodes', module)
       required={true}
       clear={true}
       value={'Text'}
+    />
+  ))
+  .add('Currency Input', () => (
+    <CurrencyInput
+      label={'Financiamiento'}
+      handleChange={action('handleChange')}
+      required={true}
+      clear={true}
     />
   ))
   .add('Select', () => (
