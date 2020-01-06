@@ -3,15 +3,16 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles(theme => ({
   root: {
     cursor: 'pointer',
-    width: 'max-content',
+    width: '100%',
     '&:hover $selector': {
       display: 'flex',
     }
   },
   imageContainer: {
     position: 'relative',
-    width: '125px',
-    height: '66px',
+    width: '100%',
+    minHeight: '66px',
+    height: '8vw',
     border: 'solid 1px #E0E0E0',
     borderRadius: '4px',
   },

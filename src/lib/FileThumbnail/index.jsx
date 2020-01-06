@@ -106,7 +106,7 @@ const FileThumbnail = ({ file, selected, onClick }) => {
   
   const handleOnClick = () => {
     onClick(file);
-  }
+  };
 
   useEffect(() => {
     const { type } = file;
