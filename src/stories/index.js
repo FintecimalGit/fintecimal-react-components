@@ -251,7 +251,7 @@ storiesOf('Components|Nodes', module)
   ))
   .add('Map', () => <SignatureMap />)
   .add('Image Actions', () => <ImageActions />)
-  .add('CardApp', () => <CardApp />);
+  .add('CardApp', () => <CardApp onClick={action('onClick')} />);
 
 storiesOf('Components|Button', module)
   .add('Classic Button', () => <Button onClick={action('clicked')}></Button>, {
