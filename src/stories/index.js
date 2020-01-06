@@ -348,6 +348,8 @@ import PDFCard from '../lib/PDFCard';
 import DropZone from '../lib/DropZone';
 import FilePreview from '../lib/FilePreview';
 import UploadDocuments from '../lib/UploadDocuments';
+import FileThumbnail from '../lib/FileThumbnail';
+
 storiesOf('NewComponents', module)
   .add('Table', () => {
     const headers = Array(4)
@@ -571,7 +573,51 @@ storiesOf('NewComponents', module)
           onDelete={action('onDelete')}
         />
       </Container>
+  )})
+  .add('FileThumbnail', () => {
+    const [image, setImage] = useState(new File([''], 'test.png', { type: 'image/png' }))
+    const [pdf, setPdf] = useState(new File([''], 'test.pdf', { type: 'application/pdf' }))
+
+    useEffect(() => {
+      fetch('https://upload.wikimedia.org/wikipedia/commons/c/cc/Game_Boy_Color_Pikachu.jpg')
+        .then(response => response.blob())
+        .then((blob) => {
+            const file = new File([blob], "test.jpg", { type: blob.type })
+            setImage(file)
+        });
+
+        fetch('https://s1.q4cdn.com/806093406/files/doc_downloads/test.pdf')
+        .then(response => response.blob())
+        .then((blob) => {
+            const file = new File([blob], "test.pdf", { type: blob.type })
+            setPdf(file)
+        });
+    }, []);
+    return (
+      <Container
+        style={{ paddingTop: '5vh',
+        paddingBottom: '5vh',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+      }}
+      >
+        <FileThumbnail
+          file={pdf}
+          onClick={action('onClick')}
+        />
+        <FileThumbnail
+          file={image}
+          onClick={action('onClick')}
+        />
+        <FileThumbnail
+          file={image}
+          onClick={action('onClick')}
+          selected
+        />
+      </Container>
   )});
+
 
 storiesOf('Components|SelectBasic', module).add('Select Basic', () => (
   <div style={{ height: '35px', width: '250px' }}>
