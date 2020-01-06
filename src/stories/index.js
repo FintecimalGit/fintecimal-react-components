@@ -16,7 +16,8 @@ import {
   RejectTooltip,
   RejectActions,
   SignatureMap,
-  ImageActions
+  ImageActions,
+  CardApp
 } from '../lib/nodes';
 
 const {
@@ -249,7 +250,8 @@ storiesOf('Components|Nodes', module)
     />
   ))
   .add('Map', () => <SignatureMap />)
-  .add('Image Actions', () => <ImageActions />);
+  .add('Image Actions', () => <ImageActions />)
+  .add('CardApp', () => <CardApp onClick={action('onClick')} />);
 
 storiesOf('Components|Button', module)
   .add('Classic Button', () => <Button onClick={action('clicked')}></Button>, {
@@ -367,7 +369,7 @@ storiesOf('NewComponents', module)
           onClickRow={action('onClickRow')}
           onEdit={action('onEdit')}
           edit
-          />
+        />
       </Container>
     );
   })
@@ -483,15 +485,18 @@ storiesOf('NewComponents', module)
           rejected={false}
         />
       </Container>
-  )})
+    );
+  })
   .add('RejectionField', () => {
     return (
       <Container maxWidth="sm" style={{ paddingTop: '5vh', paddingBottom: '5vh' }}>
-        {
-          Array(5).fill(null).map((value, index) => (
+        {Array(5)
+          .fill(null)
+          .map((value, index) => (
             <RejectionField
               field={{
-                key: 'Monto total del crédito', value: '$72,000.00',
+                key: 'Monto total del crédito',
+                value: '$72,000.00'
               }}
               onReject={action('onReject')}
               rejectionOptions={[
@@ -510,10 +515,10 @@ storiesOf('NewComponents', module)
               }}
               rejected={index === 0}
             />
-          ))
-        }
+          ))}
       </Container>
-  )})
+    );
+  })
   .add('PDFCard', () => {
     return (
       <Container style={{ paddingTop: '5vh', paddingBottom: '5vh' }}>
@@ -522,7 +527,8 @@ storiesOf('NewComponents', module)
           pdf="https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf"
         />
       </Container>
-  )});
+    );
+  });
 
 storiesOf('Components|SelectBasic', module).add('Select Basic', () => (
   <div style={{ height: '35px', width: '250px' }}>
