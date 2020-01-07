@@ -92,7 +92,7 @@ Identification.propTypes = {
 };
 
 Identification.defaultProps = {
-  title: 'INE/IFE - Frente',
+  title: '',
   image: {
     key: 'INE',
     name: 'Frente',
