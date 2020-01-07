@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
-var _react = _interopRequireDefault(require("react"));
+var _react = _interopRequireWildcard(require("react"));
 
 var _propTypes = _interopRequireDefault(require("prop-types"));
 
@@ -25,6 +25,8 @@ require("../../styles/BaseInput.css");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
@@ -33,7 +35,7 @@ function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = 
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
-var BaseInput = function BaseInput(_ref) {
+var TextAreaInput = function TextAreaInput(_ref) {
   var label = _ref.label,
       value = _ref.value,
       handleChange = _ref.handleChange,
@@ -46,16 +48,32 @@ var BaseInput = function BaseInput(_ref) {
       onClear = _ref.onClear;
   var classes = (0, _style.default)();
 
-  var _React$useState = _react.default.useState(0),
-      _React$useState2 = _slicedToArray(_React$useState, 2),
-      labelWidth = _React$useState2[0],
-      setLabelWidth = _React$useState2[1];
+  var _useState = (0, _react.useState)(0),
+      _useState2 = _slicedToArray(_useState, 2),
+      labelWidth = _useState2[0],
+      setLabelWidth = _useState2[1];
 
-  var labelRef = _react.default.useRef(null);
+  var _useState3 = (0, _react.useState)(value),
+      _useState4 = _slicedToArray(_useState3, 2),
+      mValue = _useState4[0],
+      setValue = _useState4[1];
 
-  _react.default.useEffect(function () {
+  var labelRef = (0, _react.useRef)(null);
+  (0, _react.useEffect)(function () {
     setLabelWidth(labelRef.current.offsetWidth);
   }, []);
+
+  var mHandleChange = function mHandleChange(event) {
+    var eventValue = event.target.value;
+    setValue(eventValue);
+    handleChange(eventValue);
+  };
+
+  var mOnClear = function mOnClear() {
+    setValue('');
+    handleChange('');
+    onClear('');
+  };
 
   var selectLabel = function selectLabel() {
     if (error) {
@@ -90,16 +108,18 @@ var BaseInput = function BaseInput(_ref) {
     }
   }, selectLabel()), _react.default.createElement(_core.OutlinedInput, {
     id: "component-outlined",
-    value: value,
-    onChange: handleChange,
+    value: mValue,
+    multiline: true,
+    rows: "4",
+    onChange: mHandleChange,
     labelWidth: labelWidth,
     onBlur: onBlur,
     className: classes.input,
-    endAdornment: clear && value && _react.default.createElement(_core.InputAdornment, {
+    endAdornment: clear && mValue && _react.default.createElement(_core.InputAdornment, {
       position: "end"
     }, _react.default.createElement(_core.IconButton, {
       "aria-label": "clear input",
-      onClick: onClear
+      onClick: mOnClear
     }, _react.default.createElement(_icons.Clear, {
       className: classes.icon
     }))),
@@ -113,15 +133,16 @@ var BaseInput = function BaseInput(_ref) {
   }));
 };
 
-BaseInput.defaultProps = {
+TextAreaInput.defaultProps = {
   value: '',
   required: false,
   error: false,
   type: 'text',
   clear: true,
-  errorMessage: ''
+  errorMessage: '',
+  onClear: function onClear() {}
 };
-BaseInput.propTypes = {
+TextAreaInput.propTypes = {
   label: _propTypes.default.string.isRequired,
   value: _propTypes.default.oneOfType([_propTypes.default.number, _propTypes.default.string]),
   required: _propTypes.default.bool,
@@ -130,7 +151,8 @@ BaseInput.propTypes = {
   clear: _propTypes.default.bool,
   errorMessage: _propTypes.default.string,
   handleChange: _propTypes.default.func.isRequired,
-  onBlur: _propTypes.default.func
+  onBlur: _propTypes.default.func,
+  onClear: _propTypes.default.func
 };
-var _default = BaseInput;
+var _default = TextAreaInput;
 exports.default = _default;
