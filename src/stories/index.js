@@ -18,7 +18,8 @@ import {
   SignatureMap,
   ImageActions,
   CardApp,
-  CurrencyInput
+  CurrencyInput,
+  TextAreaInput
 } from '../lib/nodes';
 
 const {
@@ -194,6 +195,14 @@ storiesOf('Components|Nodes', module)
   .add('Currency Input', () => (
     <CurrencyInput
       label={'Financiamiento'}
+      handleChange={action('handleChange')}
+      required={true}
+      clear={true}
+    />
+  ))
+  .add('Text Area Input', () => (
+    <TextAreaInput
+      label={'Comentarios Anexos'}
       handleChange={action('handleChange')}
       required={true}
       clear={true}

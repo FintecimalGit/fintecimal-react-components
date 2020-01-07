@@ -10,6 +10,7 @@ import SignatureMap from './SignatureMap';
 import ImageActions from './ImageActions';
 import CardApp from './CardApp';
 import CurrencyInput from './CurrencyInput';
+import TextAreaInput from './TextAreaInput';
 
 export {
   Maps,
@@ -22,6 +23,7 @@ export {
   SignatureMap,
   ImageActions,
   CurrencyInput,
+  TextAreaInput,
   RejectTooltip,
   RejectActions
 };
