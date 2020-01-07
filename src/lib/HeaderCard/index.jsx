@@ -6,20 +6,12 @@ import CardHeader from '@material-ui/core/CardHeader';
 
 import useStyles from './style';
 
-const HeaderCard = ({
-  title,
-  subheader,
-  children
-}) => {
+const HeaderCard = ({ title, subheader, children }) => {
   const clasess = useStyles();
   return (
     <Card className={clasess.card}>
-      <CardHeader
-        className={clasess.cardHeader}
-        title={title}
-        subheader={subheader}
-      />
-      { children }
+      {title && <CardHeader className={clasess.cardHeader} title={title} subheader={subheader} />}
+      {children}
     </Card>
   );
 };
@@ -30,14 +22,14 @@ HeaderCard.propTypes = {
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,
-    PropTypes.string,
-  ]),
+    PropTypes.string
+  ])
 };
 
 HeaderCard.defaultProps = {
   title: '',
   subHeader: '',
-  children: '',
+  children: ''
 };
 
 export default HeaderCard;
