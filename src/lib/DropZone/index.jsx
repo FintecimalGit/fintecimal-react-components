@@ -12,7 +12,7 @@ import useStyles from './style';
 const DropZone = ({ multiple, accept, onDrop }) => {
   const classes = useStyles();
 
-  const { getRootProps, getInputProps, acceptedFiles } = useDropzone({ multiple, accept, onDrop })
+  const { getRootProps, getInputProps } = useDropzone({ multiple, accept, onDrop })
 
   const rootProps = getRootProps({ className: classes.dropZone });
   const inputProps = getInputProps();
