@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import SearchIcon from '@material-ui/icons/Search';
@@ -8,13 +8,26 @@ import { InputBase, InputAdornment } from '@material-ui/core';
 
 const ENTER_KEY = 13;
 
-const Search = ({ onEnter, placeholder }) => {
+const Search = ({ onEnter, placeholder, value, onChange }) => {
   const classes = useStyles();
+  const [currentValue, setCurrentValue] = useState('');
 
   const onKeyup = event => {
     const { keyCode } = event;
     if (keyCode === ENTER_KEY) onEnter(event);
   };
+
+  const handleOnChange = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setCurrentValue(value);
+    onChange(event);
+  };
+
+  useEffect(() => {
+    setCurrentValue(value)
+  }, [value]);
 
   return (
     <div className={classnames(classes.root, classes.border)}>
@@ -31,6 +44,8 @@ const Search = ({ onEnter, placeholder }) => {
             <SearchIcon className={classes.icon} />
           </InputAdornment>
         }
+        value={currentValue}
+        onChange={handleOnChange}
       />
     </div>
   );
@@ -38,11 +53,16 @@ const Search = ({ onEnter, placeholder }) => {
 
 Search.propTypes = {
   onEnter: PropTypes.func,
-  placeholder: PropTypes.string.isRequired
+  placeholder: PropTypes.string,
+  value: PropTypes.string,
+  onEnter: PropTypes.func,
 };
 
 Search.defaultProps = {
-  onEnter: () => {}
+  onEnter: () => {},
+  placeholder: '',
+  value: '',
+  onChange: () => {},
 };
 
 export default Search;

@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import Grid from '@material-ui/core/Grid';
@@ -6,34 +6,23 @@ import Grid from '@material-ui/core/Grid';
 import SearchBar from '../nodes/SearchBar';
 import FileThumbnail from '../FileThumbnail';
 
-const FileFinder = ({ files, onClick }) => {
-  const [selected, setSelected] = useState(0);
-  const [search, setSearch] = useState('');
-
+const FileFinder = ({
+  files,
+  current,
+  onClick,
+  search,
+  onSearch,
+}) => {
   const handleOnClick = index => (file) => {
     onClick(index, file);
-    setSelected(index);
   };
 
   const handleOnEnter = (event) => {
     const {
       target: { value },
-    } = event
-    setSearch(value);
+    } = event;
+    onSearch(value);
   };
-
-  const filteredFiles = useMemo(() => {
-    const searchLower = search.toLowerCase();
-    return (
-      files
-        .map((file, index) => {
-          const fileNameLower = file.name.toLowerCase();
-          if (fileNameLower.includes(searchLower) || searchLower === '') return { file, index };
-          return null;
-        })
-        .filter((file) => file !== null)
-    );
-  }, [files, search]);
 
   return (
     <Grid container spacing={3}>
@@ -41,15 +30,16 @@ const FileFinder = ({ files, onClick }) => {
         <SearchBar
           placeholder="Busca una nómina"
           onEnter={handleOnEnter}
+          value={search}
         />
       </Grid>
       {
-        filteredFiles.map(({ file, index }) => (
-          <Grid item sm={3}> 
+        files.map((file, index) => (
+          <Grid key={file.name} item sm={3}> 
             <FileThumbnail
               file={file}
               onClick={handleOnClick(index)}
-              selected={index === selected}
+              selected={index === current}
             />
           </Grid>
         ))
@@ -60,12 +50,18 @@ const FileFinder = ({ files, onClick }) => {
 
 FileFinder.propTypes = {
   files: PropTypes.arrayOf(PropTypes.instanceOf(File)),
+  current: PropTypes.number,
   onClick: PropTypes.func,
+  search: PropTypes.string,
+  onSearch: PropTypes.func,
 };
 
 FileFinder.defaultProps = {
   files: [],
+  current: 0,
   onClick: () => {},
+  search: '',
+  onSearch: () => {},
 };
 
 export default FileFinder;

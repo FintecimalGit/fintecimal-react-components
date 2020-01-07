@@ -572,6 +572,13 @@ storiesOf('NewComponents', module)
     return (
       <Container style={{ paddingTop: '5vh', paddingBottom: '5vh' }}>
         <UploadDocuments
+          title="DropZone Multiple"
+          multiple
+          accept=""
+          onDrop={action('onDrop')}
+          onDelete={action('onDelete')}
+        />
+        <UploadDocuments
           title="DropZone"
           multiple={false}
           accept=""
