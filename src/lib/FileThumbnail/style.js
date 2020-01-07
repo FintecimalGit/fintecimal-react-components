@@ -38,6 +38,7 @@ const useStyles = makeStyles(theme => ({
   typography: {
     paddingTop: theme.spacing(1),
     opacity: 0.5,
+    wordWrap: 'break-word',
   },
   typographySelected: {
     opacity: 1,

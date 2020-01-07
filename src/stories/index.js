@@ -590,6 +590,14 @@ storiesOf('NewComponents', module)
     return (
       <Container style={{ paddingTop: '5vh', paddingBottom: '5vh' }}>
         <UploadDocuments
+          title="DropZone Multiple"
+          multiple
+          accept=""
+          onDrop={action('onDrop')}
+          onDelete={action('onDelete')}
+          placeholder="Busca una nómina"
+        />
+        <UploadDocuments
           title="DropZone"
           multiple={false}
           accept=""
@@ -644,7 +652,7 @@ storiesOf('NewComponents', module)
   .add('FileFinder', () => {
     const [image, setImage] = useState(new File([''], 'test.png', { type: 'image/png' }))
     const [pdf, setPdf] = useState(new File([''], 'test.pdf', { type: 'application/pdf' }))
-
+    const [files, setFiles] = useState([]);
     useEffect(() => {
       fetch('https://upload.wikimedia.org/wikipedia/commons/c/cc/Game_Boy_Color_Pikachu.jpg')
         .then(response => response.blob())
@@ -659,7 +667,11 @@ storiesOf('NewComponents', module)
             const file = new File([blob], "test.pdf", { type: blob.type })
             setPdf(file)
         });
-    }, [])
+    }, []);
+
+    useEffect(() => {
+      setFiles([image, pdf, image, pdf, image, pdf, image, pdf]);
+    }, [image, files]);
     return (
       <Container
         style={{ paddingTop: '5vh',
@@ -670,7 +682,7 @@ storiesOf('NewComponents', module)
       }}
       >
         <FileFinder
-          files={[image, pdf, image, pdf, image, pdf, image, pdf]}
+          files={files}
           onClick={action('onClick')}
           placeholder="Busca una nómina"
         />
