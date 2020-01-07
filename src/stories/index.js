@@ -17,7 +17,9 @@ import {
   RejectActions,
   SignatureMap,
   ImageActions,
-  CardApp
+  CardApp,
+  CurrencyInput,
+  TextAreaInput
 } from '../lib/nodes';
 
 const {
@@ -188,6 +190,22 @@ storiesOf('Components|Nodes', module)
       required={true}
       clear={true}
       value={'Text'}
+    />
+  ))
+  .add('Currency Input', () => (
+    <CurrencyInput
+      label={'Financiamiento'}
+      handleChange={action('handleChange')}
+      required={true}
+      clear={true}
+    />
+  ))
+  .add('Text Area Input', () => (
+    <TextAreaInput
+      label={'Comentarios Anexos'}
+      handleChange={action('handleChange')}
+      required={true}
+      clear={true}
     />
   ))
   .add('Select', () => (
@@ -657,7 +675,10 @@ storiesOf('NewComponents', module)
         />
       </Container>
   )});
+<<<<<<< HEAD
 
+=======
+>>>>>>> 00c0c91962eb5b2bf904314f385fd31bfe623100
 
 storiesOf('Components|SelectBasic', module).add('Select Basic', () => (
   <div style={{ height: '35px', width: '250px' }}>
