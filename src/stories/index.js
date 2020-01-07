@@ -672,6 +672,7 @@ storiesOf('NewComponents', module)
         <FileFinder
           files={[image, pdf, image, pdf, image, pdf, image, pdf]}
           onClick={action('onClick')}
+          placeholder="Busca una nómina"
         />
       </Container>
   )});
