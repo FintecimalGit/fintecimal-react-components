@@ -11,6 +11,7 @@ import ImageActions from './ImageActions';
 import CardApp from './CardApp';
 import CurrencyInput from './CurrencyInput';
 import TextAreaInput from './TextAreaInput';
+import IDCardUpload from './IDCardUpload';
 
 export {
   Maps,
@@ -22,6 +23,7 @@ export {
   RejectButton,
   SignatureMap,
   ImageActions,
+  IDCardUpload,
   CurrencyInput,
   TextAreaInput,
   RejectTooltip,
