@@ -6,7 +6,7 @@ import Grid from '@material-ui/core/Grid';
 import SearchBar from '../nodes/SearchBar';
 import FileThumbnail from '../FileThumbnail';
 
-const FileFinder = ({ files, onClick }) => {
+const FileFinder = ({ files, onClick, placeholder }) => {
   const [selected, setSelected] = useState(0);
   const [search, setSearch] = useState('');
 
@@ -39,7 +39,7 @@ const FileFinder = ({ files, onClick }) => {
     <Grid container spacing={3}>
       <Grid item sm={12}>
         <SearchBar
-          placeholder="Busca una nómina"
+          placeholder={placeholder}
           onEnter={handleOnEnter}
         />
       </Grid>
@@ -61,11 +61,13 @@ const FileFinder = ({ files, onClick }) => {
 FileFinder.propTypes = {
   files: PropTypes.arrayOf(PropTypes.instanceOf(File)),
   onClick: PropTypes.func,
+  placeholder: PropTypes.string,
 };
 
 FileFinder.defaultProps = {
   files: [],
   onClick: () => {},
+  placeholder: '',
 };
 
 export default FileFinder;

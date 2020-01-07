@@ -675,10 +675,7 @@ storiesOf('NewComponents', module)
         />
       </Container>
   )});
-<<<<<<< HEAD
 
-=======
->>>>>>> 00c0c91962eb5b2bf904314f385fd31bfe623100
 
 storiesOf('Components|SelectBasic', module).add('Select Basic', () => (
   <div style={{ height: '35px', width: '250px' }}>
