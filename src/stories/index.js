@@ -595,6 +595,7 @@ storiesOf('NewComponents', module)
           accept=""
           onDrop={action('onDrop')}
           onDelete={action('onDelete')}
+          placeholder="Busca una nómina"
         />
         <UploadDocuments
           title="DropZone"
@@ -683,6 +684,7 @@ storiesOf('NewComponents', module)
         <FileFinder
           files={files}
           onClick={action('onClick')}
+          placeholder="Busca una nómina"
         />
       </Container>
   )});

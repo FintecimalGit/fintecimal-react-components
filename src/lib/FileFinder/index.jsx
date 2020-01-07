@@ -12,6 +12,7 @@ const FileFinder = ({
   onClick,
   search,
   onSearch,
+  placeholder,
 }) => {
   const handleOnClick = index => (file) => {
     onClick(index, file);
@@ -28,7 +29,7 @@ const FileFinder = ({
     <Grid container spacing={3}>
       <Grid item sm={12}>
         <SearchBar
-          placeholder="Busca una nómina"
+          placeholder={placeholder}
           onEnter={handleOnEnter}
           value={search}
         />
@@ -54,6 +55,7 @@ FileFinder.propTypes = {
   onClick: PropTypes.func,
   search: PropTypes.string,
   onSearch: PropTypes.func,
+  placeholder: PropTypes.string,
 };
 
 FileFinder.defaultProps = {
@@ -62,6 +64,7 @@ FileFinder.defaultProps = {
   onClick: () => {},
   search: '',
   onSearch: () => {},
+  placeholder: '',
 };
 
 export default FileFinder;

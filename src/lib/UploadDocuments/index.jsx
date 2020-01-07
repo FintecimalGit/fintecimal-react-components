@@ -15,6 +15,7 @@ const UploadDocuments = ({
   accept,
   onDrop,
   onDelete,
+  placeholder,
 }) => {
   const classes = useStyles();
   const [file, setFile] = useState(null);
@@ -116,6 +117,7 @@ const UploadDocuments = ({
             onClick={handleOnClick}
             search={search}
             onSearch={handleOnSearch}
+            placeholder={placeholder}
           />
         )
       }
@@ -132,6 +134,7 @@ UploadDocuments.propTypes = {
   ]),
   onDrop: PropTypes.func,
   onDelete: PropTypes.func,
+  placeholder: PropTypes.string,
 };
 
 UploadDocuments.defaultProps = {
@@ -140,6 +143,7 @@ UploadDocuments.defaultProps = {
   accept: '',
   onDrop: () => {},
   onDelete: () => {},
+  placeholder: ''
 };
 
 export default UploadDocuments;
