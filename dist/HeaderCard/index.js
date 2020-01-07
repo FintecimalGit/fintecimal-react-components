@@ -24,7 +24,7 @@ var HeaderCard = function HeaderCard(_ref) {
   var clasess = (0, _style.default)();
   return _react.default.createElement(_Card.default, {
     className: clasess.card
-  }, _react.default.createElement(_CardHeader.default, {
+  }, title && _react.default.createElement(_CardHeader.default, {
     className: clasess.cardHeader,
     title: title,
     subheader: subheader

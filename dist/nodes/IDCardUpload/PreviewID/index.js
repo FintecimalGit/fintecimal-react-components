@@ -9,13 +9,15 @@ var _react = _interopRequireWildcard(require("react"));
 
 var _propTypes = _interopRequireDefault(require("prop-types"));
 
-require("moment/locale/es");
+var _core = require("@material-ui/core");
 
-var _pickers = require("@material-ui/pickers");
+var _Delete = _interopRequireDefault(require("@material-ui/icons/Delete"));
 
-var _moment = _interopRequireDefault(require("@date-io/moment"));
+var _classnames = _interopRequireDefault(require("classnames"));
 
 var _style = _interopRequireDefault(require("./style"));
+
+var _ImageActions = _interopRequireDefault(require("../../ImageActions"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -29,65 +31,69 @@ function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = 
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
-var DatePicker = function DatePicker(_ref) {
-  var label = _ref.label,
-      value = _ref.value,
-      onDateChange = _ref.onDateChange,
-      format = _ref.format,
-      disabled = _ref.disabled,
-      minDate = _ref.minDate;
+var PreviewID = function PreviewID(_ref) {
+  var file = _ref.file,
+      onDelete = _ref.onDelete,
+      label = _ref.label,
+      className = _ref.className;
   var classes = (0, _style.default)();
 
-  var _useState = (0, _react.useState)(value),
+  var _useState = (0, _react.useState)(''),
       _useState2 = _slicedToArray(_useState, 2),
-      date = _useState2[0],
-      setDate = _useState2[1];
-  /**
-   *
-   * @param {Date} _date
-   */
+      url = _useState2[0],
+      setUrl = _useState2[1];
 
+  var readFile = function readFile() {
+    var reader = new FileReader();
 
-  var handleDateChange = function handleDateChange(_date) {
-    setDate(_date);
-    onDateChange(_date);
+    reader.onloadend = function () {
+      setUrl(reader.result);
+    };
+
+    reader.readAsDataURL(file);
+  };
+
+  var constructImage = function constructImage() {
+    return {
+      url: url,
+      name: label
+    };
+  };
+
+  var handleOnDelete = function handleOnDelete() {
+    onDelete(file);
   };
 
   (0, _react.useEffect)(function () {
-    setDate(value);
-  }, [value]);
-  return _react.default.createElement(_pickers.MuiPickersUtilsProvider, {
-    locale: "es",
-    utils: _moment.default
-  }, _react.default.createElement(_pickers.KeyboardDatePicker, {
-    className: classes.datePicker,
-    variant: "inline",
-    inputVariant: "outlined",
-    label: label,
-    value: date,
-    format: format,
-    onChange: handleDateChange,
-    disableToolbar: true,
-    disabled: disabled,
-    minDate: minDate
+    readFile();
+  }, [file]);
+  return _react.default.createElement(_core.Card, {
+    className: (0, _classnames.default)(classes.card, className)
+  }, _react.default.createElement(_core.CardHeader, {
+    className: classes.cardHeader,
+    title: label,
+    action: _react.default.createElement(_core.IconButton, {
+      className: classes.iconButton,
+      onClick: handleOnDelete
+    }, _react.default.createElement(_Delete.default, null))
+  }), _react.default.createElement(_ImageActions.default, {
+    image: constructImage()
   }));
 };
 
-DatePicker.propTypes = {
+PreviewID.propTypes = {
+  className: _propTypes.default.string,
   label: _propTypes.default.string,
-  value: _propTypes.default.oneOfType([_propTypes.default.instanceOf(Date), _propTypes.default.string]),
-  format: _propTypes.default.string,
-  onDateChange: _propTypes.default.func,
-  disabled: _propTypes.default.bool,
-  minDate: _propTypes.default.oneOfType([_propTypes.default.instanceOf(Date), _propTypes.default.string])
+  file: _propTypes.default.instanceOf(File),
+  onDelete: _propTypes.default.func
 };
-DatePicker.defaultProps = {
+PreviewID.defaultProps = {
+  className: '',
   label: '',
-  value: null,
-  format: 'DD/MM/YYYY',
-  onDateChange: function onDateChange() {},
-  disabled: false,
-  minDate: ''
+  file: new File([''], 'No Soportado', {
+    type: ''
+  }),
+  onDelete: function onDelete() {}
 };
-var _default = DatePicker;
+var _default = PreviewID;
 exports.default = _default;
