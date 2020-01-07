@@ -35,7 +35,7 @@ const FileFinder = ({
       </Grid>
       {
         files.map((file, index) => (
-          <Grid key={file.name} item sm={3}> 
+          <Grid key={index} item sm={3}> 
             <FileThumbnail
               file={file}
               onClick={handleOnClick(index)}

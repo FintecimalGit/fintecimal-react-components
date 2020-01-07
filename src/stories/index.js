@@ -17,7 +17,9 @@ import {
   RejectActions,
   SignatureMap,
   ImageActions,
-  CardApp
+  CardApp,
+  CurrencyInput,
+  TextAreaInput
 } from '../lib/nodes';
 
 const {
@@ -188,6 +190,22 @@ storiesOf('Components|Nodes', module)
       required={true}
       clear={true}
       value={'Text'}
+    />
+  ))
+  .add('Currency Input', () => (
+    <CurrencyInput
+      label={'Financiamiento'}
+      handleChange={action('handleChange')}
+      required={true}
+      clear={true}
+    />
+  ))
+  .add('Text Area Input', () => (
+    <TextAreaInput
+      label={'Comentarios Anexos'}
+      handleChange={action('handleChange')}
+      required={true}
+      clear={true}
     />
   ))
   .add('Select', () => (
@@ -633,7 +651,7 @@ storiesOf('NewComponents', module)
   .add('FileFinder', () => {
     const [image, setImage] = useState(new File([''], 'test.png', { type: 'image/png' }))
     const [pdf, setPdf] = useState(new File([''], 'test.pdf', { type: 'application/pdf' }))
-
+    const [files, setFiles] = useState([]);
     useEffect(() => {
       fetch('https://upload.wikimedia.org/wikipedia/commons/c/cc/Game_Boy_Color_Pikachu.jpg')
         .then(response => response.blob())
@@ -648,7 +666,11 @@ storiesOf('NewComponents', module)
             const file = new File([blob], "test.pdf", { type: blob.type })
             setPdf(file)
         });
-    }, [])
+    }, []);
+
+    useEffect(() => {
+      setFiles([image, pdf, image, pdf, image, pdf, image, pdf]);
+    }, [image, files]);
     return (
       <Container
         style={{ paddingTop: '5vh',
@@ -659,7 +681,7 @@ storiesOf('NewComponents', module)
       }}
       >
         <FileFinder
-          files={[image, pdf, image, pdf, image, pdf, image, pdf]}
+          files={files}
           onClick={action('onClick')}
         />
       </Container>
