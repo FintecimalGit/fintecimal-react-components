@@ -10,13 +10,11 @@ const IDCardUpload = ({ title, onDrop, labelPrimary, labelSecondary }) => {
   const [secondaryFile, setSecondaryFile] = useState(null);
 
   const handleDropPrimary = acceptedFiles => {
-    console.log(acceptedFiles);
     setPrimaryFile(acceptedFiles[0]);
     onDrop(acceptedFiles);
   };
 
   const handleDropSecondary = acceptedFiles => {
-    console.log(acceptedFiles);
     setSecondaryFile(acceptedFiles[0]);
     onDrop(acceptedFiles);
   };
