@@ -20,7 +20,9 @@ import {
   CardApp,
   CurrencyInput,
   TextAreaInput,
-  IDCardUpload
+  IDCardUpload,
+  TextInput as TextInputNodes,
+  FieldValue,
 } from '../lib/nodes';
 
 const {
@@ -271,7 +273,67 @@ storiesOf('Components|Nodes', module)
   .add('Map', () => <SignatureMap />)
   .add('Image Actions', () => <ImageActions />)
   .add('IDCardUpload', () => <IDCardUpload />)
-  .add('CardApp', () => <CardApp onClick={action('onClick')} />);
+  .add('CardApp', () => <CardApp onClick={action('onClick')} />)
+  .add('TextInput',() => (
+    <TextInputNodes label={'TextInput'} handleChange={action('handleChange')} required={true} error={false} />
+  ))
+  .add('FieldValue',() => {
+    const fieldRespuestaCorta = {
+      "id": "jbpLf32qC1",
+      "name": "montoprestamo",
+      "label": "Monto del crédito",
+      "config": {
+        "function": {
+          "name": "getCapital"
+        },
+        "visible": true
+      },
+      "type": "Respuesta corta"
+    };
+
+    const fieldRespuestaLarga = {
+      "id": "jbpLf32qC1",
+      "name": "montoprestamo",
+      "label": "Monto del crédito",
+      "config": {
+        "function": {
+          "name": "getCapital"
+        },
+        "visible": true
+      },
+      "type": "Respuesta larga"
+    };
+
+    const fieldNumero = {
+      "id": "jbpLf32qC1",
+      "name": "montoprestamo",
+      "label": "Monto del crédito",
+      "config": {
+        "function": {
+          "name": "getCapital"
+        },
+        "visible": true
+      },
+      "type": "Número"
+    };
+  
+    return (
+      <>
+        <FieldValue
+          field={fieldRespuestaCorta}
+          value="Respuesta Corta"
+        />
+        <FieldValue
+          field={fieldRespuestaLarga}
+          value="Respuesta Larga"
+        />
+        <FieldValue
+          field={fieldNumero}
+          value="1"
+        />
+      </>
+    );
+});
 
 storiesOf('Components|Button', module)
   .add('Classic Button', () => <Button onClick={action('clicked')}></Button>, {
@@ -673,7 +735,8 @@ storiesOf('NewComponents', module)
 
     useEffect(() => {
       setFiles([image, pdf, image, pdf, image, pdf, image, pdf]);
-    }, [image, files]);
+    }, [image, pdf]);
+    
     return (
       <Container
         style={{ paddingTop: '5vh',

@@ -12,6 +12,9 @@ import CardApp from './CardApp';
 import CurrencyInput from './CurrencyInput';
 import TextAreaInput from './TextAreaInput';
 import IDCardUpload from './IDCardUpload';
+import TextInput from './TextInput';
+import NumbertInput from './NumbertInput';
+import FieldValue from './FieldValue';
 
 export {
   Maps,
@@ -27,5 +30,8 @@ export {
   CurrencyInput,
   TextAreaInput,
   RejectTooltip,
-  RejectActions
+  RejectActions,
+  TextInput,
+  NumbertInput,
+  FieldValue,
 };
