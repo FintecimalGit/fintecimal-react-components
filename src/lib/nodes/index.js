@@ -12,6 +12,7 @@ import CardApp from './CardApp';
 import CurrencyInput from './CurrencyInput';
 import TextAreaInput from './TextAreaInput';
 import IDCardUpload from './IDCardUpload';
+import ListSignerRoles from './ListSignerRoles';
 
 export {
   Maps,
@@ -27,5 +28,6 @@ export {
   CurrencyInput,
   TextAreaInput,
   RejectTooltip,
-  RejectActions
+  RejectActions,
+  ListSignerRoles
 };

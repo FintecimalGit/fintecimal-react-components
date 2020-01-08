@@ -20,7 +20,8 @@ import {
   CardApp,
   CurrencyInput,
   TextAreaInput,
-  IDCardUpload
+  IDCardUpload,
+  ListSignerRoles
 } from '../lib/nodes';
 
 const {
@@ -271,6 +272,9 @@ storiesOf('Components|Nodes', module)
   .add('Map', () => <SignatureMap />)
   .add('Image Actions', () => <ImageActions />)
   .add('IDCardUpload', () => <IDCardUpload />)
+  .add('ListSignerRoles', () => <ListSignerRoles
+                                  selected={2}
+                                  onChangeHandler={action('onChangeHandler')}/>)
   .add('CardApp', () => <CardApp onClick={action('onClick')} />);
 
 storiesOf('Components|Button', module)
