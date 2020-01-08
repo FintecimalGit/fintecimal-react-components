@@ -5,6 +5,13 @@ import TextInput from '../TextInput';
 import TextAreaInput from '../TextAreaInput';
 import NumbertInput from '../NumbertInput';
 
+/**
+ *
+ * @param {Object} field
+ * @param {String|Number} value
+ * @param {Function} handleChange
+ * @returns {Component}
+ */
 const renderField = (field, value, handleChange) => {
   const { type = '', config = {} } = field;
   const { visible = false } = config;
