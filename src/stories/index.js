@@ -23,6 +23,7 @@ import {
   IDCardUpload,
   TextInput as TextInputNodes,
   FieldValue,
+  FieldValues,
 } from '../lib/nodes';
 
 const {
@@ -336,7 +337,96 @@ storiesOf('Components|Nodes', module)
         />
       </>
     );
-});
+  })
+  .add('FieldValues', () => {
+    const fieldCalle = {
+      id: "5db9cf033fa1e10017b4ff85",
+      name: "calle",
+      label: "Calle",
+      config: {
+        visible: true
+      },
+      type: "Texto corto"
+    };
+    const fieldValueCalle = {
+      field: "5db9cf033fa1e10017b4ff85",
+      value: "La Calle",
+    };
+
+    const fieldNInterior = {
+      id: "5db9cf033fa1e10017b4ff86",
+      name: "nInterior",
+      label: "Nº Interior",
+      config: {
+        visible: true
+      },
+      type: "Número"
+    };
+    const fieldValueNInterior = {
+      field: "5db9cf033fa1e10017b4ff86",
+      value: "666",
+    };
+  
+    const fieldNExterior = {
+      id: "5db9cf033fa1e10017b4ff87",
+      name: "nExterior",
+      label: "Nº Exterior",
+      config: {
+        visible: true
+      },
+      type: "Número"
+    };
+    const fieldValueNExterior = {
+      field: "5db9cf033fa1e10017b4ff87",
+      value: "666",
+    };
+
+    const fieldColonia = {
+      id: "5db9cf033fa1e10017b4ff88",
+      name: "colonia",
+      label: "Colonia",
+      config: {
+        visible: true,
+      },
+      type: "Texto corto"
+    };
+    const fieldValueColonia = {
+      field: "5db9cf033fa1e10017b4ff88",
+      value: "La Colonia",
+    };
+
+    const fieldMunicipio = {
+      id: "5db9cf033fa1e10017b4ff89",
+      name: "municipio",
+      label: "Municipio",
+      config: {
+        visible: true,
+      },
+      type: "Texto corto"
+    };
+    const fieldValueMunicipio = {
+      field: "5db9cf033fa1e10017b4ff89",
+      value: "La Municipio",
+    };
+
+    const fields = [
+      fieldCalle,
+      fieldNInterior,
+      fieldNExterior,
+      fieldColonia,
+      fieldMunicipio,
+    ];
+
+    const values = [
+      fieldValueCalle,
+      fieldValueNInterior,
+      fieldValueNExterior,
+      fieldValueColonia,
+      fieldValueMunicipio,
+    ];
+
+    return <FieldValues title="FieldValues" fields={fields} values={values} />
+  })
 
 storiesOf('Components|Button', module)
   .add('Classic Button', () => <Button onClick={action('clicked')}></Button>, {

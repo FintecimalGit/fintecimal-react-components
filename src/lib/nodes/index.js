@@ -15,6 +15,7 @@ import IDCardUpload from './IDCardUpload';
 import TextInput from './TextInput';
 import NumbertInput from './NumbertInput';
 import FieldValue from './FieldValue';
+import FieldValues from './FieldValues';
 
 export {
   Maps,
@@ -34,4 +35,5 @@ export {
   TextInput,
   NumbertInput,
   FieldValue,
+  FieldValues,
 };

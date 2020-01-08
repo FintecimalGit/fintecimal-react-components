@@ -34,6 +34,7 @@ const FieldValue = ({ field, value, handleChange }) => (
 
 FieldValue.propTypes = {
   field: PropTypes.shape({
+    id: PropTypes.string,
     name: PropTypes.string,
     label: PropTypes.string,
     config: PropTypes.shape({
@@ -47,6 +48,7 @@ FieldValue.propTypes = {
 
 FieldValue.defaultProps = {
   field: {
+    id: '',
     name: '',
     label: '',
     config: {
