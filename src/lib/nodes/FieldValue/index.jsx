@@ -5,11 +5,11 @@ import TextInput from '../TextInput';
 import TextAreaInput from '../TextAreaInput';
 import NumbertInput from '../NumbertInput';
 
-const renderField = (field, value) => {
+const renderField = (field, value, handleChange) => {
   const { type = '', config = {} } = field;
   const { visible = false } = config;
 
-  const props = { ...field, ...config, value };
+  const props = { ...field, ...config, value, handleChange };
 
   if (!visible) return '';
 
@@ -28,12 +28,11 @@ const renderField = (field, value) => {
   }
 };
 
-const FieldValue = ({ field, value }) => (
-  <> { renderField(field, value) } </>
+const FieldValue = ({ field, value, handleChange }) => (
+  <> { renderField(field, value, handleChange) } </>
 );
 
 FieldValue.propTypes = {
-  value: PropTypes.string,
   field: PropTypes.shape({
     name: PropTypes.string,
     label: PropTypes.string,
@@ -42,6 +41,8 @@ FieldValue.propTypes = {
     }),
     type: PropTypes.string,
   }),
+  value: PropTypes.string,
+  handleChange: PropTypes.func,
 };
 
 FieldValue.defaultProps = {

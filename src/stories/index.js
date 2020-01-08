@@ -322,14 +322,17 @@ storiesOf('Components|Nodes', module)
         <FieldValue
           field={fieldRespuestaCorta}
           value="Respuesta Corta"
+          handleChange={action('handleChange')}
         />
         <FieldValue
           field={fieldRespuestaLarga}
           value="Respuesta Larga"
+          handleChange={action('handleChange')}
         />
         <FieldValue
           field={fieldNumero}
           value="1"
+          handleChange={action('handleChange')}
         />
       </>
     );
