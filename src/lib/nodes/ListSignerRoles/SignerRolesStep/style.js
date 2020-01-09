@@ -21,24 +21,24 @@ const useStyles = makeStyles((theme) => ({
       textTransform: 'capitalize',
     },
     fontWeight: 'normal',
-    color: theme.palette.text.secondary,
+    color: theme.palette.tertiary.main,
   },
   labelComplete: {
     flex: '1 1 auto',
     margin: 0,
-    fontSize: 16  ,
+    fontSize: 15  ,
     paddingLeft: theme.spacing(5),
     textTransform: 'lowercase',
     '&::first-letter': {
       textTransform: 'capitalize',
     },
-    color: theme.palette.primary.main,
+    color: theme.palette.tertiary.main,
   },
   icon: {
     flex: '0 0 auto',
     color: theme.palette.secondary.main,
     paddingRight: 20,
-    fontSize: '1.5rem',
+    fontSize: '1.3rem',
   },
 }));
 

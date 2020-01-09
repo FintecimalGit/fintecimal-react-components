@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
     left: 0,
   },
   label: {
-    flex: '0 1 auto',
+    flex: '1 1 auto',
     margin: 0,
     fontSize: 18,
     paddingLeft: theme.spacing(3),
@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.tertiary.main,
   },
   labelSelected: {
-    flex: '0 1 auto',
+    flex: '1 1 auto',
     margin: 0,
     fontSize: 18,
     paddingLeft: theme.spacing(3),
@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.primary.main,
   },
   labelComplete: {
-    flex: '0 1 auto',
+    flex: '1 1 auto',
     margin: 0,
     fontSize: 18,
     paddingLeft: theme.spacing(3),
@@ -56,12 +56,8 @@ const useStyles = makeStyles((theme) => ({
   },
   icon: {
     flex: '0 0 auto',
-    color: theme.palette.secondary.main,
     paddingRight: 20,
     fontSize: '1.5rem',
-  },
-  icon_space: {
-    paddingLeft: theme.spacing(2),
   }
 }));
 

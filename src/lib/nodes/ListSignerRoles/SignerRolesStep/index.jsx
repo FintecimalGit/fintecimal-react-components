@@ -5,23 +5,23 @@ import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 
 import useStyles from './style';
 
-const SignerRolesStep = ({step}) => {
+const SignerRolesStep = ({index, step}) => {
     const classes = useStyles();
     const getClassFromStatus = (complete) => {
         if (complete) return classes.labelComplete;
         return classes.label;
     };
-
     const { label, complete } = step;
     return(
-        <div className={classes.content}>
+        <div key={index} className={classes.content}>
             <p className={getClassFromStatus(complete)}>{label}</p>
             {complete && <CheckCircleIcon className={classes.icon} />}
         </div>
     );
 };
 
-SignerRolesStep.PropTypes = {
+SignerRolesStep.propTypes = {
+    index: PropTypes.number,
     step: PropTypes.object
 }
 
