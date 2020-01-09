@@ -7,10 +7,7 @@ import useStyles from './style';
 
 const SignerRolesStep = ({index, step}) => {
     const classes = useStyles();
-    const getClassFromStatus = (complete) => {
-        if (complete) return classes.labelComplete;
-        return classes.label;
-    };
+    const getClassFromStatus = (complete) => complete ? classes.labelComplete : classes.label;
     const { label, complete } = step;
     return(
         <div key={index} className={classes.content}>
@@ -23,7 +20,12 @@ const SignerRolesStep = ({index, step}) => {
 SignerRolesStep.propTypes = {
     index: PropTypes.number,
     step: PropTypes.object
-}
+};
+
+SignerRolesStep.defaultProps = {
+    index: 0,
+    step: {}
+};
 
 
 export default SignerRolesStep;

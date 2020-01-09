@@ -20,21 +20,21 @@ const ListSignerRoles = ({ options, selected, onChangeHandler }) => {
   return (
     <div>
       {options.map((option, index) => {
-        const { label, complete, readOnly,values } = option;
+        const { label, complete, readOnly, values } = option;
         const isSelected = selected === index;
         return (
           <Fragment key={index} >
-          <div
-            className={classes.content}
-            onClick={() => {
-              onChangeHandler(index);
-            }}
-          >
-            {isSelected && <div className={classes.selected} />}
-            <p className={getClassFromStatus(isSelected, complete)}>{label}</p>
-            {readOnly && <RemoveRedEyeRoundedIcon  className={classes.icon}/>}
-          </div>
-          { isSelected && values.map((steps, index_step) => <SignerRolesStep key={index_step} step={steps}/>)}
+            <div
+              className={classes.content}
+              onClick={() => {
+                onChangeHandler(index);
+              }}
+            >
+              {isSelected && <div className={classes.selected} />}
+              <p className={getClassFromStatus(isSelected, complete)}>{label}</p>
+              {readOnly && <RemoveRedEyeRoundedIcon  className={classes.icon}/>}
+            </div>
+            { isSelected && values.map((steps, index_step) => <SignerRolesStep key={index_step} step={steps}/>)}
           </Fragment>
         );
       })}
