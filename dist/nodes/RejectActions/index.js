@@ -40,7 +40,8 @@ var RejectActions = function RejectActions(_ref) {
       rejected = _ref.rejected,
       onOpen = _ref.onOpen,
       onClose = _ref.onClose,
-      size = _ref.size;
+      size = _ref.size,
+      rejectionShowed = _ref.rejectionShowed;
 
   var _useState = (0, _react.useState)(rejected),
       _useState2 = _slicedToArray(_useState, 2),
@@ -82,6 +83,7 @@ var RejectActions = function RejectActions(_ref) {
     setAnchorElement(null);
   };
 
+  if (rejectionShowed === false) return null;
   return _react.default.createElement(_react.default.Fragment, null, _react.default.createElement(_index.RejectButton, {
     noteOpen: Boolean(anchorElement),
     rejected: mRejected,
@@ -114,7 +116,8 @@ RejectActions.defaultProps = {
   rejectionOptions: [],
   onOpen: function onOpen() {},
   onClose: function onClose() {},
-  size: 'large'
+  size: 'large',
+  rejectionShowed: true
 };
 RejectActions.propTypes = {
   rejected: _propTypes.default.bool.isRequired,
@@ -123,7 +126,8 @@ RejectActions.propTypes = {
   handlerReject: _propTypes.default.func.isRequired,
   onOpen: _propTypes.default.func.isRequired,
   onClose: _propTypes.default.func,
-  size: _propTypes.default.oneOf(['large', 'small'])
+  size: _propTypes.default.oneOf(['large', 'small']),
+  rejectionShowed: _propTypes.default.bool
 };
 var _default = RejectActions;
 exports.default = _default;

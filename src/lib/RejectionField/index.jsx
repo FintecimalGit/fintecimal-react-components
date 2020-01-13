@@ -17,6 +17,7 @@ const RejectionField = ({
   rejectionOptions,
   rejectionData,
   rejected,
+  rejectionShowed,
 }) => {
   const classes = useStyles();
   const [forceDisplay, setForceDisplay] = useState('none')
@@ -58,6 +59,7 @@ const RejectionField = ({
                 onOpen={keep}
                 onClose={leave}
                 size="small"
+                rejectionShowed={rejectionShowed}
               />
             </div>
           </div>
@@ -81,6 +83,7 @@ RejectionField.propTypes = {
     reason: PropTypes.string,
     comments: PropTypes.string
   }),
+  rejectionShowed: PropTypes.bool,
 };
 
 RejectionField.defaultProps = {
@@ -95,6 +98,7 @@ RejectionField.defaultProps = {
     comments: ''
   },
   rejected: false,
+  rejectionShowed: true
 };
 
 export default RejectionField;

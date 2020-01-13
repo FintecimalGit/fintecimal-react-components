@@ -42,7 +42,8 @@ var RejectionField = function RejectionField(_ref) {
       onReject = _ref.onReject,
       rejectionOptions = _ref.rejectionOptions,
       rejectionData = _ref.rejectionData,
-      rejected = _ref.rejected;
+      rejected = _ref.rejected,
+      rejectionShowed = _ref.rejectionShowed;
   var classes = (0, _style.default)();
 
   var _useState = (0, _react.useState)('none'),
@@ -88,7 +89,8 @@ var RejectionField = function RejectionField(_ref) {
     rejectionData: rejectionData,
     onOpen: keep,
     onClose: leave,
-    size: "small"
+    size: "small",
+    rejectionShowed: rejectionShowed
   }))))));
 };
 
@@ -105,7 +107,8 @@ RejectionField.propTypes = {
     date: _propTypes.default.instanceOf(Date),
     reason: _propTypes.default.string,
     comments: _propTypes.default.string
-  })
+  }),
+  rejectionShowed: _propTypes.default.bool
 };
 RejectionField.defaultProps = {
   field: {
@@ -121,7 +124,8 @@ RejectionField.defaultProps = {
     reason: '',
     comments: ''
   },
-  rejected: false
+  rejected: false,
+  rejectionShowed: true
 };
 var _default = RejectionField;
 exports.default = _default;
