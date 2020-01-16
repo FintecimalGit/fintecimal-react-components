@@ -10,7 +10,6 @@ var _styles = require("@material-ui/core/styles");
 var useStyles = (0, _styles.makeStyles)(function (theme) {
   return {
     paper: {
-      maxWidth: '384px',
       height: '168px',
       display: 'flex',
       flexDirection: 'column',
