@@ -12,6 +12,7 @@ const RejectActions = ({
   onOpen,
   onClose,
   size,
+  rejectionShowed,
 }) => {
   const [mRejected, setRejected] = useState(rejected);
   const [mRejectionData, setRejectionData] = useState(rejectionData);
@@ -40,6 +41,8 @@ const RejectActions = ({
     onClose(event);
     setAnchorElement(null);
   };
+
+  if (rejectionShowed === false) return null;
 
   return (
     <>
@@ -83,6 +86,7 @@ RejectActions.defaultProps = {
   onOpen: () => {},
   onClose: () => {},
   size: 'large',
+  rejectionShowed: true,
 };
 
 RejectActions.propTypes = {
@@ -93,6 +97,7 @@ RejectActions.propTypes = {
   onOpen: PropTypes.func.isRequired,
   onClose: PropTypes.func,
   size: PropTypes.oneOf(['large', 'small']),
+  rejectionShowed: PropTypes.bool,
 };
 
 export default RejectActions;
