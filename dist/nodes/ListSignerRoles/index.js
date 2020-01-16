@@ -17,7 +17,7 @@ var _RemoveRedEyeRounded = _interopRequireDefault(require("@material-ui/icons/Re
 
 var _style = _interopRequireDefault(require("./style"));
 
-var _data = _interopRequireDefault(require("./data.json"));
+var _data = _interopRequireDefault(require("./data"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
