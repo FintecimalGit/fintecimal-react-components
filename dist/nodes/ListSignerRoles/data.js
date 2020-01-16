@@ -3,9 +3,8 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = void 0;
-
-var _default = data = [{
+exports.data = void 0;
+var data = [{
   label: 'representante legal',
   selected: false,
   complete: true,
@@ -36,5 +35,4 @@ var _default = data = [{
   readOnly: true,
   values: []
 }];
-
-exports.default = _default;
+exports.data = data;
