@@ -17,7 +17,7 @@ var _RemoveRedEyeRounded = _interopRequireDefault(require("@material-ui/icons/Re
 
 var _style = _interopRequireDefault(require("./style"));
 
-var _data = _interopRequireDefault(require("./data"));
+var _data = require("./data");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -76,7 +76,7 @@ ListSignerRoles.propTypes = {
   onChangeHandler: _propTypes.default.func
 };
 ListSignerRoles.defaultProps = {
-  options: _data.default,
+  options: _data.data,
   selected: 0,
   onChangeHandler: function onChangeHandler() {}
 };

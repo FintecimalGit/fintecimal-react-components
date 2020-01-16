@@ -8,7 +8,7 @@ import SignerRolesStep from './SignerRolesStep';
 import RemoveRedEyeRoundedIcon from '@material-ui/icons/RemoveRedEyeRounded';
 
 import useStyles from './style';
-import data from './data';
+import { data } from './data';
 
 const ListSignerRoles = ({ options, selected, onChangeHandler }) => {
   const classes = useStyles();
