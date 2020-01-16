@@ -2,7 +2,6 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
   paper: {
-    maxWidth: '384px',
     height: '168px',
     display: 'flex',
     flexDirection: 'column',
