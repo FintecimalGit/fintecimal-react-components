@@ -21,7 +21,8 @@ import {
   CurrencyInput,
   TextAreaInput,
   IDCardUpload,
-  ListSignerRoles
+  ListSignerRoles,
+  InputTable,
 } from '../lib/nodes';
 
 const {
@@ -272,6 +273,7 @@ storiesOf('Components|Nodes', module)
   .add('Map', () => <SignatureMap />)
   .add('Image Actions', () => <ImageActions />)
   .add('IDCardUpload', () => <IDCardUpload />)
+  .add('InputTable', () => <InputTable />)
   .add('ListSignerRoles', () => <ListSignerRoles
                                   selected={2}
                                   onChangeHandler={action('onChangeHandler')}/>)

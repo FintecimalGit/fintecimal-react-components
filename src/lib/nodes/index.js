@@ -13,6 +13,7 @@ import CurrencyInput from './CurrencyInput';
 import TextAreaInput from './TextAreaInput';
 import IDCardUpload from './IDCardUpload';
 import ListSignerRoles from './ListSignerRoles';
+import InputTable from './InputTable';
 
 export {
   Maps,
@@ -29,5 +30,6 @@ export {
   TextAreaInput,
   RejectTooltip,
   RejectActions,
-  ListSignerRoles
+  ListSignerRoles,
+  InputTable,
 };
