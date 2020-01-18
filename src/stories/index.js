@@ -273,7 +273,7 @@ storiesOf('Components|Nodes', module)
   .add('Map', () => <SignatureMap />)
   .add('Image Actions', () => <ImageActions />)
   .add('IDCardUpload', () => <IDCardUpload />)
-  .add('InputTable', () => <InputTable />)
+  .add('Input Table', () => <InputTable />)
   .add('ListSignerRoles', () => <ListSignerRoles
                                   selected={2}
                                   onChangeHandler={action('onChangeHandler')}/>)

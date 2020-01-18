@@ -3,13 +3,18 @@ import PropTypes from 'prop-types';
 
 import BaseInput from "../../BaseInput";
 import Button from "../../Buttons/Button";
+import useStyles from "./style";
 
 
-const Fields = ({fields, addNewRow}) =>{
+const Fields = ({fields, addNewRow, header}) =>{
 
-    const emptyfields = {};
-
+    const classes = useStyles();
     const [values, setValues] = React.useState({});
+    const [inputError, setInputError] = React.useState({});
+
+    React.useEffect(() =>{
+        if(Object.keys(values).length === 0) createEmptyValues(header);
+    }, [header]);
 
     const isString = (value) => typeof value === 'string';
 
@@ -20,9 +25,40 @@ const Fields = ({fields, addNewRow}) =>{
 
     const getInputValue = (input) => values[input.label] || '';
 
+    const getInputValueError = (input) => inputError[input.label] || false;
+
+    const clearText = (input) => (event) => setValues({ ...values, [input.label]: '' });
+
     const onClickAccept = () => {
+        if(validateInformation()) return null;
         addNewRow(values);
-        setValues({});
+        createEmptyValues(header);
+    };
+
+    const createEmptyValues = (headers) => {
+        let value = {};
+        let valueErrors = {}
+        headers.map(keys => {
+            value[keys.key] = '';
+            valueErrors[keys.key] = false;
+        });
+        setValues(value);
+        setInputError(valueErrors);
+    };
+
+    const validateInformation = () => {
+        let inputErrors = {...inputError};
+        let exitsErrors = false;
+        for(let key in values){
+           if(values[key] === ''){
+               inputErrors[key] = true;
+               exitsErrors = true;
+           }else{
+               inputErrors[key] = false;
+           }
+        }
+        setInputError(inputErrors);
+        return exitsErrors;
     };
 
     return(
@@ -30,10 +66,21 @@ const Fields = ({fields, addNewRow}) =>{
             {fields.map(values => {
                 const  { label, id } = values;
                 return(
-                    <BaseInput key={id} handleChange={handleChangeInputs({label})} label={label} required={true} type={'text'} value={getInputValue({label})}/>
+                    <div className={classes.content_inputs} key={id}>
+                        <BaseInput
+                                    handleChange={handleChangeInputs({label})}
+                                    label={label}
+                                    required
+                                    type={'text'}
+                                    value={getInputValue({label})}
+                                    onClear={clearText({label})}
+                                    error={getInputValueError({label})}
+                                    errorMessage={'Campo obligatorio'}
+                        />
+                    </div>
                 );
             })}
-            <Button text="Aceptar" onClick={onClickAccept} />
+            <Button text="Agregar" onClick={onClickAccept} />
         </div>
     );
 };

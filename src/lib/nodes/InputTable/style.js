@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles(theme => ({
     container: {
         position: 'absolute',
-        width: '401px',
+        width: '90%',
         top: '50%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
@@ -15,6 +15,8 @@ const useStyles = makeStyles(theme => ({
     },
     content: {
         display: 'flex',
+        marginLeft: 5,
+        width: '50%',
         flexDirection: 'column',
         alignItems: 'stretch',
         padding: theme.spacing(3, 5),

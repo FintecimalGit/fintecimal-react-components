@@ -1,30 +1,40 @@
 import React, { Fragment} from 'react';
 import PropTypes from 'prop-types';
 
-import BaseInput from '../BaseInput';
-
 import Fields from './Fields';
+import Table from '../../Table';
+
 import useStyles from './style';
 
 const InputTable = ({ options }) => {
   const classes = useStyles();
   const [information, setInformation] = React.useState([]);
+  const [header, setHeader] = React.useState([]);
 
-  const addNewRow = (value) => {
-    setInformation([...information, value]);
+  React.useEffect(() => {
+    if(Object.keys(header).length === 0) getHeaders(options[0]);
+  }, [options]);
+
+  const getHeaders = (option) => {
+    let obj = [];
+    option.map(opt => obj.push({'key': opt.label, 'value': opt.label}));
+    setHeader(obj);
   };
+
+  const addNewRow = (value) => setInformation([...information, value]);
 
   return (
     <div className={classes.container}>
       <div className={classes.content}>
-        <Fields fields={options[0]} addNewRow={addNewRow} />
+        <Fields fields={options[0]} addNewRow={addNewRow} header={header} />
       </div>
+      { (Object.keys(information).length > 0) ? <Table headers={header} items={information}/>  : null}
     </div>
   );
 };
 
 InputTable.propTypes = {
-  options: PropTypes.array,
+  options: PropTypes.array.isRequired
 };
 
 InputTable.defaultProps = {
