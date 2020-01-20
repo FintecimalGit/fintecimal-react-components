@@ -21,6 +21,7 @@ const Fields = ({fields, addNewRow, header}) =>{
     const handleChangeInputs = (input) => (event) => {
         const value = isString(event) ? event : event.target.value;
         setValues({ ...values, [input.label]: value });
+        setInputError({...inputError, [input.label]: false})
     };
 
     const getInputValue = (input) => values[input.label] || '';

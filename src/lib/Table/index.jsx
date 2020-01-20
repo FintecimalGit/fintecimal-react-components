@@ -12,6 +12,8 @@ const Table = ({
   onClickRow,
   edit,
   onEdit,
+  deleteRow,
+  onDeleteRow,
 }) => {
   const classes = useStyles();
   return (
@@ -23,6 +25,8 @@ const Table = ({
         onClickRow={onClickRow}
         edit={edit}
         onEdit={onEdit}
+        deleteRow={deleteRow}
+        onDeleteRow={onDeleteRow}
       />
     </table>
   );
@@ -39,6 +43,8 @@ Table.propTypes = {
   onClickRow: PropTypes.func,
   edit: PropTypes.bool,
   onEdit: PropTypes.func,
+  deleteRow: PropTypes.bool,
+  onDeleteRow: PropTypes.func,
 };
 
 Table.defaultProps = {
@@ -47,6 +53,8 @@ Table.defaultProps = {
   onClickRow: () => {},
   edit: false,
   onEdit: () => {},
+  deleteRow: false,
+  onDeleteRow: () => {},
 };
 
 export default Table;

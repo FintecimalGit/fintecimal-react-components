@@ -1,4 +1,4 @@
-import React, { Fragment} from 'react';
+import React, { useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
 
 import Fields from './Fields';
@@ -8,27 +8,59 @@ import useStyles from './style';
 
 const InputTable = ({ options }) => {
   const classes = useStyles();
-  const [information, setInformation] = React.useState([]);
-  const [header, setHeader] = React.useState([]);
+  const [information, setInformation] = useState([]);
+  const [dataTable, setDataTable] = useState([]);
+  const [header, setHeader] = useState([]);
 
-  React.useEffect(() => {
-    if(Object.keys(header).length === 0) getHeaders(options[0]);
-  }, [options]);
+  useEffect(() => {
+    if(Object.keys(header).length === 0) getHeaders(options);
+    loadDataTable(information);
+  }, [options, information]);
 
   const getHeaders = (option) => {
     let obj = [];
-    option.map(opt => obj.push({'key': opt.label, 'value': opt.label}));
+    option[0].map(opt => obj.push({'key': opt.label, 'value': opt.label}));
     setHeader(obj);
+    setInformation(option);
   };
 
-  const addNewRow = (value) => setInformation([...information, value]);
+  const addNewRow = (value) => {
+    let newArray = [];
+    Object.keys(value).forEach(function(key, index) {
+      newArray.push({
+        'id' : index,
+        'label': key,
+        'value': value[key]
+      });
+    });
+    setInformation([...information, newArray]);
+  };
+
+  const loadDataTable = (data) => {
+    let newValues = [];
+    let newObject = {};
+    data.forEach(element => {
+      Object.keys(element).forEach((key) => {
+        if(element[key]['value'] !== '') newObject[element[key]['label']] = element[key]['value'];
+      });
+      if(Object.keys(newObject).length > 0) newValues.push(newObject);
+      newObject = {};
+    });
+    setDataTable(newValues);
+  };
+
+  const DeleteRow = (item, index) => {
+    let newInformation = [...information];
+    newInformation.splice(index,1);
+    setInformation(newInformation);
+  };
 
   return (
     <div className={classes.container}>
       <div className={classes.content}>
         <Fields fields={options[0]} addNewRow={addNewRow} header={header} />
       </div>
-      { (Object.keys(information).length > 0) ? <Table headers={header} items={information}/>  : null}
+      { (Object.keys(dataTable).length > 0) ? <Table headers={header} items={dataTable} deleteRow={true} onDeleteRow={DeleteRow} edit={true}/>  : null}
     </div>
   );
 };
@@ -42,23 +74,23 @@ InputTable.defaultProps = {
     [{
       'id': 0,
       'label': 'No.',
-      'value': '',
+      'value': '123',
     },{
       'id': 1,
       'label': 'Fecha de pago',
-      'value': '',
+      'value': '20 de enero',
     },{
       'id': 2,
       'label': 'Monto sin iva',
-      'value': '',
+      'value': '1000',
     },{
       'id': 3,
       'label': 'IVA',
-      'value': '',
+      'value': '160',
     },{
       'id': 4,
       'label': 'Total a pagar',
-      'value': '',
+      'value': '1160',
     }],
   ],
 };
