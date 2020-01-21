@@ -87,6 +87,12 @@ Object.defineProperty(exports, "IDCardUpload", {
     return _IDCardUpload.default;
   }
 });
+Object.defineProperty(exports, "ListSignerRoles", {
+  enumerable: true,
+  get: function get() {
+    return _ListSignerRoles.default;
+  }
+});
 
 var _SearchBar = _interopRequireDefault(require("./SearchBar"));
 
@@ -115,5 +121,7 @@ var _CurrencyInput = _interopRequireDefault(require("./CurrencyInput"));
 var _TextAreaInput = _interopRequireDefault(require("./TextAreaInput"));
 
 var _IDCardUpload = _interopRequireDefault(require("./IDCardUpload"));
+
+var _ListSignerRoles = _interopRequireDefault(require("./ListSignerRoles"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }

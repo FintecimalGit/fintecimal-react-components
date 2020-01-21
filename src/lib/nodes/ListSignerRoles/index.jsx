@@ -1,14 +1,14 @@
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import React, {Fragment} from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 
 import SignerRolesStep from './SignerRolesStep';
 import RemoveRedEyeRoundedIcon from '@material-ui/icons/RemoveRedEyeRounded';
 
 import useStyles from './style';
-import data from './data.json';
+import { data } from './data';
 
 const ListSignerRoles = ({ options, selected, onChangeHandler }) => {
   const classes = useStyles();
@@ -23,7 +23,7 @@ const ListSignerRoles = ({ options, selected, onChangeHandler }) => {
         const { label, complete, readOnly, values } = option;
         const isSelected = selected === index;
         return (
-          <Fragment key={index} >
+          <Fragment key={index}>
             <div
               className={classes.content}
               onClick={() => {
@@ -32,9 +32,10 @@ const ListSignerRoles = ({ options, selected, onChangeHandler }) => {
             >
               {isSelected && <div className={classes.selected} />}
               <p className={getClassFromStatus(isSelected, complete)}>{label}</p>
-              {readOnly && <RemoveRedEyeRoundedIcon  className={classes.icon}/>}
+              {readOnly && <RemoveRedEyeRoundedIcon className={classes.icon} />}
             </div>
-            { isSelected && values.map((steps, index_step) => <SignerRolesStep key={index_step} step={steps}/>)}
+            {isSelected &&
+              values.map((steps, index_step) => <SignerRolesStep key={index_step} step={steps} />)}
           </Fragment>
         );
       })}
@@ -45,13 +46,13 @@ const ListSignerRoles = ({ options, selected, onChangeHandler }) => {
 ListSignerRoles.propTypes = {
   options: PropTypes.array,
   selected: PropTypes.number,
-  onChangeHandler: PropTypes.func,
+  onChangeHandler: PropTypes.func
 };
 
 ListSignerRoles.defaultProps = {
   options: data,
   selected: 0,
-  onChangeHandler: () => {},
+  onChangeHandler: () => {}
 };
 
 export default ListSignerRoles;
