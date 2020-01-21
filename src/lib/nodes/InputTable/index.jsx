@@ -60,7 +60,9 @@ const InputTable = ({ options }) => {
       <div className={classes.content}>
         <Fields fields={options[0]} addNewRow={addNewRow} header={header} />
       </div>
-      { (Object.keys(dataTable).length > 0) ? <Table headers={header} items={dataTable} deleteRow={true} onDeleteRow={DeleteRow}/>  : null}
+      <div className={classes.tableContent}>
+        { (Object.keys(dataTable).length > 0) ? <Table headers={header} items={dataTable} deleteRow={true} onDeleteRow={DeleteRow}/>  : null}
+      </div>
     </div>
   );
 };

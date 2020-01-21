@@ -4,7 +4,7 @@ const useStyles = makeStyles(theme => ({
     container: {
         position: 'absolute',
         width: '100%',
-        top: '40%',
+        top: '50%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
         backgroundColor: '#ffffff',
@@ -19,7 +19,10 @@ const useStyles = makeStyles(theme => ({
         flexDirection: 'column',
         alignItems: 'center',
         padding: theme.spacing(3, 5),
-    }
+    },
+    tableContent: {
+        padding: theme.spacing(3,5),
+    },
 }));
 
 export default useStyles;
