@@ -6,8 +6,7 @@ import Button from "../../Buttons/Button";
 import useStyles from "./style";
 
 
-const Fields = ({fields, addNewRow, header}) =>{
-
+const Fields = ({fields, header, addNewRow}) =>{
     const classes = useStyles();
     const [values, setValues] = React.useState({});
     const [inputError, setInputError] = React.useState({});
@@ -63,7 +62,7 @@ const Fields = ({fields, addNewRow, header}) =>{
     };
 
     return(
-        <div>
+        <div className={classes.content} >
             {fields.map(values => {
                 const  { label, id } = values;
                 return(
@@ -84,6 +83,18 @@ const Fields = ({fields, addNewRow, header}) =>{
             <Button text="Agregar" onClick={onClickAccept} />
         </div>
     );
+};
+
+Fields.propTypes = {
+    fields: PropTypes.array,
+    header: PropTypes.array,
+    addNewRow: PropTypes.func,
+};
+
+Fields.defaultProps = {
+    fields: [],
+    header: [],
+    addNewRow: () => {},
 };
 
 export default Fields;

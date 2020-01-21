@@ -5,7 +5,10 @@ const useStyles = makeStyles(theme => ({
         display: 'flex',
         flexDirection: 'column',
         marginBottom: theme.spacing(3),
-    }
+    },
+    content:{
+        width: '40%',
+    },
 }));
 
 export default useStyles;
