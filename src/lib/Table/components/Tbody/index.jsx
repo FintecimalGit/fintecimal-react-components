@@ -7,6 +7,7 @@ import classnames from 'classnames';
 import IconButton from '@material-ui/core/IconButton';
 
 import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 import useStyles from './style';
 
@@ -16,6 +17,8 @@ const Table = ({
   onClickRow,
   edit,
   onEdit,
+  deleteRow,
+  onDeleteRow,
 }) => {
   const classes = useStyles();
 
@@ -46,6 +49,11 @@ const Table = ({
     onEdit(item, index, event);
   };
 
+  const handleOnDelete = (item, index) => (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    onDeleteRow(item, index, event);
+  };
   return (
     <tbody>
       {
@@ -62,6 +70,7 @@ const Table = ({
                   className={classnames(
                     classes.td,
                     { [classes.editButton]: edit && isLastIndex(headers, headerIndex) },
+                    { [classes.editButton]: deleteRow && isLastIndex(headers, headerIndex) },
                   )}
                 >
                   <span>
@@ -75,6 +84,16 @@ const Table = ({
                       >
                         <EditIcon />
                       </IconButton>
+                    )
+                  }
+                  {
+                    deleteRow && isLastIndex(headers, headerIndex) && (
+                        <IconButton
+                            className={classes.noPadding}
+                            onClick={handleOnDelete(item, index)}
+                        >
+                          <DeleteIcon />
+                        </IconButton>
                     )
                   }
                 </td>
@@ -98,6 +117,8 @@ Table.propTypes = {
   onClickRow: PropTypes.func,
   edit: PropTypes.bool,
   onEdit: PropTypes.func,
+  deleteRow: PropTypes.bool,
+  onDeleteRow: PropTypes.func,
 };
 
 Table.defaultProps = {
@@ -106,6 +127,8 @@ Table.defaultProps = {
   onClickRow: () => {},
   edit: false,
   onEdit: () => {},
+  deleteRow: false,
+  onDeleteRow: () => {},
 };
 
 export default Table;
