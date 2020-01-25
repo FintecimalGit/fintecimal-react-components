@@ -56,10 +56,8 @@ const InputTable = ({ options }) => {
   };
 
   return (
-    <div className={classes.container}>
-      <div className={classes.content}>
-        <Fields fields={options[0]} addNewRow={addNewRow} header={header} />
-      </div>
+    <div className={classes.content}>
+      <Fields fields={options[0]} addNewRow={addNewRow} header={header} />
       <div className={classes.tableContent}>
         { (Object.keys(dataTable).length > 0) ? <Table headers={header} items={dataTable} deleteRow={true} onDeleteRow={DeleteRow}/>  : null}
       </div>
@@ -76,22 +74,27 @@ InputTable.defaultProps = {
     [{
       'id': 0,
       'label': 'No.',
+      'type': 'número',
       'value': '123',
     },{
       'id': 1,
       'label': 'Fecha de pago',
+      'type': 'respuesta corta',
       'value': '20 de enero',
     },{
       'id': 2,
       'label': 'Monto sin iva',
+      'type': 'número',
       'value': '1000',
     },{
       'id': 3,
       'label': 'IVA',
+      'type': 'número',
       'value': '160',
     },{
       'id': 4,
       'label': 'Total a pagar',
+      'type': 'número',
       'value': '1160',
     }],
   ],

@@ -22,7 +22,9 @@ var Table = function Table(_ref) {
       items = _ref.items,
       onClickRow = _ref.onClickRow,
       edit = _ref.edit,
-      onEdit = _ref.onEdit;
+      onEdit = _ref.onEdit,
+      deleteRow = _ref.deleteRow,
+      onDeleteRow = _ref.onDeleteRow;
   var classes = (0, _style.default)();
   return _react.default.createElement("table", {
     className: classes.table
@@ -33,7 +35,9 @@ var Table = function Table(_ref) {
     items: items,
     onClickRow: onClickRow,
     edit: edit,
-    onEdit: onEdit
+    onEdit: onEdit,
+    deleteRow: deleteRow,
+    onDeleteRow: onDeleteRow
   }));
 };
 
@@ -45,14 +49,18 @@ Table.propTypes = {
   items: _propTypes.default.array,
   onClickRow: _propTypes.default.func,
   edit: _propTypes.default.bool,
-  onEdit: _propTypes.default.func
+  onEdit: _propTypes.default.func,
+  deleteRow: _propTypes.default.bool,
+  onDeleteRow: _propTypes.default.func
 };
 Table.defaultProps = {
   headers: [],
   items: [],
   onClickRow: function onClickRow() {},
   edit: false,
-  onEdit: function onEdit() {}
+  onEdit: function onEdit() {},
+  deleteRow: false,
+  onDeleteRow: function onDeleteRow() {}
 };
 var _default = Table;
 exports.default = _default;
