@@ -6,16 +6,16 @@ import Table from '../../Table';
 
 import useStyles from './style';
 
-const InputTable = ({ options }) => {
+const InputTable = ({ value, handleChange }) => {
   const classes = useStyles();
   const [information, setInformation] = useState([]);
   const [dataTable, setDataTable] = useState([]);
   const [header, setHeader] = useState([]);
 
   useEffect(() => {
-    if(Object.keys(header).length === 0) getHeaders(options);
-    loadDataTable(information);
-  }, [options, information]);
+    getHeaders(value);
+    loadDataTable(value);
+  }, [value]);
 
   const getHeaders = (option) => {
     let obj = [];
@@ -24,16 +24,18 @@ const InputTable = ({ options }) => {
     setInformation(option);
   };
 
-  const addNewRow = (value) => {
+  const addNewRow = (values) => {
     let newArray = [];
-    Object.keys(value).forEach(function(key, index) {
+    Object.keys(values).forEach(function(key, index) {
       newArray.push({
         'id' : index,
         'label': key,
-        'value': value[key]
+        'value': values[key]
       });
     });
-    setInformation([...information, newArray]);
+    let newInformation = [...information, newArray];
+    setInformation(newInformation);
+    handleChange(newInformation);
   };
 
   const loadDataTable = (data) => {
@@ -51,13 +53,14 @@ const InputTable = ({ options }) => {
 
   const DeleteRow = (item, index) => {
     let newInformation = [...information];
-    newInformation.splice(index,1);
+    newInformation.splice(index+1,1);
     setInformation(newInformation);
+    handleChange(newInformation);
   };
 
   return (
     <div className={classes.content}>
-      <Fields fields={options[0]} addNewRow={addNewRow} header={header} />
+      <Fields fields={value[0]} addNewRow={addNewRow} header={header} />
       <div className={classes.tableContent}>
         { (Object.keys(dataTable).length > 0) ? <Table headers={header} items={dataTable} deleteRow={true} onDeleteRow={DeleteRow}/>  : null}
       </div>
@@ -66,11 +69,12 @@ const InputTable = ({ options }) => {
 };
 
 InputTable.propTypes = {
-  options: PropTypes.array.isRequired
+  value: PropTypes.array.isRequired,
+  handleChange: PropTypes.func,
 };
 
 InputTable.defaultProps = {
-  options: [
+  value: [
     [{
       'id': 0,
       'label': 'No.',
@@ -98,6 +102,7 @@ InputTable.defaultProps = {
       'value': '1160',
     }],
   ],
+  handleChange: () => {},
 };
 
 export default InputTable;
