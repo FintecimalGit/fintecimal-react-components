@@ -36,7 +36,8 @@ function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 var InputTable = function InputTable(_ref) {
-  var options = _ref.options;
+  var value = _ref.value,
+      handleChange = _ref.handleChange;
   var classes = (0, _style.default)();
 
   var _useState = (0, _react.useState)([]),
@@ -55,9 +56,9 @@ var InputTable = function InputTable(_ref) {
       setHeader = _useState6[1];
 
   (0, _react.useEffect)(function () {
-    if (Object.keys(header).length === 0) getHeaders(options);
-    loadDataTable(information);
-  }, [options, information]);
+    getHeaders(value);
+    loadDataTable(value);
+  }, [value]);
 
   var getHeaders = function getHeaders(option) {
     var obj = [];
@@ -71,16 +72,18 @@ var InputTable = function InputTable(_ref) {
     setInformation(option);
   };
 
-  var addNewRow = function addNewRow(value) {
+  var addNewRow = function addNewRow(values) {
     var newArray = [];
-    Object.keys(value).forEach(function (key, index) {
+    Object.keys(values).forEach(function (key, index) {
       newArray.push({
         'id': index,
         'label': key,
-        'value': value[key]
+        'value': values[key]
       });
     });
-    setInformation([].concat(_toConsumableArray(information), [newArray]));
+    var newInformation = [].concat(_toConsumableArray(information), [newArray]);
+    setInformation(newInformation);
+    handleChange(newInformation);
   };
 
   var loadDataTable = function loadDataTable(data) {
@@ -99,14 +102,15 @@ var InputTable = function InputTable(_ref) {
   var DeleteRow = function DeleteRow(item, index) {
     var newInformation = _toConsumableArray(information);
 
-    newInformation.splice(index, 1);
+    newInformation.splice(index + 1, 1);
     setInformation(newInformation);
+    handleChange(newInformation);
   };
 
   return _react.default.createElement("div", {
     className: classes.content
   }, _react.default.createElement(_Fields.default, {
-    fields: options[0],
+    fields: value[0],
     addNewRow: addNewRow,
     header: header
   }), _react.default.createElement("div", {
@@ -120,10 +124,11 @@ var InputTable = function InputTable(_ref) {
 };
 
 InputTable.propTypes = {
-  options: _propTypes.default.array.isRequired
+  value: _propTypes.default.array.isRequired,
+  handleChange: _propTypes.default.func
 };
 InputTable.defaultProps = {
-  options: [[{
+  value: [[{
     'id': 0,
     'label': 'No.',
     'type': 'número',
@@ -148,7 +153,8 @@ InputTable.defaultProps = {
     'label': 'Total a pagar',
     'type': 'número',
     'value': '1160'
-  }]]
+  }]],
+  handleChange: function handleChange() {}
 };
 var _default = InputTable;
 exports.default = _default;
