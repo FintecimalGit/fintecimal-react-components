@@ -22,7 +22,7 @@ import {
   TextAreaInput,
   IDCardUpload,
   ListSignerRoles,
-  InputTable,
+  InputTable
 } from '../lib/nodes';
 
 const {
@@ -274,9 +274,9 @@ storiesOf('Components|Nodes', module)
   .add('Image Actions', () => <ImageActions />)
   .add('IDCardUpload', () => <IDCardUpload />)
   .add('Input Table', () => <InputTable />)
-  .add('ListSignerRoles', () => <ListSignerRoles
-                                  selected={2}
-                                  onChangeHandler={action('onChangeHandler')}/>)
+  .add('ListSignerRoles', () => (
+    <ListSignerRoles selected={2} onChangeHandler={action('onChangeHandler')} />
+  ))
   .add('CardApp', () => <CardApp onClick={action('onClick')} />);
 
 storiesOf('Components|Button', module)
@@ -476,7 +476,8 @@ storiesOf('NewComponents', module)
           documents={[
             { name: 'Documento 1', status: 'Aceptado' },
             { name: 'Documento 2', status: 'Pendiente' },
-            { name: 'Documento 3', status: 'En espera' }
+            { name: 'Documento 3', status: 'En Espera' },
+            { name: 'Documento 3', status: 'En Revisión' }
           ]}
           onClickDocument={action('onClickDocument')}
           onDownload={action('onDownload')}
@@ -559,32 +560,32 @@ storiesOf('NewComponents', module)
           pdf="https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf"
         />
       </Container>
-  )})
+    );
+  })
   .add('DropZone', () => {
     return (
       <Container style={{ paddingTop: '5vh', paddingBottom: '5vh' }}>
-        <DropZone
-          title="DropZone"
-        />
+        <DropZone title="DropZone" />
       </Container>
-  )})
+    );
+  })
   .add('FilePreview', () => {
-    const [image, setImage] = useState(new File([''], 'test.png', { type: 'image/png' }))
-    const [pdf, setPdf] = useState(new File([''], 'test.pdf', { type: 'application/pdf' }))
+    const [image, setImage] = useState(new File([''], 'test.png', { type: 'image/png' }));
+    const [pdf, setPdf] = useState(new File([''], 'test.pdf', { type: 'application/pdf' }));
 
     useEffect(() => {
       fetch('https://upload.wikimedia.org/wikipedia/commons/c/cc/Game_Boy_Color_Pikachu.jpg')
         .then(response => response.blob())
-        .then((blob) => {
-            const file = new File([blob], "test.jpg", { type: blob.type })
-            setImage(file)
+        .then(blob => {
+          const file = new File([blob], 'test.jpg', { type: blob.type });
+          setImage(file);
         });
 
-        fetch('https://s1.q4cdn.com/806093406/files/doc_downloads/test.pdf')
+      fetch('https://s1.q4cdn.com/806093406/files/doc_downloads/test.pdf')
         .then(response => response.blob())
-        .then((blob) => {
-            const file = new File([blob], "test.pdf", { type: blob.type })
-            setPdf(file)
+        .then(blob => {
+          const file = new File([blob], 'test.pdf', { type: blob.type });
+          setPdf(file);
         });
     }, []);
 
@@ -593,7 +594,8 @@ storiesOf('NewComponents', module)
         <FilePreview file={image} onDelete={action('onDelete')} />
         <FilePreview file={pdf} onDelete={action('onDelete')} />
       </Container>
-  )})
+    );
+  })
   .add('UploadDocuments', () => {
     return (
       <Container style={{ paddingTop: '5vh', paddingBottom: '5vh' }}>
@@ -613,67 +615,60 @@ storiesOf('NewComponents', module)
           onDelete={action('onDelete')}
         />
       </Container>
-  )})
+    );
+  })
   .add('FileThumbnail', () => {
-    const [image, setImage] = useState(new File([''], 'test.png', { type: 'image/png' }))
-    const [pdf, setPdf] = useState(new File([''], 'test.pdf', { type: 'application/pdf' }))
+    const [image, setImage] = useState(new File([''], 'test.png', { type: 'image/png' }));
+    const [pdf, setPdf] = useState(new File([''], 'test.pdf', { type: 'application/pdf' }));
 
     useEffect(() => {
       fetch('https://upload.wikimedia.org/wikipedia/commons/c/cc/Game_Boy_Color_Pikachu.jpg')
         .then(response => response.blob())
-        .then((blob) => {
-            const file = new File([blob], "test.jpg", { type: blob.type })
-            setImage(file)
+        .then(blob => {
+          const file = new File([blob], 'test.jpg', { type: blob.type });
+          setImage(file);
         });
 
-        fetch('https://s1.q4cdn.com/806093406/files/doc_downloads/test.pdf')
+      fetch('https://s1.q4cdn.com/806093406/files/doc_downloads/test.pdf')
         .then(response => response.blob())
-        .then((blob) => {
-            const file = new File([blob], "test.pdf", { type: blob.type })
-            setPdf(file)
+        .then(blob => {
+          const file = new File([blob], 'test.pdf', { type: blob.type });
+          setPdf(file);
         });
-    }, [])
+    }, []);
     return (
       <Container
-        style={{ paddingTop: '5vh',
-        paddingBottom: '5vh',
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'space-around',
-      }}
+        style={{
+          paddingTop: '5vh',
+          paddingBottom: '5vh',
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'space-around'
+        }}
       >
-        <FileThumbnail
-          file={pdf}
-          onClick={action('onClick')}
-        />
-        <FileThumbnail
-          file={image}
-          onClick={action('onClick')}
-        />
-        <FileThumbnail
-          file={image}
-          onClick={action('onClick')}
-          selected
-        />
+        <FileThumbnail file={pdf} onClick={action('onClick')} />
+        <FileThumbnail file={image} onClick={action('onClick')} />
+        <FileThumbnail file={image} onClick={action('onClick')} selected />
       </Container>
-  )})
+    );
+  })
   .add('FileFinder', () => {
-    const [image, setImage] = useState(new File([''], 'test.png', { type: 'image/png' }))
-    const [pdf, setPdf] = useState(new File([''], 'test.pdf', { type: 'application/pdf' }))
+    const [image, setImage] = useState(new File([''], 'test.png', { type: 'image/png' }));
+    const [pdf, setPdf] = useState(new File([''], 'test.pdf', { type: 'application/pdf' }));
     const [files, setFiles] = useState([]);
     useEffect(() => {
       fetch('https://upload.wikimedia.org/wikipedia/commons/c/cc/Game_Boy_Color_Pikachu.jpg')
         .then(response => response.blob())
-        .then((blob) => {
-            const file = new File([blob], "test.jpg", { type: blob.type })
-            setImage(file)
+        .then(blob => {
+          const file = new File([blob], 'test.jpg', { type: blob.type });
+          setImage(file);
         });
 
-        fetch('https://s1.q4cdn.com/806093406/files/doc_downloads/test.pdf')
+      fetch('https://s1.q4cdn.com/806093406/files/doc_downloads/test.pdf')
         .then(response => response.blob())
-        .then((blob) => {
-            const file = new File([blob], "test.pdf", { type: blob.type })
-            setPdf(file)
+        .then(blob => {
+          const file = new File([blob], 'test.pdf', { type: blob.type });
+          setPdf(file);
         });
     }, []);
 
@@ -682,21 +677,18 @@ storiesOf('NewComponents', module)
     }, [image, files]);
     return (
       <Container
-        style={{ paddingTop: '5vh',
-        paddingBottom: '5vh',
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'space-around',
-      }}
+        style={{
+          paddingTop: '5vh',
+          paddingBottom: '5vh',
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'space-around'
+        }}
       >
-        <FileFinder
-          files={files}
-          onClick={action('onClick')}
-          placeholder="Busca una nómina"
-        />
+        <FileFinder files={files} onClick={action('onClick')} placeholder="Busca una nómina" />
       </Container>
-  )});
-
+    );
+  });
 
 storiesOf('Components|SelectBasic', module).add('Select Basic', () => (
   <div style={{ height: '35px', width: '250px' }}>

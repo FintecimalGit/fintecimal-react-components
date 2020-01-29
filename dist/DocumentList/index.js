@@ -60,8 +60,8 @@ var DocumentList = function DocumentList(_ref) {
 
   var getDotColorClass = function getDotColorClass(status) {
     switch (status) {
-      case 'En espera':
-      case 'En revisión':
+      case 'En Espera':
+      case 'En Revisión':
         return clasess.dotOnHold;
 
       case 'Pendiente':
@@ -96,8 +96,8 @@ var DocumentList = function DocumentList(_ref) {
           className: clasess.dangerIcon
         });
 
-      case 'En espera':
-      case 'En revisión':
+      case 'En Espera':
+      case 'En Revisión':
       case 'Pendiente':
       default:
         return _react.default.createElement("span", {
@@ -112,8 +112,8 @@ var DocumentList = function DocumentList(_ref) {
    */
 
 
-  var isOnHole = function isOnHole(status) {
-    return status === 'En espera' || status === 'En revisión';
+  var isOnHold = function isOnHold(status) {
+    return status === 'En Espera' || status === 'En Revisión';
   };
   /**
    *
@@ -122,8 +122,8 @@ var DocumentList = function DocumentList(_ref) {
    */
 
 
-  var isPending = function isPending(status) {
-    return status === 'Pendiente';
+  var isOnRevision = function isOnRevision(status) {
+    return status === 'En Revisión';
   };
 
   return _react.default.createElement(_HeaderCollapse.default, {
@@ -134,13 +134,13 @@ var DocumentList = function DocumentList(_ref) {
   }, documents.map(function (document, index) {
     return _react.default.createElement(_ListItem.default, {
       key: document.name,
-      button: isPending(document.status),
-      onClick: isPending(document.status) ? handleOnClickDocument(document, index) : function () {},
+      button: isOnRevision(document.status),
+      onClick: isOnRevision(document.status) ? handleOnClickDocument(document, index) : function () {},
       className: clasess.listItem
     }, _react.default.createElement(_ListItemText.default, null, _react.default.createElement("span", {
       className: (0, _classnames2.default)(clasess.dot, getDotColorClass(document.status))
     }), _react.default.createElement("span", {
-      className: (0, _classnames2.default)(clasess.name, _defineProperty({}, clasess.nameOnHole, isOnHole(document.status)))
+      className: (0, _classnames2.default)(clasess.name, _defineProperty({}, clasess.nameOnHole, isOnHold(document.status)))
     }, document.name)), _react.default.createElement("div", null, _react.default.createElement("span", null, getLabelStatus(document.status))));
   })));
 };
