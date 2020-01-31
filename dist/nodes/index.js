@@ -93,6 +93,12 @@ Object.defineProperty(exports, "ListSignerRoles", {
     return _ListSignerRoles.default;
   }
 });
+Object.defineProperty(exports, "InputTable", {
+  enumerable: true,
+  get: function get() {
+    return _InputTable.default;
+  }
+});
 
 var _SearchBar = _interopRequireDefault(require("./SearchBar"));
 
@@ -123,5 +129,7 @@ var _TextAreaInput = _interopRequireDefault(require("./TextAreaInput"));
 var _IDCardUpload = _interopRequireDefault(require("./IDCardUpload"));
 
 var _ListSignerRoles = _interopRequireDefault(require("./ListSignerRoles"));
+
+var _InputTable = _interopRequireDefault(require("./InputTable"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }

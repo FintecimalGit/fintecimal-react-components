@@ -13,12 +13,7 @@ import HeaderCollapse from '../HeaderCollapse';
 
 import useStyle from './style';
 
-const DocumentList = ({
-  title,
-  documents,
-  onClickDocument,
-  onDownload,
-}) => {
+const DocumentList = ({ title, documents, onClickDocument, onDownload }) => {
   const clasess = useStyle();
 
   /**
@@ -34,10 +29,10 @@ const DocumentList = ({
    * @param {String} status
    * @returns {String}
    */
-  const getDotColorClass = (status) => {
+  const getDotColorClass = status => {
     switch (status) {
-      case 'En espera':
-      case 'En revisión':
+      case 'En Espera':
+      case 'En Revisión':
         return clasess.dotOnHold;
       case 'Pendiente':
         return clasess.dotPending;
@@ -55,17 +50,17 @@ const DocumentList = ({
    * @param {String} status
    * @returns {String|DOMElement}
    */
-  const getLabelStatus = (status) => {
+  const getLabelStatus = status => {
     switch (status) {
       case 'Aceptado':
         return <DoneIcon className={clasess.successIcon} />;
       case 'Rechazado':
         return <ClearIcon className={clasess.dangerIcon} />;
-      case 'En espera':
-      case 'En revisión':
+      case 'En Espera':
+      case 'En Revisión':
       case 'Pendiente':
       default:
-        return <span className={clasess.statusName}>{ status } </span>;
+        return <span className={clasess.statusName}>{status} </span>;
     }
   };
 
@@ -74,47 +69,42 @@ const DocumentList = ({
    * @param {String} status
    * @returns {Boolean}
    */
-  const isOnHole = (status) => status === 'En espera' || status === 'En revisión';
+  const isOnHold = status => status === 'En Espera' || status === 'En Revisión';
 
   /**
    *
    * @param {String} status
    * @returns {Boolean}
    */
-  const isPending = (status) => status === 'Pendiente';
+  const isOnRevision = status => status === 'En Revisión';
 
   return (
-    <HeaderCollapse
-      title={title}
-      onDownload={onDownload}
-    >
+    <HeaderCollapse title={title} onDownload={onDownload}>
       <List className={clasess.noPadding}>
-        {
-          documents.map((document, index) => (
-            <ListItem
-              key={document.name}
-              button={isPending(document.status)}
-              onClick={isPending(document.status) ? handleOnClickDocument(document, index) : () => {}}
-              className={clasess.listItem}
-            >
-              <ListItemText>
-                <span className={classnames(clasess.dot, getDotColorClass(document.status))} />
-                <span
-                  className={classnames(clasess.name, {
-                    [clasess.nameOnHole]: isOnHole(document.status),
-                  })}
-                >
-                  { document.name }
-                </span>
-              </ListItemText>
-              <div>
-                <span>
-                  { getLabelStatus(document.status) }
-                </span>
-              </div>
-            </ListItem>
-          ))
-        }
+        {documents.map((document, index) => (
+          <ListItem
+            key={document.name}
+            button={isOnRevision(document.status)}
+            onClick={
+              isOnRevision(document.status) ? handleOnClickDocument(document, index) : () => {}
+            }
+            className={clasess.listItem}
+          >
+            <ListItemText>
+              <span className={classnames(clasess.dot, getDotColorClass(document.status))} />
+              <span
+                className={classnames(clasess.name, {
+                  [clasess.nameOnHole]: isOnHold(document.status)
+                })}
+              >
+                {document.name}
+              </span>
+            </ListItemText>
+            <div>
+              <span>{getLabelStatus(document.status)}</span>
+            </div>
+          </ListItem>
+        ))}
       </List>
     </HeaderCollapse>
   );
@@ -122,19 +112,21 @@ const DocumentList = ({
 
 DocumentList.propTypes = {
   title: PropTypes.string,
-  documents: PropTypes.arrayOf(PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    status: PropTypes.string.isRequired,
-  })).isRequired,
+  documents: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      status: PropTypes.string.isRequired
+    })
+  ).isRequired,
   onClickDocument: PropTypes.func,
-  onDownload: PropTypes.func,
+  onDownload: PropTypes.func
 };
 
 DocumentList.defaultProps = {
   title: '',
   documents: [],
   onClickDocument: () => {},
-  onDownload: () => {},
+  onDownload: () => {}
 };
 
 export default DocumentList;
