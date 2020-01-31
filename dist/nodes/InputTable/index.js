@@ -1,7 +1,5 @@
 "use strict";
 
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
@@ -19,9 +17,7 @@ var _style = _interopRequireDefault(require("./style"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
 
@@ -35,12 +31,13 @@ function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArra
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
 
-function _iterableToArrayLimit(arr, i) { if (!(Symbol.iterator in Object(arr) || Object.prototype.toString.call(arr) === "[object Arguments]")) { return; } var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 var InputTable = function InputTable(_ref) {
-  var options = _ref.options;
+  var value = _ref.value,
+      handleChange = _ref.handleChange;
   var classes = (0, _style.default)();
 
   var _useState = (0, _react.useState)([]),
@@ -59,9 +56,9 @@ var InputTable = function InputTable(_ref) {
       setHeader = _useState6[1];
 
   (0, _react.useEffect)(function () {
-    if (Object.keys(header).length === 0) getHeaders(options);
-    loadDataTable(information);
-  }, [options, information]);
+    getHeaders(value);
+    loadDataTable(value);
+  }, [value]);
 
   var getHeaders = function getHeaders(option) {
     var obj = [];
@@ -75,16 +72,18 @@ var InputTable = function InputTable(_ref) {
     setInformation(option);
   };
 
-  var addNewRow = function addNewRow(value) {
+  var addNewRow = function addNewRow(values) {
     var newArray = [];
-    Object.keys(value).forEach(function (key, index) {
+    Object.keys(values).forEach(function (key, index) {
       newArray.push({
         'id': index,
         'label': key,
-        'value': value[key]
+        'value': values[key]
       });
     });
-    setInformation([].concat(_toConsumableArray(information), [newArray]));
+    var newInformation = [].concat(_toConsumableArray(information), [newArray]);
+    setInformation(newInformation);
+    handleChange(newInformation);
   };
 
   var loadDataTable = function loadDataTable(data) {
@@ -103,19 +102,18 @@ var InputTable = function InputTable(_ref) {
   var DeleteRow = function DeleteRow(item, index) {
     var newInformation = _toConsumableArray(information);
 
-    newInformation.splice(index, 1);
+    newInformation.splice(index + 1, 1);
     setInformation(newInformation);
+    handleChange(newInformation);
   };
 
   return _react.default.createElement("div", {
-    className: classes.container
-  }, _react.default.createElement("div", {
     className: classes.content
   }, _react.default.createElement(_Fields.default, {
-    fields: options[0],
+    fields: value[0],
     addNewRow: addNewRow,
     header: header
-  })), _react.default.createElement("div", {
+  }), _react.default.createElement("div", {
     className: classes.tableContent
   }, Object.keys(dataTable).length > 0 ? _react.default.createElement(_Table.default, {
     headers: header,
@@ -126,30 +124,37 @@ var InputTable = function InputTable(_ref) {
 };
 
 InputTable.propTypes = {
-  options: _propTypes.default.array.isRequired
+  value: _propTypes.default.array.isRequired,
+  handleChange: _propTypes.default.func
 };
 InputTable.defaultProps = {
-  options: [[{
+  value: [[{
     'id': 0,
     'label': 'No.',
+    'type': 'número',
     'value': '123'
   }, {
     'id': 1,
     'label': 'Fecha de pago',
+    'type': 'respuesta corta',
     'value': '20 de enero'
   }, {
     'id': 2,
     'label': 'Monto sin iva',
+    'type': 'número',
     'value': '1000'
   }, {
     'id': 3,
     'label': 'IVA',
+    'type': 'número',
     'value': '160'
   }, {
     'id': 4,
     'label': 'Total a pagar',
+    'type': 'número',
     'value': '1160'
-  }]]
+  }]],
+  handleChange: function handleChange() {}
 };
 var _default = InputTable;
 exports.default = _default;
