@@ -76,7 +76,7 @@ const DocumentList = ({ title, documents, onClickDocument, onDownload }) => {
    * @param {String} status
    * @returns {Boolean}
    */
-  const isOnRevision = status => status === 'En Revisión';
+  const isNotPending = status => status !== 'Pendiente';
 
   return (
     <HeaderCollapse title={title} onDownload={onDownload}>
@@ -84,9 +84,9 @@ const DocumentList = ({ title, documents, onClickDocument, onDownload }) => {
         {documents.map((document, index) => (
           <ListItem
             key={document.name}
-            button={isOnRevision(document.status)}
+            button={isNotPending(document.status)}
             onClick={
-              isOnRevision(document.status) ? handleOnClickDocument(document, index) : () => {}
+              isNotPending(document.status) ? handleOnClickDocument(document, index) : () => {}
             }
             className={clasess.listItem}
           >
