@@ -14,6 +14,7 @@ import TextAreaInput from './TextAreaInput';
 import IDCardUpload from './IDCardUpload';
 import ListSignerRoles from './ListSignerRoles';
 import InputTable from './InputTable';
+import RejectDocuments from './RejectDocuments';
 
 export {
   Maps,
@@ -32,4 +33,5 @@ export {
   RejectActions,
   ListSignerRoles,
   InputTable,
+  RejectDocuments,
 };
