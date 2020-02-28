@@ -16,6 +16,7 @@ const UploadDocuments = ({
   onDrop,
   onDelete,
   placeholder,
+  url,
 }) => {
   const classes = useStyles();
   const [file, setFile] = useState(null);
@@ -75,6 +76,16 @@ const UploadDocuments = ({
     setSearch(text);
   };
 
+  const generateFileToURL = async () => {
+    let response = await fetch(url);
+    let data = await response.blob();
+    let metadata = {
+      type: data.type
+    };
+    let file = new File([data], title, metadata);
+    if(file) setFile(file);
+  };
+
   useEffect(() => {
     setCurrentFile(0);
     if (filteredFiles.length > 0) setFile(filteredFiles[0]);
@@ -85,6 +96,10 @@ const UploadDocuments = ({
     setCurrentFile(0);
     if (files.length <= 0) setFile(null);
   }, [files]);
+
+  useEffect(() => {
+    if(url !== '' && typeof url === "string") generateFileToURL();
+  }, [url]);
 
   return (
     <div>
@@ -143,7 +158,8 @@ UploadDocuments.defaultProps = {
   accept: '',
   onDrop: () => {},
   onDelete: () => {},
-  placeholder: ''
+  placeholder: '',
+  url: '',
 };
 
 export default UploadDocuments;
