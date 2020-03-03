@@ -93,7 +93,8 @@ var SpecialInput = function SpecialInput(_ref) {
       onClear = _ref.onClear,
       children = _ref.children,
       onFocus = _ref.onFocus,
-      startAdornment = _ref.startAdornment;
+      startAdornment = _ref.startAdornment,
+      disabled = _ref.disabled;
   var classes = useStyles();
 
   var selectLabel = function selectLabel() {
@@ -140,7 +141,7 @@ var SpecialInput = function SpecialInput(_ref) {
       position: "start",
       className: classes.adornment
     }, startAdornment),
-    endAdornment: clear && _react.default.createElement(_core.InputAdornment, {
+    endAdornment: clear && !disabled && _react.default.createElement(_core.InputAdornment, {
       position: "end"
     }, _react.default.createElement(_core.IconButton, {
       "aria-label": "clear input",
@@ -153,7 +154,8 @@ var SpecialInput = function SpecialInput(_ref) {
       notchedOutline: classes.notchedOutline,
       focused: classes.focusNotchedOutline
     },
-    type: type
+    type: type,
+    disabled: disabled
   }))), error && (0, _utils.isTextLong)(errorMessage) && _react.default.createElement(_LongError.default, {
     text: errorMessage
   }));
@@ -165,7 +167,8 @@ SpecialInput.defaultProps = {
   error: false,
   type: 'text',
   clear: true,
-  errorMessage: ''
+  errorMessage: '',
+  disabled: false
 };
 SpecialInput.propTypes = {
   label: _propTypes.default.string.isRequired,
@@ -178,7 +181,8 @@ SpecialInput.propTypes = {
   handleChange: _propTypes.default.func.isRequired,
   onBlur: _propTypes.default.func,
   onFocus: _propTypes.default.func,
-  startAdornment: _propTypes.default.string
+  startAdornment: _propTypes.default.string,
+  disabled: _propTypes.default.bool
 };
 var _default = SpecialInput;
 exports.default = _default;

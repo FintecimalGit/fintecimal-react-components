@@ -23,7 +23,8 @@ var FileFinder = function FileFinder(_ref) {
       onClick = _ref.onClick,
       search = _ref.search,
       onSearch = _ref.onSearch,
-      placeholder = _ref.placeholder;
+      placeholder = _ref.placeholder,
+      disabled = _ref.disabled;
 
   var handleOnClick = function handleOnClick(index) {
     return function (file) {
@@ -45,7 +46,8 @@ var FileFinder = function FileFinder(_ref) {
   }, _react.default.createElement(_SearchBar.default, {
     placeholder: placeholder,
     onEnter: handleOnEnter,
-    value: search
+    value: search,
+    disabled: disabled
   })), files.map(function (file, index) {
     return _react.default.createElement(_Grid.default, {
       key: index,
@@ -65,7 +67,8 @@ FileFinder.propTypes = {
   onClick: _propTypes.default.func,
   search: _propTypes.default.string,
   onSearch: _propTypes.default.func,
-  placeholder: _propTypes.default.string
+  placeholder: _propTypes.default.string,
+  disabled: _propTypes.default.bool
 };
 FileFinder.defaultProps = {
   files: [],
@@ -73,7 +76,8 @@ FileFinder.defaultProps = {
   onClick: function onClick() {},
   search: '',
   onSearch: function onSearch() {},
-  placeholder: ''
+  placeholder: '',
+  disabled: false
 };
 var _default = FileFinder;
 exports.default = _default;
