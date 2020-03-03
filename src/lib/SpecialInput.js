@@ -82,7 +82,8 @@ const SpecialInput = ({
   onClear,
   children,
   onFocus,
-  startAdornment
+  startAdornment,
+  disabled
 }) => {
   const classes = useStyles();
   const selectLabel = () => {
@@ -131,7 +132,7 @@ const SpecialInput = ({
               )
             }
             endAdornment={
-              clear && (
+                (clear && !disabled) && (
                 <InputAdornment position="end">
                   <IconButton aria-label="clear input" onClick={onClear}>
                     <Clear />
@@ -147,6 +148,7 @@ const SpecialInput = ({
               focused: classes.focusNotchedOutline
             }}
             type={type}
+            disabled={disabled}
           />
         </FormControl>
       </div>
@@ -161,7 +163,8 @@ SpecialInput.defaultProps = {
   error: false,
   type: 'text',
   clear: true,
-  errorMessage: ''
+  errorMessage: '',
+  disabled: false
 };
 
 SpecialInput.propTypes = {
@@ -175,7 +178,8 @@ SpecialInput.propTypes = {
   handleChange: PropTypes.func.isRequired,
   onBlur: PropTypes.func,
   onFocus: PropTypes.func,
-  startAdornment: PropTypes.string
+  startAdornment: PropTypes.string,
+  disabled: PropTypes.bool
 };
 
 export default SpecialInput;

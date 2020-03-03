@@ -72,7 +72,8 @@ var BaseInput = function BaseInput(_ref) {
       type = _ref.type,
       clear = _ref.clear,
       onBlur = _ref.onBlur,
-      onClear = _ref.onClear;
+      onClear = _ref.onClear,
+      disabled = _ref.disabled;
   var classes = useStyles();
 
   var selectLabel = function selectLabel() {
@@ -110,7 +111,7 @@ var BaseInput = function BaseInput(_ref) {
     value: value,
     onChange: handleChange,
     onBlur: onBlur,
-    endAdornment: clear && _react.default.createElement(_core.InputAdornment, {
+    endAdornment: clear && !disabled && _react.default.createElement(_core.InputAdornment, {
       position: "end"
     }, _react.default.createElement(_core.IconButton, {
       "aria-label": "clear input",
@@ -125,7 +126,8 @@ var BaseInput = function BaseInput(_ref) {
       notchedOutline: classes.notchedOutline,
       focused: classes.focusNotchedOutline
     },
-    type: type
+    type: type,
+    disabled: disabled
   })), error && (0, _utils.isTextLong)(errorMessage) && _react.default.createElement(_LongError.default, {
     text: errorMessage
   }));
@@ -137,7 +139,8 @@ BaseInput.defaultProps = {
   error: false,
   type: 'text',
   clear: true,
-  errorMessage: ''
+  errorMessage: '',
+  disabled: false
 };
 BaseInput.propTypes = {
   label: _propTypes.default.string.isRequired,
@@ -148,7 +151,8 @@ BaseInput.propTypes = {
   clear: _propTypes.default.bool,
   errorMessage: _propTypes.default.string,
   handleChange: _propTypes.default.func.isRequired,
-  onBlur: _propTypes.default.func
+  onBlur: _propTypes.default.func,
+  disabled: _propTypes.default.bool
 };
 var _default = BaseInput;
 exports.default = _default;

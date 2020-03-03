@@ -1,7 +1,5 @@
 "use strict";
 
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
@@ -23,9 +21,11 @@ var _style = _interopRequireDefault(require("./style"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
 
@@ -39,7 +39,7 @@ function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArra
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
 
-function _iterableToArrayLimit(arr, i) { if (!(Symbol.iterator in Object(arr) || Object.prototype.toString.call(arr) === "[object Arguments]")) { return; } var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
@@ -49,7 +49,9 @@ var UploadDocuments = function UploadDocuments(_ref) {
       accept = _ref.accept,
       onDrop = _ref.onDrop,
       onDelete = _ref.onDelete,
-      placeholder = _ref.placeholder;
+      placeholder = _ref.placeholder,
+      url = _ref.url,
+      disabled = _ref.disabled;
   var classes = (0, _style.default)();
 
   var _useState = (0, _react.useState)(null),
@@ -127,6 +129,46 @@ var UploadDocuments = function UploadDocuments(_ref) {
     setSearch(text);
   };
 
+  var generateFileToURL =
+  /*#__PURE__*/
+  function () {
+    var _ref2 = _asyncToGenerator(
+    /*#__PURE__*/
+    regeneratorRuntime.mark(function _callee() {
+      var response, data, metadata, file;
+      return regeneratorRuntime.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              _context.next = 2;
+              return fetch(url);
+
+            case 2:
+              response = _context.sent;
+              _context.next = 5;
+              return response.blob();
+
+            case 5:
+              data = _context.sent;
+              metadata = {
+                type: data.type
+              };
+              file = new File([data], title, metadata);
+              if (file) setFile(file);
+
+            case 9:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }));
+
+    return function generateFileToURL() {
+      return _ref2.apply(this, arguments);
+    };
+  }();
+
   (0, _react.useEffect)(function () {
     setCurrentFile(0);
     if (filteredFiles.length > 0) setFile(filteredFiles[0]);else setSearch('');
@@ -135,24 +177,30 @@ var UploadDocuments = function UploadDocuments(_ref) {
     setCurrentFile(0);
     if (files.length <= 0) setFile(null);
   }, [files]);
+  (0, _react.useEffect)(function () {
+    if (url !== '' && typeof url === "string") generateFileToURL();
+  }, [url]);
   return _react.default.createElement("div", null, _react.default.createElement("div", {
     className: classes.titleContainer
   }, _react.default.createElement(_Typography.default, {
     className: classes.title
   }, title)), file ? _react.default.createElement(_FilePreview.default, {
     file: file,
-    onDelete: handleOnDelete
+    onDelete: handleOnDelete,
+    disabled: disabled
   }) : _react.default.createElement(_DropZone.default, {
     multiple: multiple,
     accept: accept,
-    onDrop: handleOnDrop
+    onDrop: handleOnDrop,
+    disabled: disabled
   }), multiple && files.length > 0 && _react.default.createElement(_FileFinder.default, {
     files: filteredFiles,
     current: currentFile,
     onClick: handleOnClick,
     search: search,
     onSearch: handleOnSearch,
-    placeholder: placeholder
+    placeholder: placeholder,
+    disabled: disabled
   }));
 };
 
@@ -162,7 +210,8 @@ UploadDocuments.propTypes = {
   accept: _propTypes.default.oneOfType([_propTypes.default.string, _propTypes.default.arrayOf(_propTypes.default.string)]),
   onDrop: _propTypes.default.func,
   onDelete: _propTypes.default.func,
-  placeholder: _propTypes.default.string
+  placeholder: _propTypes.default.string,
+  disabled: _propTypes.default.bool
 };
 UploadDocuments.defaultProps = {
   title: '',
@@ -170,7 +219,9 @@ UploadDocuments.defaultProps = {
   accept: '',
   onDrop: function onDrop() {},
   onDelete: function onDelete() {},
-  placeholder: ''
+  placeholder: '',
+  url: '',
+  disabled: false
 };
 var _default = UploadDocuments;
 exports.default = _default;

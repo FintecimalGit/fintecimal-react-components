@@ -24,7 +24,8 @@ var NumberInput = function NumberInput(_ref) {
       error = _ref.error,
       errorMessage = _ref.errorMessage,
       type = _ref.type,
-      required = _ref.required;
+      required = _ref.required,
+      disabled = _ref.disabled;
   var config = {
     type: type,
     label: label,
@@ -48,7 +49,8 @@ var NumberInput = function NumberInput(_ref) {
   return _react.default.createElement(_InputWrapper.default, {
     config: config,
     errors: errors,
-    isValid: isValid
+    isValid: isValid,
+    disabled: disabled
   });
 };
 
@@ -57,14 +59,16 @@ NumberInput.defaultProps = {
   type: _InputStrings.number.type,
   error: false,
   errorMessage: '',
-  required: false
+  required: false,
+  disabled: false
 };
 NumberInput.propTypes = {
   label: _propTypes.default.string,
   type: _propTypes.default.string,
   error: _propTypes.default.bool,
   errorMessage: _propTypes.default.string,
-  required: _propTypes.default.bool
+  required: _propTypes.default.bool,
+  disabled: _propTypes.default.bool
 };
 var _default = NumberInput;
 exports.default = _default;

@@ -61,7 +61,8 @@ const BaseInput = ({
   type,
   clear,
   onBlur,
-  onClear
+  onClear,
+  disabled
 }) => {
   const classes = useStyles();
   const selectLabel = () => {
@@ -100,7 +101,7 @@ const BaseInput = ({
           onChange={handleChange}
           onBlur={onBlur}
           endAdornment={
-            clear && (
+          (clear && !disabled) && (
               <InputAdornment position="end">
                 <IconButton aria-label="clear input" onClick={onClear}>
                   <Clear /*className={classes.icon}*/ />
@@ -116,6 +117,7 @@ const BaseInput = ({
             focused: classes.focusNotchedOutline
           }}
           type={type}
+          disabled={disabled}
         />
       </FormControl>
       {error && isTextLong(errorMessage) && <LongError text={errorMessage}></LongError>}
@@ -129,7 +131,8 @@ BaseInput.defaultProps = {
   error: false,
   type: 'text',
   clear: true,
-  errorMessage: ''
+  errorMessage: '',
+  disabled: false
 };
 
 BaseInput.propTypes = {
@@ -141,7 +144,8 @@ BaseInput.propTypes = {
   clear: PropTypes.bool,
   errorMessage: PropTypes.string,
   handleChange: PropTypes.func.isRequired,
-  onBlur: PropTypes.func
+  onBlur: PropTypes.func,
+  disabled: PropTypes.bool
 };
 
 export default BaseInput;

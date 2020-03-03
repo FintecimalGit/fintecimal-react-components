@@ -9,7 +9,7 @@ import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 
 import useStyles from './style';
 
-const DropZone = ({ multiple, accept, onDrop }) => {
+const DropZone = ({ multiple, accept, onDrop, disabled }) => {
   const classes = useStyles();
 
   const { getRootProps, getInputProps } = useDropzone({ multiple, accept, onDrop })
@@ -20,7 +20,7 @@ const DropZone = ({ multiple, accept, onDrop }) => {
   return (
     <div className={classes.dropZoneContainer}>
       <Paper {...rootProps}>
-        <input {...inputProps} />
+        <input {...inputProps} disabled={disabled} />
         <div>
           <AddCircleOutlineIcon />
         </div>
@@ -40,12 +40,14 @@ DropZone.propTypes = {
     PropTypes.arrayOf(PropTypes.string),
   ]),
   onDrop: PropTypes.func,
+  disabled: PropTypes.bool
 };
 
 DropZone.defaultProps = {
   multiple: false,
   accept: '',
-  onDrop: () => {}
+  onDrop: () => {},
+  disabled: false
 };
 
 export default DropZone;

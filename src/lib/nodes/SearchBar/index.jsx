@@ -8,7 +8,7 @@ import { InputBase, InputAdornment } from '@material-ui/core';
 
 const ENTER_KEY = 13;
 
-const Search = ({ onEnter, placeholder, value, onChange }) => {
+const Search = ({ onEnter, placeholder, value, onChange, disabled }) => {
   const classes = useStyles();
   const [currentValue, setCurrentValue] = useState('');
 
@@ -46,6 +46,7 @@ const Search = ({ onEnter, placeholder, value, onChange }) => {
         }
         value={currentValue}
         onChange={handleOnChange}
+        disabled={disabled}
       />
     </div>
   );
@@ -55,7 +56,7 @@ Search.propTypes = {
   onEnter: PropTypes.func,
   placeholder: PropTypes.string,
   value: PropTypes.string,
-  onEnter: PropTypes.func,
+  disabled: PropTypes.bool
 };
 
 Search.defaultProps = {
@@ -63,6 +64,7 @@ Search.defaultProps = {
   placeholder: '',
   value: '',
   onChange: () => {},
+  disabled: false
 };
 
 export default Search;

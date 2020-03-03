@@ -4,7 +4,7 @@ import { text } from './InputStrings';
 import InputWrapper from './InputWrapper';
 import { isEmpty } from './commons/utils';
 
-const TextInput = ({ value, handleChange, label, error, errorMessage, type, required }) => {
+const TextInput = ({ value, handleChange, label, error, errorMessage, type, required, disabled }) => {
   const config = {
     type,
     label,
@@ -23,7 +23,7 @@ const TextInput = ({ value, handleChange, label, error, errorMessage, type, requ
     return true;
   };
 
-  return <InputWrapper config={config} errors={errors} isValid={isValid} />;
+  return <InputWrapper config={config} errors={errors} isValid={isValid} disabled={disabled} />;
 };
 
 TextInput.defaultProps = {
@@ -31,7 +31,8 @@ TextInput.defaultProps = {
   type: text.type,
   error: false,
   errorMessage: '',
-  required: false
+  required: false,
+  disabled: false,
 };
 
 TextInput.propTypes = {
@@ -39,7 +40,8 @@ TextInput.propTypes = {
   type: PropTypes.string,
   error: PropTypes.bool,
   errorMessage: PropTypes.string,
-  required: PropTypes.bool
+  required: PropTypes.bool,
+  disabled: PropTypes.bool,
 };
 
 export default TextInput;

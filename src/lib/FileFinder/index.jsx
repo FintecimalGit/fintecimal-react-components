@@ -13,6 +13,7 @@ const FileFinder = ({
   search,
   onSearch,
   placeholder,
+  disabled
 }) => {
   const handleOnClick = index => (file) => {
     onClick(index, file);
@@ -32,11 +33,12 @@ const FileFinder = ({
           placeholder={placeholder}
           onEnter={handleOnEnter}
           value={search}
+          disabled={disabled}
         />
       </Grid>
       {
         files.map((file, index) => (
-          <Grid key={index} item sm={3}> 
+          <Grid key={index} item sm={3}>
             <FileThumbnail
               file={file}
               onClick={handleOnClick(index)}
@@ -56,6 +58,7 @@ FileFinder.propTypes = {
   search: PropTypes.string,
   onSearch: PropTypes.func,
   placeholder: PropTypes.string,
+  disabled: PropTypes.bool,
 };
 
 FileFinder.defaultProps = {
@@ -65,6 +68,7 @@ FileFinder.defaultProps = {
   search: '',
   onSearch: () => {},
   placeholder: '',
+  disabled: false
 };
 
 export default FileFinder;

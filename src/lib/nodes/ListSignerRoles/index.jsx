@@ -21,6 +21,7 @@ const ListSignerRoles = ({ options, selected, onChangeHandler }) => {
     <div>
       {options.map((option, index) => {
         const { label, complete, readOnly, values } = option;
+
         const isSelected = selected === index;
         return (
           <Fragment key={index}>
