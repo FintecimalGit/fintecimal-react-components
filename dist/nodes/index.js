@@ -99,6 +99,12 @@ Object.defineProperty(exports, "InputTable", {
     return _InputTable.default;
   }
 });
+Object.defineProperty(exports, "RejectDocuments", {
+  enumerable: true,
+  get: function get() {
+    return _RejectDocuments.default;
+  }
+});
 
 var _SearchBar = _interopRequireDefault(require("./SearchBar"));
 
@@ -131,5 +137,7 @@ var _IDCardUpload = _interopRequireDefault(require("./IDCardUpload"));
 var _ListSignerRoles = _interopRequireDefault(require("./ListSignerRoles"));
 
 var _InputTable = _interopRequireDefault(require("./InputTable"));
+
+var _RejectDocuments = _interopRequireDefault(require("./RejectDocuments"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }

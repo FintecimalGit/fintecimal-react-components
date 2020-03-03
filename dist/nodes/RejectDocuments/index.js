@@ -22,7 +22,8 @@ var RejectDocuments = function RejectDocuments(_ref) {
       rejected = _ref.rejected,
       onReject = _ref.onReject,
       url = _ref.url,
-      rejectionOptions = _ref.rejectionOptions;
+      rejectionOptions = _ref.rejectionOptions,
+      rejectionData = _ref.rejectionData;
   var classes = (0, _style.default)();
   return _react.default.createElement("div", null, _react.default.createElement("div", {
     className: classes.titleContainer
@@ -36,7 +37,8 @@ var RejectDocuments = function RejectDocuments(_ref) {
     rejectionOptions: rejectionOptions,
     handlerReject: onReject(title),
     rejected: rejected,
-    size: "small"
+    size: "small",
+    rejectionData: rejectionData
   }))), url ? _react.default.createElement("iframe", {
     title: title,
     src: url,
@@ -49,14 +51,19 @@ RejectDocuments.propTypes = {
   onDrop: _propTypes.default.func,
   onReject: _propTypes.default.func,
   url: _propTypes.default.string,
-  rejectionOptions: _propTypes.default.array
+  rejectionOptions: _propTypes.default.array,
+  rejectionData: _propTypes.default.object
 };
 RejectDocuments.defaultProps = {
   title: '',
   onDrop: function onDrop() {},
   onReject: function onReject() {},
   url: '',
-  rejectionOptions: []
+  rejectionOptions: [],
+  rejectionData: {
+    reason: '',
+    comments: ''
+  }
 };
 var _default = RejectDocuments;
 exports.default = _default;
