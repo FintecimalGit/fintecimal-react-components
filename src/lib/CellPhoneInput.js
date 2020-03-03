@@ -6,7 +6,7 @@ import { isEmpty, status, validateRegex } from './commons/utils';
 import IconText from './IconText';
 import flag from './assets/mexicoflag.png';
 
-const CellPhoneInput = ({ value, handleChange, label, type, required, error, errorMessage }) => {
+const CellPhoneInput = ({ value, handleChange, label, type, required, error, errorMessage, disabled }) => {
   const errorMessages = cellphone.errorMessages;
   const [mError, setError] = useState(error);
   const [mErrorMessage, setErrorMessage] = useState(errorMessage);
@@ -98,6 +98,7 @@ const CellPhoneInput = ({ value, handleChange, label, type, required, error, err
       onClear={onClear}
       onFocus={onFocus}
       startAdornment={mAdornment}
+      disabled={disabled}
     >
       <IconText inputStatus={mError ? status.ERROR : mStatus} imgSrc={flag} text={'MXN'} />
     </SpecialInput>
@@ -109,7 +110,8 @@ CellPhoneInput.defaultProps = {
   type: cellphone.type,
   error: false,
   errorMessage: '',
-  required: false
+  required: false,
+  disabled: false
 };
 
 CellPhoneInput.propTypes = {
@@ -117,7 +119,8 @@ CellPhoneInput.propTypes = {
   type: PropTypes.string,
   error: PropTypes.bool,
   errorMessage: PropTypes.string,
-  required: PropTypes.bool
+  required: PropTypes.bool,
+  disabled: PropTypes.bool
 };
 
 export default CellPhoneInput;

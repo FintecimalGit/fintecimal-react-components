@@ -17,6 +17,7 @@ const UploadDocuments = ({
   onDelete,
   placeholder,
   url,
+  disabled
 }) => {
   const classes = useStyles();
   const [file, setFile] = useState(null);
@@ -114,6 +115,7 @@ const UploadDocuments = ({
               <FilePreview
                 file={file}
                 onDelete={handleOnDelete}
+                disabled={disabled}
               />
             )
           : (
@@ -121,6 +123,7 @@ const UploadDocuments = ({
               multiple={multiple}
               accept={accept}
               onDrop={handleOnDrop}
+              disabled={disabled}
             />
           )
       }
@@ -133,6 +136,7 @@ const UploadDocuments = ({
             search={search}
             onSearch={handleOnSearch}
             placeholder={placeholder}
+            disabled={disabled}
           />
         )
       }
@@ -150,6 +154,7 @@ UploadDocuments.propTypes = {
   onDrop: PropTypes.func,
   onDelete: PropTypes.func,
   placeholder: PropTypes.string,
+  disabled: PropTypes.bool
 };
 
 UploadDocuments.defaultProps = {
@@ -160,6 +165,7 @@ UploadDocuments.defaultProps = {
   onDelete: () => {},
   placeholder: '',
   url: '',
+  disabled: false
 };
 
 export default UploadDocuments;

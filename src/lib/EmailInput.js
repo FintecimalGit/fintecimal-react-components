@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { email } from './InputStrings';
 import InputWrapper from './InputWrapper';
 
-const EmailInput = ({ value, handleChange, label, error, errorMessage, type, required }) => {
+const EmailInput = ({ value, handleChange, label, error, errorMessage, type, required, disabled }) => {
     const config = {
         type,
         label,
@@ -28,6 +28,7 @@ const EmailInput = ({ value, handleChange, label, error, errorMessage, type, req
         config={config}
         errors={errors}
         isValid={isValid}
+        disabled={disabled}
         />
     );
 };
@@ -38,6 +39,7 @@ EmailInput.defaultProps = {
     error: false,
     errorMessage: '',
     required: false,
+    disabled: false
 };
 
 EmailInput.propTypes = {
@@ -46,6 +48,7 @@ EmailInput.propTypes = {
     error: PropTypes.bool,
     errorMessage: PropTypes.string,
     required: PropTypes.bool,
+    disabled: PropTypes.bool
 };
 
 export default EmailInput;

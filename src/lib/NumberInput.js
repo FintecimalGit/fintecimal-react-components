@@ -4,7 +4,7 @@ import { number } from './InputStrings';
 import InputWrapper from './InputWrapper';
 import { textFormats, isNumber, isEmpty } from './commons/utils';
 
-const NumberInput = ({ value, handleChange, label, error, errorMessage, type, required }) => {
+const NumberInput = ({ value, handleChange, label, error, errorMessage, type, required, disabled }) => {
   const config = {
     type,
     label,
@@ -25,7 +25,7 @@ const NumberInput = ({ value, handleChange, label, error, errorMessage, type, re
     return true;
   };
 
-  return <InputWrapper config={config} errors={errors} isValid={isValid} />;
+  return <InputWrapper config={config} errors={errors} isValid={isValid} disabled={disabled} />;
 };
 
 NumberInput.defaultProps = {
@@ -33,7 +33,8 @@ NumberInput.defaultProps = {
   type: number.type,
   error: false,
   errorMessage: '',
-  required: false
+  required: false,
+  disabled: false
 };
 
 NumberInput.propTypes = {
@@ -41,7 +42,8 @@ NumberInput.propTypes = {
   type: PropTypes.string,
   error: PropTypes.bool,
   errorMessage: PropTypes.string,
-  required: PropTypes.bool
+  required: PropTypes.bool,
+  disabled: PropTypes.bool
 };
 
 export default NumberInput;

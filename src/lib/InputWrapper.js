@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import BaseInput from './BaseInput';
 import { isEmpty, formatText } from './commons/utils';
 
-const InputWrapper = ({ config, errors, isValid }) => {
+const InputWrapper = ({ config, errors, isValid, disabled }) => {
   const { value, handleChange, label, type, required, format } = config;
   const { error, errorMessage, errorMessages } = errors;
   const [mError, setError] = useState(error);
@@ -72,6 +72,7 @@ const InputWrapper = ({ config, errors, isValid }) => {
       errorMessage={mErrorMessage}
       required={required}
       onClear={onClear}
+      disabled={disabled}
     />
   );
 };

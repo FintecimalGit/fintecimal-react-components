@@ -9,7 +9,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 
 import useStyles from './style';
 
-const FilePreview = ({ file, onDelete }) => {
+const FilePreview = ({ file, onDelete, disabled }) => {
   const clasess = useStyles();
   const [url, setUrl] = useState('');
 
@@ -48,12 +48,16 @@ const FilePreview = ({ file, onDelete }) => {
         className={clasess.cardHeader}
         title={file.name}
         action={
-          <IconButton
-            className={clasess.iconButton}
-            onClick={handleOnDelete}
-          >
-            <DeleteIcon />
-          </IconButton>
+          (
+            !disabled && (
+                <IconButton
+                    className={clasess.iconButton}
+                    onClick={handleOnDelete}
+                >
+                  <DeleteIcon />
+                </IconButton>
+            )
+          )
         }
       />
       <div className={clasess.container}>
@@ -66,11 +70,13 @@ const FilePreview = ({ file, onDelete }) => {
 FilePreview.propTypes = {
   file: PropTypes.instanceOf(File),
   onDelete: PropTypes.func,
+  disabled: PropTypes.bool
 };
 
 FilePreview.defaultProps = {
   file: new File([''], 'No Soportado', { type: '' }),
   onDelete: () => {},
+  disabled: false
 };
 
 export default FilePreview;
