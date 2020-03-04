@@ -15,6 +15,8 @@ import IDCardUpload from './IDCardUpload';
 import ListSignerRoles from './ListSignerRoles';
 import InputTable from './InputTable';
 import RejectDocuments from './RejectDocuments';
+import RejectionButtons from './RejectionButtons';
+import RejectSimple from './RejectSimple';
 
 export {
   Maps,
@@ -34,4 +36,6 @@ export {
   ListSignerRoles,
   InputTable,
   RejectDocuments,
+  RejectionButtons,
+  RejectSimple
 };
