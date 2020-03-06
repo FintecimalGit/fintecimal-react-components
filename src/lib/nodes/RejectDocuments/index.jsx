@@ -15,7 +15,6 @@ const RejectDocuments = ({
                              url,
                              rejectionOptions,
                              rejectionData,
-                             editable,
                              onHandlerReject
                          }) => {
   const classes = useStyles();
@@ -42,7 +41,7 @@ const RejectDocuments = ({
   };
 
   useEffect(() => {
-    if(url !== '' && typeof url === "string" && editable === false) generateFileToURL();
+    if(url !== '' && typeof url === "string" && rejected === false) generateFileToURL();
   }, [url]);
 
   const handleOnDrop = (value) => {
@@ -65,7 +64,6 @@ const RejectDocuments = ({
                       rejected={rejected}
                       size="small"
                       rejectionData={rejectionData}
-                      editable={editable}
                   />
               </div>
           </div>
@@ -73,6 +71,7 @@ const RejectDocuments = ({
               <FilePreview
                   file={file}
                   onDelete={() => { setFile(null) }}
+                  disabled={!rejected}
               />
           )}
           {rejected && !file && (
@@ -92,7 +91,6 @@ RejectDocuments.propTypes = {
     url: PropTypes.string,
     rejectionOptions: PropTypes.array,
     rejectionData: PropTypes.object,
-    editable: PropTypes.bool,
     onHandlerReject: PropTypes.func.isRequired,
 };
 
@@ -105,8 +103,7 @@ RejectDocuments.defaultProps = {
   rejectionData: {
       reason: '',
       comments: ''
-  },
-  editable: false
+  }
 };
 
 export default RejectDocuments;

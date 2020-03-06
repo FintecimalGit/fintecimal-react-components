@@ -526,32 +526,44 @@ storiesOf('NewComponents', module)
   .add('RejectionField', () => {
     return (
       <Container maxWidth="sm" style={{ paddingTop: '5vh', paddingBottom: '5vh' }}>
-        {Array(5)
-          .fill(null)
-          .map((value, index) => (
-            <RejectionField
-              field={{
-                key: 'Monto total del crédito',
-                value: '$72,000.00'
-              }}
-              onReject={action('onReject')}
-              rejectionOptions={[
-                { name: 'Calidad baja' },
-                { name: 'Sin imagen' },
-                { name: 'Sin sonido' },
-                { name: 'Sin audio' }
-              ]}
-              rejectionData={{
-                name: 'Valerie Baumbach',
-                image: 'http://usagibaru.com/wp-content/uploads/2019/06/3822333_0.jpg',
-                date: new Date(),
-                reason: 'Video no corresponde a documento.',
-                comments:
-                  'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
-              }}
-              rejected={index === 0}
-            />
-          ))}
+          <RejectionField
+            field={{
+              key: 'Monto total del crédito',
+              value: '$72,000.00'
+            }}
+            onReject={action('onReject')}
+            rejectionOptions={[
+              { name: 'Calidad baja' },
+              { name: 'Sin imagen' },
+              { name: 'Sin sonido' },
+              { name: 'Sin audio' }
+            ]}
+            rejectionData={{}}
+            rejected={false}
+          />
+          <RejectionField
+            field={{
+              key: 'Monto total del crédito',
+                  value: '$72,000.00'
+            }}
+            onReject={action('onReject')}
+            rejectionOptions={[
+                  { name: 'Calidad baja' },
+            { name: 'Sin imagen' },
+            { name: 'Sin sonido' },
+            { name: 'Sin audio' }
+          ]}
+            rejectionData={{
+              name: 'Valerie Baumbach',
+                  image: 'http://usagibaru.com/wp-content/uploads/2019/06/3822333_0.jpg',
+                  date: new Date(),
+                  reason: 'Video no corresponde a documento.',
+                  comments:
+              'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
+            }}
+            rejected={true}
+            editable={true}
+          />
       </Container>
     );
   })
@@ -634,11 +646,11 @@ storiesOf('NewComponents', module)
       { name: 'Sin imagen' },
       { name: 'Sin sonido' },
       { name: 'Sin audio' }
-    ]}
+      ]}
       rejectionData={{}}
       onHandlerReject={action('onHandlerReject')}
-      />
-      <RejectDocuments
+    />
+    <RejectDocuments
       title={'Estado de bancarios'}
       onReject={action('onReject')}
       url={"https://fintecimal-test.s3.amazonaws.com/Screen Shot 2020-03-03 at 10.52.13.png"}
@@ -647,7 +659,7 @@ storiesOf('NewComponents', module)
       { name: 'Sin imagen' },
       { name: 'Sin sonido' },
       { name: 'Sin audio' }
-    ]}
+      ]}
       rejectionData={{
         name: 'Valerie Baumbach',
             image: 'http://usagibaru.com/wp-content/uploads/2019/06/3822333_0.jpg',
@@ -658,8 +670,7 @@ storiesOf('NewComponents', module)
       }}
       rejected={true}
       onHandlerReject={action('onHandlerReject')}
-      editable={true}
-      />
+    />
       </Container>
     );
     })
