@@ -5,7 +5,7 @@ import { ThumbDownRounded, Chat } from '@material-ui/icons';
 import classnames from 'classnames';
 import useStyles from './style';
 
-const RejectIcon = ({ onClick, onClickMessage, rejected, noteOpen, size }) => {
+const RejectIcon = ({ onClick, onClickMessage, rejected, noteOpen, size, editable }) => {
   const classes = useStyles();
   const clickBadge = event => {
     event.stopPropagation();
@@ -39,20 +39,22 @@ const RejectIcon = ({ onClick, onClickMessage, rejected, noteOpen, size }) => {
         invisible={!rejected}
         onClick={clickBadge}
       >
-        <Fab
-          color="secondary"
-          aria-label="reject"
-          className={classnames(
-            classes.button,
-            { [classes.disabled]: rejected },
-            { [classes.hover]: !rejected },
-            { [classes.buttonLarge]: sizeIsLarge(), },
-            { [classes.buttonSmall]: sizeIsSmall(), }
-          )}
-          onClick={clickButton}
-        >
-          <ThumbDownRounded className={classes.icon} />
-        </Fab>
+        {!editable &&
+          <Fab
+              color="secondary"
+              aria-label="reject"
+              className={classnames(
+                  classes.button,
+                  {[classes.disabled]: rejected},
+                  {[classes.hover]: !rejected},
+                  {[classes.buttonLarge]: sizeIsLarge(),},
+                  {[classes.buttonSmall]: sizeIsSmall(),}
+              )}
+              onClick={clickButton}
+          >
+            <ThumbDownRounded className={classes.icon}/>
+          </Fab>
+        }
       </Badge>
     </div>
   );

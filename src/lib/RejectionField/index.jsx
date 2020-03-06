@@ -18,6 +18,7 @@ const RejectionField = ({
   rejectionData,
   rejected,
   rejectionShowed,
+  editable,
 }) => {
   const classes = useStyles();
   const [forceDisplay, setForceDisplay] = useState('none')
@@ -60,6 +61,7 @@ const RejectionField = ({
                 onClose={leave}
                 size="small"
                 rejectionShowed={rejectionShowed}
+                editable={editable}
               />
             </div>
           </div>
@@ -84,6 +86,7 @@ RejectionField.propTypes = {
     comments: PropTypes.string
   }),
   rejectionShowed: PropTypes.bool,
+  editable: PropTypes.bool,
 };
 
 RejectionField.defaultProps = {
@@ -98,7 +101,8 @@ RejectionField.defaultProps = {
     comments: ''
   },
   rejected: false,
-  rejectionShowed: true
+  rejectionShowed: true,
+  editable: false
 };
 
 export default RejectionField;
