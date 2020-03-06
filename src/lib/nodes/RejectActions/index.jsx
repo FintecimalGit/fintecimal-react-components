@@ -13,6 +13,7 @@ const RejectActions = ({
   onClose,
   size,
   rejectionShowed,
+  editable,
 }) => {
   const [mRejected, setRejected] = useState(rejected);
   const [mRejectionData, setRejectionData] = useState(rejectionData);
@@ -52,6 +53,7 @@ const RejectActions = ({
         onClick={onClick}
         onClickMessage={onClickMessage}
         size={size}
+        editable={editable}
       />
       <Popover
         anchorEl={anchorElement}
@@ -87,6 +89,7 @@ RejectActions.defaultProps = {
   onClose: () => {},
   size: 'large',
   rejectionShowed: true,
+  editable: false,
 };
 
 RejectActions.propTypes = {
@@ -98,6 +101,7 @@ RejectActions.propTypes = {
   onClose: PropTypes.func,
   size: PropTypes.oneOf(['large', 'small']),
   rejectionShowed: PropTypes.bool,
+  editable: PropTypes.bool,
 };
 
 export default RejectActions;
