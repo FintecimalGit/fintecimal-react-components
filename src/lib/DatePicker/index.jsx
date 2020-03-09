@@ -33,20 +33,22 @@ const DatePicker = ({
   }, [value])
 
   return (
-    <MuiPickersUtilsProvider locale="es" utils={DateMomentUtils}>
-      <KeyboardDatePicker
-          className={classes.datePicker}
-          variant="inline"
-          inputVariant="outlined"
-          label={label}
-          value={date}
-          format={format}
-          onChange={handleDateChange}
-          disableToolbar
-          disabled={disabled}
-          minDate={minDate}
-      />
-    </MuiPickersUtilsProvider>
+      <div className={classes.root}>
+        <MuiPickersUtilsProvider locale="es" utils={DateMomentUtils}>
+          <KeyboardDatePicker
+              className={classes.datePicker}
+              variant="inline"
+              inputVariant="outlined"
+              label={label}
+              value={date}
+              format={format}
+              onChange={handleDateChange}
+              disableToolbar
+              disabled={disabled}
+              minDate={minDate}
+          />
+        </MuiPickersUtilsProvider>
+      </div>
   );
 };
 
