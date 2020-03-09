@@ -7,6 +7,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 
+import TextInput from '../TextInput';
 import RejectActions from '../nodes/RejectActions';
 
 import useStyles from './style';
@@ -36,18 +37,28 @@ const RejectionField = ({
    */
   const getRejectionActionsDisplay = () => rejected ? 'inline-block' : forceDisplay;
 
+  const { value, key } = field;
+
+  const rejectInfo = !editable ?  <ListItemText primary={field.key} /> : (
+      <div className={classes.input} >
+        <TextInput label={key} handleChange={() => { console.log('entro')}} value={''} />
+      </div>
+  );
+
   return (
     <List className={classnames(
       classes.list,
       { [classes.listBorder]: rejected && forceDisplay === 'inline-block' },
     )}>
       <ListItem className={classes.listItem}>
-        <ListItemText primary={field.key} />
-        <ListItemSecondaryAction>
+        {rejectInfo}
+        <ListItemSecondaryAction className={classes.secondItem}>
           <div className={classes.listItemSecondaryContainer}>
-            <div className={classes.listItemSecondaryText}>
-              { field.value }
-            </div>
+            { !editable && (
+                <div className={classes.listItemSecondaryText}>
+                  { field.value }
+                </div>
+            )}
             <div
               className={classes.rejectionActions}
               style={{ display: getRejectionActionsDisplay() }}

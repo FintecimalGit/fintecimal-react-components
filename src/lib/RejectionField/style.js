@@ -34,4 +34,10 @@ export default makeStyles((theme) => ({
   listItem: {
     border: 'solid 0.5px #fbfbfb'
   },
+  input: {
+    width: '100%',
+  },
+  secondItem: {
+    paddingRight: '!16px',
+  }
 }));

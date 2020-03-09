@@ -15,20 +15,11 @@ const RejectDocuments = ({
                              url,
                              rejectionOptions,
                              rejectionData,
-                             onHandlerReject
+                             onHandlerReject,
+                             editable
                          }) => {
   const classes = useStyles();
   const [file, setFile] = useState(null);
-
-  const renderFile = () => {
-    if (/^image\//.test(file.type)) {
-      return <img alt={file.name} src={url} />;
-    }
-    else if(/^(text||application)\//.test(file.type)) {
-      return <iframe title={file.name} src={url} />;
-    }
-    else return 'No Soportado';
-  };
 
   const generateFileToURL = async () => {
     let response = await fetch(url);
@@ -41,7 +32,7 @@ const RejectDocuments = ({
   };
 
   useEffect(() => {
-    if(url !== '' && typeof url === "string" && rejected === false) generateFileToURL();
+    if(url !== '' && typeof url === "string" && editable === false) generateFileToURL();
   }, [url]);
 
   const handleOnDrop = (value) => {
@@ -64,6 +55,7 @@ const RejectDocuments = ({
                       rejected={rejected}
                       size="small"
                       rejectionData={rejectionData}
+                      editable={editable}
                   />
               </div>
           </div>
@@ -71,10 +63,10 @@ const RejectDocuments = ({
               <FilePreview
                   file={file}
                   onDelete={() => { setFile(null) }}
-                  disabled={!rejected}
+                  disabled={!editable}
               />
           )}
-          {rejected && !file && (
+          {editable && !file && (
             <DropZone
                 onDrop={handleOnDrop}
                 isIncorrect={true}
@@ -92,6 +84,7 @@ RejectDocuments.propTypes = {
     rejectionOptions: PropTypes.array,
     rejectionData: PropTypes.object,
     onHandlerReject: PropTypes.func.isRequired,
+    editable: PropTypes.bool
 };
 
 RejectDocuments.defaultProps = {
@@ -103,7 +96,8 @@ RejectDocuments.defaultProps = {
   rejectionData: {
       reason: '',
       comments: ''
-  }
+  },
+  editable: false
 };
 
 export default RejectDocuments;
