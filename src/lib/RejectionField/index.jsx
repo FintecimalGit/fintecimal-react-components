@@ -20,6 +20,7 @@ const RejectionField = ({
   rejected,
   rejectionShowed,
   editable,
+  onHandleChange
 }) => {
   const classes = useStyles();
   const [forceDisplay, setForceDisplay] = useState('none')
@@ -37,11 +38,11 @@ const RejectionField = ({
    */
   const getRejectionActionsDisplay = () => rejected ? 'inline-block' : forceDisplay;
 
-  const { value, key } = field;
+  const { key } = field;
 
   const rejectInfo = !editable ?  <ListItemText primary={field.key} /> : (
       <div className={classes.input} >
-        <TextInput label={key} handleChange={() => { console.log('entro')}} value={''} />
+        <TextInput label={key} handleChange={onHandleChange} value={''} />
       </div>
   );
 
@@ -98,6 +99,7 @@ RejectionField.propTypes = {
   }),
   rejectionShowed: PropTypes.bool,
   editable: PropTypes.bool,
+  onHandleChange: PropTypes.func
 };
 
 RejectionField.defaultProps = {
@@ -113,7 +115,8 @@ RejectionField.defaultProps = {
   },
   rejected: false,
   rejectionShowed: true,
-  editable: false
+  editable: false,
+  onHandleChange: () => {}
 };
 
 export default RejectionField;

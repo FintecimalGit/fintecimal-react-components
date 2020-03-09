@@ -44,22 +44,22 @@ const FilePreview = ({ file, onDelete, disabled }) => {
 
   return (
     <Card className={clasess.card}>
-      <CardHeader
-        className={clasess.cardHeader}
-        title={file.name}
-        action={
-          (
-            !disabled && (
-                <IconButton
-                    className={clasess.iconButton}
-                    onClick={handleOnDelete}
-                >
-                  <DeleteIcon />
-                </IconButton>
-            )
-          )
-        }
-      />
+      { !disabled && (
+          <CardHeader
+              className={clasess.cardHeader}
+              title={file.name}
+              action={
+                (
+                    <IconButton
+                        className={clasess.iconButton}
+                        onClick={handleOnDelete}
+                    >
+                      <DeleteIcon />
+                    </IconButton>
+                )
+              }
+          />
+      )}
       <div className={clasess.container}>
         { renderFile() }
       </div>
