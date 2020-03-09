@@ -75,7 +75,7 @@ const BaseInput = ({
             clear &&
             value && (
               <InputAdornment position="end">
-                <IconButton aria-label="clear input" onClick={onClear}>
+                <IconButton aria-label="clear input" onClick={onClear} tabindex="-1">
                   <Clear className={classes.icon} />
                 </IconButton>
               </InputAdornment>
