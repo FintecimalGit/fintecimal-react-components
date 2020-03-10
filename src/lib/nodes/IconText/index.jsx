@@ -23,7 +23,7 @@ const useStyles = makeStyles(theme => ({
   },
   focus: {
     borderWidth: 2,
-    borderColor: theme.palette.status.success.main
+    borderColor: theme.palette.primary.main
   },
   img: {
     flex: '1 1',
