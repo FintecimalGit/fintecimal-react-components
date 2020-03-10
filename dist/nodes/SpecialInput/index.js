@@ -25,6 +25,8 @@ require("../../styles/BaseInput.css");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
@@ -33,18 +35,23 @@ function _iterableToArrayLimit(arr, i) { if (!(Symbol.iterator in Object(arr) ||
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
-var BaseInput = function BaseInput(_ref) {
+var SpecialInput = function SpecialInput(_ref) {
+  var _React$createElement;
+
   var label = _ref.label,
       value = _ref.value,
       handleChange = _ref.handleChange,
       required = _ref.required,
       error = _ref.error,
       errorMessage = _ref.errorMessage,
-      disabled = _ref.disabled,
       type = _ref.type,
       clear = _ref.clear,
       onBlur = _ref.onBlur,
-      onClear = _ref.onClear;
+      onClear = _ref.onClear,
+      children = _ref.children,
+      onFocus = _ref.onFocus,
+      startAdornment = _ref.startAdornment,
+      disabled = _ref.disabled;
   var classes = (0, _style.default)();
 
   var _React$useState = _react.default.useState(0),
@@ -76,7 +83,11 @@ var BaseInput = function BaseInput(_ref) {
     className: classes.root
   }, (0, _utils.isTextLong)(label) && _react.default.createElement("div", null, _react.default.createElement(_LongPlaceHolder.default, {
     text: label
-  })), _react.default.createElement(_core.FormControl, {
+  })), _react.default.createElement("div", {
+    className: classes.inputBox
+  }, _react.default.createElement("div", {
+    className: classes.icon
+  }, children), _react.default.createElement(_core.FormControl, {
     className: classes.form,
     required: required,
     error: error,
@@ -89,34 +100,33 @@ var BaseInput = function BaseInput(_ref) {
     classes: {
       asterisk: classes.asterisk
     }
-  }, selectLabel()), _react.default.createElement(_core.OutlinedInput, {
+  }, selectLabel()), _react.default.createElement(_core.OutlinedInput, (_React$createElement = {
     id: "component-outlined",
+    className: classes.input,
     value: value,
     onChange: handleChange,
-    labelWidth: labelWidth,
     onBlur: onBlur,
-    className: classes.input,
-    endAdornment: clear && value && !disabled && _react.default.createElement(_core.InputAdornment, {
-      position: "end"
-    }, _react.default.createElement(_core.IconButton, {
-      "aria-label": "clear input",
-      onClick: onClear,
-      tabIndex: "-1"
-    }, _react.default.createElement(_icons.Clear, {
-      className: classes.icon
-    }))),
-    classes: {
-      notchedOutline: classes.notchedOutline,
-      focused: classes.focusNotchedOutline
-    },
-    type: type,
-    disabled: disabled
-  })), error && (0, _utils.isTextLong)(errorMessage) && _react.default.createElement(_LongError.default, {
+    labelWidth: labelWidth
+  }, _defineProperty(_React$createElement, "onBlur", onBlur), _defineProperty(_React$createElement, "onFocus", onFocus), _defineProperty(_React$createElement, "startAdornment", startAdornment && _react.default.createElement(_core.InputAdornment, {
+    position: "start",
+    className: classes.adornment
+  }, startAdornment)), _defineProperty(_React$createElement, "endAdornment", value && clear && !disabled && _react.default.createElement(_core.InputAdornment, {
+    position: "end"
+  }, _react.default.createElement(_core.IconButton, {
+    "aria-label": "clear input",
+    onClick: onClear,
+    tabIndex: "-1"
+  }, _react.default.createElement(_icons.Clear, {
+    className: classes.close
+  })))), _defineProperty(_React$createElement, "classes", {
+    notchedOutline: classes.notchedOutline,
+    focused: classes.focusNotchedOutline
+  }), _defineProperty(_React$createElement, "type", type), _defineProperty(_React$createElement, "disabled", disabled), _React$createElement)))), error && (0, _utils.isTextLong)(errorMessage) && _react.default.createElement(_LongError.default, {
     text: errorMessage
   }));
 };
 
-BaseInput.defaultProps = {
+SpecialInput.defaultProps = {
   value: '',
   required: false,
   error: false,
@@ -125,17 +135,19 @@ BaseInput.defaultProps = {
   errorMessage: '',
   disabled: false
 };
-BaseInput.propTypes = {
+SpecialInput.propTypes = {
   label: _propTypes.default.string.isRequired,
   value: _propTypes.default.oneOfType([_propTypes.default.number, _propTypes.default.string]),
   required: _propTypes.default.bool,
-  disabled: _propTypes.default.bool,
   error: _propTypes.default.bool,
   type: _propTypes.default.string,
   clear: _propTypes.default.bool,
   errorMessage: _propTypes.default.string,
   handleChange: _propTypes.default.func.isRequired,
-  onBlur: _propTypes.default.func
+  onBlur: _propTypes.default.func,
+  onFocus: _propTypes.default.func,
+  startAdornment: _propTypes.default.string,
+  disabled: _propTypes.default.bool
 };
-var _default = BaseInput;
+var _default = SpecialInput;
 exports.default = _default;

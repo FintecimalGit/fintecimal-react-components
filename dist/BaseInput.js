@@ -115,7 +115,8 @@ var BaseInput = function BaseInput(_ref) {
       position: "end"
     }, _react.default.createElement(_core.IconButton, {
       "aria-label": "clear input",
-      onClick: onClear
+      onClick: onClear,
+      tabindex: "-1"
     }, _react.default.createElement(_icons.Clear
     /*className={classes.icon}*/
     , null))),

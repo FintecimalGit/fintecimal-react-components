@@ -12,9 +12,22 @@ var _default = (0, _styles.makeStyles)(function (theme) {
     root: {
       display: 'flex',
       flexDirection: 'column',
-      flexWrap: 'wrap'
+      flexWrap: 'wrap',
+      height: '48px'
+    },
+    inputBox: {
+      alignSelf: 'stretch',
+      display: 'flex',
+      flexDirection: 'row',
+      alignContent: 'stretch',
+      alignItems: 'center',
+      margin: 0
+    },
+    icon: {
+      flex: 1
     },
     form: {
+      flex: 20,
       alignSelf: 'stretch'
     },
     label: {
@@ -27,7 +40,9 @@ var _default = (0, _styles.makeStyles)(function (theme) {
       paddingRight: 2
     },
     notchedOutline: {
-      borderWidth: 1,
+      borderRight: '1px solid lightgray',
+      borderTop: '1px solid lightgray',
+      borderBottom: '1px solid lightgray',
       opacity: 0.7
     },
     focusNotchedOutline: {
@@ -39,8 +54,10 @@ var _default = (0, _styles.makeStyles)(function (theme) {
       fontSize: 14.2,
       verticalAlign: 'super'
     },
-    icon: {
-      fontSize: 16
+    close: {
+      fontSize: theme.spacing(2)
+    },
+    adornment: {//marginTop: 12
     }
   };
 });

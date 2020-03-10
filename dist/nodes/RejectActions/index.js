@@ -95,7 +95,8 @@ var RejectActions = function RejectActions(_ref) {
     rejected: mRejected,
     onClick: onClick,
     onClickMessage: onClickMessage,
-    size: size
+    size: size,
+    editable: rejected
   }), _react.default.createElement(_core.Popover, {
     anchorEl: anchorElement,
     open: Boolean(anchorElement),

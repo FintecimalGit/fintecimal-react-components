@@ -21,7 +21,6 @@ var _default = (0, _styles.makeStyles)(function (theme) {
       boxSizing: 'border-box',
       width: '100%',
       height: '204.33px',
-      border: '2px dashed #4C5C68',
       borderRadius: '4px',
       display: 'flex',
       justifyContent: 'center',
