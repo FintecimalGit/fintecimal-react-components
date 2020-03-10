@@ -45,10 +45,12 @@ var useStyles = (0, _styles.makeStyles)(function (theme) {
         display: 'flex !important'
       }
     },
-    file: {
-      width: '100%',
-      height: '100%',
-      objectFit: 'fill'
+    container: {
+      padding: theme.spacing(2),
+      '& > *': {
+        width: '100%',
+        height: '534px'
+      }
     }
   };
 });

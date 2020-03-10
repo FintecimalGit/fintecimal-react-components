@@ -26,7 +26,8 @@ var RejectIcon = function RejectIcon(_ref) {
       onClickMessage = _ref.onClickMessage,
       rejected = _ref.rejected,
       noteOpen = _ref.noteOpen,
-      size = _ref.size;
+      size = _ref.size,
+      editable = _ref.editable;
   var classes = (0, _style.default)();
 
   var clickBadge = function clickBadge(event) {
@@ -64,7 +65,7 @@ var RejectIcon = function RejectIcon(_ref) {
     className: (0, _classnames6.default)(classes.badge, _defineProperty({}, classes.noteOpen, noteOpen)),
     invisible: !rejected,
     onClick: clickBadge
-  }, _react.default.createElement(_core.Fab, {
+  }, !editable && _react.default.createElement(_core.Fab, {
     color: "secondary",
     "aria-label": "reject",
     className: (0, _classnames6.default)(classes.button, _defineProperty({}, classes.disabled, rejected), _defineProperty({}, classes.hover, !rejected), _defineProperty({}, classes.buttonLarge, sizeIsLarge()), _defineProperty({}, classes.buttonSmall, sizeIsSmall())),

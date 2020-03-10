@@ -27,7 +27,8 @@ var DropZone = function DropZone(_ref) {
   var multiple = _ref.multiple,
       accept = _ref.accept,
       onDrop = _ref.onDrop,
-      disabled = _ref.disabled;
+      disabled = _ref.disabled,
+      isIncorrect = _ref.isIncorrect;
   var classes = (0, _style.default)();
 
   var _useDropzone = (0, _reactDropzone.useDropzone)({
@@ -44,7 +45,11 @@ var DropZone = function DropZone(_ref) {
   var inputProps = getInputProps();
   return _react.default.createElement("div", {
     className: classes.dropZoneContainer
-  }, _react.default.createElement(_Paper.default, rootProps, _react.default.createElement("input", _extends({}, inputProps, {
+  }, _react.default.createElement(_Paper.default, _extends({}, rootProps, {
+    style: {
+      border: isIncorrect ? '2px dashed #f44336' : '2px dashed #4C5C68'
+    }
+  }), _react.default.createElement("input", _extends({}, inputProps, {
     disabled: disabled
   })), _react.default.createElement("div", null, _react.default.createElement(_AddCircleOutline.default, null)), _react.default.createElement(_Typography.default, {
     className: classes.typography
@@ -55,13 +60,15 @@ DropZone.propTypes = {
   multiple: _propTypes.default.bool,
   accept: _propTypes.default.oneOfType([_propTypes.default.string, _propTypes.default.arrayOf(_propTypes.default.string)]),
   onDrop: _propTypes.default.func,
-  disabled: _propTypes.default.bool
+  disabled: _propTypes.default.bool,
+  isIncorrect: _propTypes.default.bool
 };
 DropZone.defaultProps = {
   multiple: false,
   accept: '',
   onDrop: function onDrop() {},
-  disabled: false
+  disabled: false,
+  isIncorrect: false
 };
 var _default = DropZone;
 exports.default = _default;

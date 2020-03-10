@@ -12,7 +12,8 @@ var _default = (0, _styles.makeStyles)(function (theme) {
     root: {
       display: 'flex',
       flexDirection: 'column',
-      flexWrap: 'wrap'
+      flexWrap: 'wrap',
+      height: '48px'
     },
     form: {
       alignSelf: 'stretch'

@@ -47,15 +47,15 @@ var listWithCategories = [{
 exports.listWithCategories = listWithCategories;
 var listWithoutCategories = [{
   type: 'string',
-  name: 'Todos'
+  name: 'Todos TODOS'
 }, {
   type: 'string',
-  name: 'Completo'
+  name: 'Completo COMPLETO'
 }, {
   type: 'string',
-  name: 'Inactivo'
+  name: 'Inactivo INACTIVO'
 }, {
   type: 'string',
-  name: 'Pendiente'
+  name: 'Pendiente PENDIENTE'
 }];
 exports.listWithoutCategories = listWithoutCategories;
