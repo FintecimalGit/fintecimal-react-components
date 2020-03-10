@@ -10,7 +10,9 @@ import SignatureMap from './SignatureMap';
 import ImageActions from './ImageActions';
 import CardApp from './CardApp';
 import CurrencyInput from './CurrencyInput';
-import TextInput from './TextInput';
+import BaseTextInput from './BaseTextInput';
+import BaseEmailInput from './BaseEmailInput';
+import BasePhoneInput from './BasePhoneInput';
 import TextAreaInput from './TextAreaInput';
 import IDCardUpload from './IDCardUpload';
 import ListSignerRoles from './ListSignerRoles';
@@ -24,7 +26,6 @@ export {
   Select,
   CardApp,
   SearchBar,
-  TextInput,
   BaseInput,
   ButtonFlat,
   RejectButton,
@@ -35,6 +36,9 @@ export {
   TextAreaInput,
   RejectTooltip,
   RejectActions,
+  BaseTextInput,
+  BaseEmailInput,
+  BasePhoneInput,
   ListSignerRoles,
   InputTable,
   RejectDocuments,

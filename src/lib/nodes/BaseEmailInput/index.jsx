@@ -1,10 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { text } from '../../InputStrings';
+import { email } from '../../InputStrings';
 import InputWrapper from '../InputWrapper';
-import { isEmpty } from '../../commons/utils';
 
-const TextInput = ({
+const EmailInput = ({
   value,
   handleChange,
   label,
@@ -24,27 +23,28 @@ const TextInput = ({
   const errors = {
     error,
     errorMessage,
-    errorMessages: text.errorMessages
+    errorMessages: email.errorMessages
   };
 
   const isValid = data => {
-    if (isEmpty(data) && !required) return true;
-    return true;
+    if (!data) return true;
+    const reg = /\S+@\S+\.\S+/;
+    return reg.test(data);
   };
 
   return <InputWrapper config={config} errors={errors} isValid={isValid} disabled={disabled} />;
 };
 
-TextInput.defaultProps = {
-  label: text.label,
-  type: text.type,
+EmailInput.defaultProps = {
+  label: email.label,
+  type: email.type,
   error: false,
   errorMessage: '',
   required: false,
   disabled: false
 };
 
-TextInput.propTypes = {
+EmailInput.propTypes = {
   label: PropTypes.string,
   type: PropTypes.string,
   error: PropTypes.bool,
@@ -53,4 +53,4 @@ TextInput.propTypes = {
   disabled: PropTypes.bool
 };
 
-export default TextInput;
+export default EmailInput;

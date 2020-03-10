@@ -19,7 +19,9 @@ import {
   ImageActions,
   CardApp,
   CurrencyInput,
-  TextInput,
+  BaseTextInput,
+  BaseEmailInput,
+  BasePhoneInput,
   TextAreaInput,
   IDCardUpload,
   ListSignerRoles,
@@ -228,15 +230,34 @@ storiesOf('Components|Nodes', module)
     />
   ))
   .add('TextInput', () => (
-    <TextInput
-      label={'Estatus'}
-      placeholder={'Estatus'}
+    <BaseTextInput
+      label={'Texto'}
       handleChange={action('handleChange')}
       required={true}
       //error={true}
       errorMessage={shortText}
       value={'Todo TODOS'}
-      options={listWithoutCategories}
+      disabled={false}
+    />
+  ))
+  .add('Email', () => (
+    <BaseEmailInput
+      label={'Email'}
+      handleChange={action('handleChange')}
+      required={true}
+      //error={true}
+      errorMessage={shortText}
+      //value={'Todo TODOS'}
+    />
+  ))
+  .add('Phone', () => (
+    <BasePhoneInput
+      label={'Phone'}
+      handleChange={action('handleChange')}
+      required={true}
+      //error={true}
+      errorMessage={shortText}
+      //value={'Todo TODOS'}
     />
   ))
   .add('Reject button', () => (

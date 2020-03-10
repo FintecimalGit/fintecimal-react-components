@@ -21,6 +21,7 @@ const BaseInput = ({
   required,
   error,
   errorMessage,
+  disabled,
   type,
   clear,
   onBlur,
@@ -31,7 +32,7 @@ const BaseInput = ({
   const labelRef = React.useRef(null);
   React.useEffect(() => {
     setLabelWidth(labelRef.current.offsetWidth);
-  }, []);
+  }, [label, errorMessage]);
 
   const selectLabel = () => {
     if (error) {
@@ -73,7 +74,8 @@ const BaseInput = ({
           className={classes.input}
           endAdornment={
             clear &&
-            value && (
+            value &&
+            !disabled && (
               <InputAdornment position="end">
                 <IconButton aria-label="clear input" onClick={onClear} tabindex="-1">
                   <Clear className={classes.icon} />
@@ -86,6 +88,7 @@ const BaseInput = ({
             focused: classes.focusNotchedOutline
           }}
           type={type}
+          disabled={disabled}
         />
       </FormControl>
       {error && isTextLong(errorMessage) && <LongError text={errorMessage}></LongError>}
@@ -99,13 +102,15 @@ BaseInput.defaultProps = {
   error: false,
   type: 'text',
   clear: true,
-  errorMessage: ''
+  errorMessage: '',
+  disabled: false
 };
 
 BaseInput.propTypes = {
   label: PropTypes.string.isRequired,
   value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   required: PropTypes.bool,
+  disabled: PropTypes.bool,
   error: PropTypes.bool,
   type: PropTypes.string,
   clear: PropTypes.bool,
