@@ -41,7 +41,6 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const getClassByStatus = (inputStatus, classes) => {
-  console.log(inputStatus);
   switch (inputStatus) {
     case status.FOCUS:
       return classes.focus;

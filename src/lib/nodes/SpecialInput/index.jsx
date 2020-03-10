@@ -33,9 +33,11 @@ const SpecialInput = ({
   const classes = useStyles();
   const [labelWidth, setLabelWidth] = React.useState(0);
   const labelRef = React.useRef(null);
+
   React.useEffect(() => {
     setLabelWidth(labelRef.current.offsetWidth);
   }, [label, errorMessage]);
+
   const selectLabel = () => {
     if (error) {
       if (isTextLong(errorMessage)) {
