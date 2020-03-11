@@ -22,6 +22,7 @@ import {
   BaseTextInput,
   BaseEmailInput,
   BasePhoneInput,
+  BaseNumberInput,
   TextAreaInput,
   IDCardUpload,
   ListSignerRoles,
@@ -253,6 +254,16 @@ storiesOf('Components|Nodes', module)
   .add('Phone', () => (
     <BasePhoneInput
       label={'Phone'}
+      handleChange={action('handleChange')}
+      required={true}
+      //error={true}
+      errorMessage={shortText}
+      //value={'Todo TODOS'}
+    />
+  ))
+  .add('Number', () => (
+    <BaseNumberInput
+      label={'Number'}
       handleChange={action('handleChange')}
       required={true}
       //error={true}
