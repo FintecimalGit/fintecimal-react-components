@@ -12,7 +12,7 @@ const useStyles = makeStyles(theme => ({
     alignItems: 'flex-start',
     alignContent: 'stretch',
     background: 'whitesmoke',
-    padding: 13,
+    padding: 11,
     marginRight: -1,
     borderRadius: 4,
     border: 'solid 1px rgba(0, 0, 0, 0.2)',

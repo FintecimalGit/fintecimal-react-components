@@ -4,8 +4,27 @@ export default makeStyles(theme => ({
   root: {
     display: 'flex',
     flexDirection: 'column',
-    flexWrap: 'wrap',
-    height: '48px'
+    flexWrap: 'wrap'
+  },
+  form: {
+    flex: 20,
+    alignSelf: 'stretch'
+  },
+  label: {
+    fontSize: 14,
+    fontWeight: 500,
+    opacity: 1
+  },
+  input: {
+    fontSize: 14
+  },
+  notchedOutline: {
+    borderWidth: 1,
+    opacity: 0.7
+  },
+  focusNotchedOutline: {
+    borderWidth: 2,
+    opacity: 1
   },
   inputBox: {
     alignSelf: 'stretch',
@@ -18,38 +37,16 @@ export default makeStyles(theme => ({
   icon: {
     flex: 1
   },
-  form: {
-    flex: 20,
-    alignSelf: 'stretch'
-  },
-  label: {
-    fontSize: 14,
-    fontWeight: 500,
-    opacity: 1
-  },
-  input: {
-    paddingBottom: 3,
-    paddingRight: 2
-  },
-  notchedOutline: {
-    borderRight: '1px solid lightgray',
-    borderTop: '1px solid lightgray',
-    borderBottom: '1px solid lightgray',
-    opacity: 0.7
-  },
-  focusNotchedOutline: {
-    borderWidth: 2,
-    opacity: 1
-  },
   asterisk: {
     color: theme.palette.error.main,
     fontSize: 14.2,
     verticalAlign: 'super'
   },
   close: {
-    fontSize: theme.spacing(2)
+    fontSize: theme.spacing(2),
+    fontSize: 16
   },
   adornment: {
-    //marginTop: 12
+    fontSize: 14
   }
 }));

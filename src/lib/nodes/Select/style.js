@@ -4,7 +4,7 @@ export default makeStyles(theme => ({
   root: {
     display: 'flex',
     flexDirection: 'column',
-    height: '48px'
+    flexWrap: 'wrap'
   },
   form: {
     alignSelf: 'stretch'
@@ -14,14 +14,9 @@ export default makeStyles(theme => ({
     fontWeight: 500,
     opacity: 1
   },
-  inputContainer: {
-    flex: '1px',
-    backgroundColor: '#fff',
-    fontSize: 14
-  },
   input: {
-    width: '100%',
-    boxSizing: 'border-box'
+    flex: '1px',
+    fontSize: 14
   },
   notchedOutline: {
     borderWidth: 1,
@@ -33,11 +28,12 @@ export default makeStyles(theme => ({
   },
   asterisk: {
     color: theme.palette.error.main,
-    fontSize: 13,
+    fontSize: 14.2,
     verticalAlign: 'super'
   },
   icon: {
-    marginRight: 10
+    fontSize: 20,
+    marginRight: theme.spacing(2, 0)
   },
   item: {
     paddingLeft: theme.spacing(3)

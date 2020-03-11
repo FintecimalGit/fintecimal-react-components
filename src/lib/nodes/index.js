@@ -14,6 +14,7 @@ import BaseTextInput from './BaseTextInput';
 import BaseEmailInput from './BaseEmailInput';
 import BasePhoneInput from './BasePhoneInput';
 import BaseNumberInput from './BaseNumberInput';
+import BaseRFCInput from './BaseRFCInput';
 import TextAreaInput from './TextAreaInput';
 import IDCardUpload from './IDCardUpload';
 import ListSignerRoles from './ListSignerRoles';
@@ -41,6 +42,7 @@ export {
   BaseEmailInput,
   BasePhoneInput,
   BaseNumberInput,
+  BaseRFCInput,
   ListSignerRoles,
   InputTable,
   RejectDocuments,
