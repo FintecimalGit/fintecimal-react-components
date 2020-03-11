@@ -93,6 +93,12 @@ Object.defineProperty(exports, "BasePhoneInput", {
     return _BasePhoneInput.default;
   }
 });
+Object.defineProperty(exports, "BaseNumberInput", {
+  enumerable: true,
+  get: function get() {
+    return _BaseNumberInput.default;
+  }
+});
 Object.defineProperty(exports, "TextAreaInput", {
   enumerable: true,
   get: function get() {
@@ -165,6 +171,8 @@ var _BaseTextInput = _interopRequireDefault(require("./BaseTextInput"));
 var _BaseEmailInput = _interopRequireDefault(require("./BaseEmailInput"));
 
 var _BasePhoneInput = _interopRequireDefault(require("./BasePhoneInput"));
+
+var _BaseNumberInput = _interopRequireDefault(require("./BaseNumberInput"));
 
 var _TextAreaInput = _interopRequireDefault(require("./TextAreaInput"));
 
