@@ -23,6 +23,7 @@ import {
   BaseEmailInput,
   BasePhoneInput,
   BaseNumberInput,
+  BaseRFCInput,
   TextAreaInput,
   IDCardUpload,
   ListSignerRoles,
@@ -264,6 +265,16 @@ storiesOf('Components|Nodes', module)
   .add('Number', () => (
     <BaseNumberInput
       label={'Number'}
+      handleChange={action('handleChange')}
+      required={true}
+      //error={true}
+      errorMessage={shortText}
+      //value={'Todo TODOS'}
+    />
+  ))
+  .add('RFC', () => (
+    <BaseRFCInput
+      label={'RFC'}
       handleChange={action('handleChange')}
       required={true}
       //error={true}

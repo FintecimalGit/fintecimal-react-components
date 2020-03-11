@@ -1,14 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
-import {
-  FormControl,
-  InputLabel,
-  makeStyles,
-  Select,
-  MenuItem,
-  OutlinedInput,
-  Icon
-} from '@material-ui/core';
+import { FormControl, InputLabel, Select, MenuItem, OutlinedInput } from '@material-ui/core';
 import { KeyboardArrowDown, KeyboardArrowUp } from '@material-ui/icons';
 import { status, isEmpty, isTextLong } from '../../commons/utils';
 import LongPlaceHolder from '../../LongPlaceHolder';
@@ -37,10 +29,11 @@ const SelectInput = ({
   error,
   errorMessage,
   options,
+  disabled,
   placeholder
 }) => {
   const classes = useStyles();
-  const inputLabel = useRef(null);
+  const labelRef = useRef(null);
   const [labelWidth, setLabelWidth] = useState(0);
   const { errorMessages, label: defaultPlaceHolder } = list;
   const [mValue, setValue] = useState(value);
@@ -140,8 +133,8 @@ const SelectInput = ({
 
   useEffect(() => {
     setValue(value);
-    setLabelWidth(inputLabel.current.offsetWidth);
-  }, [value]);
+    setLabelWidth(labelRef.current.offsetWidth);
+  }, [label, errorMessage]);
 
   return (
     <div className={classes.root}>
@@ -152,17 +145,17 @@ const SelectInput = ({
       )}
       <FormControl className={classes.form} required={required} error={mError} variant="outlined">
         <InputLabel
-          ref={inputLabel}
-          htmlFor="component-simple"
+          ref={labelRef}
+          className={classes.label}
+          htmlFor="component-outlined"
+          variant="outlined"
           classes={{
-            root: classes.inputContainer,
             asterisk: classes.asterisk
           }}
         >
           {selectLabel()}
         </InputLabel>
         <Select
-          labelWidth={labelWidth}
           renderValue={() => mValue || placeholder}
           value={mValue}
           onChange={mHandleChange}
@@ -184,14 +177,14 @@ const SelectInput = ({
           }}
           input={
             <OutlinedInput
-              inputProps={{
-                className: classes.input
-              }}
+              id="component-outlined"
+              labelWidth={labelWidth}
+              className={classes.input}
               classes={{
                 notchedOutline: classes.notchedOutline,
-                focused: classes.focusNotchedOutline,
-                root: classes.inputContainer
+                focused: classes.focusNotchedOutline
               }}
+              disabled={disabled}
             />
           }
         >
@@ -210,7 +203,8 @@ SelectInput.defaultProps = {
   type: 'text',
   clear: true,
   errorMessage: '',
-  placeholder: ''
+  placeholder: '',
+  disabled: false
 };
 
 SelectInput.propTypes = {
@@ -221,7 +215,8 @@ SelectInput.propTypes = {
   clear: PropTypes.bool,
   errorMessage: PropTypes.string,
   handleChange: PropTypes.func.isRequired,
-  placeholder: PropTypes.string
+  placeholder: PropTypes.string,
+  disabled: PropTypes.bool
 };
 
 export default SelectInput;
