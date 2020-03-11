@@ -72,9 +72,10 @@ var SelectInput = function SelectInput(_ref) {
       error = _ref.error,
       errorMessage = _ref.errorMessage,
       options = _ref.options,
+      disabled = _ref.disabled,
       placeholder = _ref.placeholder;
   var classes = (0, _style.default)();
-  var inputLabel = (0, _react.useRef)(null);
+  var labelRef = (0, _react.useRef)(null);
 
   var _useState = (0, _react.useState)(0),
       _useState2 = _slicedToArray(_useState, 2),
@@ -219,8 +220,8 @@ var SelectInput = function SelectInput(_ref) {
 
   (0, _react.useEffect)(function () {
     setValue(value);
-    setLabelWidth(inputLabel.current.offsetWidth);
-  }, [value]);
+    setLabelWidth(labelRef.current.offsetWidth);
+  }, [label, errorMessage]);
   return _react.default.createElement("div", {
     className: classes.root
   }, (0, _utils.isTextLong)(label) && _react.default.createElement("div", null, _react.default.createElement(_LongPlaceHolder.default, {
@@ -231,14 +232,14 @@ var SelectInput = function SelectInput(_ref) {
     error: mError,
     variant: "outlined"
   }, _react.default.createElement(_core.InputLabel, {
-    ref: inputLabel,
-    htmlFor: "component-simple",
+    ref: labelRef,
+    className: classes.label,
+    htmlFor: "component-outlined",
+    variant: "outlined",
     classes: {
-      root: classes.inputContainer,
       asterisk: classes.asterisk
     }
   }, selectLabel()), _react.default.createElement(_core.Select, {
-    labelWidth: labelWidth,
     renderValue: function renderValue() {
       return mValue || placeholder;
     },
@@ -259,14 +260,14 @@ var SelectInput = function SelectInput(_ref) {
       }
     },
     input: _react.default.createElement(_core.OutlinedInput, {
-      inputProps: {
-        className: classes.input
-      },
+      id: "component-outlined",
+      labelWidth: labelWidth,
+      className: classes.input,
       classes: {
         notchedOutline: classes.notchedOutline,
-        focused: classes.focusNotchedOutline,
-        root: classes.inputContainer
-      }
+        focused: classes.focusNotchedOutline
+      },
+      disabled: disabled
     })
   }, renderOptions(options))), mError && (0, _utils.isTextLong)(mErrorMessage) && _react.default.createElement(_LongError.default, {
     text: mErrorMessage
@@ -280,7 +281,8 @@ SelectInput.defaultProps = {
   type: 'text',
   clear: true,
   errorMessage: '',
-  placeholder: ''
+  placeholder: '',
+  disabled: false
 };
 SelectInput.propTypes = {
   label: _propTypes.default.string.isRequired,
@@ -290,7 +292,8 @@ SelectInput.propTypes = {
   clear: _propTypes.default.bool,
   errorMessage: _propTypes.default.string,
   handleChange: _propTypes.default.func.isRequired,
-  placeholder: _propTypes.default.string
+  placeholder: _propTypes.default.string,
+  disabled: _propTypes.default.bool
 };
 var _default = SelectInput;
 exports.default = _default;

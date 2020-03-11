@@ -23,8 +23,8 @@ var _default = (0, _styles.makeStyles)(function (theme) {
       opacity: 1
     },
     input: {
-      paddingBottom: 3,
-      paddingRight: 2
+      flex: '1px',
+      fontSize: 14
     },
     notchedOutline: {
       borderWidth: 1,
