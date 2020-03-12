@@ -24,11 +24,7 @@ var _default = (0, _styles.makeStyles)(function (theme) {
     },
     td: {
       fontWeight: 'normal',
-      padding: theme.spacing(2, 1.5),
-      textTransform: 'lowercase',
-      '&::first-letter': {
-        textTransform: 'uppercase'
-      }
+      padding: theme.spacing(2, 1.5)
     },
     noPadding: {
       padding: 4
