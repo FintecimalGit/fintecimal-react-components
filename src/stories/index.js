@@ -332,9 +332,16 @@ storiesOf('Components|Nodes', module)
   .add('Map', () => <SignatureMap />)
   .add('Image Actions', () => <ImageActions />)
   .add('IDCardUpload', () => <IDCardUpload />)
-  .add('Input Table', () => <InputTable />)
+  .add('Input Table', () => {
+
+  return (
+      <Container style={{ paddingTop: '5vh', paddingBottom: '5vh' }}>
+        <InputTable handleChange={action('handleChange')}/>
+      </Container>
+  );
+  })
   .add('ListSignerRoles', () => (
-    <ListSignerRoles selected={2} onChangeHandler={action('onChangeHandler')} />
+    <ListSignerRoles selected={2}  onChangeHandler={action('onChangeHandler')} />
   ))
   .add('CardApp', () => <CardApp onClick={action('onClick')} />);
 

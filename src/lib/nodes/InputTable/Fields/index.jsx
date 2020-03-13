@@ -1,99 +1,83 @@
-import React from 'react';
+import React, { Fragment, useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
 
-import BaseInput from "../../BaseInput";
+import CustomField from "./CustomField";
 import Button from "../../Buttons/Button";
+
+import {generateValueEmpty} from '../utils';
 import useStyles from "./style";
 
-
-const Fields = ({fields, header, addNewRow}) =>{
+const Fields = ({fieldValues, addNewRow}) =>{
     const classes = useStyles();
-    const [values, setValues] = React.useState({});
-    const [inputError, setInputError] = React.useState({});
+    const [fields, setFields]  = useState([]);
+    const [deleteInfo, setDeleteInfo] = useState(false);
 
-    React.useEffect(() =>{
-        if(Object.keys(values).length === 0) createEmptyValues(header);
-    }, [header]);
+    useEffect(() =>{
+        setFields(fieldValues);
+    }, [fieldValues]);
 
-    const isString = (value) => typeof value === 'string';
+    useEffect(() =>{
+        if(deleteInfo) {
+            setFields(generateValueEmpty(fields));
+            setDeleteInfo(false);
+        }
+    }, [deleteInfo]);
 
-    const handleChangeInputs = (input) => (event) => {
-        const value = isString(event) ? event : event.target.value;
-        setValues({ ...values, [input.label]: value });
-        setInputError({...inputError, [input.label]: false})
+    const handleOnChange = (field, index, value) => {
+        let newFields = fields;
+        newFields[index] = { ...field, value};
+        setFields(newFields)
     };
-
-    const getInputValue = (input) => values[input.label] || '';
-
-    const getInputValueError = (input) => inputError[input.label] || false;
-
-    const clearText = (input) => (event) => setValues({ ...values, [input.label]: '' });
 
     const onClickAccept = () => {
-        if(validateInformation()) return null;
-        addNewRow(values);
-        createEmptyValues(header);
-    };
-
-    const createEmptyValues = (headers) => {
-        let value = {};
-        let valueErrors = {}
-        headers.map(keys => {
-            value[keys.key] = '';
-            valueErrors[keys.key] = false;
-        });
-        setValues(value);
-        setInputError(valueErrors);
-    };
-
-    const validateInformation = () => {
-        let inputErrors = {...inputError};
-        let exitsErrors = false;
-        for(let key in values){
-           if(values[key] === ''){
-               inputErrors[key] = true;
-               exitsErrors = true;
-           }else{
-               inputErrors[key] = false;
-           }
+        if(isValidFields()){
+            addNewRow(fields);
+            setDeleteInfo(true);
         }
-        setInputError(inputErrors);
-        return exitsErrors;
     };
+
+    const isValidFields = () => {
+        let isValid = true;
+        fields.map(field => {
+            if(field.required && field.value === '')  isValid = false;
+        });
+        return isValid;
+    };
+
+   if(Object.keys(fields).length === 0) return null;
 
     return(
-        <div className={classes.content} >
-            {fields.map(values => {
-                const  { label, id } = values;
+        <Fragment>
+            {fields.map((field, index) => {
+                const { id, name, label, type, value, required = false } = field;
                 return(
-                    <div className={classes.content_inputs} key={id}>
-                        <BaseInput
-                                    handleChange={handleChangeInputs({label})}
-                                    label={label}
-                                    required
-                                    type={'text'}
-                                    value={getInputValue({label})}
-                                    onClear={clearText({label})}
-                                    error={getInputValueError({label})}
-                                    errorMessage={'Campo obligatorio'}
+                    <div className={classes.root} key={id} >
+                        <CustomField
+                            key={id}
+                            type={type}
+                            label={label}
+                            name={name}
+                            value={value}
+                            required={required}
+                            handleChange={(value) => handleOnChange(field, index, value)}
                         />
                     </div>
-                );
+                )
             })}
-            <Button text="Agregar" onClick={onClickAccept} />
-        </div>
+            <div className={classes.button}>
+                <Button text="Agregar" onClick={onClickAccept} />
+            </div>
+        </Fragment>
     );
 };
 
 Fields.propTypes = {
     fields: PropTypes.array,
-    header: PropTypes.array,
     addNewRow: PropTypes.func,
 };
 
 Fields.defaultProps = {
     fields: [],
-    header: [],
     addNewRow: () => {},
 };
 
