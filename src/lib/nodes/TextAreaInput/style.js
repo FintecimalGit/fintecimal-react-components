@@ -4,8 +4,7 @@ export default makeStyles(theme => ({
   root: {
     display: 'flex',
     flexDirection: 'column',
-    flexWrap: 'wrap',
-    height: '48px'
+    flexWrap: 'wrap'
   },
   form: {
     alignSelf: 'stretch'

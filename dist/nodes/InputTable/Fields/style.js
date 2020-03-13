@@ -9,13 +9,14 @@ var _styles = require("@material-ui/core/styles");
 
 var useStyles = (0, _styles.makeStyles)(function (theme) {
   return {
-    content_inputs: {
-      display: 'flex',
-      flexDirection: 'column',
-      marginBottom: theme.spacing(3)
+    root: {
+      margin: theme.spacing(2)
     },
-    content: {
-      width: '40%'
+    button: {
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'center',
+      marginTop: theme.spacing(2)
     }
   };
 });

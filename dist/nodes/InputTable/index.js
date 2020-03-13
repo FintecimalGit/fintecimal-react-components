@@ -1,7 +1,5 @@
 "use strict";
 
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
@@ -15,13 +13,13 @@ var _Fields = _interopRequireDefault(require("./Fields"));
 
 var _Table = _interopRequireDefault(require("../../Table"));
 
+var _utils = require("./utils");
+
 var _style = _interopRequireDefault(require("./style"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
 
@@ -35,7 +33,7 @@ function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArra
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
 
-function _iterableToArrayLimit(arr, i) { if (!(Symbol.iterator in Object(arr) || Object.prototype.toString.call(arr) === "[object Arguments]")) { return; } var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
@@ -46,47 +44,59 @@ var InputTable = function InputTable(_ref) {
 
   var _useState = (0, _react.useState)([]),
       _useState2 = _slicedToArray(_useState, 2),
-      information = _useState2[0],
-      setInformation = _useState2[1];
+      fields = _useState2[0],
+      setFields = _useState2[1];
 
   var _useState3 = (0, _react.useState)([]),
       _useState4 = _slicedToArray(_useState3, 2),
-      dataTable = _useState4[0],
-      setDataTable = _useState4[1];
+      information = _useState4[0],
+      setInformation = _useState4[1];
 
   var _useState5 = (0, _react.useState)([]),
       _useState6 = _slicedToArray(_useState5, 2),
-      header = _useState6[0],
-      setHeader = _useState6[1];
+      dataTable = _useState6[0],
+      setDataTable = _useState6[1];
+
+  var _useState7 = (0, _react.useState)([]),
+      _useState8 = _slicedToArray(_useState7, 2),
+      header = _useState8[0],
+      setHeader = _useState8[1];
 
   (0, _react.useEffect)(function () {
     getHeaders(value);
-    loadDataTable(value);
   }, [value]);
+  (0, _react.useEffect)(function () {
+    loadDataTable(information);
+  }, [information]);
 
   var getHeaders = function getHeaders(option) {
-    var obj = [];
-    option[0].map(function (opt) {
-      return obj.push({
-        'key': opt.label,
-        'value': opt.label
-      });
+    var headers = option[0].map(function (opt) {
+      return {
+        key: opt.label,
+        value: opt.label
+      };
     });
-    setHeader(obj);
-    setInformation(option);
+    setHeader(headers);
+    setFields((0, _utils.generateValueEmpty)(option[0]));
+    setInformation(validateExistValues(option));
   };
 
-  var addNewRow = function addNewRow(values) {
-    var newArray = [];
-    Object.keys(values).forEach(function (key, index) {
-      newArray.push({
-        'id': index,
-        'label': key,
-        'value': values[key]
+  var validateExistValues = function validateExistValues(data) {
+    var newData = [];
+    data.map(function (arrayField) {
+      var foundInformation = false;
+      arrayField.map(function (field) {
+        console.log(field);
+        if (field.hasOwnProperty('value')) if (field.value !== '') foundInformation = true;
       });
+      console.log(foundInformation);
+      if (foundInformation) newData.push(arrayField);
     });
-    var newInformation = [].concat(_toConsumableArray(information), [newArray]);
-    setInformation(newInformation);
+    return newData;
+  };
+
+  var addNewRow = function addNewRow(newData) {
+    var newInformation = [].concat(_toConsumableArray(information), [newData]);
     handleChange(newInformation);
   };
 
@@ -106,25 +116,23 @@ var InputTable = function InputTable(_ref) {
   var DeleteRow = function DeleteRow(item, index) {
     var newInformation = _toConsumableArray(information);
 
-    newInformation.splice(index + 1, 1);
-    setInformation(newInformation);
+    newInformation.splice(index, 1);
     handleChange(newInformation);
   };
 
   return _react.default.createElement("div", {
     className: classes.content
   }, _react.default.createElement(_Fields.default, {
-    fields: value[0],
-    addNewRow: addNewRow,
-    header: header
+    fieldValues: fields,
+    addNewRow: addNewRow
   }), _react.default.createElement("div", {
     className: classes.tableContent
-  }, Object.keys(dataTable).length > 0 ? _react.default.createElement(_Table.default, {
+  }, _react.default.createElement(_Table.default, {
     headers: header,
     items: dataTable,
     deleteRow: true,
     onDeleteRow: DeleteRow
-  }) : null));
+  })));
 };
 
 InputTable.propTypes = {
@@ -132,32 +140,7 @@ InputTable.propTypes = {
   handleChange: _propTypes.default.func
 };
 InputTable.defaultProps = {
-  value: [[{
-    'id': 0,
-    'label': 'No.',
-    'type': 'número',
-    'value': '123'
-  }, {
-    'id': 1,
-    'label': 'Fecha de pago',
-    'type': 'respuesta corta',
-    'value': '20 de enero'
-  }, {
-    'id': 2,
-    'label': 'Monto sin iva',
-    'type': 'número',
-    'value': '1000'
-  }, {
-    'id': 3,
-    'label': 'IVA',
-    'type': 'número',
-    'value': '160'
-  }, {
-    'id': 4,
-    'label': 'Total a pagar',
-    'type': 'número',
-    'value': '1160'
-  }]],
+  value: _utils.defaultData,
   handleChange: function handleChange() {}
 };
 var _default = InputTable;
