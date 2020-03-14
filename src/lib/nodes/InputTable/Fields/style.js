@@ -1,14 +1,15 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
-    content_inputs: {
+    root:{
+        margin: theme.spacing(2),
+    },
+    button:{
         display: 'flex',
-        flexDirection: 'column',
-        marginBottom: theme.spacing(3),
-    },
-    content:{
-        width: '40%',
-    },
+        flexDirection: 'row',
+        justifyContent: 'center',
+        marginTop: theme.spacing(2),
+    }
 }));
 
 export default useStyles;

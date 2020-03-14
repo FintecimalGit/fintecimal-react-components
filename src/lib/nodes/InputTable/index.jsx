@@ -4,37 +4,45 @@ import PropTypes from 'prop-types';
 import Fields from './Fields';
 import Table from '../../Table';
 
+import {generateValueEmpty, defaultData} from './utils';
 import useStyles from './style';
 
 const InputTable = ({ value, handleChange }) => {
   const classes = useStyles();
+  const [fields, setFields] = useState([]);
   const [information, setInformation] = useState([]);
   const [dataTable, setDataTable] = useState([]);
   const [header, setHeader] = useState([]);
 
   useEffect(() => {
     getHeaders(value);
-    loadDataTable(value);
   }, [value]);
 
+  useEffect(() =>{
+    loadDataTable(information);
+  }, [information]);
+
   const getHeaders = (option) => {
-    let obj = [];
-    option[0].map(opt => obj.push({'key': opt.label, 'value': opt.label}));
-    setHeader(obj);
-    setInformation(option);
+    const headers = option[0].map(opt => { return {key: opt.label, value: opt.label}});
+    setHeader(headers);
+    setFields(generateValueEmpty(option[0]));
+    setInformation(validateExistValuesEmpty(option));
   };
 
-  const addNewRow = (values) => {
-    let newArray = [];
-    Object.keys(values).forEach(function(key, index) {
-      newArray.push({
-        'id' : index,
-        'label': key,
-        'value': values[key]
+  const validateExistValuesEmpty = (data) => {
+    let newData = [];
+    data.map(arrayField => {
+      let foundInformation = false;
+      arrayField.map(field => {
+        if(field.hasOwnProperty('value')) if(field.value !== '') foundInformation = true
       });
+      if(foundInformation) newData.push(arrayField);
     });
-    let newInformation = [...information, newArray];
-    setInformation(newInformation);
+    return newData;
+  };
+
+  const addNewRow = (newData) => {
+    let newInformation = [...information, newData];
     handleChange(newInformation);
   };
 
@@ -52,17 +60,16 @@ const InputTable = ({ value, handleChange }) => {
   };
 
   const DeleteRow = (item, index) => {
-    let newInformation = [...information];
-    newInformation.splice(index+1,1);
-    setInformation(newInformation);
+    const newInformation = [...information];
+    newInformation.splice(index,1);
     handleChange(newInformation);
   };
 
   return (
     <div className={classes.content}>
-      <Fields fields={value[0]} addNewRow={addNewRow} header={header} />
+      <Fields fieldValues={fields} addNewRow={addNewRow} />
       <div className={classes.tableContent}>
-        { (Object.keys(dataTable).length > 0) ? <Table headers={header} items={dataTable} deleteRow={true} onDeleteRow={DeleteRow}/>  : null}
+         <Table headers={header} items={dataTable} deleteRow={true} onDeleteRow={DeleteRow}/>
       </div>
     </div>
   );
@@ -74,34 +81,7 @@ InputTable.propTypes = {
 };
 
 InputTable.defaultProps = {
-  value: [
-    [{
-      'id': 0,
-      'label': 'No.',
-      'type': 'número',
-      'value': '123',
-    },{
-      'id': 1,
-      'label': 'Fecha de pago',
-      'type': 'respuesta corta',
-      'value': '20 de enero',
-    },{
-      'id': 2,
-      'label': 'Monto sin iva',
-      'type': 'número',
-      'value': '1000',
-    },{
-      'id': 3,
-      'label': 'IVA',
-      'type': 'número',
-      'value': '160',
-    },{
-      'id': 4,
-      'label': 'Total a pagar',
-      'type': 'número',
-      'value': '1160',
-    }],
-  ],
+  value: defaultData,
   handleChange: () => {},
 };
 

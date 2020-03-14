@@ -2,15 +2,11 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
     content: {
-        display: 'flex',
         width: '100%',
-        flexDirection: 'column',
-        alignItems: 'center',
-        padding: theme.spacing(3, 5),
+        margin: 0,
     },
     tableContent: {
-        padding: theme.spacing(3,5),
-        width: '80%',
+        padding: theme.spacing(2,0),
     },
 }));
 
