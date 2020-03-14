@@ -74,7 +74,10 @@ var Fields = function Fields(_ref) {
   };
 
   var areValidFields = function areValidFields() {
-    var isValid = !Boolean(fields.some(field.required && field.value === ''));
+    var isValid = true;
+    fields.map(function (field) {
+      if (field.required && field.value === '') isValid = false;
+    });
     return isValid;
   };
 
@@ -96,7 +99,6 @@ var Fields = function Fields(_ref) {
       label: label,
       name: name,
       value: value,
-      required: required,
       handleChange: function handleChange(value) {
         return handleOnChange(field, index, value);
       }

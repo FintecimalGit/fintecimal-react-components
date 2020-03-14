@@ -37,7 +37,10 @@ const Fields = ({fieldValues, addNewRow}) =>{
     };
 
     const areValidFields = () => {
-        const isValid = !Boolean(fields.some(field.required && field.value === ''))
+        let isValid = true;
+        fields.map(field => {
+            if(field.required && field.value === '')  isValid = false;
+        });
         return isValid;
     };
 
@@ -55,7 +58,6 @@ const Fields = ({fieldValues, addNewRow}) =>{
                             label={label}
                             name={name}
                             value={value}
-                            required={required}
                             handleChange={(value) => handleOnChange(field, index, value)}
                         />
                     </div>
