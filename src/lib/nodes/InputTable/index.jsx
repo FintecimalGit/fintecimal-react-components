@@ -26,18 +26,16 @@ const InputTable = ({ value, handleChange }) => {
     const headers = option[0].map(opt => { return {key: opt.label, value: opt.label}});
     setHeader(headers);
     setFields(generateValueEmpty(option[0]));
-    setInformation(validateExistValues(option));
+    setInformation(validateExistValuesEmpty(option));
   };
 
-  const validateExistValues = (data) => {
+  const validateExistValuesEmpty = (data) => {
     let newData = [];
     data.map(arrayField => {
       let foundInformation = false;
       arrayField.map(field => {
-        console.log(field)
         if(field.hasOwnProperty('value')) if(field.value !== '') foundInformation = true
       });
-      console.log(foundInformation)
       if(foundInformation) newData.push(arrayField);
     });
     return newData;
@@ -62,7 +60,7 @@ const InputTable = ({ value, handleChange }) => {
   };
 
   const DeleteRow = (item, index) => {
-    let newInformation = [...information];
+    const newInformation = [...information];
     newInformation.splice(index,1);
     handleChange(newInformation);
   };

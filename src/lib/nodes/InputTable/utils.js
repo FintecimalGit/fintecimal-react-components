@@ -10,7 +10,7 @@ export const generateValueEmpty = (fieldArray) => {
   });
 };
 
-export const defaultData2 = [
+export const defaultData = [
   [{
     'id': 0,
     'label': 'No.',
@@ -75,7 +75,7 @@ export const defaultData2 = [
   }],
 ];
 
-export const defaultData = [
+export const defaultData2 = [
   [
     {
       "id" : 1,

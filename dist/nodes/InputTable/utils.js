@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.defaultData = exports.defaultData2 = exports.generateValueEmpty = void 0;
+exports.defaultData2 = exports.defaultData = exports.generateValueEmpty = void 0;
 
 var generateValueEmpty = function generateValueEmpty(fieldArray) {
   return fieldArray.map(function (field) {
@@ -18,7 +18,7 @@ var generateValueEmpty = function generateValueEmpty(fieldArray) {
 };
 
 exports.generateValueEmpty = generateValueEmpty;
-var defaultData2 = [[{
+var defaultData = [[{
   'id': 0,
   'label': 'No.',
   'type': 'número',
@@ -79,8 +79,8 @@ var defaultData2 = [[{
   'value': '1160',
   'required': true
 }]];
-exports.defaultData2 = defaultData2;
-var defaultData = [[{
+exports.defaultData = defaultData;
+var defaultData2 = [[{
   "id": 1,
   "name": "cantidadbien",
   "label": "Cantidad",
@@ -93,4 +93,4 @@ var defaultData = [[{
   "type": "respuesta larga",
   "required": true
 }]];
-exports.defaultData = defaultData;
+exports.defaultData2 = defaultData2;

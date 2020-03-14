@@ -30,17 +30,14 @@ const Fields = ({fieldValues, addNewRow}) =>{
     };
 
     const onClickAccept = () => {
-        if(isValidFields()){
+        if(areValidFields()){
             addNewRow(fields);
             setDeleteInfo(true);
         }
     };
 
-    const isValidFields = () => {
-        let isValid = true;
-        fields.map(field => {
-            if(field.required && field.value === '')  isValid = false;
-        });
+    const areValidFields = () => {
+        const isValid = !Boolean(fields.some(field.required && field.value === ''))
         return isValid;
     };
 

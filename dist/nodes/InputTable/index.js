@@ -78,18 +78,16 @@ var InputTable = function InputTable(_ref) {
     });
     setHeader(headers);
     setFields((0, _utils.generateValueEmpty)(option[0]));
-    setInformation(validateExistValues(option));
+    setInformation(validateExistValuesEmpty(option));
   };
 
-  var validateExistValues = function validateExistValues(data) {
+  var validateExistValuesEmpty = function validateExistValuesEmpty(data) {
     var newData = [];
     data.map(function (arrayField) {
       var foundInformation = false;
       arrayField.map(function (field) {
-        console.log(field);
         if (field.hasOwnProperty('value')) if (field.value !== '') foundInformation = true;
       });
-      console.log(foundInformation);
       if (foundInformation) newData.push(arrayField);
     });
     return newData;
