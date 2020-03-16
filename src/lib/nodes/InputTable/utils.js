@@ -11,82 +11,61 @@ export const generateValueEmpty = (fieldArray) => {
   });
 };
 
-export const defaultData2 = [
-  [{
+export const defaultHeader = [
+    {
     'id': 0,
     'name': 'no',
     'label': 'No.',
     'type': 'número',
-    'value': '',
     'required': true
   },{
     'id': 1,
     'name': 'fechaPago',
     'label': 'Fecha de pago',
     'type': 'respuesta corta',
-    'value': '',
-    'required': true
+    'required': false
   },{
     'id': 2,
     'name': 'montoSinIva',
     'label': 'Monto sin iva',
     'type': 'número',
-    'value': '',
     'required': true
   },{
     'id': 3,
     'name': 'iva',
     'label': 'IVA',
     'type': 'número',
-    'value': '',
-    'required': true
+    'required': false
   },{
     'id': 4,
     'name': 'total',
     'label': 'Total a pagar',
     'type': 'número',
-    'value': '',
     'required': true
-  }],
-  [{
-    'id': 0,
-    'name': 'no',
-    'label': 'No.',
-    'type': 'número',
-    'value': '123',
-    'required': true
-  },{
-    'id': 1,
-    'name': 'fechaPago',
-    'label': 'Fecha de pago',
-    'type': 'respuesta corta',
-    'value': '20 de enero',
-    'required': true
-  },{
-    'id': 2,
-    'name': 'montoSinIVA',
-    'label': 'Monto sin iva',
-    'type': 'número',
-    'value': '1000',
-    'required': true
-  },{
-    'id': 3,
-    'name': 'iva',
-    'label': 'IVA',
-    'type': 'número',
-    'value': '160',
-    'required': true
-  },{
-    'id': 4,
-    'name': 'total',
-    'label': 'Total a pagar',
-    'type': 'número',
-    'value': '1160',
-    'required': true
-  }],
+  }
 ];
 
 export const defaultData = [
+  [{
+    'name': 'no',
+    'value': '1234'
+  },{
+    'name': 'fechaPago',
+    'value': '20 de marzo 2020'
+  },{
+    'name': 'montoSinIva',
+    'value': '1000'
+  },{
+    'name': 'iva',
+    'value': '160'
+  },{
+    'name': 'total',
+    'value': '1160'
+  }]
+];
+
+
+export const defaultHeader2 = [
   [
     {
       "id" : 1,

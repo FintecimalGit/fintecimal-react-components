@@ -39,8 +39,12 @@ const Fields = ({fieldValues, addNewRow}) =>{
     const areValidFields = () => {
         let isValid = true;
         fields.map(field => {
-            if(field.required && field.value === '')  isValid = false;
+            if(field.required && field.value === ''){
+                isValid = false;
+                field['error'] = true;
+            }
         });
+        if(!isValid) setFields([...fields]);
         return isValid;
     };
 
@@ -49,7 +53,7 @@ const Fields = ({fieldValues, addNewRow}) =>{
     return(
         <Fragment>
             {fields.map((field, index) => {
-                const { id, name, label, type, value, required = false } = field;
+                const { id, name, label, type, value, error = false, errorMessage = '' } = field;
                 return(
                     <div className={classes.root} key={id} >
                         <CustomField
@@ -59,6 +63,9 @@ const Fields = ({fieldValues, addNewRow}) =>{
                             name={name}
                             value={value}
                             handleChange={(value) => handleOnChange(field, index, value)}
+                            error={error}
+                            errorMessage={errorMessage}
+                            required={error}
                         />
                     </div>
                 )

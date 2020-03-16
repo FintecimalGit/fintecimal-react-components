@@ -4,10 +4,10 @@ import PropTypes from 'prop-types';
 import Fields from './Fields';
 import Table from '../../Table';
 
-import {generateValueEmpty, defaultData} from './utils';
+import {generateValueEmpty, defaultData, defaultHeader} from './utils';
 import useStyles from './style';
 
-const InputTable = ({ value, handleChange }) => {
+const InputTable = ({ values, headers, handleChange }) => {
   const classes = useStyles();
   const [fields, setFields] = useState([]);
   const [information, setInformation] = useState([]);
@@ -15,35 +15,32 @@ const InputTable = ({ value, handleChange }) => {
   const [header, setHeader] = useState([]);
 
   useEffect(() => {
-    getHeaders(value);
-  }, [value]);
+    fetchData(values, headers);
+  }, [values, headers]);
 
   useEffect(() =>{
     loadDataTable(information);
   }, [information]);
 
-  const getHeaders = (option) => {
-    const headers = option[0].map(opt => { return {key: opt.label, value: opt.label}});
-    setHeader(headers);
-    setFields(generateValueEmpty(option[0]));
-    setInformation(validateExistValuesEmpty(option));
+  const fetchData = (value, headers) => {
+    const header = headers.map(opt => { return {key: opt.name, value: opt.name}});
+    setHeader(header);
+    setFields(generateValueEmpty(headers));
+    setInformation(value);
   };
 
-  const validateExistValuesEmpty = (data) => {
-    let newData = [];
-    data.map(arrayField => {
-      let foundInformation = false;
-      arrayField.map(field => {
-        if(field.hasOwnProperty('value')) if(field.value !== '') foundInformation = true
-      });
-      if(foundInformation) newData.push(arrayField);
-    });
-    return newData;
-  };
-
-  const addNewRow = (newData) => {
-    let newInformation = [...information, newData];
+  const addNewRow = (dataField) => {
+    const newInformation = [...information, generateData(dataField)];
     handleChange(newInformation);
+  };
+
+  const generateData = (data) => {
+    return data.map(field => {
+      return {
+        name: field.name,
+        value: field.value
+      }
+    });
   };
 
   const loadDataTable = (data) => {
@@ -51,7 +48,7 @@ const InputTable = ({ value, handleChange }) => {
     let newObject = {};
     data.forEach(element => {
       Object.keys(element).forEach((key) => {
-        if(element[key]['value'] !== '') newObject[element[key]['label']] = element[key]['value'];
+        newObject[element[key]['name']] = element[key]['value'];
       });
       if(Object.keys(newObject).length > 0) newValues.push(newObject);
       newObject = {};
@@ -66,22 +63,24 @@ const InputTable = ({ value, handleChange }) => {
   };
 
   return (
-    <div className={classes.content}>
-      <Fields fieldValues={fields} addNewRow={addNewRow} />
-      <div className={classes.tableContent}>
-         <Table headers={header} items={dataTable} deleteRow={true} onDeleteRow={DeleteRow}/>
+      <div className={classes.content}>
+        <Fields fieldValues={fields} addNewRow={addNewRow} />
+        <div className={classes.tableContent}>
+          <Table headers={header} items={dataTable} deleteRow={true} onDeleteRow={DeleteRow}/>
+        </div>
       </div>
-    </div>
   );
 };
 
 InputTable.propTypes = {
-  value: PropTypes.array.isRequired,
+  values: PropTypes.array.isRequired,
+  headers: PropTypes.array.isRequired,
   handleChange: PropTypes.func,
 };
 
 InputTable.defaultProps = {
-  value: defaultData,
+  values: defaultData,
+  headers: defaultHeader,
   handleChange: () => {},
 };
 

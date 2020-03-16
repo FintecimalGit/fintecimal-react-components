@@ -38,7 +38,8 @@ function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 var InputTable = function InputTable(_ref) {
-  var value = _ref.value,
+  var values = _ref.values,
+      headers = _ref.headers,
       handleChange = _ref.handleChange;
   var classes = (0, _style.default)();
 
@@ -63,39 +64,36 @@ var InputTable = function InputTable(_ref) {
       setHeader = _useState8[1];
 
   (0, _react.useEffect)(function () {
-    getHeaders(value);
-  }, [value]);
+    fetchData(values, headers);
+  }, [values, headers]);
   (0, _react.useEffect)(function () {
     loadDataTable(information);
   }, [information]);
 
-  var getHeaders = function getHeaders(option) {
-    var headers = option[0].map(function (opt) {
+  var fetchData = function fetchData(value, headers) {
+    var header = headers.map(function (opt) {
       return {
-        key: opt.label,
-        value: opt.label
+        key: opt.name,
+        value: opt.name
       };
     });
-    setHeader(headers);
-    setFields((0, _utils.generateValueEmpty)(option[0]));
-    setInformation(validateExistValuesEmpty(option));
+    setHeader(header);
+    setFields((0, _utils.generateValueEmpty)(headers));
+    setInformation(value);
   };
 
-  var validateExistValuesEmpty = function validateExistValuesEmpty(data) {
-    var newData = [];
-    data.map(function (arrayField) {
-      var foundInformation = false;
-      arrayField.map(function (field) {
-        if (field.hasOwnProperty('value')) if (field.value !== '') foundInformation = true;
-      });
-      if (foundInformation) newData.push(arrayField);
-    });
-    return newData;
-  };
-
-  var addNewRow = function addNewRow(newData) {
-    var newInformation = [].concat(_toConsumableArray(information), [newData]);
+  var addNewRow = function addNewRow(dataField) {
+    var newInformation = [].concat(_toConsumableArray(information), [generateData(dataField)]);
     handleChange(newInformation);
+  };
+
+  var generateData = function generateData(data) {
+    return data.map(function (field) {
+      return {
+        name: field.name,
+        value: field.value
+      };
+    });
   };
 
   var loadDataTable = function loadDataTable(data) {
@@ -103,7 +101,7 @@ var InputTable = function InputTable(_ref) {
     var newObject = {};
     data.forEach(function (element) {
       Object.keys(element).forEach(function (key) {
-        if (element[key]['value'] !== '') newObject[element[key]['label']] = element[key]['value'];
+        newObject[element[key]['name']] = element[key]['value'];
       });
       if (Object.keys(newObject).length > 0) newValues.push(newObject);
       newObject = {};
@@ -134,11 +132,13 @@ var InputTable = function InputTable(_ref) {
 };
 
 InputTable.propTypes = {
-  value: _propTypes.default.array.isRequired,
+  values: _propTypes.default.array.isRequired,
+  headers: _propTypes.default.array.isRequired,
   handleChange: _propTypes.default.func
 };
 InputTable.defaultProps = {
-  value: _utils.defaultData,
+  values: _utils.defaultData,
+  headers: _utils.defaultHeader,
   handleChange: function handleChange() {}
 };
 var _default = InputTable;
