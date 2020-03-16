@@ -60,6 +60,13 @@ const InputWrapper = ({ config, errors, isValid, disabled }) => {
     }
   }, [value]);
 
+  useEffect(() =>{
+    if(error){
+      setError(true);
+      setErrorMessage(errorMessages.empty);
+    }
+  }, [error]);
+
   return (
     <BaseInput
       value={mValue}
