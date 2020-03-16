@@ -7,7 +7,7 @@ import Table from '../../Table';
 import {generateValueEmpty, defaultData, defaultHeader} from './utils';
 import useStyles from './style';
 
-const InputTable = ({ values, headers, handleChange }) => {
+const InputTable = ({ value, headers, handleChange }) => {
   const classes = useStyles();
   const [fields, setFields] = useState([]);
   const [information, setInformation] = useState([]);
@@ -15,15 +15,15 @@ const InputTable = ({ values, headers, handleChange }) => {
   const [header, setHeader] = useState([]);
 
   useEffect(() => {
-    fetchData(values, headers);
-  }, [values, headers]);
+    fetchData(value, headers);
+  }, [value, headers]);
 
   useEffect(() =>{
-    loadDataTable(information);
+    (Object.keys(information).length > 0) ? loadDataTable(information) : setDataTable([]);
   }, [information]);
 
   const fetchData = (value, headers) => {
-    const header = headers.map(opt => { return {key: opt.name, value: opt.name}});
+    const header = headers.map(opt => { return {key: opt.name, value: opt.label}});
     setHeader(header);
     setFields(generateValueEmpty(headers));
     setInformation(value);
@@ -73,13 +73,13 @@ const InputTable = ({ values, headers, handleChange }) => {
 };
 
 InputTable.propTypes = {
-  values: PropTypes.array.isRequired,
+  value: PropTypes.array.isRequired,
   headers: PropTypes.array.isRequired,
   handleChange: PropTypes.func,
 };
 
 InputTable.defaultProps = {
-  values: defaultData,
+  value: defaultData,
   headers: defaultHeader,
   handleChange: () => {},
 };
