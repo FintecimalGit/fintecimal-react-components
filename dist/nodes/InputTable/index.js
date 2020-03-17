@@ -38,7 +38,7 @@ function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 var InputTable = function InputTable(_ref) {
-  var values = _ref.values,
+  var value = _ref.value,
       headers = _ref.headers,
       handleChange = _ref.handleChange;
   var classes = (0, _style.default)();
@@ -64,17 +64,17 @@ var InputTable = function InputTable(_ref) {
       setHeader = _useState8[1];
 
   (0, _react.useEffect)(function () {
-    fetchData(values, headers);
-  }, [values, headers]);
+    fetchData(value, headers);
+  }, [value, headers]);
   (0, _react.useEffect)(function () {
-    loadDataTable(information);
+    Object.keys(information).length > 0 ? loadDataTable(information) : setDataTable([]);
   }, [information]);
 
   var fetchData = function fetchData(value, headers) {
     var header = headers.map(function (opt) {
       return {
         key: opt.name,
-        value: opt.name
+        value: opt.label
       };
     });
     setHeader(header);
@@ -132,12 +132,12 @@ var InputTable = function InputTable(_ref) {
 };
 
 InputTable.propTypes = {
-  values: _propTypes.default.array.isRequired,
+  value: _propTypes.default.array.isRequired,
   headers: _propTypes.default.array.isRequired,
   handleChange: _propTypes.default.func
 };
 InputTable.defaultProps = {
-  values: _utils.defaultData,
+  value: _utils.defaultData,
   headers: _utils.defaultHeader,
   handleChange: function handleChange() {}
 };
