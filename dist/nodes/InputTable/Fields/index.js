@@ -21,6 +21,14 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
 function _objectSpread2(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -76,8 +84,12 @@ var Fields = function Fields(_ref) {
   var areValidFields = function areValidFields() {
     var isValid = true;
     fields.map(function (field) {
-      if (field.required && field.value === '') isValid = false;
+      if (field.required && field.value === '') {
+        isValid = false;
+        field['error'] = true;
+      }
     });
+    if (!isValid) setFields(_toConsumableArray(fields));
     return isValid;
   };
 
@@ -88,8 +100,10 @@ var Fields = function Fields(_ref) {
         label = field.label,
         type = field.type,
         value = field.value,
-        _field$required = field.required,
-        required = _field$required === void 0 ? false : _field$required;
+        _field$error = field.error,
+        error = _field$error === void 0 ? false : _field$error,
+        _field$errorMessage = field.errorMessage,
+        errorMessage = _field$errorMessage === void 0 ? '' : _field$errorMessage;
     return _react.default.createElement("div", {
       className: classes.root,
       key: id
@@ -101,7 +115,10 @@ var Fields = function Fields(_ref) {
       value: value,
       handleChange: function handleChange(value) {
         return handleOnChange(field, index, value);
-      }
+      },
+      error: error,
+      errorMessage: errorMessage,
+      required: error
     }));
   }), _react.default.createElement("div", {
     className: classes.button
