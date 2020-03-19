@@ -73,12 +73,11 @@ var RejectionField = function RejectionField(_ref) {
   }, _react.default.createElement(_ListItem.default, {
     className: classes.listItem
   }, _react.default.createElement(_ListItemText.default, {
-    primary: field.key
+    primary: field.key,
+    secondary: field.value
   }), _react.default.createElement(_ListItemSecondaryAction.default, null, _react.default.createElement("div", {
     className: classes.listItemSecondaryContainer
   }, _react.default.createElement("div", {
-    className: classes.listItemSecondaryText
-  }, field.value), _react.default.createElement("div", {
     className: classes.rejectionActions,
     style: {
       display: getRejectionActionsDisplay()

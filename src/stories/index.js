@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
-
+import Grid from '@material-ui/core/Grid';
 import lib from '../lib';
 import ui from '../ui';
 import tables from '../commons/exampleTable';
@@ -589,44 +589,56 @@ storiesOf('NewComponents', module)
   .add('RejectionField', () => {
     return (
       <Container maxWidth="sm" style={{ paddingTop: '5vh', paddingBottom: '5vh' }}>
-        <RejectionField
-          field={{
-            key: 'Monto total del crédito',
-            value: '$72,000.00'
-          }}
-          onReject={action('onReject')}
-          rejectionOptions={[
-            { name: 'Calidad baja' },
-            { name: 'Sin imagen' },
-            { name: 'Sin sonido' },
-            { name: 'Sin audio' }
-          ]}
-          rejectionData={{}}
-          rejected={false}
-        />
-        <RejectionField
-          field={{
-            key: 'Monto total del crédito',
-            value: '$72,000.00'
-          }}
-          onReject={action('onReject')}
-          rejectionOptions={[
-            { name: 'Calidad baja' },
-            { name: 'Sin imagen' },
-            { name: 'Sin sonido' },
-            { name: 'Sin audio' }
-          ]}
-          rejectionData={{
-            name: 'Valerie Baumbach',
-            image: 'http://usagibaru.com/wp-content/uploads/2019/06/3822333_0.jpg',
-            date: new Date(),
-            reason: 'Video no corresponde a documento.',
-            comments:
-              'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
-          }}
-          rejected={true}
-          editable={true}
-        />
+        <Grid container spacing={0}>
+          <Grid
+            key={'a2'}
+            item
+            sm={6} >
+              <RejectionField
+                field={{
+                  key: 'Monto total del crédito',
+                  value: '$72,000.00000000000'
+                }}
+                onReject={action('onReject')}
+                rejectionOptions={[
+                  { name: 'Calidad baja' },
+                  { name: 'Sin imagen' },
+                  { name: 'Sin sonido' },
+                  { name: 'Sin audio' }
+                ]}
+                rejectionData={{}}
+                rejected={false}
+              />
+          </Grid>
+          <Grid
+            key={'a2'}
+            item
+            sm={6} >
+              <RejectionField
+                field={{
+                  key: 'Monto total del crédito',
+                  value: '$72,000.00'
+                }}
+                onReject={action('onReject')}
+                rejectionOptions={[
+                  { name: 'Calidad baja' },
+                  { name: 'Sin imagen' },
+                  { name: 'Sin sonido' },
+                  { name: 'Sin audio' }
+                ]}
+                rejectionData={{
+                  name: 'Valerie Baumbach',
+                  image: 'http://usagibaru.com/wp-content/uploads/2019/06/3822333_0.jpg',
+                  date: new Date(),
+                  reason: 'Video no corresponde a documento.',
+                  comments:
+                    'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
+                }}
+                rejected={true}
+                editable={true}
+              />
+            </Grid>
+          </Grid>
       </Container>
     );
   })
