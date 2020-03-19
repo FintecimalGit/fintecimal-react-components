@@ -597,7 +597,7 @@ storiesOf('NewComponents', module)
               <RejectionField
                 field={{
                   key: 'Monto total del crédito',
-                  value: '$72,000.00000000000 00000s0afas0fsq fsaf0asf0asf0as0fas0f0asf0f0 '
+                  value: '$72,000.00000000000'
                 }}
                 onReject={action('onReject')}
                 rejectionOptions={[
