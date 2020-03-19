@@ -42,12 +42,9 @@ const RejectionField = ({
       { [classes.listBorder]: rejected && forceDisplay === 'inline-block' },
     )}>
       <ListItem className={classes.listItem}>
-        <ListItemText primary={field.key} />
+        <ListItemText primary={field.key} secondary={ field.value }/>
         <ListItemSecondaryAction>
           <div className={classes.listItemSecondaryContainer}>
-            <div className={classes.listItemSecondaryText}>
-              { field.value }
-            </div>
             <div
               className={classes.rejectionActions}
               style={{ display: getRejectionActionsDisplay() }}
