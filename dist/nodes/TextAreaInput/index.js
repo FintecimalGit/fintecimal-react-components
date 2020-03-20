@@ -62,6 +62,9 @@ var TextAreaInput = function TextAreaInput(_ref) {
   (0, _react.useEffect)(function () {
     setLabelWidth(labelRef.current.offsetWidth);
   }, []);
+  (0, _react.useEffect)(function () {
+    setValue(value);
+  }, [value]);
 
   var mHandleChange = function mHandleChange(event) {
     var eventValue = event.target.value;

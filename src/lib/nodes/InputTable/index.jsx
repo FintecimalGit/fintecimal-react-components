@@ -38,6 +38,7 @@ const InputTable = ({ value, headers, handleChange }) => {
     return data.map(field => {
       return {
         name: field.name,
+        label: field.label,
         value: field.value
       }
     });

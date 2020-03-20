@@ -91,6 +91,7 @@ var InputTable = function InputTable(_ref) {
     return data.map(function (field) {
       return {
         name: field.name,
+        label: field.label,
         value: field.value
       };
     });

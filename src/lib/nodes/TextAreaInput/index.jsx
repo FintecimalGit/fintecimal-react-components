@@ -34,6 +34,10 @@ const TextAreaInput = ({
     setLabelWidth(labelRef.current.offsetWidth);
   }, []);
 
+  useEffect(() => {
+    setValue(value);
+  }, [value]);
+
   const mHandleChange = event => {
     const {
       target: { value: eventValue }
