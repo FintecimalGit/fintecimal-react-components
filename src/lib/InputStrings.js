@@ -69,3 +69,10 @@ export const clabe = {
     },
     type: 'text'
 };
+
+export const generateErrorMessagesByLabel = (type, label = '') => {
+    return  {
+        validation: type.errorMessages.validation,
+        empty: `El campo ${label} es requerido`
+    };
+};

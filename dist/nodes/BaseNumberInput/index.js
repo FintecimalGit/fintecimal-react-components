@@ -37,7 +37,7 @@ var NumberInput = function NumberInput(_ref) {
   var errors = {
     error: error,
     errorMessage: errorMessage,
-    errorMessages: _InputStrings.number.errorMessages
+    errorMessages: (0, _InputStrings.generateErrorMessagesByLabel)(_InputStrings.number, label)
   };
 
   var isValid = function isValid(data) {
