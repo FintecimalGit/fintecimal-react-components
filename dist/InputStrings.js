@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.clabe = exports.list = exports.cellphone = exports.number = exports.curp = exports.rfc = exports.email = exports.text = void 0;
+exports.generateErrorMessagesByLabel = exports.clabe = exports.list = exports.cellphone = exports.number = exports.curp = exports.rfc = exports.email = exports.text = void 0;
 var text = {
   label: 'Texto',
   errorMessages: {
@@ -76,3 +76,13 @@ var clabe = {
   type: 'text'
 };
 exports.clabe = clabe;
+
+var generateErrorMessagesByLabel = function generateErrorMessagesByLabel(type) {
+  var label = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
+  return {
+    validation: type.errorMessages.validation,
+    empty: "El campo ".concat(label, " es requerido")
+  };
+};
+
+exports.generateErrorMessagesByLabel = generateErrorMessagesByLabel;

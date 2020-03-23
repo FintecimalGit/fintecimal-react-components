@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { text } from '../../InputStrings';
+import {text, generateErrorMessagesByLabel, number} from '../../InputStrings';
 import InputWrapper from '../InputWrapper';
 import { isEmpty } from '../../commons/utils';
 
@@ -24,7 +24,7 @@ const TextInput = ({
   const errors = {
     error,
     errorMessage,
-    errorMessages: text.errorMessages
+    errorMessages: generateErrorMessagesByLabel(number, label)
   };
 
   const isValid = data => {
