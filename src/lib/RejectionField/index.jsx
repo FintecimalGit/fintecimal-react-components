@@ -1,24 +1,21 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import classnames from 'classnames';
 
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
+import TextInput from '../nodes/BaseTextInput';
 
 import RejectActions from '../nodes/RejectActions';
 
 import useStyles from './style';
 
 const RejectionField = ({
-  field,
+  label,
+  value,
   onReject,
   rejectionOptions,
   rejectionData,
   rejected,
   rejectionShowed,
-  editable,
+  onHandlerInput
 }) => {
   const classes = useStyles();
   const [forceDisplay, setForceDisplay] = useState('none')
@@ -36,18 +33,14 @@ const RejectionField = ({
    */
   const getRejectionActionsDisplay = () => rejected ? 'inline-block' : forceDisplay;
 
+  const getRejectionActionsTop = () => rejected ? '-20px' : '-45px';
+
   return (
-    <List className={classnames(
-      classes.list,
-      { [classes.listBorder]: rejected && forceDisplay === 'inline-block' },
-    )}>
-      <ListItem className={classes.listItem}>
-        <ListItemText primary={field.key} secondary={ field.value }/>
-        <ListItemSecondaryAction>
+      <div className={classes.list}>
           <div className={classes.listItemSecondaryContainer}>
             <div
               className={classes.rejectionActions}
-              style={{ display: getRejectionActionsDisplay() }}
+              style={{ display: getRejectionActionsDisplay(), top: getRejectionActionsTop() }}
             >
               <RejectActions
                 rejectionOptions={rejectionOptions}
@@ -58,13 +51,18 @@ const RejectionField = ({
                 onClose={leave}
                 size="small"
                 rejectionShowed={rejectionShowed}
-                editable={editable}
               />
             </div>
           </div>
-        </ListItemSecondaryAction>
-      </ListItem>
-    </List>
+        <TextInput
+              label={label}
+              value={value}
+              disabled={!rejected}
+              handleChange={onHandlerInput}
+              error={rejected}
+              errorMessage={'dist/RejectionField/index.js'}
+          />
+      </div>
   );
 };
 
