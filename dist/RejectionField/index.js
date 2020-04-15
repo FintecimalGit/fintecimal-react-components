@@ -9,15 +9,7 @@ var _react = _interopRequireWildcard(require("react"));
 
 var _propTypes = _interopRequireDefault(require("prop-types"));
 
-var _classnames2 = _interopRequireDefault(require("classnames"));
-
-var _List = _interopRequireDefault(require("@material-ui/core/List"));
-
-var _ListItem = _interopRequireDefault(require("@material-ui/core/ListItem"));
-
-var _ListItemText = _interopRequireDefault(require("@material-ui/core/ListItemText"));
-
-var _ListItemSecondaryAction = _interopRequireDefault(require("@material-ui/core/ListItemSecondaryAction"));
+var _BaseTextInput = _interopRequireDefault(require("../nodes/BaseTextInput"));
 
 var _RejectActions = _interopRequireDefault(require("../nodes/RejectActions"));
 
@@ -26,8 +18,6 @@ var _style = _interopRequireDefault(require("./style"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
 
@@ -38,13 +28,14 @@ function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 var RejectionField = function RejectionField(_ref) {
-  var field = _ref.field,
+  var label = _ref.label,
+      value = _ref.value,
       onReject = _ref.onReject,
       rejectionOptions = _ref.rejectionOptions,
       rejectionData = _ref.rejectionData,
       rejected = _ref.rejected,
       rejectionShowed = _ref.rejectionShowed,
-      editable = _ref.editable;
+      onHandlerInput = _ref.onHandlerInput;
   var classes = (0, _style.default)();
 
   var _useState = (0, _react.useState)('none'),
@@ -68,19 +59,19 @@ var RejectionField = function RejectionField(_ref) {
     return rejected ? 'inline-block' : forceDisplay;
   };
 
-  return _react.default.createElement(_List.default, {
-    className: (0, _classnames2.default)(classes.list, _defineProperty({}, classes.listBorder, rejected && forceDisplay === 'inline-block'))
-  }, _react.default.createElement(_ListItem.default, {
-    className: classes.listItem
-  }, _react.default.createElement(_ListItemText.default, {
-    primary: field.key,
-    secondary: field.value
-  }), _react.default.createElement(_ListItemSecondaryAction.default, null, _react.default.createElement("div", {
+  var getRejectionActionsTop = function getRejectionActionsTop() {
+    return rejected ? '-20px' : '-45px';
+  };
+
+  return _react.default.createElement("div", {
+    className: classes.list
+  }, _react.default.createElement("div", {
     className: classes.listItemSecondaryContainer
   }, _react.default.createElement("div", {
     className: classes.rejectionActions,
     style: {
-      display: getRejectionActionsDisplay()
+      display: getRejectionActionsDisplay(),
+      top: getRejectionActionsTop()
     }
   }, _react.default.createElement(_RejectActions.default, {
     rejectionOptions: rejectionOptions,
@@ -90,9 +81,15 @@ var RejectionField = function RejectionField(_ref) {
     onOpen: keep,
     onClose: leave,
     size: "small",
-    rejectionShowed: rejectionShowed,
-    editable: editable
-  }))))));
+    rejectionShowed: rejectionShowed
+  }))), _react.default.createElement(_BaseTextInput.default, {
+    label: label,
+    value: value,
+    disabled: !rejected,
+    handleChange: onHandlerInput,
+    error: rejected,
+    errorMessage: ''
+  }));
 };
 
 RejectionField.propTypes = {

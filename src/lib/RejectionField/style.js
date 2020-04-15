@@ -11,27 +11,15 @@ export default makeStyles((theme) => ({
     },
     borderRadius: '4px',
   },
-  listBorder: {
-    border: 'solid 1px',
-    borderColor: theme.palette.status.danger.main,
-  },
   listItemSecondaryContainer: {
     position: 'relative',
-  },
-  listItemSecondaryText: {
-    fontWeight: 'bold',
-    letterSpacing: '0.2px',
   },
   rejectionActions: {
     position: 'absolute',
     display: 'none',
-    top: '-50px',
-    right: '0px',
+    right: '10px',
     '&:hover': {
       display: 'inline-block !important',
     },
-  },
-  listItem: {
-    border: 'solid 0.5px #fbfbfb'
   },
 }));

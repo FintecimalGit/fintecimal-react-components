@@ -591,14 +591,12 @@ storiesOf('NewComponents', module)
       <Container maxWidth="sm" style={{ paddingTop: '5vh', paddingBottom: '5vh' }}>
         <Grid container spacing={0}>
           <Grid
-            key={'a2'}
+            key={'a1'}
             item
-            sm={6} >
+            sm={12} >
               <RejectionField
-                field={{
-                  key: 'Monto total del crédito',
-                  value: '$72,000.00000000000'
-                }}
+                label= 'Monto total del crédito'
+                value= '$72,000.00'
                 onReject={action('onReject')}
                 rejectionOptions={[
                   { name: 'Calidad baja' },
@@ -613,12 +611,10 @@ storiesOf('NewComponents', module)
           <Grid
             key={'a2'}
             item
-            sm={6} >
+            sm={12} >
               <RejectionField
-                field={{
-                  key: 'Monto total del crédito',
-                  value: '$72,000.00'
-                }}
+                label= {'Monto total del crédito'}
+                value= {'$72,000.00'}
                 onReject={action('onReject')}
                 rejectionOptions={[
                   { name: 'Calidad baja' },
@@ -635,7 +631,7 @@ storiesOf('NewComponents', module)
                     'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
                 }}
                 rejected={true}
-                editable={true}
+                onHandlerInput={action('onHandlerInput')}
               />
             </Grid>
           </Grid>
