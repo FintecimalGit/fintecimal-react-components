@@ -42,7 +42,9 @@ var RejectDocuments = function RejectDocuments(_ref) {
       url = _ref.url,
       rejectionOptions = _ref.rejectionOptions,
       rejectionData = _ref.rejectionData,
-      onHandlerReject = _ref.onHandlerReject;
+      onHandlerReject = _ref.onHandlerReject,
+      showUndo = _ref.showUndo,
+      onUndoRejection = _ref.onUndoRejection;
   var classes = (0, _style.default)();
 
   var _useState = (0, _react.useState)(null),
@@ -126,7 +128,9 @@ var RejectDocuments = function RejectDocuments(_ref) {
     handlerReject: onReject,
     rejected: rejected,
     size: "small",
-    rejectionData: rejectionData
+    rejectionData: rejectionData,
+    showUndo: showUndo,
+    onUndoRejection: onUndoRejection
   }))), file && _react.default.createElement(_FilePreview.default, {
     file: file,
     onDelete: function onDelete() {
@@ -146,7 +150,9 @@ RejectDocuments.propTypes = {
   url: _propTypes.default.string,
   rejectionOptions: _propTypes.default.array,
   rejectionData: _propTypes.default.object,
-  onHandlerReject: _propTypes.default.func.isRequired
+  onHandlerReject: _propTypes.default.func.isRequired,
+  showUndo: _propTypes.default.bool,
+  onUndoRejection: _propTypes.default.func
 };
 RejectDocuments.defaultProps = {
   title: '',
@@ -157,7 +163,9 @@ RejectDocuments.defaultProps = {
   rejectionData: {
     reason: '',
     comments: ''
-  }
+  },
+  showUndo: false,
+  onUndoRejection: function onUndoRejection() {}
 };
 var _default = RejectDocuments;
 exports.default = _default;

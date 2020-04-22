@@ -41,7 +41,9 @@ var RejectActions = function RejectActions(_ref) {
       onOpen = _ref.onOpen,
       onClose = _ref.onClose,
       size = _ref.size,
-      rejectionShowed = _ref.rejectionShowed;
+      rejectionShowed = _ref.rejectionShowed,
+      showUndo = _ref.showUndo,
+      onUndoRejection = _ref.onUndoRejection;
 
   var _useState = (0, _react.useState)(rejected),
       _useState2 = _slicedToArray(_useState, 2),
@@ -58,16 +60,27 @@ var RejectActions = function RejectActions(_ref) {
       anchorElement = _useState6[0],
       setAnchorElement = _useState6[1];
 
+  var _useState7 = (0, _react.useState)(false),
+      _useState8 = _slicedToArray(_useState7, 2),
+      showPopover = _useState8[0],
+      setShowPopover = _useState8[1];
+
+  (0, _react.useEffect)(function () {
+    setRejected(rejected);
+  }, [rejected]);
+
   var onClick = function onClick(event) {
     event.stopPropagation();
     onOpen(event);
     setAnchorElement(event.currentTarget);
+    setShowPopover(true);
   };
 
   var onClickMessage = function onClickMessage(event) {
     event.stopPropagation();
     onOpen(event);
     setAnchorElement(event.currentTarget);
+    setShowPopover(true);
   };
 
   var handleReject = function handleReject(data) {
@@ -76,11 +89,18 @@ var RejectActions = function RejectActions(_ref) {
     setRejectionData(newData);
     setRejected(true);
     handlerReject(data);
+    setShowPopover(!showUndo);
   };
 
   var onClosePopOver = function onClosePopOver(event) {
     onClose(event);
     setAnchorElement(null);
+    setShowPopover(false);
+  };
+
+  var handleUndoRejection = function handleUndoRejection() {
+    setShowPopover(false);
+    onUndoRejection();
   };
 
   if (rejectionShowed === false) return null;
@@ -93,7 +113,7 @@ var RejectActions = function RejectActions(_ref) {
     editable: rejected
   }), _react.default.createElement(_core.Popover, {
     anchorEl: anchorElement,
-    open: Boolean(anchorElement),
+    open: showPopover,
     anchorOrigin: {
       vertical: 'top',
       horizontal: 'right'
@@ -102,9 +122,14 @@ var RejectActions = function RejectActions(_ref) {
       vertical: 'bottom',
       horizontal: 'left'
     }
-  }, mRejected ? _react.default.createElement(_RejectionNote.default, _extends({
+  }, mRejected && showPopover ? _react.default.createElement(_RejectionNote.default, _extends({
     onClose: onClosePopOver
-  }, mRejectionData)) : _react.default.createElement(_index.RejectTooltip, {
+  }, mRejectionData, {
+    showUndo: showUndo,
+    onUndoRejection: function onUndoRejection() {
+      return handleUndoRejection();
+    }
+  })) : _react.default.createElement(_index.RejectTooltip, {
     active: true,
     onClose: onClosePopOver,
     handleReject: handleReject,
@@ -118,7 +143,9 @@ RejectActions.defaultProps = {
   onOpen: function onOpen() {},
   onClose: function onClose() {},
   size: 'large',
-  rejectionShowed: true
+  rejectionShowed: true,
+  showUndo: false,
+  onUndoRejection: function onUndoRejection() {}
 };
 RejectActions.propTypes = {
   rejected: _propTypes.default.bool.isRequired,
@@ -128,7 +155,9 @@ RejectActions.propTypes = {
   onOpen: _propTypes.default.func.isRequired,
   onClose: _propTypes.default.func,
   size: _propTypes.default.oneOf(['large', 'small']),
-  rejectionShowed: _propTypes.default.bool
+  rejectionShowed: _propTypes.default.bool,
+  showUndo: _propTypes.default.bool,
+  onUndoRejection: _propTypes.default.func
 };
 var _default = RejectActions;
 exports.default = _default;

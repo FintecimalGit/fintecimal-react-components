@@ -25,6 +25,10 @@ var _IconButton = _interopRequireDefault(require("@material-ui/core/IconButton")
 
 var _Typography = _interopRequireDefault(require("@material-ui/core/Typography"));
 
+var _Button = _interopRequireDefault(require("@material-ui/core/Button"));
+
+var _icons = require("@material-ui/icons");
+
 var _Close = _interopRequireDefault(require("@material-ui/icons/Close"));
 
 var _style = _interopRequireDefault(require("./style"));
@@ -37,7 +41,9 @@ var RejectionNote = function RejectionNote(_ref) {
       image = _ref.image,
       date = _ref.date,
       reason = _ref.reason,
-      comments = _ref.comments;
+      comments = _ref.comments,
+      showUndo = _ref.showUndo,
+      onUndoRejection = _ref.onUndoRejection;
   var classes = (0, _style.default)();
   /**
    *
@@ -87,7 +93,20 @@ var RejectionNote = function RejectionNote(_ref) {
   }, _react.default.createElement("div", null, "Motivo de rechazo:"), _react.default.createElement("div", null, reason)), comments && _react.default.createElement(_Typography.default, {
     variant: "body1",
     component: "div"
-  }, _react.default.createElement("div", null, "Comentarios: "), _react.default.createElement("div", null, comments))));
+  }, _react.default.createElement("div", null, "Comentarios: "), _react.default.createElement("div", null, comments)), showUndo && _react.default.createElement("div", {
+    className: classes.rejectBody
+  }, _react.default.createElement("div", {
+    className: classes.rejectIcon
+  }, _react.default.createElement(_icons.ThumbDownRounded, null)), _react.default.createElement("div", {
+    className: classes.rejectText
+  }, "Se rechaz\xF3 el elemento."), _react.default.createElement(_Button.default, {
+    className: classes.undoButton,
+    color: "primary",
+    size: "small",
+    onClick: function onClick() {
+      return onUndoRejection();
+    }
+  }, "Deshacer"))));
 };
 
 RejectionNote.propTypes = {
@@ -96,7 +115,9 @@ RejectionNote.propTypes = {
   image: _propTypes.default.string,
   date: _propTypes.default.instanceOf(Date),
   reason: _propTypes.default.string,
-  comments: _propTypes.default.string
+  comments: _propTypes.default.string,
+  showUndo: _propTypes.default.bool,
+  onUndoRejection: _propTypes.default.func
 };
 RejectionNote.defaultProps = {
   onClose: function onClose() {},
@@ -104,7 +125,9 @@ RejectionNote.defaultProps = {
   image: '',
   date: new Date(),
   reason: '',
-  comments: ''
+  comments: '',
+  showUndo: false,
+  onUndoRejection: function onUndoRejection() {}
 };
 var _default = RejectionNote;
 exports.default = _default;

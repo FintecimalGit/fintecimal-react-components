@@ -35,7 +35,9 @@ var RejectionField = function RejectionField(_ref) {
       rejectionData = _ref.rejectionData,
       rejected = _ref.rejected,
       rejectionShowed = _ref.rejectionShowed,
-      onHandlerInput = _ref.onHandlerInput;
+      onHandlerInput = _ref.onHandlerInput,
+      showUndo = _ref.showUndo,
+      onUndoRejection = _ref.onUndoRejection;
   var classes = (0, _style.default)();
 
   var _useState = (0, _react.useState)('none'),
@@ -81,14 +83,16 @@ var RejectionField = function RejectionField(_ref) {
     onOpen: keep,
     onClose: leave,
     size: "small",
-    rejectionShowed: rejectionShowed
+    rejectionShowed: rejectionShowed,
+    showUndo: showUndo,
+    onUndoRejection: onUndoRejection
   }))), _react.default.createElement(_BaseTextInput.default, {
     label: label,
     value: value,
     disabled: !rejected,
     handleChange: onHandlerInput,
     error: rejected,
-    errorMessage: ''
+    errorMessage: 'dist/RejectionField/index.js'
   }));
 };
 
@@ -107,7 +111,9 @@ RejectionField.propTypes = {
     comments: _propTypes.default.string
   }),
   rejectionShowed: _propTypes.default.bool,
-  editable: _propTypes.default.bool
+  editable: _propTypes.default.bool,
+  showUndo: _propTypes.default.bool,
+  onUndoRejection: _propTypes.default.func
 };
 RejectionField.defaultProps = {
   field: {
@@ -125,7 +131,9 @@ RejectionField.defaultProps = {
   },
   rejected: false,
   rejectionShowed: true,
-  editable: false
+  editable: false,
+  showUndo: false,
+  onUndoRejection: function onUndoRejection() {}
 };
 var _default = RejectionField;
 exports.default = _default;
