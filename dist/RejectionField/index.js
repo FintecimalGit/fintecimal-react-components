@@ -45,6 +45,10 @@ var RejectionField = function RejectionField(_ref) {
       forceDisplay = _useState2[0],
       setForceDisplay = _useState2[1];
 
+  (0, _react.useEffect)(function () {
+    setForceDisplay('none');
+  }, [rejected]);
+
   var keep = function keep() {
     setForceDisplay('inline-block');
   };
