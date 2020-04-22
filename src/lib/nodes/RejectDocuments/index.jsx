@@ -15,7 +15,9 @@ const RejectDocuments = ({
                              url,
                              rejectionOptions,
                              rejectionData,
-                             onHandlerReject
+                             onHandlerReject,
+                             showUndo,
+                             onUndoRejection
                          }) => {
   const classes = useStyles();
   const [file, setFile] = useState(null);
@@ -64,6 +66,8 @@ const RejectDocuments = ({
                       rejected={rejected}
                       size="small"
                       rejectionData={rejectionData}
+                      showUndo={showUndo}
+                      onUndoRejection={onUndoRejection}
                   />
               </div>
           </div>
@@ -92,6 +96,8 @@ RejectDocuments.propTypes = {
     rejectionOptions: PropTypes.array,
     rejectionData: PropTypes.object,
     onHandlerReject: PropTypes.func.isRequired,
+    showUndo: PropTypes.bool,
+    onUndoRejection: PropTypes.func,
 };
 
 RejectDocuments.defaultProps = {
@@ -103,7 +109,9 @@ RejectDocuments.defaultProps = {
   rejectionData: {
       reason: '',
       comments: ''
-  }
+  },
+  showUndo: false,
+  onUndoRejection: () => {},
 };
 
 export default RejectDocuments;
