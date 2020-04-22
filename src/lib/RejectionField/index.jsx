@@ -73,7 +73,7 @@ const RejectionField = ({
               disabled={!rejected}
               handleChange={onHandlerInput}
               error={rejected}
-              errorMessage={'dist/RejectionField/index.js'}
+              errorMessage={''}
           />
       </div>
   );

@@ -35,7 +35,8 @@ var DocumentList = function DocumentList(_ref) {
   var title = _ref.title,
       documents = _ref.documents,
       onClickDocument = _ref.onClickDocument,
-      onDownload = _ref.onDownload;
+      onDownload = _ref.onDownload,
+      open = _ref.open;
   var clasess = (0, _style.default)();
   /**
    *
@@ -123,6 +124,7 @@ var DocumentList = function DocumentList(_ref) {
   };
 
   return _react.default.createElement(_HeaderCollapse.default, {
+    open: open,
     title: title,
     onDownload: onDownload
   }, _react.default.createElement(_List.default, {
@@ -148,13 +150,15 @@ DocumentList.propTypes = {
     status: _propTypes.default.string.isRequired
   })).isRequired,
   onClickDocument: _propTypes.default.func,
-  onDownload: _propTypes.default.func
+  onDownload: _propTypes.default.func,
+  open: _propTypes.default.bool
 };
 DocumentList.defaultProps = {
   title: '',
   documents: [],
   onClickDocument: function onClickDocument() {},
-  onDownload: function onDownload() {}
+  onDownload: function onDownload() {},
+  open: false
 };
 var _default = DocumentList;
 exports.default = _default;
