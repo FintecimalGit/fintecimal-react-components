@@ -47,5 +47,29 @@ export default makeStyles(theme => ({
       color: theme.palette.status.danger.main,
       boxShadow: '0 24px 38px 3px rgba(0,0,0,0.14)'
     }
+  },
+  chat: {
+    backgroundColor: '#8a2b2b',
+    borderRadius: '50%',
+    position: 'relative',
+    '& > svg': {
+      color: '#FFFFFF',
+      position: 'absolute',
+      left: '50%',
+      top: '50%',
+      transform: 'translate(-50%, -50%)',
+    }
+  },
+  chatLarge: {
+    height: '48px',
+    width: '48px',
+  },
+  chatSmall: {
+    width: '24px',
+    height: '24px',
+    minHeight: '24px',
+    '& > svg': {
+      fontSize: '1em',
+    }
   }
 }));

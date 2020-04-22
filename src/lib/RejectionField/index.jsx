@@ -15,7 +15,9 @@ const RejectionField = ({
   rejectionData,
   rejected,
   rejectionShowed,
-  onHandlerInput
+  onHandlerInput,
+  showUndo,
+  onUndoRejection
 }) => {
   const classes = useStyles();
   const [forceDisplay, setForceDisplay] = useState('none')
@@ -51,6 +53,8 @@ const RejectionField = ({
                 onClose={leave}
                 size="small"
                 rejectionShowed={rejectionShowed}
+                showUndo={showUndo}
+                onUndoRejection={onUndoRejection}
               />
             </div>
           </div>
@@ -82,6 +86,8 @@ RejectionField.propTypes = {
   }),
   rejectionShowed: PropTypes.bool,
   editable: PropTypes.bool,
+  showUndo: PropTypes.bool,
+  onUndoRejection: PropTypes.func,
 };
 
 RejectionField.defaultProps = {
@@ -97,7 +103,9 @@ RejectionField.defaultProps = {
   },
   rejected: false,
   rejectionShowed: true,
-  editable: false
+  editable: false,
+  showUndo: false,
+  onUndoRejection: () => {},
 };
 
 export default RejectionField;

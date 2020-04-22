@@ -31,7 +31,15 @@ const RejectIcon = ({ onClick, onClickMessage, rejected, noteOpen, size, editabl
       <Badge
         color="default"
         overlap="circle"
-        badgeContent={<Chat />}
+        badgeContent={(
+          <div className={classnames(
+            classes.chat,
+            { [classes.chatLarge]: sizeIsLarge(), },
+            { [classes.chatSmall]: sizeIsSmall(), }
+          )}>
+            <Chat />
+          </div>
+        )}
         className={classnames(
           classes.badge,
           { [classes.noteOpen]: noteOpen, }

@@ -13,7 +13,7 @@ var _core = require("@material-ui/core");
 
 var _icons = require("@material-ui/icons");
 
-var _classnames6 = _interopRequireDefault(require("classnames"));
+var _classnames8 = _interopRequireDefault(require("classnames"));
 
 var _style = _interopRequireDefault(require("./style"));
 
@@ -61,14 +61,16 @@ var RejectIcon = function RejectIcon(_ref) {
   }, _react.default.createElement(_core.Badge, {
     color: "default",
     overlap: "circle",
-    badgeContent: _react.default.createElement(_icons.Chat, null),
-    className: (0, _classnames6.default)(classes.badge, _defineProperty({}, classes.noteOpen, noteOpen)),
+    badgeContent: _react.default.createElement("div", {
+      className: (0, _classnames8.default)(classes.chat, _defineProperty({}, classes.chatLarge, sizeIsLarge()), _defineProperty({}, classes.chatSmall, sizeIsSmall()))
+    }, _react.default.createElement(_icons.Chat, null)),
+    className: (0, _classnames8.default)(classes.badge, _defineProperty({}, classes.noteOpen, noteOpen)),
     invisible: !rejected,
     onClick: clickBadge
   }, !editable && _react.default.createElement(_core.Fab, {
     color: "secondary",
     "aria-label": "reject",
-    className: (0, _classnames6.default)(classes.button, _defineProperty({}, classes.disabled, rejected), _defineProperty({}, classes.hover, !rejected), _defineProperty({}, classes.buttonLarge, sizeIsLarge()), _defineProperty({}, classes.buttonSmall, sizeIsSmall())),
+    className: (0, _classnames8.default)(classes.button, _defineProperty({}, classes.disabled, rejected), _defineProperty({}, classes.hover, !rejected), _defineProperty({}, classes.buttonLarge, sizeIsLarge()), _defineProperty({}, classes.buttonSmall, sizeIsSmall())),
     onClick: clickButton
   }, _react.default.createElement(_icons.ThumbDownRounded, {
     className: classes.icon
