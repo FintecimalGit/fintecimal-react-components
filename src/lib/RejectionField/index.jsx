@@ -37,6 +37,11 @@ const RejectionField = ({
 
   const getRejectionActionsTop = () => rejected ? '-20px' : '-45px';
 
+  const handleUndoRejection = () => {
+    setForceDisplay('none');
+    onUndoRejection();
+  }
+
   return (
       <div className={classes.list}>
           <div className={classes.listItemSecondaryContainer}>
@@ -54,7 +59,7 @@ const RejectionField = ({
                 size="small"
                 rejectionShowed={rejectionShowed}
                 showUndo={showUndo}
-                onUndoRejection={onUndoRejection}
+                onUndoRejection={() => handleUndoRejection()}
               />
             </div>
           </div>

@@ -65,6 +65,11 @@ var RejectionField = function RejectionField(_ref) {
     return rejected ? '-20px' : '-45px';
   };
 
+  var handleUndoRejection = function handleUndoRejection() {
+    setForceDisplay('none');
+    onUndoRejection();
+  };
+
   return _react.default.createElement("div", {
     className: classes.list
   }, _react.default.createElement("div", {
@@ -85,7 +90,9 @@ var RejectionField = function RejectionField(_ref) {
     size: "small",
     rejectionShowed: rejectionShowed,
     showUndo: showUndo,
-    onUndoRejection: onUndoRejection
+    onUndoRejection: function onUndoRejection() {
+      return handleUndoRejection();
+    }
   }))), _react.default.createElement(_BaseTextInput.default, {
     label: label,
     value: value,
