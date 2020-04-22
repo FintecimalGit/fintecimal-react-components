@@ -74,6 +74,11 @@ var RejectionField = function RejectionField(_ref) {
     onUndoRejection();
   };
 
+  var _handlerReject = function handlerReject() {
+    setForceDisplay('none');
+    onReject();
+  };
+
   return _react.default.createElement("div", {
     className: classes.list
   }, _react.default.createElement("div", {
@@ -87,7 +92,9 @@ var RejectionField = function RejectionField(_ref) {
   }, _react.default.createElement(_RejectActions.default, {
     rejectionOptions: rejectionOptions,
     rejected: rejected,
-    handlerReject: onReject,
+    handlerReject: function handlerReject() {
+      return _handlerReject();
+    },
     rejectionData: rejectionData,
     onOpen: keep,
     onClose: leave,
