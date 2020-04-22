@@ -121,7 +121,7 @@ storiesOf('Components|Inputs', module)
       //errorMessage={'Este es un mensaje de error que puede tener cualquier cosa'}
       required={true}
       clear={true}
-      //value={'Este input viene lleno'}
+    //value={'Este input viene lleno'}
     />
   ))
   .add('Email Input', () => (
@@ -130,7 +130,7 @@ storiesOf('Components|Inputs', module)
       handleChange={action('handleChange')}
       required={true}
       error={false}
-      //errorMessage={'Este es un mensaje de error que puede tener cualquier cosa'}
+    //errorMessage={'Este es un mensaje de error que puede tener cualquier cosa'}
     />
   ))
   .add('RFC Input', () => (
@@ -249,7 +249,7 @@ storiesOf('Components|Nodes', module)
       required={true}
       //error={true}
       errorMessage={shortText}
-      //value={'Todo TODOS'}
+    //value={'Todo TODOS'}
     />
   ))
   .add('Phone', () => (
@@ -259,7 +259,7 @@ storiesOf('Components|Nodes', module)
       required={true}
       //error={true}
       errorMessage={shortText}
-      //value={'Todo TODOS'}
+    //value={'Todo TODOS'}
     />
   ))
   .add('Number', () => (
@@ -269,7 +269,7 @@ storiesOf('Components|Nodes', module)
       required={true}
       //error={true}
       errorMessage={shortText}
-      //value={'Todo TODOS'}
+    //value={'Todo TODOS'}
     />
   ))
   .add('RFC', () => (
@@ -279,7 +279,7 @@ storiesOf('Components|Nodes', module)
       required={true}
       //error={true}
       errorMessage={shortText}
-      //value={'Todo TODOS'}
+    //value={'Todo TODOS'}
     />
   ))
   .add('Reject button', () => (
@@ -334,14 +334,14 @@ storiesOf('Components|Nodes', module)
   .add('IDCardUpload', () => <IDCardUpload />)
   .add('Input Table', () => {
 
-  return (
+    return (
       <Container style={{ paddingTop: '5vh', paddingBottom: '5vh' }}>
-        <InputTable handleChange={action('handleChange')}/>
+        <InputTable handleChange={action('handleChange')} />
       </Container>
-  );
+    );
   })
   .add('ListSignerRoles', () => (
-    <ListSignerRoles selected={2}  onChangeHandler={action('onChangeHandler')} />
+    <ListSignerRoles selected={2} onChangeHandler={action('onChangeHandler')} />
   ))
   .add('CardApp', () => <CardApp onClick={action('onClick')} />);
 
@@ -395,7 +395,7 @@ storiesOf('Components|Form', module).add('Validations', () => (
         handleChange={action('handleChange')}
         required={true}
         error={false}
-        //errorMessage={'Este es un mensaje de error que puede tener cualquier cosa'}
+      //errorMessage={'Este es un mensaje de error que puede tener cualquier cosa'}
       />
       <button
         type="submit"
@@ -594,47 +594,95 @@ storiesOf('NewComponents', module)
             key={'a1'}
             item
             sm={12} >
-              <RejectionField
-                label= 'Monto total del crédito'
-                value= '$72,000.00'
-                onReject={action('onReject')}
-                rejectionOptions={[
-                  { name: 'Calidad baja' },
-                  { name: 'Sin imagen' },
-                  { name: 'Sin sonido' },
-                  { name: 'Sin audio' }
-                ]}
-                rejectionData={{}}
-                rejected={false}
-              />
+            <RejectionField
+              label='Monto total del crédito'
+              value='$72,000.00'
+              onReject={action('onReject')}
+              rejectionOptions={[
+                { name: 'Calidad baja' },
+                { name: 'Sin imagen' },
+                { name: 'Sin sonido' },
+                { name: 'Sin audio' }
+              ]}
+              rejectionData={{}}
+              rejected={false}
+            />
           </Grid>
           <Grid
             key={'a2'}
             item
             sm={12} >
-              <RejectionField
-                label= {'Monto total del crédito'}
-                value= {'$72,000.00'}
-                onReject={action('onReject')}
-                rejectionOptions={[
-                  { name: 'Calidad baja' },
-                  { name: 'Sin imagen' },
-                  { name: 'Sin sonido' },
-                  { name: 'Sin audio' }
-                ]}
-                rejectionData={{
-                  name: 'Valerie Baumbach',
-                  image: 'http://usagibaru.com/wp-content/uploads/2019/06/3822333_0.jpg',
-                  date: new Date(),
-                  reason: 'Video no corresponde a documento.',
-                  comments:
-                    'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
-                }}
-                rejected={true}
-                onHandlerInput={action('onHandlerInput')}
-              />
-            </Grid>
+            <RejectionField
+              label={'Monto total del crédito'}
+              value={'$72,000.00'}
+              onReject={action('onReject')}
+              rejectionOptions={[
+                { name: 'Calidad baja' },
+                { name: 'Sin imagen' },
+                { name: 'Sin sonido' },
+                { name: 'Sin audio' }
+              ]}
+              rejectionData={{
+                name: 'Valerie Baumbach',
+                image: 'http://usagibaru.com/wp-content/uploads/2019/06/3822333_0.jpg',
+                date: new Date(),
+                reason: 'Video no corresponde a documento.',
+                comments:
+                  'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
+              }}
+              rejected={true}
+              onHandlerInput={action('onHandlerInput')}
+            />
           </Grid>
+          <Grid
+            key={'a3'}
+            item
+            sm={12} >
+            <RejectionField
+              label={'Monto total del crédito'}
+              value={'$72,000.00'}
+              onReject={action('onReject')}
+              rejectionOptions={[
+                { name: 'Calidad baja' },
+                { name: 'Sin imagen' },
+                { name: 'Sin sonido' },
+                { name: 'Sin audio' }
+              ]}
+              rejectionData={{
+                name: 'Valerie Baumbach',
+                image: 'http://usagibaru.com/wp-content/uploads/2019/06/3822333_0.jpg',
+                date: new Date(),
+                reason: 'Video no corresponde a documento.',
+                comments:
+                  'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
+              }}
+              rejected={true}
+              onHandlerInput={action('onHandlerInput')}
+              showUndo
+              onUndoRejection={action('onUndoRejection')}
+            />
+            <Grid
+            key={'a4'}
+            item
+            sm={12} >
+            <RejectionField
+              label='Monto total del crédito'
+              value='$72,000.00'
+              onReject={action('onReject')}
+              rejectionOptions={[
+                { name: 'Calidad baja' },
+                { name: 'Sin imagen' },
+                { name: 'Sin sonido' },
+                { name: 'Sin audio' }
+              ]}
+              rejectionData={{}}
+              rejected={false}
+              showUndo
+              onUndoRejection={action('onUndoRejection')}
+            />
+          </Grid>
+          </Grid>
+        </Grid>
       </Container>
     );
   })

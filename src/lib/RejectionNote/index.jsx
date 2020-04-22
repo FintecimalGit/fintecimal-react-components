@@ -9,12 +9,14 @@ import CardContent from '@material-ui/core/CardContent';
 import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import { ThumbDownRounded } from '@material-ui/icons';
 
 import CloseIcon from '@material-ui/icons/Close';
 
 import useStyles from './style';
 
-const RejectionNote = ({ onClose, name, image, date, reason, comments }) => {
+const RejectionNote = ({ onClose, name, image, date, reason, comments, showUndo, onUndoRejection }) => {
   const classes = useStyles();
 
   /**
@@ -42,10 +44,10 @@ const RejectionNote = ({ onClose, name, image, date, reason, comments }) => {
           image ? (
             <Avatar alt={name} src={image} />
           ) : (
-            <Avatar aria-label="recipe" className={classes.avatar}>
-              <span>{avatarLetter(name)}</span>
-            </Avatar>
-          )
+              <Avatar aria-label="recipe" className={classes.avatar}>
+                <span>{avatarLetter(name)}</span>
+              </Avatar>
+            )
         }
         action={
           <IconButton className={classes.iconButton} aria-label="settings" onClick={onClose}>
@@ -65,6 +67,18 @@ const RejectionNote = ({ onClose, name, image, date, reason, comments }) => {
             <div>Comentarios: </div>
             <div>{comments}</div>
           </Typography>
+        )}{showUndo && (
+          <div className={classes.rejectBody}>
+            <div className={classes.rejectIcon}>
+              <ThumbDownRounded />
+            </div>
+            <div className={classes.rejectText}>
+              Se rechazó el elemento.
+          </div>
+            <Button className={classes.undoButton} color="primary" size="small" onClick={() => onUndoRejection()}>
+              Deshacer
+          </Button>
+          </div>
         )}
       </CardContent>
     </Card>
@@ -77,16 +91,20 @@ RejectionNote.propTypes = {
   image: PropTypes.string,
   date: PropTypes.instanceOf(Date),
   reason: PropTypes.string,
-  comments: PropTypes.string
+  comments: PropTypes.string,
+  showUndo: PropTypes.bool,
+  onUndoRejection: PropTypes.func,
 };
 
 RejectionNote.defaultProps = {
-  onClose: () => {},
+  onClose: () => { },
   name: '',
   image: '',
   date: new Date(),
   reason: '',
-  comments: ''
+  comments: '',
+  showUndo: false,
+  onUndoRejection: () => {}
 };
 
 export default RejectionNote;

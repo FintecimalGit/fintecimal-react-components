@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { RejectButton, RejectTooltip } from '../index';
 import { Popover } from '@material-ui/core';
@@ -12,22 +12,31 @@ const RejectActions = ({
   onOpen,
   onClose,
   size,
-  rejectionShowed
+  rejectionShowed,
+  showUndo,
+  onUndoRejection
 }) => {
   const [mRejected, setRejected] = useState(rejected);
   const [mRejectionData, setRejectionData] = useState(rejectionData);
   const [anchorElement, setAnchorElement] = useState(null);
+  const [showPopover, setShowPopover] = useState(false);
+
+  useEffect(() => {
+    setRejected(rejected);
+  }, [rejected]);
 
   const onClick = event => {
     event.stopPropagation();
     onOpen(event);
     setAnchorElement(event.currentTarget);
+    setShowPopover(true);
   };
 
   const onClickMessage = event => {
     event.stopPropagation();
     onOpen(event);
     setAnchorElement(event.currentTarget);
+    setShowPopover(true);
   };
 
   const handleReject = data => {
@@ -35,11 +44,13 @@ const RejectActions = ({
     setRejectionData(newData);
     setRejected(true);
     handlerReject(data);
+    setShowPopover(!showUndo);
   };
 
   const onClosePopOver = (event) => {
     onClose(event);
     setAnchorElement(null);
+    setShowPopover(false);
   };
 
   if (rejectionShowed === false) return null;
@@ -56,7 +67,7 @@ const RejectActions = ({
       />
       <Popover
         anchorEl={anchorElement}
-        open={Boolean(anchorElement)}
+        open={showPopover}
         anchorOrigin={{
           vertical: 'top',
           horizontal: 'right'
@@ -66,16 +77,21 @@ const RejectActions = ({
           horizontal: 'left'
         }}
       >
-        {mRejected ? (
-          <RejectionNote onClose={onClosePopOver} {...mRejectionData} />
-        ) : (
-          <RejectTooltip
-            active={true}
+        {mRejected && showPopover ? (
+          <RejectionNote
             onClose={onClosePopOver}
-            handleReject={handleReject}
-            rejectionOptions={rejectionOptions}
+            {...mRejectionData}
+            showUndo={showUndo}
+            onUndoRejection={onUndoRejection}
           />
-        )}
+        ) : (
+            <RejectTooltip
+              active={true}
+              onClose={onClosePopOver}
+              handleReject={handleReject}
+              rejectionOptions={rejectionOptions}
+            />
+          )}
       </Popover>
     </>
   );
@@ -84,10 +100,12 @@ const RejectActions = ({
 RejectActions.defaultProps = {
   rejectionData: {},
   rejectionOptions: [],
-  onOpen: () => {},
-  onClose: () => {},
+  onOpen: () => { },
+  onClose: () => { },
   size: 'large',
-  rejectionShowed: true
+  rejectionShowed: true,
+  showUndo: false,
+  onUndoRejection: () => { }
 };
 
 RejectActions.propTypes = {
@@ -98,7 +116,9 @@ RejectActions.propTypes = {
   onOpen: PropTypes.func.isRequired,
   onClose: PropTypes.func,
   size: PropTypes.oneOf(['large', 'small']),
-  rejectionShowed: PropTypes.bool
+  rejectionShowed: PropTypes.bool,
+  showUndo: PropTypes.bool,
+  onUndoRejection: PropTypes.func,
 };
 
 export default RejectActions;
