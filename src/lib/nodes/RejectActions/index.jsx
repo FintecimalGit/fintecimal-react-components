@@ -53,6 +53,11 @@ const RejectActions = ({
     setShowPopover(false);
   };
 
+  const handleUndoRejection = () => {
+    setShowPopover(false);
+    onUndoRejection();
+  }
+
   if (rejectionShowed === false) return null;
 
   return (
@@ -82,7 +87,7 @@ const RejectActions = ({
             onClose={onClosePopOver}
             {...mRejectionData}
             showUndo={showUndo}
-            onUndoRejection={onUndoRejection}
+            onUndoRejection={() => handleUndoRejection()}
           />
         ) : (
             <RejectTooltip
