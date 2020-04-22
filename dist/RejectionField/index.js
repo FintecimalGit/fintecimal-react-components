@@ -45,6 +45,10 @@ var RejectionField = function RejectionField(_ref) {
       forceDisplay = _useState2[0],
       setForceDisplay = _useState2[1];
 
+  (0, _react.useEffect)(function () {
+    setForceDisplay('none');
+  }, [rejected]);
+
   var keep = function keep() {
     setForceDisplay('inline-block');
   };
@@ -63,6 +67,11 @@ var RejectionField = function RejectionField(_ref) {
 
   var getRejectionActionsTop = function getRejectionActionsTop() {
     return rejected ? '-20px' : '-45px';
+  };
+
+  var handleUndoRejection = function handleUndoRejection() {
+    setForceDisplay('none');
+    onUndoRejection();
   };
 
   return _react.default.createElement("div", {
@@ -85,7 +94,9 @@ var RejectionField = function RejectionField(_ref) {
     size: "small",
     rejectionShowed: rejectionShowed,
     showUndo: showUndo,
-    onUndoRejection: onUndoRejection
+    onUndoRejection: function onUndoRejection() {
+      return handleUndoRejection();
+    }
   }))), _react.default.createElement(_BaseTextInput.default, {
     label: label,
     value: value,

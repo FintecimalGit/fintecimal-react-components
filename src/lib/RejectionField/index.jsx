@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import TextInput from '../nodes/BaseTextInput';
@@ -22,6 +22,10 @@ const RejectionField = ({
   const classes = useStyles();
   const [forceDisplay, setForceDisplay] = useState('none')
 
+  useEffect(() => {
+    setForceDisplay('none');
+  }, [rejected]);
+
   const keep = () => {
     setForceDisplay('inline-block');
   };
@@ -36,6 +40,11 @@ const RejectionField = ({
   const getRejectionActionsDisplay = () => rejected ? 'inline-block' : forceDisplay;
 
   const getRejectionActionsTop = () => rejected ? '-20px' : '-45px';
+
+  const handleUndoRejection = () => {
+    setForceDisplay('none');
+    onUndoRejection();
+  }
 
   return (
       <div className={classes.list}>
@@ -54,7 +63,7 @@ const RejectionField = ({
                 size="small"
                 rejectionShowed={rejectionShowed}
                 showUndo={showUndo}
-                onUndoRejection={onUndoRejection}
+                onUndoRejection={() => handleUndoRejection()}
               />
             </div>
           </div>
