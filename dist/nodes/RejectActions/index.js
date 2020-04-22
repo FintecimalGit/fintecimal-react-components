@@ -105,12 +105,12 @@ var RejectActions = function RejectActions(_ref) {
 
   if (rejectionShowed === false) return null;
   return _react.default.createElement(_react.default.Fragment, null, _react.default.createElement(_index.RejectButton, {
-    noteOpen: Boolean(anchorElement),
+    noteOpen: showPopover,
     rejected: mRejected,
     onClick: onClick,
     onClickMessage: onClickMessage,
     size: size,
-    editable: rejected
+    editable: mRejected
   }), _react.default.createElement(_core.Popover, {
     anchorEl: anchorElement,
     open: showPopover,

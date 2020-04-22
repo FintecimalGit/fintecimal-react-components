@@ -46,6 +46,11 @@ const RejectionField = ({
     onUndoRejection();
   }
 
+  const handlerReject = () => {
+    setForceDisplay('none');
+    onReject();
+  } 
+
   return (
       <div className={classes.list}>
           <div className={classes.listItemSecondaryContainer}>
@@ -56,7 +61,7 @@ const RejectionField = ({
               <RejectActions
                 rejectionOptions={rejectionOptions}
                 rejected={rejected}
-                handlerReject={onReject}
+                handlerReject={() => handlerReject()}
                 rejectionData={rejectionData}
                 onOpen={keep}
                 onClose={leave}

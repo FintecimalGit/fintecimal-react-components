@@ -63,12 +63,12 @@ const RejectActions = ({
   return (
     <>
       <RejectButton
-        noteOpen={Boolean(anchorElement)}
+        noteOpen={showPopover}
         rejected={mRejected}
         onClick={onClick}
         onClickMessage={onClickMessage}
         size={size}
-        editable={rejected}
+        editable={mRejected}
       />
       <Popover
         anchorEl={anchorElement}
