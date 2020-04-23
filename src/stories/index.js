@@ -806,6 +806,7 @@ storiesOf('NewComponents', module)
           onHandlerReject={action('onHandlerReject')}
           showUndo
           onUndoRejection={action('onUndoRejection')}
+          editable={false}
         />
         <RejectDocuments
           title={'Estado de bancarios'}
@@ -829,6 +830,7 @@ storiesOf('NewComponents', module)
           onHandlerReject={action('onHandlerReject')}
           showUndo
           onUndoRejection={action('onUndoRejection')}
+          editable={false}
         />
       </Container>
     );

@@ -7,7 +7,12 @@ export default makeStyles(theme => ({
     flexWrap: 'wrap'
   },
   form: {
-    alignSelf: 'stretch'
+    alignSelf: 'stretch',
+    '& .MuiOutlinedInput-root.Mui-disabled.Mui-error': {
+      '& .MuiOutlinedInput-notchedOutline': {
+        borderColor: '#f44336 !important',
+      }
+    }
   },
   label: {
     fontSize: 14,

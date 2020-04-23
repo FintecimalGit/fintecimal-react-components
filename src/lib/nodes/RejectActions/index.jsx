@@ -41,6 +41,7 @@ const RejectActions = ({
 
   const handleReject = data => {
     const newData = { ...mRejectionData, ...data };
+    setRejected(true);
     setRejectionData(newData);
     handlerReject(data);
     setShowPopover(!showUndo);
