@@ -10,7 +10,7 @@ export default makeStyles(theme => ({
     alignSelf: 'stretch',
     '& .MuiOutlinedInput-root.Mui-disabled.Mui-error': {
       '& .MuiOutlinedInput-notchedOutline': {
-        borderColor: '#f44336 !important',
+        borderColor: `${theme.palette.error.main} !important`,
       }
     }
   },
