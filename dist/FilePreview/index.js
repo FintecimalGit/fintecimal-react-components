@@ -34,7 +34,8 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 var FilePreview = function FilePreview(_ref) {
   var file = _ref.file,
       onDelete = _ref.onDelete,
-      disabled = _ref.disabled;
+      disabled = _ref.disabled,
+      urlDocument = _ref.urlDocument;
   var clasess = (0, _style.default)();
 
   var _useState = (0, _react.useState)(''),
@@ -60,7 +61,9 @@ var FilePreview = function FilePreview(_ref) {
     if (/^image\//.test(file.type)) {
       return _react.default.createElement("img", {
         alt: file.name,
-        src: url
+        src: url,
+        maxWidth: '100%',
+        height: 'auto'
       });
     } else if (/^(text||application)\//.test(file.type)) {
       return _react.default.createElement("iframe", {
@@ -70,13 +73,21 @@ var FilePreview = function FilePreview(_ref) {
     } else return 'No Soportado';
   };
 
+  var readUrlDocument = function readUrlDocument() {
+    setUrl(urlDocument);
+  };
+
   var handleOnDelete = function handleOnDelete() {
     onDelete(file);
   };
 
   (0, _react.useEffect)(function () {
-    readFile();
-  }, [file]);
+    if (urlDocument) {
+      readUrlDocument();
+    } else {
+      readFile();
+    }
+  }, [file, urlDocument]);
   return _react.default.createElement(_Card.default, {
     className: clasess.card
   }, _react.default.createElement(_CardHeader.default, {
@@ -94,7 +105,8 @@ var FilePreview = function FilePreview(_ref) {
 FilePreview.propTypes = {
   file: _propTypes.default.instanceOf(File),
   onDelete: _propTypes.default.func,
-  disabled: _propTypes.default.bool
+  disabled: _propTypes.default.bool,
+  urlDocument: _propTypes.default.string
 };
 FilePreview.defaultProps = {
   file: new File([''], 'No Soportado', {

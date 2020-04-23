@@ -116,6 +116,7 @@ const UploadDocuments = ({
                 file={file}
                 onDelete={handleOnDelete}
                 disabled={disabled}
+                urlDocument={url}
               />
             )
           : (

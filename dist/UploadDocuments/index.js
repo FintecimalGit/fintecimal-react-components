@@ -187,7 +187,8 @@ var UploadDocuments = function UploadDocuments(_ref) {
   }, title)), file ? _react.default.createElement(_FilePreview.default, {
     file: file,
     onDelete: handleOnDelete,
-    disabled: disabled
+    disabled: disabled,
+    urlDocument: url
   }) : _react.default.createElement(_DropZone.default, {
     multiple: multiple,
     accept: accept,

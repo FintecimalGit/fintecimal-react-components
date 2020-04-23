@@ -52,20 +52,6 @@ var RejectDocuments = function RejectDocuments(_ref) {
       file = _useState2[0],
       setFile = _useState2[1];
 
-  var renderFile = function renderFile() {
-    if (/^image\//.test(file.type)) {
-      return _react.default.createElement("img", {
-        alt: file.name,
-        src: url
-      });
-    } else if (/^(text||application)\//.test(file.type)) {
-      return _react.default.createElement("iframe", {
-        title: file.name,
-        src: url
-      });
-    } else return 'No Soportado';
-  };
-
   var generateFileToURL =
   /*#__PURE__*/
   function () {
@@ -136,7 +122,8 @@ var RejectDocuments = function RejectDocuments(_ref) {
     onDelete: function onDelete() {
       setFile(null);
     },
-    disabled: !rejected
+    disabled: !rejected,
+    urlDocument: url
   }), rejected && !file && _react.default.createElement(_DropZone.default, {
     onDrop: handleOnDrop,
     isIncorrect: true
