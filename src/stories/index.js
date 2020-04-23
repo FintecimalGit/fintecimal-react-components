@@ -660,6 +660,7 @@ storiesOf('NewComponents', module)
               onHandlerInput={action('onHandlerInput')}
               showUndo
               onUndoRejection={action('onUndoRejection')}
+              editable={false}
             />
             <Grid
             key={'a4'}

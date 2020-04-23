@@ -104,8 +104,9 @@ var InputWrapper = function InputWrapper(_ref) {
     }
   }, [value]);
   (0, _react.useEffect)(function () {
+    setError(error);
+
     if (error) {
-      setError(true);
       setErrorMessage(errorMessages.empty);
     }
   }, [error]);

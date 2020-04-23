@@ -37,7 +37,8 @@ var RejectionField = function RejectionField(_ref) {
       rejectionShowed = _ref.rejectionShowed,
       onHandlerInput = _ref.onHandlerInput,
       showUndo = _ref.showUndo,
-      onUndoRejection = _ref.onUndoRejection;
+      onUndoRejection = _ref.onUndoRejection,
+      editable = _ref.editable;
   var classes = (0, _style.default)();
 
   var _useState = (0, _react.useState)('none'),
@@ -107,10 +108,10 @@ var RejectionField = function RejectionField(_ref) {
   }))), _react.default.createElement(_BaseTextInput.default, {
     label: label,
     value: value,
-    disabled: !rejected,
+    disabled: !editable || !rejected,
     handleChange: onHandlerInput,
     error: rejected,
-    errorMessage: 'dist/RejectionField/index.js'
+    errorMessage: ''
   }));
 };
 

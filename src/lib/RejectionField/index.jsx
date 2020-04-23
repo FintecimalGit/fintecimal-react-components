@@ -17,7 +17,8 @@ const RejectionField = ({
   rejectionShowed,
   onHandlerInput,
   showUndo,
-  onUndoRejection
+  onUndoRejection,
+  editable
 }) => {
   const classes = useStyles();
   const [forceDisplay, setForceDisplay] = useState('none')
@@ -75,7 +76,7 @@ const RejectionField = ({
         <TextInput
               label={label}
               value={value}
-              disabled={!rejected}
+              disabled={(!editable) || (!rejected)}
               handleChange={onHandlerInput}
               error={rejected}
               errorMessage={''}
@@ -113,11 +114,11 @@ RejectionField.defaultProps = {
     image: '',
     date: new Date(),
     reason: '',
-    comments: ''
+    comments: '',
   },
   rejected: false,
   rejectionShowed: true,
-  editable: false,
+  editable: true,
   showUndo: false,
   onUndoRejection: () => {},
 };

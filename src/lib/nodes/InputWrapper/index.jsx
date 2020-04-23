@@ -61,8 +61,8 @@ const InputWrapper = ({ config, errors, isValid, disabled }) => {
   }, [value]);
 
   useEffect(() =>{
+    setError(error);
     if(error){
-      setError(true);
       setErrorMessage(errorMessages.empty);
     }
   }, [error]);
