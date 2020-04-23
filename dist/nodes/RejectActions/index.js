@@ -15,6 +15,8 @@ var _core = require("@material-ui/core");
 
 var _RejectionNote = _interopRequireDefault(require("../../RejectionNote"));
 
+var _useClickOutside = _interopRequireDefault(require("../../../hooks/useClickOutside"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
@@ -65,9 +67,15 @@ var RejectActions = function RejectActions(_ref) {
       showPopover = _useState8[0],
       setShowPopover = _useState8[1];
 
+  var noteRef = (0, _react.createRef)();
   (0, _react.useEffect)(function () {
     setRejected(rejected);
   }, [rejected]);
+  (0, _useClickOutside.default)(noteRef, function () {
+    if (showPopover) {
+      onClosePopOver();
+    }
+  });
 
   var onClick = function onClick(event) {
     event.stopPropagation();
@@ -128,8 +136,9 @@ var RejectActions = function RejectActions(_ref) {
     showUndo: showUndo,
     onUndoRejection: function onUndoRejection() {
       return handleUndoRejection();
-    }
-  })) : _react.default.createElement(_index.RejectTooltip, {
+    },
+    ref: noteRef
+  })) : showPopover && _react.default.createElement(_index.RejectTooltip, {
     active: true,
     onClose: onClosePopOver,
     handleReject: handleReject,
