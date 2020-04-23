@@ -150,7 +150,7 @@ RejectionField.defaultProps = {
   },
   rejected: false,
   rejectionShowed: true,
-  editable: false,
+  editable: true,
   showUndo: false,
   onUndoRejection: function onUndoRejection() {}
 };

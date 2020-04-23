@@ -72,6 +72,17 @@ var BaseInput = function BaseInput(_ref) {
     }
   };
 
+  var removeDisabledClass = function removeDisabledClass() {
+    if (error && disabled) {
+      var div = document.querySelector('.MuiOutlinedInput-root.Mui-disabled.Mui-error');
+
+      if (div && div.classList.contains('Mui-disabled')) {
+        div.classList.remove('Mui-disabled');
+      }
+    }
+  };
+
+  removeDisabledClass();
   return _react.default.createElement("div", {
     className: classes.root
   }, (0, _utils.isTextLong)(label) && _react.default.createElement("div", null, _react.default.createElement(_LongPlaceHolder.default, {
