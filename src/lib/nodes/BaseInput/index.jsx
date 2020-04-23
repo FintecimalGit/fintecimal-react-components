@@ -47,16 +47,6 @@ const BaseInput = ({
     }
   };
 
-  const removeDisabledClass = () => {
-    if (error && disabled) {
-      const div = document.querySelector('.MuiOutlinedInput-root.Mui-disabled.Mui-error');
-      if (div && div.classList.contains('Mui-disabled')) {
-        div.classList.remove('Mui-disabled');
-      }
-    }
-  };
-
-  removeDisabledClass();
   return (
     <div className={classes.root}>
       {isTextLong(label) && (

@@ -35,12 +35,12 @@ const RejectionField = ({
     setForceDisplay('none');
   };
 
-  /**
-   * @returns {String}
-   */
-  const getRejectionActionsDisplay = () => rejected ? 'inline-block' : forceDisplay;
-
-  const getRejectionActionsTop = () => rejected ? '-20px' : '-45px';
+  const getStyles = () => rejected ? { 
+    display: 'inline-block', 
+    right: '10px',
+    left: '103%',
+    transform: 'translate(50%, 50%)', 
+  } : { display: forceDisplay, top: '-45px' };
 
   const handleUndoRejection = () => {
     setForceDisplay('none');
@@ -57,7 +57,7 @@ const RejectionField = ({
           <div className={classes.listItemSecondaryContainer}>
             <div
               className={classes.rejectionActions}
-              style={{ display: getRejectionActionsDisplay(), top: getRejectionActionsTop() }}
+              style={getStyles()}
             >
               <RejectActions
                 rejectionOptions={rejectionOptions}

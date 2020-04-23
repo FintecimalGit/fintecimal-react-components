@@ -57,17 +57,17 @@ var RejectionField = function RejectionField(_ref) {
   var leave = function leave() {
     setForceDisplay('none');
   };
-  /**
-   * @returns {String}
-   */
 
-
-  var getRejectionActionsDisplay = function getRejectionActionsDisplay() {
-    return rejected ? 'inline-block' : forceDisplay;
-  };
-
-  var getRejectionActionsTop = function getRejectionActionsTop() {
-    return rejected ? '-20px' : '-45px';
+  var getStyles = function getStyles() {
+    return rejected ? {
+      display: 'inline-block',
+      right: '10px',
+      left: '103%',
+      transform: 'translate(50%, 50%)'
+    } : {
+      display: forceDisplay,
+      top: '-45px'
+    };
   };
 
   var handleUndoRejection = function handleUndoRejection() {
@@ -86,10 +86,7 @@ var RejectionField = function RejectionField(_ref) {
     className: classes.listItemSecondaryContainer
   }, _react.default.createElement("div", {
     className: classes.rejectionActions,
-    style: {
-      display: getRejectionActionsDisplay(),
-      top: getRejectionActionsTop()
-    }
+    style: getStyles()
   }, _react.default.createElement(_RejectActions.default, {
     rejectionOptions: rejectionOptions,
     rejected: rejected,

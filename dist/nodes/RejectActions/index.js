@@ -87,7 +87,6 @@ var RejectActions = function RejectActions(_ref) {
     var newData = _objectSpread2({}, mRejectionData, {}, data);
 
     setRejectionData(newData);
-    setRejected(true);
     handlerReject(data);
     setShowPopover(!showUndo);
   };
