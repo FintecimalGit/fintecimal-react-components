@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import 'moment/locale/es';
@@ -16,7 +16,7 @@ import CloseIcon from '@material-ui/icons/Close';
 
 import useStyles from './style';
 
-const RejectionNote = ({ onClose, name, image, date, reason, comments, showUndo, onUndoRejection }) => {
+const RejectionNote = forwardRef(({ onClose, name, image, date, reason, comments, showUndo, onUndoRejection }, ref) => {
   const classes = useStyles();
 
   /**
@@ -37,7 +37,7 @@ const RejectionNote = ({ onClose, name, image, date, reason, comments, showUndo,
       .replace('-', 'del');
 
   return (
-    <Card className={classes.card}>
+    <Card className={classes.card} ref={ref}>
       <CardHeader
         className={classes.cardHeader}
         avatar={
@@ -83,7 +83,7 @@ const RejectionNote = ({ onClose, name, image, date, reason, comments, showUndo,
       </CardContent>
     </Card>
   );
-};
+});
 
 RejectionNote.propTypes = {
   onClose: PropTypes.func,

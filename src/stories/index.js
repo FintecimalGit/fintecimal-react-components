@@ -660,6 +660,7 @@ storiesOf('NewComponents', module)
               onHandlerInput={action('onHandlerInput')}
               showUndo
               onUndoRejection={action('onUndoRejection')}
+              editable={false}
             />
             <Grid
             key={'a4'}
@@ -805,6 +806,7 @@ storiesOf('NewComponents', module)
           onHandlerReject={action('onHandlerReject')}
           showUndo
           onUndoRejection={action('onUndoRejection')}
+          editable={false}
         />
         <RejectDocuments
           title={'Estado de bancarios'}
@@ -828,6 +830,7 @@ storiesOf('NewComponents', module)
           onHandlerReject={action('onHandlerReject')}
           showUndo
           onUndoRejection={action('onUndoRejection')}
+          editable={false}
         />
       </Container>
     );

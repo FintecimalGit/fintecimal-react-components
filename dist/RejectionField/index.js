@@ -37,7 +37,8 @@ var RejectionField = function RejectionField(_ref) {
       rejectionShowed = _ref.rejectionShowed,
       onHandlerInput = _ref.onHandlerInput,
       showUndo = _ref.showUndo,
-      onUndoRejection = _ref.onUndoRejection;
+      onUndoRejection = _ref.onUndoRejection,
+      editable = _ref.editable;
   var classes = (0, _style.default)();
 
   var _useState = (0, _react.useState)('none'),
@@ -56,17 +57,17 @@ var RejectionField = function RejectionField(_ref) {
   var leave = function leave() {
     setForceDisplay('none');
   };
-  /**
-   * @returns {String}
-   */
 
-
-  var getRejectionActionsDisplay = function getRejectionActionsDisplay() {
-    return rejected ? 'inline-block' : forceDisplay;
-  };
-
-  var getRejectionActionsTop = function getRejectionActionsTop() {
-    return rejected ? '-20px' : '-45px';
+  var getStyles = function getStyles() {
+    return rejected ? {
+      display: 'inline-block',
+      right: '10px',
+      left: '103%',
+      transform: 'translate(50%, 50%)'
+    } : {
+      display: forceDisplay,
+      top: '-45px'
+    };
   };
 
   var handleUndoRejection = function handleUndoRejection() {
@@ -85,10 +86,7 @@ var RejectionField = function RejectionField(_ref) {
     className: classes.listItemSecondaryContainer
   }, _react.default.createElement("div", {
     className: classes.rejectionActions,
-    style: {
-      display: getRejectionActionsDisplay(),
-      top: getRejectionActionsTop()
-    }
+    style: getStyles()
   }, _react.default.createElement(_RejectActions.default, {
     rejectionOptions: rejectionOptions,
     rejected: rejected,
@@ -107,10 +105,10 @@ var RejectionField = function RejectionField(_ref) {
   }))), _react.default.createElement(_BaseTextInput.default, {
     label: label,
     value: value,
-    disabled: !rejected,
+    disabled: !editable || !rejected,
     handleChange: onHandlerInput,
     error: rejected,
-    errorMessage: 'dist/RejectionField/index.js'
+    errorMessage: ''
   }));
 };
 
@@ -149,7 +147,7 @@ RejectionField.defaultProps = {
   },
   rejected: false,
   rejectionShowed: true,
-  editable: false,
+  editable: true,
   showUndo: false,
   onUndoRejection: function onUndoRejection() {}
 };

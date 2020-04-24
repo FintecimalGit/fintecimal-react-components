@@ -17,7 +17,8 @@ const RejectionField = ({
   rejectionShowed,
   onHandlerInput,
   showUndo,
-  onUndoRejection
+  onUndoRejection,
+  editable
 }) => {
   const classes = useStyles();
   const [forceDisplay, setForceDisplay] = useState('none')
@@ -34,12 +35,12 @@ const RejectionField = ({
     setForceDisplay('none');
   };
 
-  /**
-   * @returns {String}
-   */
-  const getRejectionActionsDisplay = () => rejected ? 'inline-block' : forceDisplay;
-
-  const getRejectionActionsTop = () => rejected ? '-20px' : '-45px';
+  const getStyles = () => rejected ? { 
+    display: 'inline-block', 
+    right: '10px',
+    left: '103%',
+    transform: 'translate(50%, 50%)', 
+  } : { display: forceDisplay, top: '-45px' };
 
   const handleUndoRejection = () => {
     setForceDisplay('none');
@@ -56,7 +57,7 @@ const RejectionField = ({
           <div className={classes.listItemSecondaryContainer}>
             <div
               className={classes.rejectionActions}
-              style={{ display: getRejectionActionsDisplay(), top: getRejectionActionsTop() }}
+              style={getStyles()}
             >
               <RejectActions
                 rejectionOptions={rejectionOptions}
@@ -75,7 +76,7 @@ const RejectionField = ({
         <TextInput
               label={label}
               value={value}
-              disabled={!rejected}
+              disabled={(!editable) || (!rejected)}
               handleChange={onHandlerInput}
               error={rejected}
               errorMessage={''}
@@ -113,11 +114,11 @@ RejectionField.defaultProps = {
     image: '',
     date: new Date(),
     reason: '',
-    comments: ''
+    comments: '',
   },
   rejected: false,
   rejectionShowed: true,
-  editable: false,
+  editable: true,
   showUndo: false,
   onUndoRejection: () => {},
 };

@@ -46,6 +46,7 @@ const BaseInput = ({
       return label;
     }
   };
+
   return (
     <div className={classes.root}>
       {isTextLong(label) && (
