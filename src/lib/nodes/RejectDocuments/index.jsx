@@ -23,16 +23,6 @@ const RejectDocuments = ({
   const classes = useStyles();
   const [file, setFile] = useState(null);
 
-  const renderFile = () => {
-    if (/^image\//.test(file.type)) {
-      return <img alt={file.name} src={url} />;
-    }
-    else if(/^(text||application)\//.test(file.type)) {
-      return <iframe title={file.name} src={url} />;
-    }
-    else return 'No Soportado';
-  };
-
   const generateFileToURL = async () => {
     let response = await fetch(url);
     let data = await response.blob();
@@ -77,6 +67,7 @@ const RejectDocuments = ({
                   file={file}
                   onDelete={() => { setFile(null) }}
                   disabled={!rejected}
+                  urlDocument={url}
               />
           )}
           {file && !editable && rejected && (
@@ -84,6 +75,7 @@ const RejectDocuments = ({
                   file={file}
                   onDelete={() => { setFile(null) }}
                   disabled={true}
+                  urlDocument={url}
               />
           )}
           {editable && rejected && (

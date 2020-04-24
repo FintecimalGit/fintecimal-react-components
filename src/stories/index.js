@@ -760,7 +760,7 @@ storiesOf('NewComponents', module)
           title={'Estado de cuenta'}
           rejected={false}
           onReject={action('onReject')}
-          url={'https://fintecimal-test.s3.amazonaws.com/Screen Shot 2020-03-03 at 10.52.13.png'}
+          url={'https://fintecimal-test.s3.amazonaws.com/c4611_sample_explain.pdf'}
           rejectionOptions={[
             { name: 'Calidad baja' },
             { name: 'Sin imagen' },
@@ -773,7 +773,7 @@ storiesOf('NewComponents', module)
         <RejectDocuments
           title={'Estado de bancarios'}
           onReject={action('onReject')}
-          url={'https://fintecimal-test.s3.amazonaws.com/Screen Shot 2020-03-03 at 10.52.13.png'}
+          url={'https://fintecimal-test.s3.amazonaws.com/c4611_sample_explain.pdf'}
           rejectionOptions={[
             { name: 'Calidad baja' },
             { name: 'Sin imagen' },

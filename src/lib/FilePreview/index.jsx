@@ -9,7 +9,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 
 import useStyles from './style';
 
-const FilePreview = ({ file, onDelete, disabled }) => {
+const FilePreview = ({ file, onDelete, disabled, urlDocument }) => {
   const clasess = useStyles();
   const [url, setUrl] = useState('');
 
@@ -26,7 +26,7 @@ const FilePreview = ({ file, onDelete, disabled }) => {
    */
   const renderFile = () => {
     if (/^image\//.test(file.type)) {
-      return <img alt={file.name} src={url} />;
+      return <img alt={file.name} src={url} maxWidth={'100%'} height={'auto'} />;
     }
     else if(/^(text||application)\//.test(file.type)) {
       return <iframe title={file.name} src={url} />;
@@ -34,13 +34,21 @@ const FilePreview = ({ file, onDelete, disabled }) => {
     else return 'No Soportado';
   };
 
+  const readUrlDocument = () => {
+    setUrl(urlDocument);
+  };
+
   const handleOnDelete = () => {
     onDelete(file);
   };
 
   useEffect(() => {
-    readFile();
-  }, [file]);
+    if (urlDocument) {
+      readUrlDocument();
+    } else {
+      readFile();
+    }
+  }, [file, urlDocument]);
 
   return (
     <Card className={clasess.card}>
@@ -70,7 +78,8 @@ const FilePreview = ({ file, onDelete, disabled }) => {
 FilePreview.propTypes = {
   file: PropTypes.instanceOf(File),
   onDelete: PropTypes.func,
-  disabled: PropTypes.bool
+  disabled: PropTypes.bool,
+  urlDocument: PropTypes.string,
 };
 
 FilePreview.defaultProps = {
