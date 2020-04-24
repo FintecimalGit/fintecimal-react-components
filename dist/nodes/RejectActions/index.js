@@ -15,7 +15,7 @@ var _core = require("@material-ui/core");
 
 var _RejectionNote = _interopRequireDefault(require("../../RejectionNote"));
 
-var _useClickOutside = _interopRequireDefault(require("../../../hooks/useClickOutside"));
+var _useClickOutside = _interopRequireDefault(require("../../hooks/useClickOutside"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
