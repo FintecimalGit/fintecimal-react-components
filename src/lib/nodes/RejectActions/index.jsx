@@ -4,7 +4,7 @@ import { RejectButton, RejectTooltip } from '../index';
 import { Popover } from '@material-ui/core';
 import RejectionNote from '../../RejectionNote';
 
-import useClickOutside from '../../../hooks/useClickOutside';
+import useClickOutside from '../../hooks/useClickOutside';
 
 const RejectActions = ({
   rejectionData,

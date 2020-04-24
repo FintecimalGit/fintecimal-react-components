@@ -18,7 +18,7 @@ var _default = (0, _styles.makeStyles)(function (theme) {
       alignSelf: 'stretch',
       '& .MuiOutlinedInput-root.Mui-disabled.Mui-error': {
         '& .MuiOutlinedInput-notchedOutline': {
-          borderColor: '#f44336 !important'
+          borderColor: "".concat(theme.palette.error.main, " !important")
         }
       }
     },
