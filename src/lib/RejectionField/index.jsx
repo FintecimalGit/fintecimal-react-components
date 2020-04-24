@@ -47,9 +47,9 @@ const RejectionField = ({
     onUndoRejection();
   }
 
-  const handlerReject = () => {
+  const handlerReject = (value) => {
     setForceDisplay('none');
-    onReject();
+    onReject(value);
   } 
 
   return (
@@ -62,7 +62,7 @@ const RejectionField = ({
               <RejectActions
                 rejectionOptions={rejectionOptions}
                 rejected={rejected}
-                handlerReject={() => handlerReject()}
+                handlerReject={(value) => handlerReject(value)}
                 rejectionData={rejectionData}
                 onOpen={keep}
                 onClose={leave}
