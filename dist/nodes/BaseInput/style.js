@@ -15,7 +15,12 @@ var _default = (0, _styles.makeStyles)(function (theme) {
       flexWrap: 'wrap'
     },
     form: {
-      alignSelf: 'stretch'
+      alignSelf: 'stretch',
+      '& .MuiOutlinedInput-root.Mui-disabled.Mui-error': {
+        '& .MuiOutlinedInput-notchedOutline': {
+          borderColor: "".concat(theme.palette.error.main, " !important")
+        }
+      }
     },
     label: {
       fontSize: 14,

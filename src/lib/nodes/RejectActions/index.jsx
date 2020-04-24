@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, createRef } from 'react';
 import PropTypes from 'prop-types';
 import { RejectButton, RejectTooltip } from '../index';
 import { Popover } from '@material-ui/core';
 import RejectionNote from '../../RejectionNote';
+
+import useClickOutside from '../../hooks/useClickOutside';
 
 const RejectActions = ({
   rejectionData,
@@ -21,9 +23,17 @@ const RejectActions = ({
   const [anchorElement, setAnchorElement] = useState(null);
   const [showPopover, setShowPopover] = useState(false);
 
+  const noteRef = createRef();
+
   useEffect(() => {
     setRejected(rejected);
   }, [rejected]);
+
+  useClickOutside(noteRef, () => {
+    if (showPopover) {
+      onClosePopOver();
+    }
+  });
 
   const onClick = event => {
     event.stopPropagation();
@@ -41,8 +51,8 @@ const RejectActions = ({
 
   const handleReject = data => {
     const newData = { ...mRejectionData, ...data };
-    setRejectionData(newData);
     setRejected(true);
+    setRejectionData(newData);
     handlerReject(data);
     setShowPopover(!showUndo);
   };
@@ -88,8 +98,9 @@ const RejectActions = ({
             {...mRejectionData}
             showUndo={showUndo}
             onUndoRejection={() => handleUndoRejection()}
+            ref={noteRef}
           />
-        ) : (
+        ) : (showPopover && 
             <RejectTooltip
               active={true}
               onClose={onClosePopOver}

@@ -17,7 +17,8 @@ const RejectDocuments = ({
                              rejectionData,
                              onHandlerReject,
                              showUndo,
-                             onUndoRejection
+                             onUndoRejection,
+                             editable
                          }) => {
   const classes = useStyles();
   const [file, setFile] = useState(null);
@@ -33,7 +34,7 @@ const RejectDocuments = ({
   };
 
   useEffect(() => {
-    if(url !== '' && typeof url === "string" && rejected === false) generateFileToURL();
+    if(url !== '' && typeof url === "string") generateFileToURL();
   }, [url]);
 
   const handleOnDrop = (value) => {
@@ -61,7 +62,7 @@ const RejectDocuments = ({
                   />
               </div>
           </div>
-          {file && (
+          {file && !rejected && (
               <FilePreview
                   file={file}
                   onDelete={() => { setFile(null) }}
@@ -69,7 +70,15 @@ const RejectDocuments = ({
                   urlDocument={url}
               />
           )}
-          {rejected && !file && (
+          {file && !editable && rejected && (
+              <FilePreview
+                  file={file}
+                  onDelete={() => { setFile(null) }}
+                  disabled={true}
+                  urlDocument={url}
+              />
+          )}
+          {editable && rejected && (
             <DropZone
                 onDrop={handleOnDrop}
                 isIncorrect={true}
@@ -89,6 +98,7 @@ RejectDocuments.propTypes = {
     onHandlerReject: PropTypes.func.isRequired,
     showUndo: PropTypes.bool,
     onUndoRejection: PropTypes.func,
+    editable: PropTypes.bool
 };
 
 RejectDocuments.defaultProps = {
@@ -103,6 +113,7 @@ RejectDocuments.defaultProps = {
   },
   showUndo: false,
   onUndoRejection: () => {},
+  editable: true,
 };
 
 export default RejectDocuments;

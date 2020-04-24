@@ -44,7 +44,8 @@ var RejectDocuments = function RejectDocuments(_ref) {
       rejectionData = _ref.rejectionData,
       onHandlerReject = _ref.onHandlerReject,
       showUndo = _ref.showUndo,
-      onUndoRejection = _ref.onUndoRejection;
+      onUndoRejection = _ref.onUndoRejection,
+      editable = _ref.editable;
   var classes = (0, _style.default)();
 
   var _useState = (0, _react.useState)(null),
@@ -93,7 +94,7 @@ var RejectDocuments = function RejectDocuments(_ref) {
   }();
 
   (0, _react.useEffect)(function () {
-    if (url !== '' && typeof url === "string" && rejected === false) generateFileToURL();
+    if (url !== '' && typeof url === "string") generateFileToURL();
   }, [url]);
 
   var handleOnDrop = function handleOnDrop(value) {
@@ -117,14 +118,21 @@ var RejectDocuments = function RejectDocuments(_ref) {
     rejectionData: rejectionData,
     showUndo: showUndo,
     onUndoRejection: onUndoRejection
-  }))), file && _react.default.createElement(_FilePreview.default, {
+  }))), file && !rejected && _react.default.createElement(_FilePreview.default, {
     file: file,
     onDelete: function onDelete() {
       setFile(null);
     },
     disabled: !rejected,
     urlDocument: url
-  }), rejected && !file && _react.default.createElement(_DropZone.default, {
+  }), file && !editable && rejected && _react.default.createElement(_FilePreview.default, {
+    file: file,
+    onDelete: function onDelete() {
+      setFile(null);
+    },
+    disabled: true,
+    urlDocument: url
+  }), editable && rejected && _react.default.createElement(_DropZone.default, {
     onDrop: handleOnDrop,
     isIncorrect: true
   }));
@@ -139,7 +147,8 @@ RejectDocuments.propTypes = {
   rejectionData: _propTypes.default.object,
   onHandlerReject: _propTypes.default.func.isRequired,
   showUndo: _propTypes.default.bool,
-  onUndoRejection: _propTypes.default.func
+  onUndoRejection: _propTypes.default.func,
+  editable: _propTypes.default.bool
 };
 RejectDocuments.defaultProps = {
   title: '',
@@ -152,7 +161,8 @@ RejectDocuments.defaultProps = {
     comments: ''
   },
   showUndo: false,
-  onUndoRejection: function onUndoRejection() {}
+  onUndoRejection: function onUndoRejection() {},
+  editable: true
 };
 var _default = RejectDocuments;
 exports.default = _default;
