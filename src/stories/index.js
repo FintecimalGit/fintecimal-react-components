@@ -662,6 +662,7 @@ storiesOf('NewComponents', module)
               onUndoRejection={action('onUndoRejection')}
               editable={false}
             />
+            </Grid>
             <Grid
             key={'a4'}
             item
@@ -681,8 +682,7 @@ storiesOf('NewComponents', module)
               showUndo
               onUndoRejection={action('onUndoRejection')}
             />
-          </Grid>
-          </Grid>
+            </Grid>
         </Grid>
       </Container>
     );

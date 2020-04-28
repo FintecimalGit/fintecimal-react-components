@@ -41,10 +41,15 @@ var RejectionField = function RejectionField(_ref) {
       editable = _ref.editable;
   var classes = (0, _style.default)();
 
-  var _useState = (0, _react.useState)('none'),
+  var _useState = (0, _react.useState)(value),
       _useState2 = _slicedToArray(_useState, 2),
-      forceDisplay = _useState2[0],
-      setForceDisplay = _useState2[1];
+      mvalue = _useState2[0],
+      setValue = _useState2[1];
+
+  var _useState3 = (0, _react.useState)('none'),
+      _useState4 = _slicedToArray(_useState3, 2),
+      forceDisplay = _useState4[0],
+      setForceDisplay = _useState4[1];
 
   (0, _react.useEffect)(function () {
     setForceDisplay('none');
@@ -80,6 +85,14 @@ var RejectionField = function RejectionField(_ref) {
     onReject(value);
   };
 
+  var handleChange = function handleChange(newValue) {
+    setValue(newValue);
+  };
+
+  var onBlur = function onBlur() {
+    onHandlerInput(mvalue);
+  };
+
   return _react.default.createElement("div", {
     className: classes.list
   }, _react.default.createElement("div", {
@@ -104,11 +117,12 @@ var RejectionField = function RejectionField(_ref) {
     }
   }))), _react.default.createElement(_BaseTextInput.default, {
     label: label,
-    value: value,
+    value: mvalue,
     disabled: !editable || !rejected,
-    handleChange: onHandlerInput,
+    handleChange: handleChange,
     error: rejected,
-    errorMessage: ''
+    errorMessage: '',
+    onBlur: onBlur
   }));
 };
 
@@ -127,6 +141,7 @@ RejectionField.propTypes = {
     comments: _propTypes.default.string
   }),
   rejectionShowed: _propTypes.default.bool,
+  onHandlerInput: _propTypes.default.func,
   editable: _propTypes.default.bool,
   showUndo: _propTypes.default.bool,
   onUndoRejection: _propTypes.default.func
@@ -147,6 +162,7 @@ RejectionField.defaultProps = {
   },
   rejected: false,
   rejectionShowed: true,
+  onHandlerInput: function onHandlerInput() {},
   editable: true,
   showUndo: false,
   onUndoRejection: function onUndoRejection() {}

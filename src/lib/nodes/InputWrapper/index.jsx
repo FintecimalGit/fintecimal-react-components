@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { isEmpty, formatText } from '../../commons/utils';
 import BaseInput from '../BaseInput';
 
-const InputWrapper = ({ config, errors, isValid, disabled }) => {
+const InputWrapper = ({ config, errors, isValid, disabled, onBlur }) => {
   const { value, handleChange, label, type, required, format } = config;
   const { error, errorMessage, errorMessages } = errors;
   const [mError, setError] = useState(error);
@@ -46,6 +46,7 @@ const InputWrapper = ({ config, errors, isValid, disabled }) => {
       setError(false);
       setErrorMessage('');
     }
+    onBlur();
   };
 
   useEffect(() => {
@@ -88,5 +89,9 @@ InputWrapper.propTypes = {
   errors: PropTypes.object.isRequired,
   isValid: PropTypes.func.isRequired
 };
+
+InputWrapper.defaultProps = {
+  onBlur: () => {},
+}
 
 export default InputWrapper;
