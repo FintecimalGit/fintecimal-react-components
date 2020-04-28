@@ -29,7 +29,8 @@ var InputWrapper = function InputWrapper(_ref) {
   var config = _ref.config,
       errors = _ref.errors,
       isValid = _ref.isValid,
-      disabled = _ref.disabled;
+      disabled = _ref.disabled,
+      onBlur = _ref.onBlur;
   var value = config.value,
       handleChange = config.handleChange,
       label = config.label,
@@ -89,6 +90,8 @@ var InputWrapper = function InputWrapper(_ref) {
       setError(false);
       setErrorMessage('');
     }
+
+    onBlur();
   };
 
   (0, _react.useEffect)(function () {
@@ -128,6 +131,9 @@ InputWrapper.propTypes = {
   config: _propTypes.default.object.isRequired,
   errors: _propTypes.default.object.isRequired,
   isValid: _propTypes.default.func.isRequired
+};
+InputWrapper.defaultProps = {
+  onBlur: function onBlur() {}
 };
 var _default = InputWrapper;
 exports.default = _default;

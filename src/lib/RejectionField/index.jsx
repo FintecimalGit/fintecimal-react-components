@@ -21,6 +21,7 @@ const RejectionField = ({
   editable
 }) => {
   const classes = useStyles();
+  const [mvalue, setValue] = useState(value);
   const [forceDisplay, setForceDisplay] = useState('none')
 
   useEffect(() => {
@@ -50,7 +51,15 @@ const RejectionField = ({
   const handlerReject = (value) => {
     setForceDisplay('none');
     onReject(value);
-  } 
+  }
+
+  const handleChange = (newValue) => {
+    setValue(newValue);
+  };
+
+  const onBlur = () => {
+    onHandlerInput(mvalue)
+  };
 
   return (
       <div className={classes.list}>
@@ -75,11 +84,12 @@ const RejectionField = ({
           </div>
         <TextInput
               label={label}
-              value={value}
+              value={mvalue}
               disabled={(!editable) || (!rejected)}
-              handleChange={onHandlerInput}
+              handleChange={handleChange}
               error={rejected}
               errorMessage={''}
+              onBlur={onBlur}
           />
       </div>
   );
@@ -100,6 +110,7 @@ RejectionField.propTypes = {
     comments: PropTypes.string
   }),
   rejectionShowed: PropTypes.bool,
+  onHandlerInput: PropTypes.func,
   editable: PropTypes.bool,
   showUndo: PropTypes.bool,
   onUndoRejection: PropTypes.func,
@@ -118,6 +129,7 @@ RejectionField.defaultProps = {
   },
   rejected: false,
   rejectionShowed: true,
+  onHandlerInput: () => {},
   editable: true,
   showUndo: false,
   onUndoRejection: () => {},
