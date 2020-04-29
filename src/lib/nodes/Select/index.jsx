@@ -30,7 +30,8 @@ const SelectInput = ({
   errorMessage,
   options,
   disabled,
-  placeholder
+  placeholder,
+  handleBlur,
 }) => {
   const classes = useStyles();
   const labelRef = useRef(null);
@@ -127,6 +128,7 @@ const SelectInput = ({
       setErrorMessage(empty);
     } else {
       setError(false);
+      handleBlur()
     }
     setStatus(status.NORMAL);
   };
@@ -216,7 +218,8 @@ SelectInput.propTypes = {
   errorMessage: PropTypes.string,
   handleChange: PropTypes.func.isRequired,
   placeholder: PropTypes.string,
-  disabled: PropTypes.bool
+  disabled: PropTypes.bool,
+  handleBlur: PropTypes.func,
 };
 
 export default SelectInput;

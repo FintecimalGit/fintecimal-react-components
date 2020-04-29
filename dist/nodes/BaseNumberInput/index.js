@@ -25,7 +25,8 @@ var NumberInput = function NumberInput(_ref) {
       errorMessage = _ref.errorMessage,
       type = _ref.type,
       required = _ref.required,
-      disabled = _ref.disabled;
+      disabled = _ref.disabled,
+      handleBlur = _ref.handleBlur;
   var config = {
     type: type,
     label: label,
@@ -50,7 +51,8 @@ var NumberInput = function NumberInput(_ref) {
     config: config,
     errors: errors,
     isValid: isValid,
-    disabled: disabled
+    disabled: disabled,
+    onBlur: handleBlur
   });
 };
 
@@ -68,7 +70,8 @@ NumberInput.propTypes = {
   error: _propTypes.default.bool,
   errorMessage: _propTypes.default.string,
   required: _propTypes.default.bool,
-  disabled: _propTypes.default.bool
+  disabled: _propTypes.default.bool,
+  handleBlur: _propTypes.default.func
 };
 var _default = NumberInput;
 exports.default = _default;

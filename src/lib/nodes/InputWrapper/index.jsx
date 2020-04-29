@@ -45,8 +45,8 @@ const InputWrapper = ({ config, errors, isValid, disabled, onBlur }) => {
     } else {
       setError(false);
       setErrorMessage('');
+      onBlur();
     }
-    onBlur();
   };
 
   useEffect(() => {

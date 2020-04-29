@@ -4,7 +4,16 @@ import InputWrapper from '../InputWrapper';
 import { rfc } from '../../InputStrings';
 import { textFormats, isEmpty, validateRegex } from '../../commons/utils';
 
-const RFCInput = ({ value, handleChange, label, error, errorMessage, type, required }) => {
+const RFCInput = ({
+      value,
+      handleChange,
+      label,
+      error,
+      errorMessage,
+      type,
+      required,
+      handleBlur,
+}) => {
   const config = {
     type,
     label,
@@ -34,7 +43,7 @@ const RFCInput = ({ value, handleChange, label, error, errorMessage, type, requi
     }
   };
 
-  return <InputWrapper config={config} errors={errors} isValid={isValid} />;
+  return <InputWrapper config={config} errors={errors} isValid={isValid} onBlur={handleBlur} />;
 };
 
 RFCInput.defaultProps = {
@@ -50,7 +59,8 @@ RFCInput.propTypes = {
   type: PropTypes.string,
   error: PropTypes.bool,
   errorMessage: PropTypes.string,
-  required: PropTypes.bool
+  required: PropTypes.bool,
+  handleBlur: PropTypes.func,
 };
 
 export default RFCInput;

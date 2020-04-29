@@ -13,7 +13,7 @@ const TextInput = ({
   type,
   required,
   disabled,
-  onBlur,
+  handleBlur,
 }) => {
   const config = {
     type,
@@ -33,7 +33,7 @@ const TextInput = ({
     return true;
   };
 
-  return <InputWrapper config={config} errors={errors} isValid={isValid} disabled={disabled} onBlur={onBlur}/>;
+  return <InputWrapper config={config} errors={errors} isValid={isValid} disabled={disabled} onBlur={handleBlur}/>;
 };
 
 TextInput.defaultProps = {
@@ -52,7 +52,7 @@ TextInput.propTypes = {
   errorMessage: PropTypes.string,
   required: PropTypes.bool,
   disabled: PropTypes.bool,
-  onBlur: PropTypes.func,
+  handleBlur: PropTypes.func,
 };
 
 export default TextInput;

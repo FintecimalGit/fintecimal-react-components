@@ -30,7 +30,8 @@ import {
   InputTable,
   RejectDocuments,
   RejectionButtons,
-  RejectSimple
+  RejectSimple,
+  BaseDatePicker
 } from '../lib/nodes';
 
 const {
@@ -203,6 +204,27 @@ storiesOf('Components|Nodes', module)
       value={'Text'}
     />
   ))
+  .add('BaseDatePicker', () => {
+    return(
+      <Grid container spacing={0} >
+        <Grid item sm={12}>
+          <BaseDatePicker
+            label={'Fecha de nacimiento'}
+            value={'1993-05-07'}
+            onDateChange={action('onDateChange')}
+            minDate={'1950-01-01'}
+          />
+        </Grid>
+        <Grid item sm={12}>
+          <BaseDatePicker
+            label={'Fecha de ingreso'}
+            onDateChange={action('onDateChange')}
+            minDate={'2000-01-01'}
+          />
+        </Grid>
+    </Grid>
+  )
+  })
   .add('Currency Input', () => (
     <CurrencyInput
       label={'Financiamiento'}
@@ -595,8 +617,11 @@ storiesOf('NewComponents', module)
             item
             sm={12} >
             <RejectionField
-              label='Monto total del crédito'
-              value='$72,000.00'
+              field={{
+                  label: 'Monto total del crédito',
+                  value: '72,000.00',
+                  fieldType: { name: 'número'}
+              }}
               onReject={action('onReject')}
               rejectionOptions={[
                 { name: 'Calidad baja' },
@@ -613,8 +638,11 @@ storiesOf('NewComponents', module)
             item
             sm={12} >
             <RejectionField
-              label={'Monto total del crédito'}
-              value={'$72,000.00'}
+              field={{
+                  label: 'Monto total del crédito',
+                  value: '72,000.00',
+                  fieldType: { name: 'número'}
+              }}
               onReject={action('onReject')}
               rejectionOptions={[
                 { name: 'Calidad baja' },
@@ -634,13 +662,39 @@ storiesOf('NewComponents', module)
               onHandlerInput={action('onHandlerInput')}
             />
           </Grid>
+            <Grid
+            key={'a4'}
+            item
+            sm={12} >
+              <RejectionField
+                field={{
+                  label: 'Corre electronico',
+                  value: 'alfredo@fintecimal.com',
+                  fieldType: { name: 'email'}
+                }}
+                onReject={action('onReject')}
+                rejectionOptions={[
+                    { name: 'Calidad baja' },
+                { name: 'Sin imagen' },
+                { name: 'Sin sonido' },
+                { name: 'Sin audio' }
+                ]}
+                rejectionData={{}}
+                rejected={false}
+                showUndo
+                onUndoRejection={action('onUndoRejection')}
+                />
+            </Grid>
           <Grid
             key={'a3'}
             item
             sm={12} >
             <RejectionField
-              label={'Monto total del crédito'}
-              value={'$72,000.00'}
+              field={{
+                label: 'Corre electronico',
+                value: 'alfredo@fintecimal.com',
+                fieldType: { name: 'email'}
+              }}
               onReject={action('onReject')}
               rejectionOptions={[
                 { name: 'Calidad baja' },
@@ -660,30 +714,191 @@ storiesOf('NewComponents', module)
               onHandlerInput={action('onHandlerInput')}
               showUndo
               onUndoRejection={action('onUndoRejection')}
-              editable={false}
             />
             </Grid>
             <Grid
-            key={'a4'}
-            item
-            sm={12} >
-            <RejectionField
-              label='Monto total del crédito'
-              value='$72,000.00'
-              onReject={action('onReject')}
-              rejectionOptions={[
-                { name: 'Calidad baja' },
-                { name: 'Sin imagen' },
-                { name: 'Sin sonido' },
-                { name: 'Sin audio' }
-              ]}
-              rejectionData={{}}
-              rejected={false}
-              showUndo
-              onUndoRejection={action('onUndoRejection')}
-            />
+              key={'a4'}
+              item
+              sm={12} >
+                <RejectionField
+                  field={{
+                    label: 'Celular',
+                      value: '3333333333',
+                      fieldType: { name: 'celular'}
+                  }}
+                  onReject={action('onReject')}
+                  rejectionOptions={[
+                      { name: 'Calidad baja' },
+                  { name: 'Sin imagen' },
+                  { name: 'Sin sonido' },
+                  { name: 'Sin audio' }
+                  ]}
+                  rejectionData={{}}
+                  rejected={false}
+                  showUndo
+                  onUndoRejection={action('onUndoRejection')}
+                />
             </Grid>
-        </Grid>
+            <Grid
+              key={'a3'}
+              item
+              sm={12} >
+                <RejectionField
+                  field={{
+                    label: 'Celular',
+                      value: '3333333333',
+                      fieldType: { name: 'celular'}
+                  }}
+                  onReject={action('onReject')}
+                  rejectionOptions={[
+                      { name: 'Calidad baja' },
+                  { name: 'Sin imagen' },
+                  { name: 'Sin sonido' },
+                  { name: 'Sin audio' }
+                ]}
+                  rejectionData={{
+                    name: 'Valerie Baumbach',
+                      image: 'http://usagibaru.com/wp-content/uploads/2019/06/3822333_0.jpg',
+                      date: new Date(),
+                      reason: 'Video no corresponde a documento.',
+                      comments:
+                    'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
+                  }}
+                  rejected={true}
+                  onHandlerInput={action('onHandlerInput')}
+                  showUndo
+                  onUndoRejection={action('onUndoRejection')}
+                />
+            </Grid>
+            <Grid
+              key={'a4'}
+              item
+              sm={12} >
+                <RejectionField
+                  field={{
+                    label: 'RFC',
+                      value: 'XEXX010101000',
+                      fieldType: { name: 'RFC'}
+                  }}
+                  onReject={action('onReject')}
+                  rejectionOptions={[
+                      { name: 'Calidad baja' },
+                  { name: 'Sin imagen' },
+                  { name: 'Sin sonido' },
+                  { name: 'Sin audio' }
+                ]}
+                  rejectionData={{}}
+                  rejected={false}
+                  showUndo
+                  onUndoRejection={action('onUndoRejection')}
+                />
+            </Grid>
+            <Grid
+              key={'a3'}
+              item
+              sm={12} >
+                <RejectionField
+                  field={{
+                    label: 'RFC',
+                      value: 'XEXX010101000',
+                      fieldType: { name: 'RFC'}
+                  }}
+                  onReject={action('onReject')}
+                  rejectionOptions={[
+                      { name: 'Calidad baja' },
+                  { name: 'Sin imagen' },
+                  { name: 'Sin sonido' },
+                  { name: 'Sin audio' }
+                ]}
+                  rejectionData={{
+                    name: 'Valerie Baumbach',
+                      image: 'http://usagibaru.com/wp-content/uploads/2019/06/3822333_0.jpg',
+                      date: new Date(),
+                      reason: 'Video no corresponde a documento.',
+                      comments:
+                    'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
+                  }}
+                  rejected={true}
+                  onHandlerInput={action('onHandlerInput')}
+                  showUndo
+                  onUndoRejection={action('onUndoRejection')}
+                />
+            </Grid>
+              <Grid
+                key={'a4'}
+                item
+                sm={12} >
+                  <RejectionField
+                    field={{
+                      label: 'Tipo de pago',
+                        value: 'Quincenal',
+                        fieldType: { name: 'lista'},
+                        config:[
+                          {
+                            type : "string",
+                            name : "Mensual"
+                          },
+                          {
+                            "type" : "string",
+                            "name" : "Quincenal"
+                          }
+                        ]
+                    }}
+                    onReject={action('onReject')}
+                    rejectionOptions={[
+                        { name: 'Calidad baja' },
+                    { name: 'Sin imagen' },
+                    { name: 'Sin sonido' },
+                    { name: 'Sin audio' }
+                  ]}
+                    rejectionData={{}}
+                    rejected={false}
+                    showUndo
+                    onUndoRejection={action('onUndoRejection')}
+                  />
+              </Grid>
+              <Grid
+                key={'a3'}
+                item
+                sm={12} >
+                  <RejectionField
+                    field={{
+                      label: 'Tipo de pago',
+                        value: 'Mensual',
+                        fieldType: { name: 'lista'},
+                        config:[
+                          {
+                            "type" : "string",
+                            "name" : "Mensual"
+                          },
+                          {
+                            "type" : "string",
+                            "name" : "Quincenal"
+                          }
+                        ]
+                    }}
+                    onReject={action('onReject')}
+                    rejectionOptions={[
+                        { name: 'Calidad baja' },
+                    { name: 'Sin imagen' },
+                    { name: 'Sin sonido' },
+                    { name: 'Sin audio' }
+                    ]}
+                    rejectionData={{
+                      name: 'Valerie Baumbach',
+                        image: 'http://usagibaru.com/wp-content/uploads/2019/06/3822333_0.jpg',
+                        date: new Date(),
+                        reason: 'Video no corresponde a documento.',
+                        comments:
+                      'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
+                    }}
+                    rejected={true}
+                    onHandlerInput={action('onHandlerInput')}
+                    showUndo
+                    onUndoRejection={action('onUndoRejection')}
+                  />
+              </Grid>
+          </Grid>
       </Container>
     );
   })

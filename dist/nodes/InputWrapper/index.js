@@ -89,9 +89,8 @@ var InputWrapper = function InputWrapper(_ref) {
     } else {
       setError(false);
       setErrorMessage('');
+      onBlur();
     }
-
-    onBlur();
   };
 
   (0, _react.useEffect)(function () {

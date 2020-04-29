@@ -9,7 +9,7 @@ var _react = _interopRequireWildcard(require("react"));
 
 var _propTypes = _interopRequireDefault(require("prop-types"));
 
-var _BaseTextInput = _interopRequireDefault(require("../nodes/BaseTextInput"));
+var _CustomField = _interopRequireDefault(require("./component/CustomField"));
 
 var _RejectActions = _interopRequireDefault(require("../nodes/RejectActions"));
 
@@ -28,8 +28,7 @@ function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 var RejectionField = function RejectionField(_ref) {
-  var label = _ref.label,
-      value = _ref.value,
+  var field = _ref.field,
       onReject = _ref.onReject,
       rejectionOptions = _ref.rejectionOptions,
       rejectionData = _ref.rejectionData,
@@ -39,6 +38,20 @@ var RejectionField = function RejectionField(_ref) {
       showUndo = _ref.showUndo,
       onUndoRejection = _ref.onUndoRejection,
       editable = _ref.editable;
+  var _field$fieldType = field.fieldType,
+      type = _field$fieldType === void 0 ? '' : _field$fieldType,
+      _field$label = field.label,
+      label = _field$label === void 0 ? '' : _field$label,
+      _field$value = field.value,
+      value = _field$value === void 0 ? '' : _field$value,
+      _field$config = field.config,
+      config = _field$config === void 0 ? {} : _field$config;
+  var _config$required = config.required,
+      required = _config$required === void 0 ? false : _config$required,
+      _config$data = config.data,
+      data = _config$data === void 0 ? '' : _config$data,
+      _config$minDate = config.minDate,
+      minDate = _config$minDate === void 0 ? '' : _config$minDate;
   var classes = (0, _style.default)();
 
   var _useState = (0, _react.useState)(value),
@@ -89,8 +102,12 @@ var RejectionField = function RejectionField(_ref) {
     setValue(newValue);
   };
 
-  var onBlur = function onBlur() {
-    onHandlerInput(mvalue);
+  var handleBlur = function handleBlur() {
+    if (mvalue && mvalue !== '') onHandlerInput(mvalue);
+  };
+
+  var handleDatechange = function handleDatechange(newValue) {
+    onHandlerInput(newValue.toString());
   };
 
   return _react.default.createElement("div", {
@@ -115,22 +132,25 @@ var RejectionField = function RejectionField(_ref) {
     onUndoRejection: function onUndoRejection() {
       return handleUndoRejection();
     }
-  }))), _react.default.createElement(_BaseTextInput.default, {
+  }))), _react.default.createElement(_CustomField.default, {
+    type: type,
     label: label,
     value: mvalue,
     disabled: !editable || !rejected,
     handleChange: handleChange,
+    onDateChange: handleDatechange,
     error: rejected,
     errorMessage: '',
-    onBlur: onBlur
+    handleBlur: handleBlur,
+    options: config,
+    required: required,
+    data: data,
+    minDate: minDate
   }));
 };
 
 RejectionField.propTypes = {
-  field: _propTypes.default.shape({
-    key: _propTypes.default.string,
-    value: _propTypes.default.string
-  }),
+  field: _propTypes.default.object,
   onReject: _propTypes.default.func,
   rejectionOptions: _propTypes.default.array,
   rejectionData: _propTypes.default.shape({
@@ -147,10 +167,7 @@ RejectionField.propTypes = {
   onUndoRejection: _propTypes.default.func
 };
 RejectionField.defaultProps = {
-  field: {
-    key: '',
-    value: ''
-  },
+  field: {},
   onReject: function onReject() {},
   rejectionOptions: [],
   rejectionData: {
