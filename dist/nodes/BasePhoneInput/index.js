@@ -138,6 +138,13 @@ var CellPhoneInput = function CellPhoneInput(_ref) {
       setErrorMessage(errorMessages.validation);
     }
   }, [value]);
+  (0, _react.useEffect)(function () {
+    setError(error);
+
+    if (error) {
+      setErrorMessage(errorMessages.empty);
+    }
+  }, [error]);
   return _react.default.createElement(_SpecialInput.default, {
     value: mValue,
     handleChange: mHandleChange,

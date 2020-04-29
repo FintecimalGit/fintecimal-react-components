@@ -103,6 +103,8 @@ const RejectionField = ({
             required={required}
             data={data}
             minDate={minDate}
+            error={rejected}
+            errorMessage={''}
           />
       </div>
   );

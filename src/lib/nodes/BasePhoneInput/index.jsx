@@ -95,6 +95,13 @@ const CellPhoneInput = ({
     }
   }, [value]);
 
+  useEffect(() =>{
+    setError(error);
+    if(error){
+      setErrorMessage(errorMessages.empty);
+    }
+  }, [error]);
+
   return (
     <SpecialInput
       value={mValue}
