@@ -11,7 +11,8 @@ const EmailInput = ({
   errorMessage,
   type,
   required,
-  disabled
+  disabled,
+  handleBlur,
 }) => {
   const config = {
     type,
@@ -32,7 +33,7 @@ const EmailInput = ({
     return reg.test(data);
   };
 
-  return <InputWrapper config={config} errors={errors} isValid={isValid} disabled={disabled} />;
+  return <InputWrapper config={config} errors={errors} isValid={isValid} disabled={disabled} onBlur={handleBlur}/>;
 };
 
 EmailInput.defaultProps = {
@@ -50,7 +51,8 @@ EmailInput.propTypes = {
   error: PropTypes.bool,
   errorMessage: PropTypes.string,
   required: PropTypes.bool,
-  disabled: PropTypes.bool
+  disabled: PropTypes.bool,
+  handleBlur: PropTypes.func,
 };
 
 export default EmailInput;

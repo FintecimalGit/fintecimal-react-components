@@ -24,7 +24,8 @@ var RFCInput = function RFCInput(_ref) {
       error = _ref.error,
       errorMessage = _ref.errorMessage,
       type = _ref.type,
-      required = _ref.required;
+      required = _ref.required,
+      handleBlur = _ref.handleBlur;
   var config = {
     type: type,
     label: label,
@@ -59,7 +60,8 @@ var RFCInput = function RFCInput(_ref) {
   return _react.default.createElement(_InputWrapper.default, {
     config: config,
     errors: errors,
-    isValid: isValid
+    isValid: isValid,
+    onBlur: handleBlur
   });
 };
 
@@ -75,7 +77,8 @@ RFCInput.propTypes = {
   type: _propTypes.default.string,
   error: _propTypes.default.bool,
   errorMessage: _propTypes.default.string,
-  required: _propTypes.default.bool
+  required: _propTypes.default.bool,
+  handleBlur: _propTypes.default.func
 };
 var _default = RFCInput;
 exports.default = _default;

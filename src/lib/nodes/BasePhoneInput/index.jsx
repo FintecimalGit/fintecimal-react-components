@@ -14,7 +14,8 @@ const CellPhoneInput = ({
   required,
   error,
   errorMessage,
-  disabled
+  disabled,
+  handleBlur,
 }) => {
   const errorMessages = cellphone.errorMessages;
   const [mError, setError] = useState(error);
@@ -73,6 +74,7 @@ const CellPhoneInput = ({
       setErrorMessage(validation);
     } else {
       setError(false);
+      handleBlur()
     }
   };
 
@@ -128,7 +130,8 @@ CellPhoneInput.propTypes = {
   error: PropTypes.bool,
   errorMessage: PropTypes.string,
   required: PropTypes.bool,
-  disabled: PropTypes.bool
+  disabled: PropTypes.bool,
+  handleBlur: PropTypes.func,
 };
 
 export default CellPhoneInput;

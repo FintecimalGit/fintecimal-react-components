@@ -67,7 +67,8 @@ var SelectInput = function SelectInput(_ref) {
       errorMessage = _ref.errorMessage,
       options = _ref.options,
       disabled = _ref.disabled,
-      placeholder = _ref.placeholder;
+      placeholder = _ref.placeholder,
+      handleBlur = _ref.handleBlur;
   var classes = (0, _style.default)();
   var labelRef = (0, _react.useRef)(null);
 
@@ -207,6 +208,7 @@ var SelectInput = function SelectInput(_ref) {
       setErrorMessage(empty);
     } else {
       setError(false);
+      handleBlur();
     }
 
     setStatus(_utils.status.NORMAL);
@@ -287,7 +289,8 @@ SelectInput.propTypes = {
   errorMessage: _propTypes.default.string,
   handleChange: _propTypes.default.func.isRequired,
   placeholder: _propTypes.default.string,
-  disabled: _propTypes.default.bool
+  disabled: _propTypes.default.bool,
+  handleBlur: _propTypes.default.func
 };
 var _default = SelectInput;
 exports.default = _default;

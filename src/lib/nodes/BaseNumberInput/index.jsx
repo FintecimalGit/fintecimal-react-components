@@ -12,7 +12,8 @@ const NumberInput = ({
   errorMessage,
   type,
   required,
-  disabled
+  disabled,
+  handleBlur,
 }) => {
   const config = {
     type,
@@ -34,7 +35,7 @@ const NumberInput = ({
     return true;
   };
 
-  return <InputWrapper config={config} errors={errors} isValid={isValid} disabled={disabled} />;
+  return <InputWrapper config={config} errors={errors} isValid={isValid} disabled={disabled} onBlur={handleBlur}/>;
 };
 
 NumberInput.defaultProps = {
@@ -52,7 +53,8 @@ NumberInput.propTypes = {
   error: PropTypes.bool,
   errorMessage: PropTypes.string,
   required: PropTypes.bool,
-  disabled: PropTypes.bool
+  disabled: PropTypes.bool,
+  handleBlur: PropTypes.func,
 };
 
 export default NumberInput;

@@ -89,6 +89,7 @@ var InputWrapper = function InputWrapper(_ref) {
     } else {
       setError(false);
       setErrorMessage('');
+      onBlur();
     }
 
     onBlur();

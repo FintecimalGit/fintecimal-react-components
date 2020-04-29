@@ -22,6 +22,7 @@ import InputTable from './InputTable';
 import RejectDocuments from './RejectDocuments';
 import RejectionButtons from './RejectionButtons';
 import RejectSimple from './RejectSimple';
+import BaseDatePicker from './BaseDatePicker';
 
 export {
   Maps,
@@ -47,5 +48,6 @@ export {
   InputTable,
   RejectDocuments,
   RejectionButtons,
-  RejectSimple
+  RejectSimple,
+  BaseDatePicker
 };

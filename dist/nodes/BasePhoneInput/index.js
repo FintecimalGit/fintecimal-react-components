@@ -39,7 +39,8 @@ var CellPhoneInput = function CellPhoneInput(_ref) {
       required = _ref.required,
       error = _ref.error,
       errorMessage = _ref.errorMessage,
-      disabled = _ref.disabled;
+      disabled = _ref.disabled,
+      handleBlur = _ref.handleBlur;
   var errorMessages = _InputStrings.cellphone.errorMessages;
 
   var _useState = (0, _react.useState)(error),
@@ -116,6 +117,7 @@ var CellPhoneInput = function CellPhoneInput(_ref) {
       setErrorMessage(validation);
     } else {
       setError(false);
+      handleBlur();
     }
   };
 
@@ -170,7 +172,8 @@ CellPhoneInput.propTypes = {
   error: _propTypes.default.bool,
   errorMessage: _propTypes.default.string,
   required: _propTypes.default.bool,
-  disabled: _propTypes.default.bool
+  disabled: _propTypes.default.bool,
+  handleBlur: _propTypes.default.func
 };
 var _default = CellPhoneInput;
 exports.default = _default;

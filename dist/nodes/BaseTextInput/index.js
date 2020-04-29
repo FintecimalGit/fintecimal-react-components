@@ -26,7 +26,7 @@ var TextInput = function TextInput(_ref) {
       type = _ref.type,
       required = _ref.required,
       disabled = _ref.disabled,
-      onBlur = _ref.onBlur;
+      handleBlur = _ref.handleBlur;
   var config = {
     type: type,
     label: label,
@@ -50,7 +50,7 @@ var TextInput = function TextInput(_ref) {
     errors: errors,
     isValid: isValid,
     disabled: disabled,
-    onBlur: onBlur
+    onBlur: handleBlur
   });
 };
 
@@ -69,7 +69,7 @@ TextInput.propTypes = {
   errorMessage: _propTypes.default.string,
   required: _propTypes.default.bool,
   disabled: _propTypes.default.bool,
-  onBlur: _propTypes.default.func
+  handleBlur: _propTypes.default.func
 };
 var _default = TextInput;
 exports.default = _default;
