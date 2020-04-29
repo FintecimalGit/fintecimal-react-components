@@ -17,14 +17,14 @@ const CellPhoneInput = ({
   disabled,
   handleBlur,
 }) => {
-  const errorMessages = cellphone.errorMessages;
+  const { errorMessages } = cellphone;
   const [mError, setError] = useState(error);
   const [mErrorMessage, setErrorMessage] = useState(errorMessage);
   const [mValue, setValue] = useState(value);
   const [mStatus, setStatus] = useState(status.NORMAL);
   const [mAdornment, setAdornment] = useState('');
 
-  const addParenthesis = number => {
+  const addParenthesis = (number) => {
     number = formatValue(number);
     if (number.length > 2) {
       const fNumber = `(${number.substr(0, 2)})${number.substr(2, number.length - 1)}`;
@@ -33,10 +33,10 @@ const CellPhoneInput = ({
     return number;
   };
 
-  const mHandleChange = event => {
+  const mHandleChange = (event) => {
     const {
       target: { value },
-      target
+      target,
     } = event;
 
     if (isValid(value)) target.setCustomValidity('');
@@ -52,7 +52,7 @@ const CellPhoneInput = ({
     handleChange('');
   };
 
-  const isValid = data => {
+  const isValid = (data) => {
     if (isEmpty(data) && !required) return true;
     return validateRegex(data, /\(?([0-9]{2})\)([0-9]{8})$/);
   };
@@ -74,11 +74,11 @@ const CellPhoneInput = ({
       setErrorMessage(validation);
     } else {
       setError(false);
-      handleBlur()
+      handleBlur();
     }
   };
 
-  const formatValue = rValue => {
+  const formatValue = (rValue) => {
     if (rValue) return rValue.replace(/[{()}]/g, '');
     return '';
   };
@@ -95,11 +95,12 @@ const CellPhoneInput = ({
     }
   }, [value]);
 
-  useEffect(() =>{
+  useEffect(() => {
     setError(error);
-    if(error){
-      setErrorMessage(errorMessages.empty);
+    if (!error) {
+      return;
     }
+    setErrorMessage(errorMessages.empty);
   }, [error]);
 
   return (
@@ -117,7 +118,7 @@ const CellPhoneInput = ({
       startAdornment={mAdornment}
       disabled={disabled}
     >
-      <IconText inputStatus={mError ? status.ERROR : mStatus} imgSrc={flag} text={'MXN'} />
+      <IconText inputStatus={mError ? status.ERROR : mStatus} imgSrc={flag} text="MXN" />
     </SpecialInput>
   );
 };
@@ -128,7 +129,8 @@ CellPhoneInput.defaultProps = {
   error: false,
   errorMessage: '',
   required: false,
-  disabled: false
+  disabled: false,
+  handleBlur: () => {},
 };
 
 CellPhoneInput.propTypes = {

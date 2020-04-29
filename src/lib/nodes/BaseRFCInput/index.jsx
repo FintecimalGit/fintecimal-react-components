@@ -5,14 +5,14 @@ import { rfc } from '../../InputStrings';
 import { textFormats, isEmpty, validateRegex } from '../../commons/utils';
 
 const RFCInput = ({
-      value,
-      handleChange,
-      label,
-      error,
-      errorMessage,
-      type,
-      required,
-      handleBlur,
+  value,
+  handleChange,
+  label,
+  error,
+  errorMessage,
+  type,
+  required,
+  handleBlur,
 }) => {
   const config = {
     type,
@@ -20,27 +20,25 @@ const RFCInput = ({
     value,
     format: textFormats.UPPER,
     required,
-    handleChange
+    handleChange,
   };
   const errors = {
     error,
     errorMessage,
-    errorMessages: rfc.errorMessages
+    errorMessages: rfc.errorMessages,
   };
-  const isValid = data => {
+  const isValid = (data) => {
     if (isEmpty(data) && !required) return true;
     const size = data.length;
     if (size >= 10 && size <= 13) {
       if (size === 10) {
         return validateRegex(data, /[A-Z]{4}[0-9][0-9][0-1][0-9][0-3][0-9]/);
-      } else if (size === 12) {
+      } if (size === 12) {
         return validateRegex(data, /[A-Z]{3}[0-9][0-9][0-1][0-9][0-3][0-9][A-Z0-9]{3}/);
-      } else {
-        return validateRegex(data, /[A-Z]{4}[0-9][0-9][0-1][0-9][0-3][0-9][A-Z0-9]{3}/);
       }
-    } else {
-      return false;
+      return validateRegex(data, /[A-Z]{4}[0-9][0-9][0-1][0-9][0-3][0-9][A-Z0-9]{3}/);
     }
+    return false;
   };
 
   return <InputWrapper config={config} errors={errors} isValid={isValid} onBlur={handleBlur} />;
@@ -51,7 +49,8 @@ RFCInput.defaultProps = {
   type: rfc.type,
   error: false,
   errorMessage: '',
-  required: false
+  required: false,
+  handleBlur: () => {},
 };
 
 RFCInput.propTypes = {

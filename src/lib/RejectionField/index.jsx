@@ -17,15 +17,15 @@ const RejectionField = ({
   onHandlerInput,
   showUndo,
   onUndoRejection,
-  editable
+  editable,
 }) => {
   const {
-    fieldType: type = '', label = '', value = '', config = {}
+    fieldType: type = '', label = '', value = '', config = {},
   } = field;
   const { required = false, data = '', minDate = '' } = config;
   const classes = useStyles();
   const [mvalue, setValue] = useState(value);
-  const [forceDisplay, setForceDisplay] = useState('none')
+  const [forceDisplay, setForceDisplay] = useState('none');
 
   useEffect(() => {
     setForceDisplay('none');
@@ -39,74 +39,74 @@ const RejectionField = ({
     setForceDisplay('none');
   };
 
-  const getStyles = () => rejected ? { 
-    display: 'inline-block', 
+  const getStyles = () => (rejected ? {
+    display: 'inline-block',
     right: '10px',
     left: '103%',
-    transform: 'translate(50%, 50%)', 
-  } : { display: forceDisplay, top: '-45px' };
+    transform: 'translate(50%, 50%)',
+  } : { display: forceDisplay, top: '-45px' });
 
   const handleUndoRejection = () => {
     setForceDisplay('none');
     onUndoRejection();
-  }
+  };
 
   const handlerReject = (value) => {
     setForceDisplay('none');
     onReject(value);
-  }
+  };
 
   const handleChange = (newValue) => {
     setValue(newValue);
   };
 
   const handleBlur = () => {
-    if(mvalue && mvalue !== '')onHandlerInput(mvalue)
+    if (mvalue && mvalue !== '')onHandlerInput(mvalue);
   };
 
   const handleDatechange = (newValue) => {
-    onHandlerInput(newValue.toString())
-  }
+    onHandlerInput(newValue.toString());
+  };
 
   return (
-      <div className={classes.list}>
-          <div className={classes.listItemSecondaryContainer}>
-            <div
-              className={classes.rejectionActions}
-              style={getStyles()}
-            >
-              <RejectActions
-                rejectionOptions={rejectionOptions}
-                rejected={rejected}
-                handlerReject={(value) => handlerReject(value)}
-                rejectionData={rejectionData}
-                onOpen={keep}
-                onClose={leave}
-                size="small"
-                rejectionShowed={rejectionShowed}
-                showUndo={showUndo}
-                onUndoRejection={() => handleUndoRejection()}
-              />
-            </div>
-          </div>
-          <CustomField
-            type={type}
-            label={label}
-            value={mvalue}
-            disabled={(!editable) || (!rejected)}
-            handleChange={handleChange}
-            onDateChange={handleDatechange}
-            error={rejected}
-            errorMessage={''}
-            handleBlur={handleBlur}
-            options={config}
-            required={required}
-            data={data}
-            minDate={minDate}
-            error={rejected}
-            errorMessage={''}
+    <div className={classes.list}>
+      <div className={classes.listItemSecondaryContainer}>
+        <div
+          className={classes.rejectionActions}
+          style={getStyles()}
+        >
+          <RejectActions
+            rejectionOptions={rejectionOptions}
+            rejected={rejected}
+            handlerReject={(value) => handlerReject(value)}
+            rejectionData={rejectionData}
+            onOpen={keep}
+            onClose={leave}
+            size="small"
+            rejectionShowed={rejectionShowed}
+            showUndo={showUndo}
+            onUndoRejection={() => handleUndoRejection()}
           />
+        </div>
       </div>
+      <CustomField
+        type={type}
+        label={label}
+        value={mvalue}
+        disabled={(!editable) || (!rejected)}
+        handleChange={handleChange}
+        onDateChange={handleDatechange}
+        error={rejected}
+        errorMessage=""
+        handleBlur={handleBlur}
+        options={config}
+        required={required}
+        data={data}
+        minDate={minDate}
+        error={rejected}
+        errorMessage=""
+      />
+    </div>
   );
 };
 
@@ -119,7 +119,7 @@ RejectionField.propTypes = {
     image: PropTypes.string,
     date: PropTypes.instanceOf(Date),
     reason: PropTypes.string,
-    comments: PropTypes.string
+    comments: PropTypes.string,
   }),
   rejectionShowed: PropTypes.bool,
   onHandlerInput: PropTypes.func,
