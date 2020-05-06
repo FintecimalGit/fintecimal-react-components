@@ -284,7 +284,8 @@ SelectInput.defaultProps = {
   clear: true,
   errorMessage: '',
   placeholder: '',
-  disabled: false
+  disabled: false,
+  handleBlur: function handleBlur() {}
 };
 SelectInput.propTypes = {
   label: _propTypes.default.string.isRequired,
