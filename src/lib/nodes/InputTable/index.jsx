@@ -1,5 +1,11 @@
-import React, { useState, useEffect} from 'react';
+import React, { 
+  useState,
+  useEffect,
+  useCallback,
+  useMemo
+} from 'react';
 import PropTypes from 'prop-types';
+import CSVReader from "react-csv-reader";
 
 import Fields from './Fields';
 import Table from '../../Table';
@@ -9,25 +15,19 @@ import useStyles from './style';
 
 const InputTable = ({ value, headers, handleChange }) => {
   const classes = useStyles();
-  const [fields, setFields] = useState([]);
   const [information, setInformation] = useState([]);
   const [dataTable, setDataTable] = useState([]);
-  const [header, setHeader] = useState([]);
+  const [localHeaders, setLocalHeaders] = useState([]);
 
-  useEffect(() => {
-    fetchData(value, headers);
-  }, [value, headers]);
-
-  useEffect(() =>{
-    (Object.keys(information).length > 0) ? loadDataTable(information) : setDataTable([]);
-  }, [information]);
-
-  const fetchData = (value, headers) => {
-    const header = headers.map(opt => { return {key: opt.name, value: opt.label}});
-    setHeader(header);
-    setFields(generateValueEmpty(headers));
-    setInformation(value);
-  };
+  const HEADERS = useMemo(() => localHeaders
+    .map(opt => { return {key: opt.name, value: opt.label}}), [localHeaders]);
+  const FIELDS = useMemo(() => generateValueEmpty(localHeaders), [localHeaders]);
+  const csvOptions = useMemo(() => ({
+    header: true,
+    dynamicTyping: true,
+    skipEmptyLines: true,
+    transformHeader: header => header.replace(/\W/g, "_"),
+  }), []);
 
   const addNewRow = (dataField) => {
     const newInformation = [...information, generateData(dataField)];
@@ -46,13 +46,15 @@ const InputTable = ({ value, headers, handleChange }) => {
 
   const loadDataTable = (data) => {
     let newValues = [];
-    let newObject = {};
     data.forEach(element => {
-      Object.keys(element).forEach((key) => {
-        newObject[element[key]['name']] = element[key]['value'];
+      let toObject = {};
+      element.forEach(({name, value}) => {
+        toObject = {
+          ...toObject,
+          [name]: value,
+        };
       });
-      if(Object.keys(newObject).length > 0) newValues.push(newObject);
-      newObject = {};
+      if(Object.keys(toObject).length) newValues.push(toObject);
     });
     setDataTable(newValues);
   };
@@ -63,11 +65,32 @@ const InputTable = ({ value, headers, handleChange }) => {
     handleChange(newInformation);
   };
 
+  const handleOnDropFile = useCallback((data, fileInfo) => {
+    setDataTable(data);
+    handleChange(data);
+  }, []);
+
+  useEffect(() => {
+    if (headers.length) setLocalHeaders(headers);
+    if (value.length) setDataTable(value);
+  }, [value, headers]);
+
+  // useEffect(() =>{
+  //   (Object.keys(information).length > 0) ? loadDataTable(information) : setDataTable([]);
+  // }, [information]);
+
+
   return (
       <div className={classes.content}>
-        <Fields fieldValues={fields} addNewRow={addNewRow} />
+        <Fields fieldValues={FIELDS} addNewRow={addNewRow} />
+        <div className={classes.input_loader}>
+          <CSVReader
+            onFileLoaded={handleOnDropFile}
+            parserOptions={csvOptions}
+            />
+        </div>
         <div className={classes.tableContent}>
-          <Table headers={header} items={dataTable} deleteRow={true} onDeleteRow={DeleteRow}/>
+          <Table headers={HEADERS} items={dataTable} deleteRow={true} onDeleteRow={DeleteRow}/>
         </div>
       </div>
   );

@@ -46,22 +46,29 @@ export const defaultHeader = [
 ];
 
 export const defaultData = [
-  [{
-    'name': 'no',
-    'value': '1234'
-  },{
-    'name': 'fechaPago',
-    'value': '20 de marzo 2020'
-  },{
-    'name': 'montoSinIva',
-    'value': '1000'
-  },{
-    'name': 'iva',
-    'value': '160'
-  },{
-    'name': 'total',
-    'value': '1160'
-  }]
+  // [{
+  //   'name': 'no',
+  //   'value': '1234'
+  // },{
+  //   'name': 'fechaPago',
+  //   'value': '20 de marzo 2020'
+  // },{
+  //   'name': 'montoSinIva',
+  //   'value': '1000'
+  // },{
+  //   'name': 'iva',
+  //   'value': '160'
+  // },{
+  //   'name': 'total',
+  //   'value': '1160'
+  // }]
+  {
+    fechaPago: "02/05/20",
+    iva: 400,
+    montoSinIva: 2155.17,
+    no: 1,
+    total: 2500,
+  },
 ];
 
 
