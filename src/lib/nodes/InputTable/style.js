@@ -17,7 +17,6 @@ const useStyles = makeStyles(theme => ({
         '& > div': {
             position: 'inherit',
             '& label': {
-                border: '1px solid red',
                 backgroundColor: '#fff',
                 color: theme.palette.primary.main,
                 padding: theme.spacing(1),
