@@ -152,7 +152,7 @@ const SelectInput = ({
           htmlFor="component-outlined"
           variant="outlined"
           classes={{
-            asterisk: classes.asterisk
+            asterisk: classes.asterisk,
           }}
         >
           {selectLabel()}
@@ -206,7 +206,8 @@ SelectInput.defaultProps = {
   clear: true,
   errorMessage: '',
   placeholder: '',
-  disabled: false
+  disabled: false,
+  handleBlur: () => {},
 };
 
 SelectInput.propTypes = {
