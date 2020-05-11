@@ -2,20 +2,19 @@ import React, {
   useState,
   useEffect,
   useCallback,
-  useMemo
+  useMemo,
 } from 'react';
 import PropTypes from 'prop-types';
-import CSVReader from "react-csv-reader";
 
 import Fields from './Fields';
 import Table from '../../Table';
+import CSVReader from './components/CsvReader';
 
 import {generateValueEmpty, defaultData, defaultHeader} from './utils';
 import useStyles from './style';
 
 const InputTable = ({ value, headers, handleChange }) => {
   const classes = useStyles();
-  const [information, setInformation] = useState([]);
   const [dataTable, setDataTable] = useState([]);
   const [localHeaders, setLocalHeaders] = useState([]);
 
@@ -26,71 +25,91 @@ const InputTable = ({ value, headers, handleChange }) => {
     header: true,
     dynamicTyping: true,
     skipEmptyLines: true,
+    complete: (result, file) => console.log(result, file),
     transformHeader: header => header.replace(/\W/g, "_"),
   }), []);
+  const VALUES = useMemo(() => {
+    let newValues = [];
+    if (value.length) {
+      value.forEach(element => {
+        let toObject = {};
+        element.forEach(({name, value}) => {
+          toObject = {
+            ...toObject,
+            [name]: value,
+          };
+        });
+        if(Object.keys(toObject).length) newValues.push(toObject);
+      });
+      return newValues;
+    }
+    return [];
+  }, [value]);
+
+  const generateData = useCallback((data) => data.map(field => ({
+    name: field.name,
+    label: field.label,
+    value: field.value
+  })), []);
 
   const addNewRow = (dataField) => {
-    const newInformation = [...information, generateData(dataField)];
+    const newInformation = [...value, generateData(dataField)];
     handleChange(newInformation);
   };
 
-  const generateData = (data) => {
-    return data.map(field => {
-      return {
-        name: field.name,
-        label: field.label,
-        value: field.value
-      }
-    });
-  };
-
-  const loadDataTable = (data) => {
-    let newValues = [];
-    data.forEach(element => {
-      let toObject = {};
-      element.forEach(({name, value}) => {
-        toObject = {
-          ...toObject,
-          [name]: value,
-        };
-      });
-      if(Object.keys(toObject).length) newValues.push(toObject);
-    });
-    setDataTable(newValues);
-  };
-
-  const DeleteRow = (item, index) => {
-    const newInformation = [...information];
-    newInformation.splice(index,1);
+  const DeleteRow = useCallback((item, index) => {
+    const newInformation = [...value];
+    newInformation.splice(index, 1);
     handleChange(newInformation);
-  };
+  }, [value]);
 
-  const handleOnDropFile = useCallback((data, fileInfo) => {
-    setDataTable(data);
-    handleChange(data);
+  const formatDataFromCsv = useCallback((data) => {
+    let isValid = true;
+    let _data = [];
+    const headersNames = headers.map(field => field.name);
+    data.forEach(row => {
+      const headersRow = Object.keys(row)
+      if (headersRow.length !== headersNames.length) isValid = false
+      _data = [ 
+        ..._data,
+        headersNames.map(key => {
+          if (!row[key]) isValid = false;
+          return {
+            name: key,
+            value: row[key] || '',
+          }
+        }),
+      ];
+    });
+    return {
+      isValid,
+      data: _data,
+    }
+  }, []);
+
+  const handleOnDropFile = useCallback((_data, fileInfo) => {
+    console.log(formatDataFromCsv(_data));
+    const { isValid, data} = formatDataFromCsv(_data);
+    if (isValid) {
+      handleChange(data);
+    }
+    // TODO: manejar error en archivo;
   }, []);
 
   useEffect(() => {
     if (headers.length) setLocalHeaders(headers);
-    if (value.length) setDataTable(value);
-  }, [value, headers]);
-
-  // useEffect(() =>{
-  //   (Object.keys(information).length > 0) ? loadDataTable(information) : setDataTable([]);
-  // }, [information]);
-
+  }, [headers]);
 
   return (
       <div className={classes.content}>
         <Fields fieldValues={FIELDS} addNewRow={addNewRow} />
-        <div className={classes.input_loader}>
-          <CSVReader
-            onFileLoaded={handleOnDropFile}
-            parserOptions={csvOptions}
-            />
-        </div>
+        <CSVReader
+          className={classes.input_loader}
+          onFileLoaded={handleOnDropFile}
+          parserOptions={csvOptions}
+        />
         <div className={classes.tableContent}>
-          <Table headers={HEADERS} items={dataTable} deleteRow={true} onDeleteRow={DeleteRow}/>
+          <Table headers={HEADERS} items={VALUES} deleteRow={true} onDeleteRow={DeleteRow}/>
         </div>
       </div>
   );
