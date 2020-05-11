@@ -87,7 +87,6 @@ const InputTable = ({ value, headers, handleChange }) => {
   }, []);
 
   const handleOnDropFile = useCallback((_data, fileInfo) => {
-    console.log(formatDataFromCsv(_data));
     const { isValid, data} = formatDataFromCsv(_data);
     if (isValid) {
       handleChange(data);
