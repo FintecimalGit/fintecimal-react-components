@@ -16,7 +16,6 @@ const CSVReader = ({
   disabled = false,
 }) => {
   const refE = useRef();
-
   const handleChangeFile = useCallback((event) => {
     let reader = new FileReader()
     const [file = null, ...rest] = refE.current.files;
@@ -74,7 +73,6 @@ CSVReader.propTypes = {
   onFileLoaded: PropTypes.func.isRequired,
   parserOptions: PropTypes.object,
   disabled: PropTypes.bool,
-  ref: PropTypes.Object,
 }
 
 CSVReader.defaultProps = {
@@ -87,7 +85,6 @@ CSVReader.defaultProps = {
   onError: () => {},
   parserOptions: {},
   disabled: false,
-  ref: {},
 }
 
 export default CSVReader;

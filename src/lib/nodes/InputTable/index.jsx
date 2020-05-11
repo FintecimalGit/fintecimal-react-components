@@ -25,7 +25,6 @@ const InputTable = ({ value, headers, handleChange }) => {
     header: true,
     dynamicTyping: true,
     skipEmptyLines: true,
-    complete: (result, file) => console.log(result, file),
     transformHeader: header => header.replace(/\W/g, "_"),
   }), []);
   const VALUES = useMemo(() => {
