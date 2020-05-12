@@ -16,8 +16,11 @@ var useStyles = (0, _styles.makeStyles)(function (theme) {
     tableContent: {
       padding: theme.spacing(2, 0)
     },
+    csvActions: {
+      position: 'relative',
+      padding: theme.spacing(1)
+    },
     input_loader: {
-      margin: theme.spacing(1),
       positions: 'relative',
       display: 'flex',
       justifyContent: 'center',
@@ -39,6 +42,38 @@ var useStyles = (0, _styles.makeStyles)(function (theme) {
         },
         '& input': {
           display: 'none'
+        }
+      }
+    },
+    errorContainerOn: {
+      opacity: '1'
+    },
+    errorContainerOff: {
+      opacity: '0'
+    },
+    errorContainer: {
+      position: 'absolute',
+      display: 'flex',
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'center',
+      buttom: 0,
+      left: 0,
+      margin: 'auto',
+      width: '100%',
+      transition: 'all 0.3s cubic-bezier(0.1, 0.3, 1.0, 0.1)',
+      marginTop: theme.spacing(0.5),
+      fontSize: '12px',
+      textAlign: 'left',
+      '& div': {
+        borderRadius: '5px',
+        border: '1px solid #ebccd1',
+        padding: theme.spacing(2),
+        maxWidth: '50%',
+        backgroundColor: '#f2dede',
+        '& span': {
+          display: 'block',
+          color: '#a94442'
         }
       }
     }

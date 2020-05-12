@@ -11,6 +11,8 @@ var _react = _interopRequireWildcard(require("react"));
 
 var _propTypes = _interopRequireDefault(require("prop-types"));
 
+var _clsx3 = _interopRequireDefault(require("clsx"));
+
 var _Fields = _interopRequireDefault(require("./Fields"));
 
 var _Table = _interopRequireDefault(require("../../Table"));
@@ -49,6 +51,9 @@ function _iterableToArrayLimit(arr, i) { if (!(Symbol.iterator in Object(arr) ||
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
+var HEADER_ERROR_MESSAGE = 'La cantidad de columnas no es la correcta, prueba con las siguientes: ';
+var HEADER_ERROR_MESSAGE_2 = 'Las siguientes columnas no son correctas: ';
+
 var InputTable = function InputTable(_ref) {
   var value = _ref.value,
       headers = _ref.headers,
@@ -64,6 +69,11 @@ var InputTable = function InputTable(_ref) {
       _useState4 = _slicedToArray(_useState3, 2),
       localValue = _useState4[0],
       setLocalValue = _useState4[1];
+
+  var _useState5 = (0, _react.useState)([]),
+      _useState6 = _slicedToArray(_useState5, 2),
+      errorMessages = _useState6[0],
+      setErrorMessages = _useState6[1];
 
   var HEADERS = (0, _react.useMemo)(function () {
     return localHeaders.map(function (option) {
@@ -123,26 +133,54 @@ var InputTable = function InputTable(_ref) {
     newInformation.splice(index, 1);
     handleChange(newInformation);
   }, [localValue, handleChange]);
+
+  var includesHeaders = function includesHeaders(arr1, arr2) {
+    return arr1.map(function (item) {
+      return arr2.includes(item) ? null : item;
+    }).filter(function (item) {
+      return item;
+    });
+  };
+
   var formatDataFromCsv = (0, _react.useCallback)(function (data) {
     var isValid = true;
+    var messages = [];
     var _data = [];
+    var headersRow = [];
     var headersNames = headers.map(function (field) {
       return field.name;
     });
-    data.forEach(function (row) {
-      var headersRow = Object.keys(row);
-      if (headersRow.length !== headersNames.length) isValid = false;
-      _data = [].concat(_toConsumableArray(_data), [headersNames.map(function (key) {
-        if (!row[key]) isValid = false;
+    data.forEach(function (row, index) {
+      headersRow = Object.keys(row);
+      _data = [].concat(_toConsumableArray(_data), [headersNames.map(function (key, _index) {
+        if (row[key] === '') {
+          isValid = false;
+          messages = [].concat(_toConsumableArray(messages), ["La fila ".concat(index + 2, " de la columna \"").concat(key, "\" esta vac\xEDa")]);
+        }
+
         return {
           name: key,
           value: row[key] || ''
         };
       })]);
     });
+    var headersAreValid = includesHeaders(headersRow, headersNames);
+
+    if (headersAreValid.length) {
+      isValid = false;
+      messages = ["".concat(HEADER_ERROR_MESSAGE_2, " ").concat(headersAreValid.join(', '))].concat(_toConsumableArray(messages));
+    }
+
+    if (headersRow.length !== headersNames.length) {
+      isValid = false;
+      messages = ["".concat(HEADER_ERROR_MESSAGE, " ").concat(headersNames.join(', '))].concat(_toConsumableArray(messages));
+    }
+
+    console.log(messages);
     return {
       isValid: isValid,
-      data: _data
+      data: _data,
+      messages: messages
     };
   }, []);
   var handleOnDropFile = (0, _react.useCallback)(function (_ref3) {
@@ -152,10 +190,14 @@ var InputTable = function InputTable(_ref) {
 
     var _formatDataFromCsv = formatDataFromCsv(_data),
         isValid = _formatDataFromCsv.isValid,
-        data = _formatDataFromCsv.data;
+        data = _formatDataFromCsv.data,
+        messages = _formatDataFromCsv.messages;
 
     if (isValid) {
       handleChange([].concat(_toConsumableArray(localValue), _toConsumableArray(data)));
+      setErrorMessages([]);
+    } else {
+      setErrorMessages(messages);
     }
   }, [localValue, handleChange]);
   (0, _react.useEffect)(function () {
@@ -167,11 +209,20 @@ var InputTable = function InputTable(_ref) {
   }, _react.default.createElement(_Fields.default, {
     fieldValues: FIELDS,
     addNewRow: addNewRow
-  }), _react.default.createElement(_CsvReader.default, {
+  }), _react.default.createElement("div", {
+    className: classes.csvActions
+  }, _react.default.createElement(_CsvReader.default, {
     className: classes.input_loader,
     onFileLoaded: handleOnDropFile,
     parserOptions: csvOptions
   }), _react.default.createElement("div", {
+    className: (0, _clsx3.default)(classes.errorContainer, _defineProperty({}, classes.errorContainerOn, Boolean(errorMessages.length)), _defineProperty({}, classes.errorContainerOff, !Boolean(errorMessages.length)))
+  }, Boolean(errorMessages.length) && _react.default.createElement("div", null, errorMessages.map(function (message, index) {
+    return _react.default.createElement("span", {
+      key: index,
+      className: classes.errorMessage
+    }, "".concat(index + 1, " - ").concat(message));
+  })))), _react.default.createElement("div", {
     className: classes.tableContent
   }, _react.default.createElement(_Table.default, {
     headers: HEADERS,
