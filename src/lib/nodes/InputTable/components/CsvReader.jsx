@@ -16,17 +16,16 @@ const CSVReader = ({
   disabled = false,
 }) => {
   const refE = useRef();
-  const handleChangeFile = useCallback((event) => {
+
+  const readFile = useCallback((event) => new Promise((resolve, reject) => {
     let reader = new FileReader()
     const [file = null, ...rest] = refE.current.files;
-
     if (file) {
       const fileInfo = {
         name: file.name,
         size: file.size,
         type: file.type,
       };
-
       reader.onload = (_event) => {
         const csvData = PapaParse.parse(
           reader.result,
@@ -36,13 +35,17 @@ const CSVReader = ({
             encoding: fileEncoding,
           },
         );
-        onFileLoaded(csvData.data, fileInfo);
+        resolve([csvData.data, fileInfo]);
         refE.current.value = null;
       };
-
       reader.readAsText(file, fileEncoding)
     }
-  }, []);
+  }), []);
+
+  const handleChangeFile = useCallback(async () => {
+    const result = await readFile();
+    onFileLoaded(result);
+  }, [readFile, onFileLoaded]);
 
   return (
     <div className={className}>

@@ -60,11 +60,16 @@ var InputTable = function InputTable(_ref) {
       localHeaders = _useState2[0],
       setLocalHeaders = _useState2[1];
 
+  var _useState3 = (0, _react.useState)([]),
+      _useState4 = _slicedToArray(_useState3, 2),
+      localValue = _useState4[0],
+      setLocalValue = _useState4[1];
+
   var HEADERS = (0, _react.useMemo)(function () {
-    return localHeaders.map(function (opt) {
+    return localHeaders.map(function (option) {
       return {
-        key: opt.name,
-        value: opt.label
+        key: option.name,
+        value: option.label
       };
     });
   }, [localHeaders]);
@@ -84,21 +89,19 @@ var InputTable = function InputTable(_ref) {
   var VALUES = (0, _react.useMemo)(function () {
     var newValues = [];
 
-    if (value.length) {
-      value.forEach(function (element) {
+    if (localValue.length) {
+      localValue.forEach(function (element) {
         var toObject = {};
         element.forEach(function (_ref2) {
           var name = _ref2.name,
-              value = _ref2.value;
-          toObject = _objectSpread({}, toObject, _defineProperty({}, name, value));
+              _value = _ref2.value;
+          toObject = _objectSpread({}, toObject, _defineProperty({}, name, _value));
         });
         if (Object.keys(toObject).length) newValues.push(toObject);
       });
       return newValues;
-    }
-
-    return [];
-  }, [value]);
+    } else return newValues;
+  }, [localValue, handleOnDropFile]);
   var generateData = (0, _react.useCallback)(function (data) {
     return data.map(function (field) {
       return {
@@ -110,16 +113,16 @@ var InputTable = function InputTable(_ref) {
   }, []);
 
   var addNewRow = function addNewRow(dataField) {
-    var newInformation = [].concat(_toConsumableArray(value), [generateData(dataField)]);
+    var newInformation = [].concat(_toConsumableArray(localValue), [generateData(dataField)]);
     handleChange(newInformation);
   };
 
   var DeleteRow = (0, _react.useCallback)(function (item, index) {
-    var newInformation = _toConsumableArray(value);
+    var newInformation = _toConsumableArray(localValue);
 
     newInformation.splice(index, 1);
     handleChange(newInformation);
-  }, [value]);
+  }, [localValue, handleChange]);
   var formatDataFromCsv = (0, _react.useCallback)(function (data) {
     var isValid = true;
     var _data = [];
@@ -142,18 +145,23 @@ var InputTable = function InputTable(_ref) {
       data: _data
     };
   }, []);
-  var handleOnDropFile = (0, _react.useCallback)(function (_data, fileInfo) {
+  var handleOnDropFile = (0, _react.useCallback)(function (_ref3) {
+    var _ref4 = _slicedToArray(_ref3, 2),
+        _data = _ref4[0],
+        fileInfo = _ref4[1];
+
     var _formatDataFromCsv = formatDataFromCsv(_data),
         isValid = _formatDataFromCsv.isValid,
         data = _formatDataFromCsv.data;
 
     if (isValid) {
-      handleChange([].concat(_toConsumableArray(value), _toConsumableArray(data)));
+      handleChange([].concat(_toConsumableArray(localValue), _toConsumableArray(data)));
     }
-  }, [value, handleChange]);
+  }, [localValue, handleChange]);
   (0, _react.useEffect)(function () {
     if (headers.length) setLocalHeaders(headers);
-  }, [headers]);
+    if (value.length) setLocalValue(value);else if (localValue.length) setLocalValue([]);
+  }, [value, headers]);
   return _react.default.createElement("div", {
     className: classes.content
   }, _react.default.createElement(_Fields.default, {
@@ -179,10 +187,8 @@ InputTable.propTypes = {
   handleChange: _propTypes.default.func
 };
 InputTable.defaultProps = {
-  value: [],
-  // defaultData,
-  headers: [],
-  // defaultHeader,
+  value: _utils.defaultData,
+  headers: _utils.defaultHeader,
   handleChange: function handleChange() {}
 };
 var _default = InputTable;

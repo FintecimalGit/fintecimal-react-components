@@ -9,6 +9,7 @@ const useStyles = makeStyles(theme => ({
         padding: theme.spacing(2,0),
     },
     input_loader: {
+        margin: theme.spacing(1),
         positions: 'relative',
         display: 'flex',
         justifyContent: 'center',

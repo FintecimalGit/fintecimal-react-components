@@ -60,7 +60,7 @@ const InputTable = ({ value, headers, handleChange }) => {
     const newInformation = [...localValue];
     newInformation.splice(index, 1);
     handleChange(newInformation);
-  }, [localValue]);
+  }, [localValue, handleChange]);
 
   const formatDataFromCsv = useCallback((data) => {
     let isValid = true;
@@ -86,16 +86,17 @@ const InputTable = ({ value, headers, handleChange }) => {
     }
   }, []);
 
-  const handleOnDropFile = useCallback((_data, fileInfo) => {
+  const handleOnDropFile = useCallback(([_data, fileInfo]) => {
     const { isValid, data} = formatDataFromCsv(_data);
     if (isValid) {
       handleChange([...localValue, ...data]);
     }
   }, [localValue, handleChange]);
-
+  
   useEffect(() => {
     if (headers.length) setLocalHeaders(headers);
-    if (value.length) setLocalValue(value);
+    if (value.length) setLocalValue(value)
+    else if (localValue.length) setLocalValue([]);
   }, [value, headers]);
 
   return (

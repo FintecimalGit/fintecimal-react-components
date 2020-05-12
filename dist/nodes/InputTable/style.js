@@ -17,6 +17,7 @@ var useStyles = (0, _styles.makeStyles)(function (theme) {
       padding: theme.spacing(2, 0)
     },
     input_loader: {
+      margin: theme.spacing(1),
       positions: 'relative',
       display: 'flex',
       justifyContent: 'center',
