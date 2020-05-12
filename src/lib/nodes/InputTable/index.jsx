@@ -16,9 +16,10 @@ import useStyles from './style';
 const InputTable = ({ value, headers, handleChange }) => {
   const classes = useStyles();
   const [localHeaders, setLocalHeaders] = useState([]);
+  const [localValue, setLocalValue] = useState([]);
 
   const HEADERS = useMemo(() => localHeaders
-    .map(opt => { return {key: opt.name, value: opt.label}}), [localHeaders]);
+    .map(option => { return {key: option.name, value: option.label}}), [localHeaders]);
   const FIELDS = useMemo(() => generateValueEmpty(localHeaders), [localHeaders]);
   const csvOptions = useMemo(() => ({
     header: true,
@@ -28,21 +29,21 @@ const InputTable = ({ value, headers, handleChange }) => {
   }), []);
   const VALUES = useMemo(() => {
     let newValues = [];
-    if (value.length) {
-      value.forEach(element => {
+    if (localValue.length) {
+      localValue.forEach(element => {
         let toObject = {};
-        element.forEach(({name, value}) => {
+        element.forEach(({name, value: _value}) => {
           toObject = {
             ...toObject,
-            [name]: value,
+            [name]: _value,
           };
         });
         if(Object.keys(toObject).length) newValues.push(toObject);
       });
       return newValues;
     }
-    return [];
-  }, [value, handleOnDropFile]);
+    else return newValues;
+  }, [localValue, handleOnDropFile]);
 
   const generateData = useCallback((data) => data.map(field => ({
     name: field.name,
@@ -51,15 +52,15 @@ const InputTable = ({ value, headers, handleChange }) => {
   })), []);
 
   const addNewRow = (dataField) => {
-    const newInformation = [...value, generateData(dataField)];
+    const newInformation = [...localValue, generateData(dataField)];
     handleChange(newInformation);
   };
 
   const DeleteRow = useCallback((item, index) => {
-    const newInformation = [...value];
+    const newInformation = [...localValue];
     newInformation.splice(index, 1);
     handleChange(newInformation);
-  }, [value]);
+  }, [localValue]);
 
   const formatDataFromCsv = useCallback((data) => {
     let isValid = true;
@@ -88,13 +89,14 @@ const InputTable = ({ value, headers, handleChange }) => {
   const handleOnDropFile = useCallback((_data, fileInfo) => {
     const { isValid, data} = formatDataFromCsv(_data);
     if (isValid) {
-      handleChange([...value, ...data]);
+      handleChange([...localValue, ...data]);
     }
-  }, [value, handleChange]);
+  }, [localValue, handleChange]);
 
   useEffect(() => {
     if (headers.length) setLocalHeaders(headers);
-  }, [headers]);
+    if (value.length) setLocalValue(value);
+  }, [value, headers]);
 
   return (
       <div className={classes.content}>
@@ -118,8 +120,8 @@ InputTable.propTypes = {
 };
 
 InputTable.defaultProps = {
-  value: [], // defaultData,
-  headers: [], // defaultHeader,
+  value: defaultData,
+  headers: defaultHeader,
   handleChange: () => {},
 };
 
