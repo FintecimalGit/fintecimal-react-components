@@ -11,13 +11,7 @@ var _react = _interopRequireWildcard(require("react"));
 
 var _propTypes = _interopRequireDefault(require("prop-types"));
 
-var _InputStrings = require("./InputStrings");
-
-var _InputWrapper = _interopRequireDefault(require("./InputWrapper"));
-
-var _utils = require("./commons/utils");
-
-var _clabehelper = require("./commons/clabehelper");
+var _papaparse = _interopRequireDefault(require("papaparse"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -31,94 +25,92 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
+function _toArray(arr) { return _arrayWithHoles(arr) || _iterableToArray(arr) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
 
-function _iterableToArrayLimit(arr, i) { if (!(Symbol.iterator in Object(arr) || Object.prototype.toString.call(arr) === "[object Arguments]")) { return; } var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
-var CLABE_LENGTH = 18;
-
-var CLABEInput = function CLABEInput(_ref) {
-  var value = _ref.value,
-      handleChange = _ref.handleChange,
+var CSVReader = function CSVReader(_ref) {
+  var accept = _ref.accept,
+      className = _ref.className,
+      inputClass = _ref.inputClass,
+      fileEncoding = _ref.fileEncoding,
+      inputId = _ref.inputId,
       label = _ref.label,
-      error = _ref.error,
-      errorMessage = _ref.errorMessage,
-      type = _ref.type,
-      required = _ref.required;
+      onError = _ref.onError,
+      onFileLoaded = _ref.onFileLoaded,
+      parserOptions = _ref.parserOptions,
+      _ref$disabled = _ref.disabled,
+      disabled = _ref$disabled === void 0 ? false : _ref$disabled;
+  var refE = (0, _react.useRef)();
+  var handleChangeFile = (0, _react.useCallback)(function (event) {
+    var reader = new FileReader();
 
-  var _useState = (0, _react.useState)(value),
-      _useState2 = _slicedToArray(_useState, 2),
-      mValue = _useState2[0],
-      setValue = _useState2[1];
+    var _refE$current$files = _toArray(refE.current.files),
+        _refE$current$files$ = _refE$current$files[0],
+        file = _refE$current$files$ === void 0 ? null : _refE$current$files$,
+        rest = _refE$current$files.slice(1);
 
-  var mHandleChange = function mHandleChange(newValue) {
-    setValue(newValue);
-    handleChange(value);
+    if (file) {
+      var fileInfo = {
+        name: file.name,
+        size: file.size,
+        type: file.type
+      };
 
-    if (!(0, _utils.isEmpty)(newValue) && isValid(newValue)) {
-      var currentLabel = mConfig.label;
-      setConfig(_objectSpread({}, mConfig, {
-        label: "".concat(currentLabel, " ").concat((0, _clabehelper.getBank)(newValue))
-      }));
+      reader.onload = function (_event) {
+        var csvData = _papaparse.default.parse(reader.result, _objectSpread({}, parserOptions, {
+          error: onError,
+          encoding: fileEncoding
+        }));
+
+        onFileLoaded(csvData.data, fileInfo);
+        refE.current.value = null;
+      };
+
+      reader.readAsText(file, fileEncoding);
     }
-  };
-
-  var _useState3 = (0, _react.useState)({
-    type: type,
-    label: label,
-    value: value,
-    format: _utils.textFormats.NUMBER,
-    required: required,
-    handleChange: mHandleChange
-  }),
-      _useState4 = _slicedToArray(_useState3, 2),
-      mConfig = _useState4[0],
-      setConfig = _useState4[1];
-
-  (0, _react.useEffect)(function () {
-    setValue(value);
-  }, [value]);
-  var errors = {
-    error: error,
-    errorMessage: errorMessage,
-    errorMessages: _InputStrings.clabe.errorMessages
-  };
-
-  var isValid = function isValid(data) {
-    if ((0, _utils.isEmpty)(data) && !required) return true;
-    var size = data.length;
-
-    if (size === CLABE_LENGTH) {
-      return (0, _clabehelper.validateClabe)(data);
-    } else {
-      return false;
-    }
-  };
-
-  return _react.default.createElement(_InputWrapper.default, {
-    config: mConfig,
-    errors: errors,
-    isValid: isValid
-  });
+  }, []);
+  return _react.default.createElement("div", {
+    className: className
+  }, _react.default.createElement("div", null, _react.default.createElement("label", {
+    htmlFor: inputId
+  }, label), _react.default.createElement("input", {
+    ref: refE,
+    className: inputClass,
+    type: "file",
+    id: inputId,
+    accept: accept,
+    onChange: handleChangeFile,
+    disabled: disabled
+  })));
 };
 
-CLABEInput.defaultProps = {
-  label: _InputStrings.clabe.label,
-  type: _InputStrings.clabe.type,
-  error: false,
-  errorMessage: '',
-  required: false
+CSVReader.propTypes = {
+  accept: _propTypes.default.string,
+  className: _propTypes.default.string,
+  inputClass: _propTypes.default.string,
+  fileEncoding: _propTypes.default.string,
+  inputId: _propTypes.default.string,
+  label: _propTypes.default.oneOfType([_propTypes.default.string, _propTypes.default.element]),
+  onError: _propTypes.default.func,
+  onFileLoaded: _propTypes.default.func.isRequired,
+  parserOptions: _propTypes.default.object,
+  disabled: _propTypes.default.bool
 };
-CLABEInput.propTypes = {
-  label: _propTypes.default.string,
-  type: _propTypes.default.string,
-  error: _propTypes.default.bool,
-  errorMessage: _propTypes.default.string,
-  required: _propTypes.default.bool
+CSVReader.defaultProps = {
+  accept: '.csv, text/csv',
+  className: '',
+  inputClass: '',
+  fileEncoding: 'UTF-8',
+  inputId: 'csv_input',
+  label: 'Cargar archivo',
+  onError: function onError() {},
+  parserOptions: {},
+  disabled: false
 };
-var _default = CLABEInput;
+var _default = CSVReader;
 exports.default = _default;

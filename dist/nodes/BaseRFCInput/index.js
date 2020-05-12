@@ -47,14 +47,16 @@ var RFCInput = function RFCInput(_ref) {
     if (size >= 10 && size <= 13) {
       if (size === 10) {
         return (0, _utils.validateRegex)(data, /[A-Z]{4}[0-9][0-9][0-1][0-9][0-3][0-9]/);
-      } else if (size === 12) {
-        return (0, _utils.validateRegex)(data, /[A-Z]{3}[0-9][0-9][0-1][0-9][0-3][0-9][A-Z0-9]{3}/);
-      } else {
-        return (0, _utils.validateRegex)(data, /[A-Z]{4}[0-9][0-9][0-1][0-9][0-3][0-9][A-Z0-9]{3}/);
       }
-    } else {
-      return false;
+
+      if (size === 12) {
+        return (0, _utils.validateRegex)(data, /[A-Z]{3}[0-9][0-9][0-1][0-9][0-3][0-9][A-Z0-9]{3}/);
+      }
+
+      return (0, _utils.validateRegex)(data, /[A-Z]{4}[0-9][0-9][0-1][0-9][0-3][0-9][A-Z0-9]{3}/);
     }
+
+    return false;
   };
 
   return _react.default.createElement(_InputWrapper.default, {
@@ -70,7 +72,8 @@ RFCInput.defaultProps = {
   type: _InputStrings.rfc.type,
   error: false,
   errorMessage: '',
-  required: false
+  required: false,
+  handleBlur: function handleBlur() {}
 };
 RFCInput.propTypes = {
   label: _propTypes.default.string,

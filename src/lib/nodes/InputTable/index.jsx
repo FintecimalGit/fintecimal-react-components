@@ -15,7 +15,6 @@ import useStyles from './style';
 
 const InputTable = ({ value, headers, handleChange }) => {
   const classes = useStyles();
-  const [dataTable, setDataTable] = useState([]);
   const [localHeaders, setLocalHeaders] = useState([]);
 
   const HEADERS = useMemo(() => localHeaders
@@ -23,7 +22,7 @@ const InputTable = ({ value, headers, handleChange }) => {
   const FIELDS = useMemo(() => generateValueEmpty(localHeaders), [localHeaders]);
   const csvOptions = useMemo(() => ({
     header: true,
-    dynamicTyping: true,
+    dynamicTyping: false,
     skipEmptyLines: true,
     transformHeader: header => header.replace(/\W/g, "_"),
   }), []);
@@ -43,7 +42,7 @@ const InputTable = ({ value, headers, handleChange }) => {
       return newValues;
     }
     return [];
-  }, [value]);
+  }, [value, handleOnDropFile]);
 
   const generateData = useCallback((data) => data.map(field => ({
     name: field.name,
@@ -89,10 +88,9 @@ const InputTable = ({ value, headers, handleChange }) => {
   const handleOnDropFile = useCallback((_data, fileInfo) => {
     const { isValid, data} = formatDataFromCsv(_data);
     if (isValid) {
-      handleChange(data);
+      handleChange([...value, ...data]);
     }
-    // TODO: manejar error en archivo;
-  }, []);
+  }, [value, handleChange]);
 
   useEffect(() => {
     if (headers.length) setLocalHeaders(headers);
@@ -114,14 +112,14 @@ const InputTable = ({ value, headers, handleChange }) => {
 };
 
 InputTable.propTypes = {
-  value: PropTypes.array.isRequired,
-  headers: PropTypes.array.isRequired,
+  value: PropTypes.array,
+  headers: PropTypes.array,
   handleChange: PropTypes.func,
 };
 
 InputTable.defaultProps = {
-  value: defaultData,
-  headers: defaultHeader,
+  value: [], // defaultData,
+  headers: [], // defaultHeader,
   handleChange: () => {},
 };
 
