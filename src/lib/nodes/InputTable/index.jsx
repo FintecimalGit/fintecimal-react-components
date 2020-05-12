@@ -100,7 +100,6 @@ const InputTable = ({ value, headers, handleChange }) => {
       isValid = false;
       messages = [`${HEADER_ERROR_MESSAGE} ${headersNames.join(', ')}`, ...messages];
     }
-    console.log(messages);
     return {
       isValid,
       data: _data,
