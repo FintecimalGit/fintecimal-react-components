@@ -176,7 +176,6 @@ var InputTable = function InputTable(_ref) {
       messages = ["".concat(HEADER_ERROR_MESSAGE, " ").concat(headersNames.join(', '))].concat(_toConsumableArray(messages));
     }
 
-    console.log(messages);
     return {
       isValid: isValid,
       data: _data,
