@@ -80,12 +80,14 @@ const InputTable = ({ value, headers, handleChange }) => {
       _data = [ 
         ..._data,
         headersNames.map((key, _index) => {
+          const { label = '' } = localHeaders[_index];
           if (row[key] === '') {
             isValid = false;
             messages = [...messages, `La fila ${index + 2} de la columna "${key}" esta vacía`];
           }
           return {
             name: key,
+            label,
             value: row[key] || '',
           }
         }),
@@ -105,7 +107,7 @@ const InputTable = ({ value, headers, handleChange }) => {
       data: _data,
       messages,
     }
-  }, []);
+  }, [localHeaders]);
 
   const handleOnDropFile = useCallback(([_data, fileInfo]) => {
     const { isValid, data, messages } = formatDataFromCsv(_data);
@@ -123,6 +125,8 @@ const InputTable = ({ value, headers, handleChange }) => {
     if (value.length) setLocalValue(value)
     else if (localValue.length) setLocalValue([]);
   }, [value, headers]);
+
+  console.log(headers)
 
   return (
       <div className={classes.content}>
