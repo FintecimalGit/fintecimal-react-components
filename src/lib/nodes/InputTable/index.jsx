@@ -74,21 +74,21 @@ const InputTable = ({ value, headers, handleChange }) => {
     let messages = [];
     let _data = [];
     let headersRow = [];
-    const headersNames = headers.map(field => field.name);
+    const headersNames = headers.map(({ name = '' }) => name);
+    const labels = headers.map(({ label = '' }) => label );
     data.forEach((row, index) => {
       headersRow = Object.keys(row);
       _data = [ 
         ..._data,
-        headersNames.map((key, _index) => {
-          const { label = '' } = localHeaders[_index];
-          if (row[key] === '') {
+        headersNames.map((name, _index) => {
+          if (row[name] === '') {
             isValid = false;
-            messages = [...messages, `La fila ${index + 2} de la columna "${key}" esta vacía`];
+            messages = [...messages, `La fila ${index + 2} de la columna "${name}" esta vacía`];
           }
           return {
-            name: key,
-            label,
-            value: row[key] || '',
+            name,
+            label: labels[_index],
+            value: row[name] || '',
           }
         }),
       ];
@@ -107,7 +107,7 @@ const InputTable = ({ value, headers, handleChange }) => {
       data: _data,
       messages,
     }
-  }, [localHeaders]);
+  }, [headers]);
 
   const handleOnDropFile = useCallback(([_data, fileInfo]) => {
     const { isValid, data, messages } = formatDataFromCsv(_data);
@@ -125,8 +125,6 @@ const InputTable = ({ value, headers, handleChange }) => {
     if (value.length) setLocalValue(value)
     else if (localValue.length) setLocalValue([]);
   }, [value, headers]);
-
-  console.log(headers)
 
   return (
       <div className={classes.content}>
