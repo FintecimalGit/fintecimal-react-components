@@ -147,20 +147,28 @@ var InputTable = function InputTable(_ref) {
     var messages = [];
     var _data = [];
     var headersRow = [];
-    var headersNames = headers.map(function (field) {
-      return field.name;
+    var headersNames = headers.map(function (_ref3) {
+      var _ref3$name = _ref3.name,
+          name = _ref3$name === void 0 ? '' : _ref3$name;
+      return name;
+    });
+    var labels = headers.map(function (_ref4) {
+      var _ref4$label = _ref4.label,
+          label = _ref4$label === void 0 ? '' : _ref4$label;
+      return label;
     });
     data.forEach(function (row, index) {
       headersRow = Object.keys(row);
-      _data = [].concat(_toConsumableArray(_data), [headersNames.map(function (key, _index) {
-        if (row[key] === '') {
+      _data = [].concat(_toConsumableArray(_data), [headersNames.map(function (name, _index) {
+        if (row[name] === '') {
           isValid = false;
-          messages = [].concat(_toConsumableArray(messages), ["La fila ".concat(index + 2, " de la columna \"").concat(key, "\" esta vac\xEDa")]);
+          messages = [].concat(_toConsumableArray(messages), ["La fila ".concat(index + 2, " de la columna \"").concat(name, "\" esta vac\xEDa")]);
         }
 
         return {
-          name: key,
-          value: row[key] || ''
+          name: name,
+          label: labels[_index],
+          value: row[name] || ''
         };
       })]);
     });
@@ -181,11 +189,11 @@ var InputTable = function InputTable(_ref) {
       data: _data,
       messages: messages
     };
-  }, []);
-  var handleOnDropFile = (0, _react.useCallback)(function (_ref3) {
-    var _ref4 = _slicedToArray(_ref3, 2),
-        _data = _ref4[0],
-        fileInfo = _ref4[1];
+  }, [headers]);
+  var handleOnDropFile = (0, _react.useCallback)(function (_ref5) {
+    var _ref6 = _slicedToArray(_ref5, 2),
+        _data = _ref6[0],
+        fileInfo = _ref6[1];
 
     var _formatDataFromCsv = formatDataFromCsv(_data),
         isValid = _formatDataFromCsv.isValid,
