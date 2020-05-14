@@ -138,6 +138,10 @@ const SelectInput = ({
     setLabelWidth(labelRef.current.offsetWidth);
   }, [label, errorMessage]);
 
+  useEffect(() => {
+    setValue(value);
+  }, [value]);
+
   return (
     <div className={classes.root}>
       {isTextLong(label) && (

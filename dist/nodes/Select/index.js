@@ -224,6 +224,9 @@ var SelectInput = function SelectInput(_ref) {
     setValue(value);
     setLabelWidth(labelRef.current.offsetWidth);
   }, [label, errorMessage]);
+  (0, _react.useEffect)(function () {
+    setValue(value);
+  }, [value]);
   return _react.default.createElement("div", {
     className: classes.root
   }, (0, _utils.isTextLong)(label) && _react.default.createElement("div", null, _react.default.createElement(_LongPlaceHolder.default, {
