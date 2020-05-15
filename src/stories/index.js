@@ -248,18 +248,22 @@ storiesOf('Components|Nodes', module)
         name: 'name',
         label: 'Nombre',
         type: 'respuesta larga',
+        required: true,
       }, {
         name: 'birthplace',
         label: 'Lugar de nacimiento',
         type: 'respuesta larga',
+        required: true,
       }, {
         name: 'ocupation',
         label: 'Ocupacion',
         type: 'respuesta corta',
+        required: true,
       }, {
         name: 'rfc',
         label: 'RFC',
         type: 'RFC',
+        required: true,
       },
     ];
     const signers = [
@@ -276,8 +280,56 @@ storiesOf('Components|Nodes', module)
         phone: '3333333333',
       },
     ];
+    const fields = [
+      [
+        {
+          "name": "name",
+          "label": "Nombre",
+          "type": "respuesta larga"
+        },
+        {
+          "name": "birthplace",
+          "label": "Lugar de nacimiento",
+          "type": "respuesta larga",
+          "value": "s"
+        },
+        {
+          "name": "ocupation",
+          "label": "Ocupacion",
+          "type": "respuesta corta"
+        },
+        {
+          "name": "rfc",
+          "label": "RFC",
+          "type": "RFC"
+        }
+      ],
+      [
+        {
+          "name": "name",
+          "label": "Nombre",
+          "type": "respuesta larga"
+        },
+        {
+          "name": "birthplace",
+          "label": "Lugar de nacimiento",
+          "type": "respuesta larga",
+          "value": "b"
+        },
+        {
+          "name": "ocupation",
+          "label": "Ocupacion",
+          "type": "respuesta corta"
+        },
+        {
+          "name": "rfc",
+          "label": "RFC",
+          "type": "RFC"
+        }
+      ]
+    ];
     return (
-      <DynamicFields header={headers} signers={signers} />
+      <DynamicFields header={headers} fields={fields} signers={signers} handleValue={action('handleValue')}/>
     )
   })
   .add('Currency Input', () => (

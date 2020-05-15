@@ -1,13 +1,13 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import GroupFields from './component/GroupFields';
 
 import useStyles from './style';
 
-
-const DynamicFields = ({ header, fields, signers }) => {
+const DynamicFields = ({ header, fields, signers, handleValue }) => {
   const classes = useStyles();
+  const [mFields, setMFields] = useState([]);
 
   const fillArray = (data, length) => {
     const res = [];
@@ -17,17 +17,46 @@ const DynamicFields = ({ header, fields, signers }) => {
     return res;
   };
 
-  const FIELDS = useMemo(() => {
+  const generateData = () => {
+    if(fields.length > 0) return fields;
     const totalSigners = signers.length;
     return fillArray(header, totalSigners);
-  }, [header, fields]);
+  };
+
+  useEffect(() => {
+    if (header.length > 0) {
+      const data = generateData();
+      setMFields(data);
+    }
+  },[header, fields])
+
+  const replaceValue = (fields, indexGroup) => {
+    const newFields = mFields;
+    newFields[indexGroup] = [...fields];
+    console.log(newFields)
+    return newFields;
+  };
+
+  const handleOnChange = (fields, indexGroup) => {
+    const newFields = replaceValue(fields, indexGroup);
+    handleValue(newFields);
+  }
+
+  const available = mFields.length > 0;
 
   return (
     <div className={classes.content}>
-      {FIELDS.map((groupField, indexGroup) => {
+      {available && mFields.map((groupField, indexGroup) => {
         const { fullName } = signers[indexGroup];
         return (
-          <GroupFields index={indexGroup} fields={groupField} classes={classes} signerName={fullName} />
+          <GroupFields
+            key={indexGroup}
+            index={indexGroup}
+            fields={groupField}
+            classes={classes}
+            signerName={fullName}
+            handleOnChange={handleOnChange}
+          />
         )
         })
       }
@@ -39,6 +68,7 @@ DynamicFields.propTypes = {
   header: PropTypes.array.isRequired,
   fields: PropTypes.array,
   signers: PropTypes.array.isRequired,
+  handleValue: PropTypes.func.isRequired,
 };
 
 DynamicFields.defaultProps = {
