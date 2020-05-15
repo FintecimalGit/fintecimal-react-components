@@ -242,7 +242,7 @@ storiesOf('Components|Nodes', module)
       </Grid>
     </Grid>
   ))
-  .add('Dynamic Fields By signers', () => {
+  .add('Dynamic Fields', () => {
     const headers = [
       {
         name: 'name',
