@@ -23,6 +23,7 @@ import RejectDocuments from './RejectDocuments';
 import RejectionButtons from './RejectionButtons';
 import RejectSimple from './RejectSimple';
 import BaseDatePicker from './BaseDatePicker';
+import DynamicFields from './DynamicFields';
 
 export {
   Maps,
@@ -49,5 +50,6 @@ export {
   RejectDocuments,
   RejectionButtons,
   RejectSimple,
-  BaseDatePicker
+  BaseDatePicker,
+  DynamicFields,
 };
