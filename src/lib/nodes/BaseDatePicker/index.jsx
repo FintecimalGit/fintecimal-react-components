@@ -1,20 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 import 'moment/locale/es';
 
-import { MuiPickersUtilsProvider, KeyboardDatePicker } from "@material-ui/pickers";
+import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
 import DateMomentUtils from '@date-io/moment';
 
 import useStyles from './style';
 
 const BaseDatePicker = ({
-                      label,
-                      value,
-                      onDateChange,
-                      format,
-                      disabled,
-                      minDate,
-                    }) => {
+  disableToolBar,
+  label,
+  value,
+  onDateChange,
+  format,
+  disabled,
+  minDate
+}) => {
   const classes = useStyles();
 
   const [date, setDate] = useState(value);
@@ -23,14 +25,15 @@ const BaseDatePicker = ({
    *
    * @param {Date} _date
    */
-  const handleDateChange = (_date) =>  {
+  const handleDateChange = _date => {
     setDate(_date);
-    onDateChange(_date);
+    const formattedDate = format ? moment(_date).format(format) : _date;
+    onDateChange(formattedDate);
   };
 
   useEffect(() => {
     setDate(value);
-  }, [value])
+  }, [value]);
 
   return (
     <div className={classes.root}>
@@ -43,10 +46,9 @@ const BaseDatePicker = ({
           value={date}
           format={format}
           onChange={handleDateChange}
-          disableToolbar
+          disableToolbar={disableToolBar}
           disabled={disabled}
           minDate={minDate}
-
         />
       </MuiPickersUtilsProvider>
     </div>
@@ -55,26 +57,23 @@ const BaseDatePicker = ({
 
 BaseDatePicker.propTypes = {
   label: PropTypes.string,
-  value: PropTypes.oneOfType([
-    PropTypes.instanceOf(Date),
-    PropTypes.string,
-  ]),
+  value: PropTypes.oneOfType([PropTypes.instanceOf(Date), PropTypes.string]),
   format: PropTypes.string,
   onDateChange: PropTypes.func,
   disabled: PropTypes.bool,
-  minDate: PropTypes.oneOfType([
-    PropTypes.instanceOf(Date),
-    PropTypes.string,
-  ]),
+  minDate: PropTypes.oneOfType([PropTypes.instanceOf(Date), PropTypes.string]),
+  disableToolBar: PropTypes.bool
 };
 
 BaseDatePicker.defaultProps = {
   label: '',
+  disableToolBar: false,
   value: null,
-  format: 'DD/MM/YYYY',
+  format: '',
   onDateChange: () => {},
   disabled: false,
-  minDate: '',
+  minDate: moment().subtract(100, 'years'),
+  maxDate: moment().subtract(10, 'years')
 };
 
 export default BaseDatePicker;

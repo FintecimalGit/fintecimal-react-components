@@ -24,6 +24,7 @@ import RejectionButtons from './RejectionButtons';
 import RejectSimple from './RejectSimple';
 import BaseDatePicker from './BaseDatePicker';
 import DynamicFields from './DynamicFields';
+import BaseCLABEInput from './BaseClabeInput';
 
 export {
   Maps,
@@ -43,6 +44,7 @@ export {
   BaseTextInput,
   BaseEmailInput,
   BasePhoneInput,
+  BaseCLABEInput,
   BaseNumberInput,
   BaseRFCInput,
   ListSignerRoles,
@@ -51,5 +53,5 @@ export {
   RejectionButtons,
   RejectSimple,
   BaseDatePicker,
-  DynamicFields,
+  DynamicFields
 };
