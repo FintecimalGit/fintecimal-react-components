@@ -35,6 +35,7 @@ import {
   RejectSimple,
   BaseDatePicker,
   DynamicFields,
+  BaseCLABEInput
 } from '../lib/nodes';
 
 import Table from '../lib/Table';
@@ -70,7 +71,7 @@ const {
   SelectInput,
   CLABEInput,
   RadioSwitch,
-  SelectBasic,
+  SelectBasic
 } = lib;
 const { LoginUI, MultiDrop } = ui;
 
@@ -90,7 +91,7 @@ storiesOf('Components|Loader', module)
     <Loader
       colors={{
         first: 'red',
-        secound: 'blue',
+        secound: 'blue'
       }}
     />
   ));
@@ -107,12 +108,12 @@ storiesOf('Components|Dropdown', module).add('Dropdown Basic', () => (
   <Dropdown
     parentStyle={{
       backgroundColor: '#4C5C68',
-      color: '#fff',
+      color: '#fff'
     }}
     options={[
       { name: 'name', value: 'Tranquilino' },
       { name: 'setting', value: 'Configuración' },
-      { name: 'logout', value: 'Cerrar Sesión' },
+      { name: 'logout', value: 'Cerrar Sesión' }
     ]}
     onClickOption={action('onClickOption')}
     clickSelect={action('clickSelect')}
@@ -141,7 +142,7 @@ storiesOf('Components|Inputs', module)
       // errorMessage={'Este es un mensaje de error que puede tener cualquier cosa'}
       required
       clear
-    // value={'Este input viene lleno'}
+      // value={'Este input viene lleno'}
     />
   ))
   .add('Email Input', () => (
@@ -150,7 +151,7 @@ storiesOf('Components|Inputs', module)
       handleChange={action('handleChange')}
       required
       error={false}
-    // errorMessage={'Este es un mensaje de error que puede tener cualquier cosa'}
+      // errorMessage={'Este es un mensaje de error que puede tener cualquier cosa'}
     />
   ))
   .add('RFC Input', () => (
@@ -228,9 +229,8 @@ storiesOf('Components|Nodes', module)
       <Grid item sm={12}>
         <BaseDatePicker
           label="Fecha de nacimiento"
-          value="1993-05-07"
           onDateChange={action('onDateChange')}
-          minDate="1950-01-01"
+          format="DD/MMM/YYYY"
         />
       </Grid>
       <Grid item sm={12}>
@@ -238,6 +238,7 @@ storiesOf('Components|Nodes', module)
           label="Fecha de ingreso"
           onDateChange={action('onDateChange')}
           minDate="2000-01-01"
+          disableToolBar={true}
         />
       </Grid>
     </Grid>
@@ -248,97 +249,100 @@ storiesOf('Components|Nodes', module)
         name: 'name',
         label: 'Nombre',
         type: 'respuesta larga',
-        required: true,
-      }, {
+        required: true
+      },
+      {
         name: 'birthplace',
         label: 'Lugar de nacimiento',
         type: 'respuesta larga',
-        required: true,
-      }, {
+        required: true
+      },
+      {
         name: 'ocupation',
         label: 'Ocupacion',
         type: 'respuesta corta',
-        required: true,
-      }, {
+        required: true
+      },
+      {
         name: 'rfc',
         label: 'RFC',
         type: 'RFC',
-        required: true,
-      },
+        required: true
+      }
     ];
     const signers = [
       {
         signerId: '5e2f792ebee1b71b8243e236',
         fullName: 'rep test  test test',
         email: 'alfredo@fintecimal.com',
-        phone: '3333333333',
+        phone: '3333333333'
       },
       {
         signerId: '5e7b8463aa09cb61d422fcdc',
         fullName: 'HUGO LEONELO CARRILLO RAMIREZ',
         email: 'hugo.carrillo@gfmega.com',
-        phone: '3333333333',
-      },
+        phone: '3333333333'
+      }
     ];
     const fields = [
       [
         {
-          "name": "name",
-          "label": "Nombre",
-          "type": "respuesta larga"
+          name: 'name',
+          label: 'Nombre',
+          type: 'respuesta larga'
         },
         {
-          "name": "birthplace",
-          "label": "Lugar de nacimiento",
-          "type": "respuesta larga",
-          "value": "s"
+          name: 'birthplace',
+          label: 'Lugar de nacimiento',
+          type: 'respuesta larga',
+          value: 's'
         },
         {
-          "name": "ocupation",
-          "label": "Ocupacion",
-          "type": "respuesta corta"
+          name: 'ocupation',
+          label: 'Ocupacion',
+          type: 'respuesta corta'
         },
         {
-          "name": "rfc",
-          "label": "RFC",
-          "type": "RFC"
+          name: 'rfc',
+          label: 'RFC',
+          type: 'RFC'
         }
       ],
       [
         {
-          "name": "name",
-          "label": "Nombre",
-          "type": "respuesta larga"
+          name: 'name',
+          label: 'Nombre',
+          type: 'respuesta larga'
         },
         {
-          "name": "birthplace",
-          "label": "Lugar de nacimiento",
-          "type": "respuesta larga",
-          "value": "b"
+          name: 'birthplace',
+          label: 'Lugar de nacimiento',
+          type: 'respuesta larga',
+          value: 'b'
         },
         {
-          "name": "ocupation",
-          "label": "Ocupacion",
-          "type": "respuesta corta"
+          name: 'ocupation',
+          label: 'Ocupacion',
+          type: 'respuesta corta'
         },
         {
-          "name": "rfc",
-          "label": "RFC",
-          "type": "RFC"
+          name: 'rfc',
+          label: 'RFC',
+          type: 'RFC'
         }
       ]
     ];
     return (
-      <DynamicFields header={headers} fields={fields} signers={signers} handleValue={action('handleValue')}/>
-    )
+      <DynamicFields
+        header={headers}
+        fields={fields}
+        signers={signers}
+        handleValue={action('handleValue')}
+      />
+    );
   })
   .add('Currency Input', () => (
-    <CurrencyInput
-      label="Financiamiento"
-      handleChange={action('handleChange')}
-      required
-      clear
-    />
+    <CurrencyInput label="Financiamiento" handleChange={action('handleChange')} required clear />
   ))
   .add('Text Area Input', () => (
     <TextAreaInput
@@ -378,7 +382,7 @@ storiesOf('Components|Nodes', module)
       required
       // error={true}
       errorMessage={shortText}
-    // value={'Todo TODOS'}
+      // value={'Todo TODOS'}
     />
   ))
   .add('Phone', () => (
@@ -388,7 +392,7 @@ storiesOf('Components|Nodes', module)
       required
       // error={true}
       errorMessage={shortText}
-    // value={'Todo TODOS'}
+      // value={'Todo TODOS'}
     />
   ))
   .add('Number', () => (
@@ -398,7 +402,7 @@ storiesOf('Components|Nodes', module)
       required
       // error={true}
       errorMessage={shortText}
-    // value={'Todo TODOS'}
+      // value={'Todo TODOS'}
     />
   ))
   .add('RFC', () => (
@@ -408,7 +412,17 @@ storiesOf('Components|Nodes', module)
       required
       // error={true}
       errorMessage={shortText}
-    // value={'Todo TODOS'}
+      // value={'Todo TODOS'}
+    />
+  ))
+  .add('CLABE', () => (
+    <BaseCLABEInput
+      label="CLABE"
+      handleChange={action('handleChange')}
+      required
+      // error={true}
+      errorMessage={shortText}
+      // value={'Todo TODOS'}
     />
   ))
   .add('Reject button', () => (
@@ -434,7 +448,7 @@ storiesOf('Components|Nodes', module)
         { name: 'Calidad baja' },
         { name: 'Sin imagen' },
         { name: 'Sin sonido' },
-        { name: 'Sin audio' },
+        { name: 'Sin audio' }
       ]}
     />
   ))
@@ -444,7 +458,7 @@ storiesOf('Components|Nodes', module)
         { name: 'Calidad baja' },
         { name: 'Sin imagen' },
         { name: 'Sin sonido' },
-        { name: 'Sin audio' },
+        { name: 'Sin audio' }
       ]}
       rejected={false}
       handlerReject={action('Reject')}
@@ -454,7 +468,7 @@ storiesOf('Components|Nodes', module)
         date: new Date(),
         reason: 'Video no corresponde a documento.',
         comments:
-          'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+          'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
       }}
     />
   ))
@@ -469,18 +483,16 @@ storiesOf('Components|Nodes', module)
 storiesOf('Components|Button', module)
   .add('Classic Button', () => <Button onClick={action('clicked')} />, {
     notes:
-      'Este es el botón creado por default, incluye la respuesta del evento cuando se dispara el evento onClick',
+      'Este es el botón creado por default, incluye la respuesta del evento cuando se dispara el evento onClick'
   })
   .add(
     'Cancel Button',
     () => <Button onClick={action('clicked')} type="cancel" textBtn="Cancelar" />,
-    { notes: '' },
+    { notes: '' }
   )
-  .add(
-    'Error Button',
-    () => <Button onClick={action('clicked')} type="error" textBtn="Error" />,
-    { notes: '' },
-  );
+  .add('Error Button', () => <Button onClick={action('clicked')} type="error" textBtn="Error" />, {
+    notes: ''
+  });
 
 storiesOf('Components|RadioSwitch', module)
   .add('Radio Switch', () => (
@@ -505,7 +517,7 @@ storiesOf('Components|RadioSwitch', module)
 storiesOf('Components|Form', module).add('Validations', () => (
   <div style={{ height: '35px', width: '250px' }}>
     <form
-      onSubmit={(event) => {
+      onSubmit={event => {
         event.preventDefault();
         event.stopPropagation();
         // const { target } = event;
@@ -516,11 +528,11 @@ storiesOf('Components|Form', module).add('Validations', () => (
         handleChange={action('handleChange')}
         required
         error={false}
-      // errorMessage={'Este es un mensaje de error que puede tener cualquier cosa'}
+        // errorMessage={'Este es un mensaje de error que puede tener cualquier cosa'}
       />
       <button
         type="submit"
-        onClick={(event) => {
+        onClick={event => {
           const { target } = event;
           const form = target.parentNode;
           action('onClickSubmit')(JSON.stringify({ formIsValid: form.checkValidity() }));
@@ -542,7 +554,7 @@ storiesOf('Components|SelectBasic', module).add('Select Basic', () => (
         { value: 'labelError', name: 'Error de Etiqueta' },
         { value: 'captureError', name: 'Error de captura' },
         { value: 'wrongDocument', name: 'Documentación de otro cliente' },
-        { value: 'whiteFields', name: 'Campos en blanco' },
+        { value: 'whiteFields', name: 'Campos en blanco' }
       ]}
     />
   </div>
@@ -556,10 +568,12 @@ storiesOf('NewComponents', module)
 
     const items = Array(10)
       .fill(null)
-      .map(() => headers.reduce(
-        (accumulator, { key, value }) => ({ ...accumulator, [key]: <span>{key}</span> }),
-        {},
-      ));
+      .map(() =>
+        headers.reduce(
+          (accumulator, { key, value }) => ({ ...accumulator, [key]: <span>{key}</span> }),
+          {}
+        )
+      );
     return (
       <Container style={{ paddingTop: '5vh', paddingBottom: '5vh' }}>
         <Table
@@ -588,7 +602,7 @@ storiesOf('NewComponents', module)
   .add('RejectionNote', () => {
     const [anchorElement, setAnchorElement] = React.useState(null);
 
-    const openNote = (event) => {
+    const openNote = event => {
       action('onOpenNote')(event.currentTarget);
       setAnchorElement(event.currentTarget);
     };
@@ -602,7 +616,10 @@ storiesOf('NewComponents', module)
       <Container style={{ paddingTop: '5vh', paddingBottom: '5vh', height: '200vh' }}>
         <div
           style={{
-            display: 'flex', justifyContent: 'center', width: '100%', padding: '25vw 0px',
+            display: 'flex',
+            justifyContent: 'center',
+            width: '100%',
+            padding: '25vw 0px'
           }}
         >
           <ButtonMaterial variant="contained" color="primary" onClick={openNote}>
@@ -639,7 +656,7 @@ storiesOf('NewComponents', module)
           { name: 'Documento 1', status: 'Aceptado' },
           { name: 'Documento 2', status: 'Pendiente' },
           { name: 'Documento 3', status: 'En Espera' },
-          { name: 'Documento 3', status: 'En Revisión' },
+          { name: 'Documento 3', status: 'En Revisión' }
         ]}
         onClickDocument={action('onClickDocument')}
         onDownload={action('onDownload')}
@@ -663,7 +680,7 @@ storiesOf('NewComponents', module)
           { name: 'Calidad baja' },
           { name: 'Sin imagen' },
           { name: 'Sin sonido' },
-          { name: 'Sin audio' },
+          { name: 'Sin audio' }
         ]}
         rejectionData={{
           name: 'Valerie Baumbach',
@@ -671,7 +688,7 @@ storiesOf('NewComponents', module)
           date: new Date(),
           reason: 'Video no corresponde a documento.',
           comments:
-              'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+            'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
         }}
         rejected={false}
       />
@@ -680,45 +697,37 @@ storiesOf('NewComponents', module)
   .add('RejectionField', () => (
     <Container maxWidth="sm" style={{ paddingTop: '5vh', paddingBottom: '5vh' }}>
       <Grid container spacing={0}>
-        <Grid
-          key="a1"
-          item
-          sm={12}
-        >
+        <Grid key="a1" item sm={12}>
           <RejectionField
             field={{
               label: 'Monto total del crédito',
               value: '72,000.00',
-              fieldType: { name: 'número' },
+              fieldType: { name: 'número' }
             }}
             onReject={action('onReject')}
             rejectionOptions={[
               { name: 'Calidad baja' },
               { name: 'Sin imagen' },
               { name: 'Sin sonido' },
-              { name: 'Sin audio' },
+              { name: 'Sin audio' }
             ]}
             rejectionData={{}}
             rejected={false}
           />
         </Grid>
-        <Grid
-          key="a2"
-          item
-          sm={12}
-        >
+        <Grid key="a2" item sm={12}>
           <RejectionField
             field={{
               label: 'Monto total del crédito',
               value: '72,000.00',
-              fieldType: { name: 'número' },
+              fieldType: { name: 'número' }
             }}
             onReject={action('onReject')}
             rejectionOptions={[
               { name: 'Calidad baja' },
               { name: 'Sin imagen' },
               { name: 'Sin sonido' },
-              { name: 'Sin audio' },
+              { name: 'Sin audio' }
             ]}
             rejectionData={{
               name: 'Valerie Baumbach',
@@ -726,29 +735,25 @@ storiesOf('NewComponents', module)
               date: new Date(),
               reason: 'Video no corresponde a documento.',
               comments:
-                  'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+                'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
             }}
             rejected
             onHandlerInput={action('onHandlerInput')}
           />
         </Grid>
-        <Grid
-          key="a4"
-          item
-          sm={12}
-        >
+        <Grid key="a4" item sm={12}>
           <RejectionField
             field={{
               label: 'Corre electronico',
               value: 'alfredo@fintecimal.com',
-              fieldType: { name: 'email' },
+              fieldType: { name: 'email' }
             }}
             onReject={action('onReject')}
             rejectionOptions={[
               { name: 'Calidad baja' },
               { name: 'Sin imagen' },
               { name: 'Sin sonido' },
-              { name: 'Sin audio' },
+              { name: 'Sin audio' }
             ]}
             rejectionData={{}}
             rejected={false}
@@ -756,23 +761,19 @@ storiesOf('NewComponents', module)
             onUndoRejection={action('onUndoRejection')}
           />
         </Grid>
-        <Grid
-          key="a3"
-          item
-          sm={12}
-        >
+        <Grid key="a3" item sm={12}>
           <RejectionField
             field={{
               label: 'Corre electronico',
               value: 'alfredo@fintecimal.com',
-              fieldType: { name: 'email' },
+              fieldType: { name: 'email' }
             }}
             onReject={action('onReject')}
             rejectionOptions={[
               { name: 'Calidad baja' },
               { name: 'Sin imagen' },
               { name: 'Sin sonido' },
-              { name: 'Sin audio' },
+              { name: 'Sin audio' }
             ]}
             rejectionData={{
               name: 'Valerie Baumbach',
@@ -780,7 +781,7 @@ storiesOf('NewComponents', module)
               date: new Date(),
               reason: 'Video no corresponde a documento.',
               comments:
-                  'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+                'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
             }}
             rejected
             onHandlerInput={action('onHandlerInput')}
@@ -788,23 +789,19 @@ storiesOf('NewComponents', module)
             onUndoRejection={action('onUndoRejection')}
           />
         </Grid>
-        <Grid
-          key="a4"
-          item
-          sm={12}
-        >
+        <Grid key="a4" item sm={12}>
           <RejectionField
             field={{
               label: 'Celular',
               value: '3333333333',
-              fieldType: { name: 'celular' },
+              fieldType: { name: 'celular' }
             }}
             onReject={action('onReject')}
             rejectionOptions={[
               { name: 'Calidad baja' },
               { name: 'Sin imagen' },
               { name: 'Sin sonido' },
-              { name: 'Sin audio' },
+              { name: 'Sin audio' }
             ]}
             rejectionData={{}}
             rejected={false}
@@ -812,23 +809,19 @@ storiesOf('NewComponents', module)
             onUndoRejection={action('onUndoRejection')}
           />
         </Grid>
-        <Grid
-          key="a3"
-          item
-          sm={12}
-        >
+        <Grid key="a3" item sm={12}>
           <RejectionField
             field={{
               label: 'Celular',
               value: '3333333333',
-              fieldType: { name: 'celular' },
+              fieldType: { name: 'celular' }
             }}
             onReject={action('onReject')}
             rejectionOptions={[
               { name: 'Calidad baja' },
               { name: 'Sin imagen' },
               { name: 'Sin sonido' },
-              { name: 'Sin audio' },
+              { name: 'Sin audio' }
             ]}
             rejectionData={{
               name: 'Valerie Baumbach',
@@ -836,7 +829,7 @@ storiesOf('NewComponents', module)
               date: new Date(),
               reason: 'Video no corresponde a documento.',
               comments:
-                    'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+                'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
             }}
             rejected
             onHandlerInput={action('onHandlerInput')}
@@ -844,23 +837,19 @@ storiesOf('NewComponents', module)
             onUndoRejection={action('onUndoRejection')}
           />
         </Grid>
-        <Grid
-          key="a4"
-          item
-          sm={12}
-        >
+        <Grid key="a4" item sm={12}>
           <RejectionField
             field={{
               label: 'RFC',
               value: 'XEXX010101000',
-              fieldType: { name: 'RFC' },
+              fieldType: { name: 'RFC' }
             }}
             onReject={action('onReject')}
             rejectionOptions={[
               { name: 'Calidad baja' },
               { name: 'Sin imagen' },
               { name: 'Sin sonido' },
-              { name: 'Sin audio' },
+              { name: 'Sin audio' }
             ]}
             rejectionData={{}}
             rejected={false}
@@ -868,23 +857,19 @@ storiesOf('NewComponents', module)
             onUndoRejection={action('onUndoRejection')}
           />
         </Grid>
-        <Grid
-          key="a3"
-          item
-          sm={12}
-        >
+        <Grid key="a3" item sm={12}>
           <RejectionField
             field={{
               label: 'RFC',
               value: 'XEXX010101000',
-              fieldType: { name: 'RFC' },
+              fieldType: { name: 'RFC' }
             }}
             onReject={action('onReject')}
             rejectionOptions={[
               { name: 'Calidad baja' },
               { name: 'Sin imagen' },
               { name: 'Sin sonido' },
-              { name: 'Sin audio' },
+              { name: 'Sin audio' }
             ]}
             rejectionData={{
               name: 'Valerie Baumbach',
@@ -892,7 +877,7 @@ storiesOf('NewComponents', module)
               date: new Date(),
               reason: 'Video no corresponde a documento.',
               comments:
-                    'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+                'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
             }}
             rejected
             onHandlerInput={action('onHandlerInput')}
@@ -900,11 +885,7 @@ storiesOf('NewComponents', module)
             onUndoRejection={action('onUndoRejection')}
           />
         </Grid>
-        <Grid
-          key="a4"
-          item
-          sm={12}
-        >
+        <Grid key="a4" item sm={12}>
           <RejectionField
             field={{
               label: 'Tipo de pago',
@@ -913,20 +894,20 @@ storiesOf('NewComponents', module)
               config: [
                 {
                   type: 'string',
-                  name: 'Mensual',
+                  name: 'Mensual'
                 },
                 {
                   type: 'string',
-                  name: 'Quincenal',
-                },
-              ],
+                  name: 'Quincenal'
+                }
+              ]
             }}
             onReject={action('onReject')}
             rejectionOptions={[
               { name: 'Calidad baja' },
               { name: 'Sin imagen' },
               { name: 'Sin sonido' },
-              { name: 'Sin audio' },
+              { name: 'Sin audio' }
             ]}
             rejectionData={{}}
             rejected={false}
@@ -934,11 +915,7 @@ storiesOf('NewComponents', module)
             onUndoRejection={action('onUndoRejection')}
           />
         </Grid>
-        <Grid
-          key="a3"
-          item
-          sm={12}
-        >
+        <Grid key="a3" item sm={12}>
           <RejectionField
             field={{
               label: 'Tipo de pago',
@@ -947,20 +924,20 @@ storiesOf('NewComponents', module)
               config: [
                 {
                   type: 'string',
-                  name: 'Mensual',
+                  name: 'Mensual'
                 },
                 {
                   type: 'string',
-                  name: 'Quincenal',
-                },
-              ],
+                  name: 'Quincenal'
+                }
+              ]
             }}
             onReject={action('onReject')}
             rejectionOptions={[
               { name: 'Calidad baja' },
               { name: 'Sin imagen' },
               { name: 'Sin sonido' },
-              { name: 'Sin audio' },
+              { name: 'Sin audio' }
             ]}
             rejectionData={{
               name: 'Valerie Baumbach',
@@ -968,7 +945,7 @@ storiesOf('NewComponents', module)
               date: new Date(),
               reason: 'Video no corresponde a documento.',
               comments:
-                      'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+                'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
             }}
             rejected
             onHandlerInput={action('onHandlerInput')}
@@ -987,7 +964,7 @@ storiesOf('NewComponents', module)
           { name: 'Calidad baja' },
           { name: 'Sin imagen' },
           { name: 'Sin sonido' },
-          { name: 'Sin audio' },
+          { name: 'Sin audio' }
         ]}
         rejectionData={{
           name: 'Valerie Baumbach',
@@ -995,7 +972,7 @@ storiesOf('NewComponents', module)
           date: new Date(),
           reason: 'Video no corresponde a documento.',
           comments:
-              'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+            'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
         }}
         rejected={false}
         onOpen={action('onOpen')}
@@ -1014,7 +991,7 @@ storiesOf('NewComponents', module)
           { name: 'Calidad baja' },
           { name: 'Sin imagen' },
           { name: 'Sin sonido' },
-          { name: 'Sin audio' },
+          { name: 'Sin audio' }
         ]}
         rejectionData={{}}
         rejected={false}
@@ -1027,7 +1004,7 @@ storiesOf('NewComponents', module)
           { name: 'Calidad baja' },
           { name: 'Sin imagen' },
           { name: 'Sin sonido' },
-          { name: 'Sin audio' },
+          { name: 'Sin audio' }
         ]}
         rejectionData={{
           name: 'Valerie Baumbach',
@@ -1035,7 +1012,7 @@ storiesOf('NewComponents', module)
           date: new Date(),
           reason: 'Video no corresponde a documento.',
           comments:
-              'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+            'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
         }}
         rejected
       />
@@ -1052,7 +1029,7 @@ storiesOf('NewComponents', module)
           { name: 'Calidad baja' },
           { name: 'Sin imagen' },
           { name: 'Sin sonido' },
-          { name: 'Sin audio' },
+          { name: 'Sin audio' }
         ]}
         rejectionData={{}}
         onHandlerReject={action('onHandlerReject')}
@@ -1065,7 +1042,7 @@ storiesOf('NewComponents', module)
           { name: 'Calidad baja' },
           { name: 'Sin imagen' },
           { name: 'Sin sonido' },
-          { name: 'Sin audio' },
+          { name: 'Sin audio' }
         ]}
         rejectionData={{
           name: 'Valerie Baumbach',
@@ -1073,7 +1050,7 @@ storiesOf('NewComponents', module)
           date: new Date(),
           reason: 'Video no corresponde a documento.',
           comments:
-              'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+            'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
         }}
         rejected
         onHandlerReject={action('onHandlerReject')}
@@ -1087,7 +1064,7 @@ storiesOf('NewComponents', module)
           { name: 'Calidad baja' },
           { name: 'Sin imagen' },
           { name: 'Sin sonido' },
-          { name: 'Sin audio' },
+          { name: 'Sin audio' }
         ]}
         rejectionData={{}}
         onHandlerReject={action('onHandlerReject')}
@@ -1103,7 +1080,7 @@ storiesOf('NewComponents', module)
           { name: 'Calidad baja' },
           { name: 'Sin imagen' },
           { name: 'Sin sonido' },
-          { name: 'Sin audio' },
+          { name: 'Sin audio' }
         ]}
         rejectionData={{
           name: 'Valerie Baumbach',
@@ -1111,7 +1088,7 @@ storiesOf('NewComponents', module)
           date: new Date(),
           reason: 'Video no corresponde a documento.',
           comments:
-              'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+            'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
         }}
         rejected
         onHandlerReject={action('onHandlerReject')}
@@ -1140,15 +1117,15 @@ storiesOf('NewComponents', module)
 
     useEffect(() => {
       fetch('https://upload.wikimedia.org/wikipedia/commons/c/cc/Game_Boy_Color_Pikachu.jpg')
-        .then((response) => response.blob())
-        .then((blob) => {
+        .then(response => response.blob())
+        .then(blob => {
           const file = new File([blob], 'test.jpg', { type: blob.type });
           setImage(file);
         });
 
       fetch('https://s1.q4cdn.com/806093406/files/doc_downloads/test.pdf')
-        .then((response) => response.blob())
-        .then((blob) => {
+        .then(response => response.blob())
+        .then(blob => {
           const file = new File([blob], 'test.pdf', { type: blob.type });
           setPdf(file);
         });
@@ -1186,15 +1163,15 @@ storiesOf('NewComponents', module)
 
     useEffect(() => {
       fetch('https://upload.wikimedia.org/wikipedia/commons/c/cc/Game_Boy_Color_Pikachu.jpg')
-        .then((response) => response.blob())
-        .then((blob) => {
+        .then(response => response.blob())
+        .then(blob => {
           const file = new File([blob], 'test.jpg', { type: blob.type });
           setImage(file);
         });
 
       fetch('https://s1.q4cdn.com/806093406/files/doc_downloads/test.pdf')
-        .then((response) => response.blob())
-        .then((blob) => {
+        .then(response => response.blob())
+        .then(blob => {
           const file = new File([blob], 'test.pdf', { type: blob.type });
           setPdf(file);
         });
@@ -1206,7 +1183,7 @@ storiesOf('NewComponents', module)
           paddingBottom: '5vh',
           display: 'flex',
           flexDirection: 'row',
-          justifyContent: 'space-around',
+          justifyContent: 'space-around'
         }}
       >
         <FileThumbnail file={pdf} onClick={action('onClick')} />
@@ -1221,15 +1198,15 @@ storiesOf('NewComponents', module)
     const [files, setFiles] = useState([]);
     useEffect(() => {
       fetch('https://upload.wikimedia.org/wikipedia/commons/c/cc/Game_Boy_Color_Pikachu.jpg')
-        .then((response) => response.blob())
-        .then((blob) => {
+        .then(response => response.blob())
+        .then(blob => {
           const file = new File([blob], 'test.jpg', { type: blob.type });
           setImage(file);
         });
 
       fetch('https://s1.q4cdn.com/806093406/files/doc_downloads/test.pdf')
-        .then((response) => response.blob())
-        .then((blob) => {
+        .then(response => response.blob())
+        .then(blob => {
           const file = new File([blob], 'test.pdf', { type: blob.type });
           setPdf(file);
         });
@@ -1245,7 +1222,7 @@ storiesOf('NewComponents', module)
           paddingBottom: '5vh',
           display: 'flex',
           flexDirection: 'row',
-          justifyContent: 'space-around',
+          justifyContent: 'space-around'
         }}
       >
         <FileFinder files={files} onClick={action('onClick')} placeholder="Busca una nómina" />
@@ -1263,7 +1240,7 @@ storiesOf('Components|SelectBasic', module).add('Select Basic', () => (
         { value: 'labelError', name: 'Error de Etiqueta' },
         { value: 'captureError', name: 'Error de captura' },
         { value: 'wrongDocument', name: 'Documentación de otro cliente' },
-        { value: 'whiteFields', name: 'Campos en blanco' },
+        { value: 'whiteFields', name: 'Campos en blanco' }
       ]}
     />
   </div>
