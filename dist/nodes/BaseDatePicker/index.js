@@ -41,7 +41,7 @@ var BaseDatePicker = function BaseDatePicker(_ref) {
       minDate = _ref.minDate;
   var classes = (0, _style.default)();
 
-  var _useState = (0, _react.useState)(value),
+  var _useState = (0, _react.useState)((0, _moment.default)()),
       _useState2 = _slicedToArray(_useState, 2),
       date = _useState2[0],
       setDate = _useState2[1];
@@ -58,7 +58,8 @@ var BaseDatePicker = function BaseDatePicker(_ref) {
   };
 
   (0, _react.useEffect)(function () {
-    setDate(value);
+    var mValue = format && value ? (0, _moment.default)(value, format) : value;
+    setDate(mValue);
   }, [value]);
   return _react.default.createElement("div", {
     className: classes.root
@@ -70,7 +71,7 @@ var BaseDatePicker = function BaseDatePicker(_ref) {
     variant: "inline",
     inputVariant: "outlined",
     label: label,
-    value: date,
+    value: date ? date : null,
     format: format,
     onChange: handleDateChange,
     disableToolbar: disableToolBar,

@@ -241,6 +241,16 @@ storiesOf('Components|Nodes', module)
           disableToolBar={true}
         />
       </Grid>
+      <Grid item sm={12}>
+        <BaseDatePicker
+          value={"mar., 9 de junio de 2020"}
+          label="Fecha de vencimiento"
+          onDateChange={action('onDateChange')}
+          minDate="2020-01-01"
+          format={"ddd, LL"}
+          disableToolBar={true}
+        />
+      </Grid>
     </Grid>
   ))
   .add('Dynamic Fields', () => {

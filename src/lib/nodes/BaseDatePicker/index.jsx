@@ -19,7 +19,7 @@ const BaseDatePicker = ({
 }) => {
   const classes = useStyles();
 
-  const [date, setDate] = useState(value);
+  const [date, setDate] = useState(moment());
 
   /**
    *
@@ -32,7 +32,8 @@ const BaseDatePicker = ({
   };
 
   useEffect(() => {
-    setDate(value);
+    const mValue = format && value ? moment(value, format) : value;
+    setDate(mValue);
   }, [value]);
 
   return (
@@ -43,7 +44,7 @@ const BaseDatePicker = ({
           variant="inline"
           inputVariant="outlined"
           label={label}
-          value={date}
+          value={date ? date : null}
           format={format}
           onChange={handleDateChange}
           disableToolbar={disableToolBar}
