@@ -10,13 +10,16 @@ import RemoveRedEyeRoundedIcon from '@material-ui/icons/RemoveRedEyeRounded';
 import useStyles from './style';
 import { data } from './data';
 
-const ListSignerRoles = ({ options, selected, onChangeHandler }) => {
+const ListSignerRoles = ({ options, selected, onChangeHandler, onSelectSection }) => {
   const classes = useStyles();
   const getClassFromStatus = (isSelect, complete) => {
     if (isSelect) return classes.labelSelected;
     if (complete) return classes.labelComplete;
     return classes.label;
   };
+  const handleOnSelectSection = (section) => () => {
+    onSelectSection(section);
+  }
   return (
     <div>
       {options.map((option, index) => {
@@ -36,7 +39,7 @@ const ListSignerRoles = ({ options, selected, onChangeHandler }) => {
               {readOnly && <RemoveRedEyeRoundedIcon className={classes.icon} />}
             </div>
             {isSelected &&
-              values.map((steps, index_step) => <SignerRolesStep key={index_step} step={steps} />)}
+              values.map((steps, index_step) => <SignerRolesStep key={index_step} step={steps} onSelectSection={handleOnSelectSection(steps)} />)}
           </Fragment>
         );
       })}
@@ -47,13 +50,15 @@ const ListSignerRoles = ({ options, selected, onChangeHandler }) => {
 ListSignerRoles.propTypes = {
   options: PropTypes.array,
   selected: PropTypes.number,
-  onChangeHandler: PropTypes.func
+  onChangeHandler: PropTypes.func,
+  onSelectSection: PropTypes.func,
 };
 
 ListSignerRoles.defaultProps = {
   options: data,
   selected: 0,
-  onChangeHandler: () => {}
+  onChangeHandler: () => {},
+  onSelectSection: () => {},
 };
 
 export default ListSignerRoles;
