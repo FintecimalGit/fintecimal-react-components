@@ -1,5 +1,7 @@
 "use strict";
 
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
@@ -19,7 +21,9 @@ var _data = require("./data");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 /* eslint-disable react/no-array-index-key */
 
@@ -29,13 +33,20 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 var ListSignerRoles = function ListSignerRoles(_ref) {
   var options = _ref.options,
       selected = _ref.selected,
-      onChangeHandler = _ref.onChangeHandler;
+      onChangeHandler = _ref.onChangeHandler,
+      onSelectSection = _ref.onSelectSection;
   var classes = (0, _style.default)();
 
   var getClassFromStatus = function getClassFromStatus(isSelect, complete) {
     if (isSelect) return classes.labelSelected;
     if (complete) return classes.labelComplete;
     return classes.label;
+  };
+
+  var handleOnSelectSection = function handleOnSelectSection(section) {
+    return function () {
+      onSelectSection(section);
+    };
   };
 
   return _react.default.createElement("div", null, options.map(function (option, index) {
@@ -60,7 +71,8 @@ var ListSignerRoles = function ListSignerRoles(_ref) {
     })), isSelected && values.map(function (steps, index_step) {
       return _react.default.createElement(_SignerRolesStep.default, {
         key: index_step,
-        step: steps
+        step: steps,
+        onSelectSection: handleOnSelectSection(steps)
       });
     }));
   }));
@@ -69,12 +81,14 @@ var ListSignerRoles = function ListSignerRoles(_ref) {
 ListSignerRoles.propTypes = {
   options: _propTypes.default.array,
   selected: _propTypes.default.number,
-  onChangeHandler: _propTypes.default.func
+  onChangeHandler: _propTypes.default.func,
+  onSelectSection: _propTypes.default.func
 };
 ListSignerRoles.defaultProps = {
   options: _data.data,
   selected: 0,
-  onChangeHandler: function onChangeHandler() {}
+  onChangeHandler: function onChangeHandler() {},
+  onSelectSection: function onSelectSection() {}
 };
 var _default = ListSignerRoles;
 exports.default = _default;
