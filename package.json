@@ -19,6 +19,7 @@
     "pdfjs-dist": "^2.2.228",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
+    "react-autosuggest": "^10.0.2",
     "react-dom": "^16.8.6",
     "react-dropzone": "^10.2.1",
     "react-google-maps": "^9.4.5",
