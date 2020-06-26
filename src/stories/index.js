@@ -1255,3 +1255,18 @@ storiesOf('Components|SelectBasic', module).add('Select Basic', () => (
     />
   </div>
 ));
+
+import AutoComplete from '../lib/Autocomplete';
+storiesOf('Components|AutoComplete', module).add('Auto Complete', () => (
+  <AutoComplete
+    label="el label"
+    placeholder="Placeholder"
+    onChange={action('onChange')}
+    required
+    error
+    errorMessage={longText}
+    // value={'Seleccion mal'}
+    options={listWithCategories}
+    // value="3"
+  />
+));
