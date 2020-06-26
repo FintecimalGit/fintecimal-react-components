@@ -91,7 +91,7 @@ const Autocomplete = ({
     setSuggestions([]);
   }
 
-  const handleChange = (event, { newValue, method }) => {
+  const handleOnChange = (event, { newValue, method }) => {
     setLocalValue(newValue);
     if (handleOnChangeWhen.includes(method)) onChange(newValue);
   };
@@ -183,7 +183,7 @@ const Autocomplete = ({
           label: label,
           placeholder: placeholder,
           value: localValue,
-          onChange: handleChange,
+          onChange: handleOnChange,
           variant: variant,
           required: required,
           disabled: disabled,
