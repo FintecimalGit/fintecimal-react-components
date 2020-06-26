@@ -1261,12 +1261,44 @@ storiesOf('Components|AutoComplete', module).add('Auto Complete', () => (
   <AutoComplete
     label="el label"
     placeholder="Placeholder"
-    onChange={action('onChange')}
+    handleChange={action('handleChange')}
     required
     error
     errorMessage={longText}
     // value={'Seleccion mal'}
     options={listWithCategories}
+    // value="3"
+  />
+));
+
+const singleOptions = [
+  {
+    "type": "string",
+    "name": "Tradicional"
+  },
+  {
+    "type": "string",
+    "name": "Tasa cero"
+  },
+  {
+    "type": "string",
+    "name": "Recompra"
+  },
+  {
+    "type": "string",
+    "name": "Segundas Operaciones"
+  }
+];
+storiesOf('Components|AutoComplete', module).add('Auto Complete single', () => (
+  <AutoComplete
+    label="el label"
+    placeholder="Placeholder"
+    handleChange={action('handleChange')}
+    required
+    error
+    errorMessage={longText}
+    // value={'Seleccion mal'}
+    options={singleOptions}
     // value="3"
   />
 ));

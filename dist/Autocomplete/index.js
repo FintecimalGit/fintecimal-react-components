@@ -98,7 +98,7 @@ var renderSuggestion = function renderSuggestion(suggestion) {
 
 var Autocomplete = function Autocomplete(_ref) {
   var options = _ref.options,
-      onChange = _ref.onChange,
+      handleChange = _ref.handleChange,
       caseSensitive = _ref.caseSensitive,
       startWith = _ref.startWith,
       maxSuggestions = _ref.maxSuggestions,
@@ -123,6 +123,11 @@ var Autocomplete = function Autocomplete(_ref) {
       suggestions = _useState4[0],
       setSuggestions = _useState4[1];
 
+  var _useState5 = (0, _react.useState)(false),
+      _useState6 = _slicedToArray(_useState5, 2),
+      multiSection = _useState6[0],
+      setMultiSection = _useState6[1];
+
   var clearSugestions = function clearSugestions() {
     setSuggestions([]);
   };
@@ -131,7 +136,7 @@ var Autocomplete = function Autocomplete(_ref) {
     var newValue = _ref2.newValue,
         method = _ref2.method;
     setLocalValue(newValue);
-    if (handleOnChangeWhen.includes(method)) onChange(newValue);
+    if (handleOnChangeWhen.includes(method)) handleChange(newValue);
   };
   /**
    *
@@ -145,17 +150,14 @@ var Autocomplete = function Autocomplete(_ref) {
   };
   /**
    * 
-   * @param {String} _value
+   * @param {Array} _options
+   * @param {RegExp} regex
    * @returns {Array} 
    */
 
 
-  var getSuggestions = function getSuggestions(_value) {
-    var escapedValue = escapeRegexCharacters(_value.trim());
-    var flags = caseSensitive ? '' : 'i';
-    var startWithFlag = startWith ? '^' : '';
-    var regex = new RegExp("".concat(startWithFlag).concat(escapedValue), flags);
-    return options.map(function (option) {
+  var getSuggestionsByChildren = function getSuggestionsByChildren(_options, regex) {
+    return _options.map(function (option) {
       return {
         name: option.name,
         children: option.children.map(function (_children) {
@@ -168,7 +170,37 @@ var Autocomplete = function Autocomplete(_ref) {
       };
     }).filter(function (option) {
       return option.children.length > 0;
-    }).slice(0, maxSuggestions);
+    });
+  };
+  /**
+   * 
+   * @param {Array} _options
+   * @param {RegExp} regex
+   * @returns {Array} 
+   */
+
+
+  var getSuggestionsByName = function getSuggestionsByName(_options, regex) {
+    return _options.filter(function (option) {
+      return regex.test(option.name);
+    });
+  };
+  /**
+   * 
+   * @param {String} _value
+   * @returns {Array} 
+   */
+
+
+  var getSuggestions = function getSuggestions(_value) {
+    var escapedValue = escapeRegexCharacters(_value.trim());
+    var flags = caseSensitive ? '' : 'i';
+    var startWithFlag = startWith ? '^' : '';
+    var regex = new RegExp("".concat(startWithFlag).concat(escapedValue), flags);
+
+    var _options = multiSection ? getSuggestionsByChildren(options, regex) : getSuggestionsByName(options, regex);
+
+    return _options.slice(0, maxSuggestions);
   };
 
   var onSuggestionsFetchRequested = function onSuggestionsFetchRequested(_ref3) {
@@ -190,7 +222,7 @@ var Autocomplete = function Autocomplete(_ref) {
 
 
   var getSuggestionValue = function getSuggestionValue(suggestion) {
-    return suggestion.customValue;
+    return multiSection ? suggestion.customValue : suggestion.name;
   };
   /**
    * 
@@ -216,8 +248,15 @@ var Autocomplete = function Autocomplete(_ref) {
   (0, _react.useEffect)(function () {
     setLocalValue(value);
   }, [value]);
+  (0, _react.useEffect)(function () {
+    var _multiSection = options.some(function (option) {
+      return option.children;
+    });
+
+    setMultiSection(_multiSection);
+  }, [options]);
   return _react.default.createElement("div", null, _react.default.createElement(_reactAutosuggest.default, {
-    multiSection: true,
+    multiSection: multiSection,
     suggestions: suggestions,
     onSuggestionsFetchRequested: onSuggestionsFetchRequested,
     onSuggestionsClearRequested: onSuggestionsClearRequested,
@@ -256,9 +295,9 @@ Autocomplete.propTypes = {
     name: _propTypes.default.string.isRequired,
     children: _propTypes.default.arrayOf(_propTypes.default.shape({
       name: _propTypes.default.string.isRequired
-    })).isRequired
+    }))
   })),
-  onChange: _propTypes.default.func,
+  handleChange: _propTypes.default.func,
   // Autosuggest props
   caseSensitive: _propTypes.default.bool,
   maxSuggestions: _propTypes.default.number,
@@ -276,7 +315,7 @@ Autocomplete.propTypes = {
 Autocomplete.defaultProps = {
   // General Props
   option: [],
-  onChange: function onChange() {},
+  handleChange: function handleChange() {},
   // Autosuggest props
   caseSensitive: false,
   startWith: false,
