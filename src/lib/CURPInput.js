@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { curp } from './InputStrings';
-import InputWrapper from './InputWrapper';
+import InputWrapper from './nodes/InputWrapper';
 import { textFormats, isEmpty, validateRegex } from './commons/utils';
 const CURP_LENGTH = 18;
 

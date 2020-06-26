@@ -17,7 +17,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var SignerRolesStep = function SignerRolesStep(_ref) {
   var index = _ref.index,
-      step = _ref.step;
+      step = _ref.step,
+      onSelectSection = _ref.onSelectSection;
   var classes = (0, _style.default)();
 
   var getClassFromStatus = function getClassFromStatus(complete) {
@@ -28,7 +29,8 @@ var SignerRolesStep = function SignerRolesStep(_ref) {
       complete = step.complete;
   return _react.default.createElement("div", {
     key: index,
-    className: classes.content
+    className: classes.content,
+    onClick: onSelectSection
   }, _react.default.createElement("p", {
     className: getClassFromStatus(complete)
   }, label), complete && _react.default.createElement(_CheckCircle.default, {
@@ -38,11 +40,13 @@ var SignerRolesStep = function SignerRolesStep(_ref) {
 
 SignerRolesStep.propTypes = {
   index: _propTypes.default.number,
-  step: _propTypes.default.object
+  step: _propTypes.default.object,
+  onSelectSection: _propTypes.default.func
 };
 SignerRolesStep.defaultProps = {
   index: 0,
-  step: {}
+  step: {},
+  onSelectSection: function onSelectSection() {}
 };
 var _default = SignerRolesStep;
 exports.default = _default;

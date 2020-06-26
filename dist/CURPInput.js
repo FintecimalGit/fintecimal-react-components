@@ -11,7 +11,7 @@ var _propTypes = _interopRequireDefault(require("prop-types"));
 
 var _InputStrings = require("./InputStrings");
 
-var _InputWrapper = _interopRequireDefault(require("./InputWrapper"));
+var _InputWrapper = _interopRequireDefault(require("./nodes/InputWrapper"));
 
 var _utils = require("./commons/utils");
 
