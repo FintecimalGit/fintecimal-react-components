@@ -64,7 +64,7 @@ const renderSuggestion = (suggestion)  => (
 const Autocomplete = ({
   // General props
   options,
-  onChange,
+  handleChange,
 
   // Autosuggest props
   caseSensitive,
@@ -86,6 +86,7 @@ const Autocomplete = ({
 
   const [localValue, setLocalValue] = useState('');
   const [suggestions, setSuggestions] = useState([]);
+  const [multiSection, setMultiSection] = useState(false);
 
   const clearSugestions = () => {
     setSuggestions([]);
@@ -93,7 +94,7 @@ const Autocomplete = ({
 
   const handleOnChange = (event, { newValue, method }) => {
     setLocalValue(newValue);
-    if (handleOnChangeWhen.includes(method)) onChange(newValue);
+    if (handleOnChangeWhen.includes(method)) handleChange(newValue);
   };
 
   /**
@@ -102,6 +103,39 @@ const Autocomplete = ({
    * @returns {String}
    */
   const escapeRegexCharacters = (str) => str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+  /**
+   * 
+   * @param {Array} _options
+   * @param {RegExp} regex
+   * @returns {Array} 
+   */
+  const getSuggestionsByChildren = (_options, regex) => {
+    return _options
+      .map((option) => ({
+        name: option.name,
+        children: (
+          option.children
+            .map((_children) => ({
+              ..._children,
+              customValue: `${option.name} - ${_children.name}`
+            }))
+            .filter((_children) => regex.test( _children.customValue))
+        )
+      }))
+      .filter(option => option.children.length > 0)
+  };
+
+  /**
+   * 
+   * @param {Array} _options
+   * @param {RegExp} regex
+   * @returns {Array} 
+   */
+  const getSuggestionsByName = (_options, regex) => {
+    return _options
+      .filter((option) => regex.test(option.name))
+  };
 
   /**
    * 
@@ -115,20 +149,9 @@ const Autocomplete = ({
     const startWithFlag = startWith ? '^' : '';
     const regex = new RegExp( `${startWithFlag}${escapedValue}`, flags);
 
-    return options
-      .map((option) => ({
-        name: option.name,
-        children: (
-          option.children
-            .map((_children) => ({
-              ..._children,
-              customValue: `${option.name} - ${_children.name}`
-            }))
-            .filter((_children) => regex.test( _children.customValue))
-        )
-      }))
-      .filter(option => option.children.length > 0)
-      .slice(0, maxSuggestions)
+    const _options = multiSection ? getSuggestionsByChildren(options, regex) : getSuggestionsByName(options, regex);
+
+    return _options.slice(0, maxSuggestions);
   };
 
   const onSuggestionsFetchRequested = ({ value: _value }) => {
@@ -145,7 +168,7 @@ const Autocomplete = ({
    * @param {Object} section
    * @returns {String} 
    */
-  const getSuggestionValue = (suggestion)  => suggestion.customValue;
+  const getSuggestionValue = (suggestion)  => multiSection ? suggestion.customValue : suggestion.name;
   
   /**
    * 
@@ -165,10 +188,15 @@ const Autocomplete = ({
     setLocalValue(value);
   }, [value]);
 
+  useEffect(() => {
+    const _multiSection = options.some((option) => option.children);
+    setMultiSection(_multiSection);
+  }, [options]);
+
   return (
     <div>
       <Autosuggest
-        multiSection
+        multiSection={multiSection}
 
         suggestions={suggestions}
         onSuggestionsFetchRequested={onSuggestionsFetchRequested}
@@ -212,9 +240,9 @@ Autocomplete.propTypes = {
     name: PropTypes.string.isRequired,
     children: PropTypes.arrayOf(PropTypes.shape({
       name: PropTypes.string.isRequired,
-    })).isRequired,
+    })),
   })),
-  onChange: PropTypes.func,
+  handleChange: PropTypes.func,
 
   // Autosuggest props
   caseSensitive: PropTypes.bool,
@@ -235,7 +263,7 @@ Autocomplete.propTypes = {
 Autocomplete.defaultProps = {
   // General Props
   option: [],
-  onChange: () => {},
+  handleChange: () => {},
 
   // Autosuggest props
   caseSensitive: false,

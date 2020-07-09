@@ -18,10 +18,11 @@ var _default = (0, _styles.makeStyles)(function (theme) {
     },
     suggestionsContainerOpen: {
       position: 'absolute',
-      zIndex: 1,
-      marginTop: theme.spacing(1),
+      zIndex: 9,
       left: 0,
-      right: 0
+      right: 0,
+      boxShadow: theme.shadows[4],
+      marginTop: theme.spacing(0.5)
     },
     sectionTitle: {
       display: 'block',
