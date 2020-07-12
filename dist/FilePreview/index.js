@@ -62,7 +62,6 @@ var FilePreview = function FilePreview(_ref) {
       return _react.default.createElement("img", {
         alt: file.name,
         src: url,
-        maxWidth: '100%',
         height: 'auto'
       });
     } else if (/^(text||application)\//.test(file.type)) {
