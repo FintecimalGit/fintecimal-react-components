@@ -26,7 +26,7 @@ const FilePreview = ({ file, onDelete, disabled, urlDocument }) => {
    */
   const renderFile = () => {
     if (/^image\//.test(file.type)) {
-      return <img alt={file.name} src={url} maxWidth={'100%'} height={'auto'} />;
+      return <img alt={file.name} src={url} height={'auto'} />;
     }
     else if(/^(text||application)\//.test(file.type)) {
       return <iframe title={file.name} src={url} />;

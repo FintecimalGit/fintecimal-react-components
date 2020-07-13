@@ -26,8 +26,8 @@ CardApp.defaultProps = {
 CardApp.propTypes = {
   title: PropTypes.string,
   count: PropTypes.number,
-  onClick: PropTypes.function,
-  Icon: PropTypes.node
+  onClick: PropTypes.func,
+  Icon: PropTypes.object
 };
 
 export default CardApp;
