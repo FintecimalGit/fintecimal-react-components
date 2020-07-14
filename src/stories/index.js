@@ -352,7 +352,14 @@ storiesOf('Components|Nodes', module)
     );
   })
   .add('Currency Input', () => (
-    <CurrencyInput label="Financiamiento" handleChange={action('handleChange')} required clear />
+    <Grid container spacing={0}>
+      <Grid key="a1" item sm={6}>
+        <CurrencyInput label="Financiamiento" handleChange={action('handleChange')} required clear />
+      </Grid>
+      <Grid key="a2" item sm={6}>
+        <CurrencyInput label="Monto Pagare" value='10000' handleChange={action('handleChange')} required clear />
+      </Grid>
+    </Grid>
   ))
   .add('Text Area Input', () => (
     <TextAreaInput

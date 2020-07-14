@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
 import BaseInput from '../BaseInput';
 import { validateRegex, isEmpty, isNumber } from '../../commons/utils';
@@ -35,6 +35,15 @@ const CurrencyInput = props => {
       handleChange(formattedNumber);
     }
   };
+  
+  useEffect(()=> {
+    if(!value) return;
+    
+    const formattedNumber = formatNumber(value);
+    if (isValid(formattedNumber)) {
+      setValue(formatMoney(formattedNumber));
+    }
+  }, [value]);
 
   return (
     <BaseInput
@@ -45,7 +54,7 @@ const CurrencyInput = props => {
       error={error}
       onClear={onClear}
       errorMessage={errorMessage}
-    ></BaseInput>
+  />
   );
 };
 
