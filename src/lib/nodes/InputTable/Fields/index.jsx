@@ -7,7 +7,7 @@ import Button from "../../Buttons/Button";
 import {generateValueEmpty} from '../utils';
 import useStyles from "./style";
 
-const Fields = ({fieldValues, addNewRow}) =>{
+const Fields = ({fieldValues, addNewRow, edit}) =>{
     const classes = useStyles();
     const [fields, setFields]  = useState([]);
     const [deleteInfo, setDeleteInfo] = useState(false);
@@ -71,7 +71,7 @@ const Fields = ({fieldValues, addNewRow}) =>{
                 )
             })}
             <div className={classes.button}>
-                <Button text="Agregar" onClick={onClickAccept} />
+                <Button text={ edit ? 'Editar' : 'Agregar' } onClick={onClickAccept} />
             </div>
         </Fragment>
     );
@@ -80,11 +80,13 @@ const Fields = ({fieldValues, addNewRow}) =>{
 Fields.propTypes = {
     fields: PropTypes.array,
     addNewRow: PropTypes.func,
+    edit: PropTypes.bool,
 };
 
 Fields.defaultProps = {
     fields: [],
     addNewRow: () => {},
+    edit: false,
 };
 
 export default Fields;
