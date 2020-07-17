@@ -49,7 +49,8 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 var Fields = function Fields(_ref) {
   var fieldValues = _ref.fieldValues,
-      addNewRow = _ref.addNewRow;
+      addNewRow = _ref.addNewRow,
+      edit = _ref.edit;
   var classes = (0, _style.default)();
 
   var _useState = (0, _react.useState)([]),
@@ -129,18 +130,20 @@ var Fields = function Fields(_ref) {
   }), _react.default.createElement("div", {
     className: classes.button
   }, _react.default.createElement(_Button.default, {
-    text: "Agregar",
+    text: edit ? 'Editar' : 'Agregar',
     onClick: onClickAccept
   })));
 };
 
 Fields.propTypes = {
   fields: _propTypes.default.array,
-  addNewRow: _propTypes.default.func
+  addNewRow: _propTypes.default.func,
+  edit: _propTypes.default.bool
 };
 Fields.defaultProps = {
   fields: [],
-  addNewRow: function addNewRow() {}
+  addNewRow: function addNewRow() {},
+  edit: false
 };
 var _default = Fields;
 exports.default = _default;

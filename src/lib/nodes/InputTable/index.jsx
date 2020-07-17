@@ -5,13 +5,14 @@ import React, {
   useMemo,
 } from 'react';
 import PropTypes from 'prop-types';
+import _ from 'lodash';
 import clsx from 'clsx';
 
 import Fields from './Fields';
 import Table from '../../Table';
 import CSVReader from './components/CsvReader';
 
-import {generateValueEmpty, defaultData, defaultHeader} from './utils';
+import {generateValueEmpty, generateFieldsWithValue, defaultData, defaultHeader} from './utils';
 import useStyles from './style';
 
 const HEADER_ERROR_MESSAGE = 'La cantidad de columnas no es la correcta, prueba con las siguientes: ';
@@ -19,13 +20,15 @@ const HEADER_ERROR_MESSAGE_2 = 'Las siguientes columnas no son correctas: ';
 
 const InputTable = ({ value, headers, handleChange }) => {
   const classes = useStyles();
+  const [fields, setFields] = useState([]);
   const [localHeaders, setLocalHeaders] = useState([]);
   const [localValue, setLocalValue] = useState([]);
   const [errorMessages, setErrorMessages] = useState([]);
+  const [edit, setEdit] = useState(false);
+  const [editPosition, setEditPosition] = useState();
 
   const HEADERS = useMemo(() => localHeaders
     .map(option => { return {key: option.name, value: option.label}}), [localHeaders]);
-  const FIELDS = useMemo(() => generateValueEmpty(localHeaders), [localHeaders]);
   const csvOptions = useMemo(() => ({
     header: true,
     dynamicTyping: false,
@@ -57,8 +60,16 @@ const InputTable = ({ value, headers, handleChange }) => {
   })), []);
 
   const addNewRow = (dataField) => {
-    const newInformation = [...localValue, generateData(dataField)];
-    handleChange(newInformation);
+    if (edit) {
+      const newInfo = _.cloneDeep(localValue);
+      newInfo[editPosition] = generateData(dataField)
+      handleChange(newInfo);
+      setEdit(false);
+      setEditPosition(0);
+    } else {
+      const newInformation = [...localValue, generateData(dataField)];
+      handleChange(newInformation);
+    }
   };
 
   const DeleteRow = useCallback((item, index) => {
@@ -67,6 +78,13 @@ const InputTable = ({ value, headers, handleChange }) => {
     handleChange(newInformation);
   }, [localValue, handleChange]);
 
+  const EditRow = (value, index) => {
+    const newFields = generateFieldsWithValue(fields, value);
+    setFields(newFields);
+    setEdit(true);
+    setEditPosition(index);
+  }
+  
   const includesHeaders = (arr1, arr2) => arr1.map(item => arr2.includes(item) ? null : item).filter(item => item);
 
   const formatDataFromCsv = useCallback((data) => {
@@ -125,10 +143,14 @@ const InputTable = ({ value, headers, handleChange }) => {
     if (value.length) setLocalValue(value)
     else if (localValue.length) setLocalValue([]);
   }, [value, headers]);
+  
+  useEffect(() => {
+    setFields(generateValueEmpty(localHeaders));
+  }, [localHeaders])
 
   return (
       <div className={classes.content}>
-        <Fields fieldValues={FIELDS} addNewRow={addNewRow} />
+        <Fields fieldValues={fields} addNewRow={addNewRow} edit={edit}/>
         <div className={classes.csvActions}>
           <CSVReader
             className={classes.input_loader}
@@ -155,7 +177,7 @@ const InputTable = ({ value, headers, handleChange }) => {
           </div>
         </div>
         <div className={classes.tableContent}>
-          <Table headers={HEADERS} items={VALUES} deleteRow={true} onDeleteRow={DeleteRow}/>
+          <Table headers={HEADERS} items={VALUES} deleteRow={true} onDeleteRow={DeleteRow} edit={true} onEdit={EditRow}/>
         </div>
       </div>
   );

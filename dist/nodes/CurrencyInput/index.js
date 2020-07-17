@@ -70,6 +70,14 @@ var CurrencyInput = function CurrencyInput(props) {
     }
   };
 
+  (0, _react.useEffect)(function () {
+    if (!value) return;
+    var formattedNumber = formatNumber(value);
+
+    if (isValid(formattedNumber)) {
+      setValue(formatMoney(formattedNumber));
+    }
+  }, [value]);
   return _react.default.createElement(_BaseInput.default, {
     label: label,
     value: mValue,

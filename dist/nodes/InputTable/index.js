@@ -11,6 +11,8 @@ var _react = _interopRequireWildcard(require("react"));
 
 var _propTypes = _interopRequireDefault(require("prop-types"));
 
+var _lodash = _interopRequireDefault(require("lodash"));
+
 var _clsx3 = _interopRequireDefault(require("clsx"));
 
 var _Fields = _interopRequireDefault(require("./Fields"));
@@ -62,18 +64,33 @@ var InputTable = function InputTable(_ref) {
 
   var _useState = (0, _react.useState)([]),
       _useState2 = _slicedToArray(_useState, 2),
-      localHeaders = _useState2[0],
-      setLocalHeaders = _useState2[1];
+      fields = _useState2[0],
+      setFields = _useState2[1];
 
   var _useState3 = (0, _react.useState)([]),
       _useState4 = _slicedToArray(_useState3, 2),
-      localValue = _useState4[0],
-      setLocalValue = _useState4[1];
+      localHeaders = _useState4[0],
+      setLocalHeaders = _useState4[1];
 
   var _useState5 = (0, _react.useState)([]),
       _useState6 = _slicedToArray(_useState5, 2),
-      errorMessages = _useState6[0],
-      setErrorMessages = _useState6[1];
+      localValue = _useState6[0],
+      setLocalValue = _useState6[1];
+
+  var _useState7 = (0, _react.useState)([]),
+      _useState8 = _slicedToArray(_useState7, 2),
+      errorMessages = _useState8[0],
+      setErrorMessages = _useState8[1];
+
+  var _useState9 = (0, _react.useState)(false),
+      _useState10 = _slicedToArray(_useState9, 2),
+      edit = _useState10[0],
+      setEdit = _useState10[1];
+
+  var _useState11 = (0, _react.useState)(),
+      _useState12 = _slicedToArray(_useState11, 2),
+      editPosition = _useState12[0],
+      setEditPosition = _useState12[1];
 
   var HEADERS = (0, _react.useMemo)(function () {
     return localHeaders.map(function (option) {
@@ -82,9 +99,6 @@ var InputTable = function InputTable(_ref) {
         value: option.label
       };
     });
-  }, [localHeaders]);
-  var FIELDS = (0, _react.useMemo)(function () {
-    return (0, _utils.generateValueEmpty)(localHeaders);
   }, [localHeaders]);
   var csvOptions = (0, _react.useMemo)(function () {
     return {
@@ -123,8 +137,17 @@ var InputTable = function InputTable(_ref) {
   }, []);
 
   var addNewRow = function addNewRow(dataField) {
-    var newInformation = [].concat(_toConsumableArray(localValue), [generateData(dataField)]);
-    handleChange(newInformation);
+    if (edit) {
+      var newInfo = _lodash.default.cloneDeep(localValue);
+
+      newInfo[editPosition] = generateData(dataField);
+      handleChange(newInfo);
+      setEdit(false);
+      setEditPosition(0);
+    } else {
+      var newInformation = [].concat(_toConsumableArray(localValue), [generateData(dataField)]);
+      handleChange(newInformation);
+    }
   };
 
   var DeleteRow = (0, _react.useCallback)(function (item, index) {
@@ -133,6 +156,13 @@ var InputTable = function InputTable(_ref) {
     newInformation.splice(index, 1);
     handleChange(newInformation);
   }, [localValue, handleChange]);
+
+  var EditRow = function EditRow(value, index) {
+    var newFields = (0, _utils.generateFieldsWithValue)(fields, value);
+    setFields(newFields);
+    setEdit(true);
+    setEditPosition(index);
+  };
 
   var includesHeaders = function includesHeaders(arr1, arr2) {
     return arr1.map(function (item) {
@@ -211,11 +241,15 @@ var InputTable = function InputTable(_ref) {
     if (headers.length) setLocalHeaders(headers);
     if (value.length) setLocalValue(value);else if (localValue.length) setLocalValue([]);
   }, [value, headers]);
+  (0, _react.useEffect)(function () {
+    setFields((0, _utils.generateValueEmpty)(localHeaders));
+  }, [localHeaders]);
   return _react.default.createElement("div", {
     className: classes.content
   }, _react.default.createElement(_Fields.default, {
-    fieldValues: FIELDS,
-    addNewRow: addNewRow
+    fieldValues: fields,
+    addNewRow: addNewRow,
+    edit: edit
   }), _react.default.createElement("div", {
     className: classes.csvActions
   }, _react.default.createElement(_CsvReader.default, {
@@ -235,7 +269,9 @@ var InputTable = function InputTable(_ref) {
     headers: HEADERS,
     items: VALUES,
     deleteRow: true,
-    onDeleteRow: DeleteRow
+    onDeleteRow: DeleteRow,
+    edit: true,
+    onEdit: EditRow
   })));
 };
 

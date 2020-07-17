@@ -10,6 +10,7 @@ import ui from '../ui';
 import tables from '../commons/exampleTable';
 import { listWithCategories, listWithoutCategories } from '../lib/commons/exampleList';
 import { longText, mediumText, shortText } from '../lib/commons/exampleLongText';
+import { defaultData, defaultHeader } from '../lib/nodes/InputTable/utils';
 import {
   SearchBar,
   BaseInput,
@@ -352,7 +353,14 @@ storiesOf('Components|Nodes', module)
     );
   })
   .add('Currency Input', () => (
-    <CurrencyInput label="Financiamiento" handleChange={action('handleChange')} required clear />
+    <Grid container spacing={0}>
+      <Grid key="a1" item sm={6}>
+        <CurrencyInput label="Financiamiento" handleChange={action('handleChange')} required clear />
+      </Grid>
+      <Grid key="a2" item sm={6}>
+        <CurrencyInput label="Monto Pagare" value='10000' handleChange={action('handleChange')} required clear />
+      </Grid>
+    </Grid>
   ))
   .add('Text Area Input', () => (
     <TextAreaInput
@@ -488,6 +496,12 @@ storiesOf('Components|Nodes', module)
   .add('ListSignerRoles', () => (
     <ListSignerRoles selected={2} onChangeHandler={action('onChangeHandler')} />
   ))
+  .add('Input Table', () => {
+    const [values, setValues] = useState(defaultData);
+    return (
+      <InputTable value={values} headers={defaultHeader} handleChange={(newValue) => setValues(newValue)} />
+    );
+  })
   .add('CardApp', () => <CardApp onClick={action('onClick')} />);
 
 storiesOf('Components|Button', module)

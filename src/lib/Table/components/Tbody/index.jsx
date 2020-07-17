@@ -76,26 +76,30 @@ const Table = ({
                   <span>
                     { item[key] }
                   </span>
-                  {
-                    edit && isLastIndex(headers, headerIndex) && (
-                      <IconButton
-                        className={classes.noPadding}
-                        onClick={handleOnEdit(item, index)}
-                      >
-                        <EditIcon />
-                      </IconButton>
-                    )
-                  }
-                  {
-                    deleteRow && isLastIndex(headers, headerIndex) && (
-                        <IconButton
+                  { isLastIndex(headers, headerIndex) && (
+                    <div>
+                      {
+                        edit && (
+                          <IconButton
+                            className={classes.noPadding}
+                            onClick={handleOnEdit(item, index)}
+                          >
+                            <EditIcon />
+                          </IconButton>
+                        )
+                      }
+                      {
+                        deleteRow && (
+                          <IconButton
                             className={classes.noPadding}
                             onClick={handleOnDelete(item, index)}
-                        >
-                          <DeleteIcon />
-                        </IconButton>
-                    )
-                  }
+                          >
+                            <DeleteIcon />
+                          </IconButton>
+                        )
+                      }
+                    </div>
+                  )}
                 </td>
               ))
             }

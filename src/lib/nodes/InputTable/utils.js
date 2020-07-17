@@ -11,6 +11,13 @@ export const generateValueEmpty = (fieldArray) => {
   });
 };
 
+export const generateFieldsWithValue = (fields, values) => {
+  return fields.reduce((acc, field) => {
+    acc.push({...field, value: values[field.name]});
+    return acc;
+  },[]);
+}
+
 export const defaultHeader = [
     {
     'id': 0,
