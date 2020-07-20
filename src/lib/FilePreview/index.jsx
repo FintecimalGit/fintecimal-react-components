@@ -43,7 +43,7 @@ const FilePreview = ({ file, onDelete, disabled, urlDocument }) => {
   };
 
   useEffect(() => {
-    if (urlDocument) {
+    if (urlDocument && !Array.isArray(urlDocument)) {
       readUrlDocument();
     } else {
       readFile();

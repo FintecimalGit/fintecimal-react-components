@@ -87,6 +87,24 @@ const UploadDocuments = ({
     if(file) setFile(file);
   };
 
+  const generateFilesToURL = async () => {
+    const files = await Promise.all(url.map(
+      async (_url) => {
+        let response = await fetch(_url);
+        let data = await response.blob();
+        let metadata = {
+          type: data.type
+        };
+        let file = new File([data], title, metadata);
+        return file;
+      }
+    ));
+  
+    const [file] = files;
+    if(files) setFiles(files);
+    if(file) setFile(file);
+  };
+
   useEffect(() => {
     setCurrentFile(0);
     if (filteredFiles.length > 0) setFile(filteredFiles[0]);
@@ -100,6 +118,7 @@ const UploadDocuments = ({
 
   useEffect(() => {
     if(url !== '' && typeof url === "string") generateFileToURL();
+    if(Array.isArray(url)) generateFilesToURL();
   }, [url]);
 
   return (
@@ -148,6 +167,10 @@ const UploadDocuments = ({
 UploadDocuments.propTypes = {
   title: PropTypes.string,
   multiple: PropTypes.bool,
+  url: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.arrayOf(PropTypes.string),
+  ]),
   accept: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.arrayOf(PropTypes.string),
