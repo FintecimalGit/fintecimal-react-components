@@ -32,7 +32,7 @@ const CurrencyInput = props => {
     const formattedNumber = formatNumber(eventValue);
     if (isValid(formattedNumber)) {
       setValue(formatMoney(formattedNumber));
-      handleChange(formattedNumber);
+      handleChange(formatMoney(formattedNumber));
     }
   };
   
