@@ -358,7 +358,7 @@ storiesOf('Components|Nodes', module)
         <CurrencyInput label="Financiamiento" handleChange={action('handleChange')} required clear />
       </Grid>
       <Grid key="a2" item sm={6}>
-        <CurrencyInput label="Monto Pagare" value='10000' handleChange={action('handleChange')} required clear />
+        <CurrencyInput label="Monto Pagare" value='$1,000,000,000' handleChange={action('handleChange')} required clear />
       </Grid>
     </Grid>
   ))
