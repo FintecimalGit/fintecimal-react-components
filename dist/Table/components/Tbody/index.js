@@ -86,10 +86,10 @@ var Table = function Table(_ref) {
       return _react.default.createElement("td", {
         key: "td-".concat(key, "-").concat(item[key], "-").concat(index),
         className: (0, _classnames3.default)(classes.td, _defineProperty({}, classes.editButton, edit && isLastIndex(headers, headerIndex)), _defineProperty({}, classes.editButton, deleteRow && isLastIndex(headers, headerIndex)))
-      }, _react.default.createElement("span", null, item[key]), isLastIndex(headers, headerIndex) && _react.default.createElement("div", null, edit && isLastIndex(headers, headerIndex) && _react.default.createElement(_IconButton.default, {
+      }, _react.default.createElement("span", null, item[key]), isLastIndex(headers, headerIndex) && _react.default.createElement("div", null, edit && _react.default.createElement(_IconButton.default, {
         className: classes.noPadding,
         onClick: handleOnEdit(item, index)
-      }, _react.default.createElement(_Edit.default, null)), deleteRow && isLastIndex(headers, headerIndex) && _react.default.createElement(_IconButton.default, {
+      }, _react.default.createElement(_Edit.default, null)), deleteRow && _react.default.createElement(_IconButton.default, {
         className: classes.noPadding,
         onClick: handleOnDelete(item, index)
       }, _react.default.createElement(_Delete.default, null))));

@@ -66,7 +66,7 @@ var CurrencyInput = function CurrencyInput(props) {
 
     if (isValid(formattedNumber)) {
       setValue(formatMoney(formattedNumber));
-      handleChange(formattedNumber);
+      handleChange(formatMoney(formattedNumber));
     }
   };
 
