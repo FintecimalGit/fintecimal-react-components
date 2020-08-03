@@ -150,7 +150,7 @@ var RejectionField = function RejectionField(_ref) {
     error: rejected,
     errorMessage: "",
     handleBlur: handleBlur,
-    options: config,
+    options: config.options || [],
     required: required,
     data: data,
     minDate: minDate
