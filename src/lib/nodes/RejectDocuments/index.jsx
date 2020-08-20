@@ -18,7 +18,8 @@ const RejectDocuments = ({
                              onHandlerReject,
                              showUndo,
                              onUndoRejection,
-                             editable
+                             editable,
+                             multiple
                          }) => {
   const classes = useStyles();
   const [file, setFile] = useState(null);
@@ -82,6 +83,7 @@ const RejectDocuments = ({
             <DropZone
                 onDrop={handleOnDrop}
                 isIncorrect={true}
+                multiple={multiple}
             />
           )}
       </div>
@@ -98,7 +100,8 @@ RejectDocuments.propTypes = {
     onHandlerReject: PropTypes.func.isRequired,
     showUndo: PropTypes.bool,
     onUndoRejection: PropTypes.func,
-    editable: PropTypes.bool
+    editable: PropTypes.bool,
+    multiple: PropTypes.bool,
 };
 
 RejectDocuments.defaultProps = {
@@ -114,6 +117,7 @@ RejectDocuments.defaultProps = {
   showUndo: false,
   onUndoRejection: () => {},
   editable: true,
+  multiple: false,
 };
 
 export default RejectDocuments;
