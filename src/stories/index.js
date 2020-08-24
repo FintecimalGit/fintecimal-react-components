@@ -371,16 +371,31 @@ storiesOf('Components|Nodes', module)
     />
   ))
   .add('Select', () => (
-    <Select
-      label="Estatus"
-      placeholder="Estatus"
-      handleChange={action('handleChange')}
-      required
-      // error={true}
-      errorMessage={shortText}
-      value="Todo TODOS"
-      options={listWithoutCategories}
-    />
+    <Grid container spacing={0}>
+      <Grid item sm={6}>
+        <Select
+          label="Estatus"
+          placeholder="Estatus"
+          handleChange={action('handleChange')}
+          required
+          // error={true}
+          errorMessage={shortText}
+          value="Todo TODOS"
+          options={listWithoutCategories}
+        />
+      </Grid>
+      <Grid item sm={6}>
+        <Select
+          label="Tipo de estudio"
+          placeholder="Tipo de estudio"
+          handleChange={action('handleChange')}
+          required
+          // error={true}
+          errorMessage={shortText}
+          options={[]}
+        />
+      </Grid>
+    </Grid>
   ))
   .add('TextInput', () => (
     <BaseTextInput

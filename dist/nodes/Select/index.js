@@ -227,6 +227,10 @@ var SelectInput = function SelectInput(_ref) {
   (0, _react.useEffect)(function () {
     setValue(value);
   }, [value]);
+  var checkDisabled = (0, _react.useMemo)(function () {
+    if (options.length === 0) return true;
+    return disabled;
+  }, [options, disabled]);
   return _react.default.createElement("div", {
     className: classes.root
   }, (0, _utils.isTextLong)(label) && _react.default.createElement("div", null, _react.default.createElement(_LongPlaceHolder.default, {
@@ -272,7 +276,7 @@ var SelectInput = function SelectInput(_ref) {
         notchedOutline: classes.notchedOutline,
         focused: classes.focusNotchedOutline
       },
-      disabled: disabled
+      disabled: checkDisabled
     })
   }, renderOptions(options))), mError && (0, _utils.isTextLong)(mErrorMessage) && _react.default.createElement(_LongError.default, {
     text: mErrorMessage

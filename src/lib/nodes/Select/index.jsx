@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { FormControl, InputLabel, Select, MenuItem, OutlinedInput } from '@material-ui/core';
 import { KeyboardArrowDown, KeyboardArrowUp } from '@material-ui/icons';
@@ -142,6 +142,11 @@ const SelectInput = ({
     setValue(value);
   }, [value]);
 
+  const checkDisabled = useMemo(() => {
+    if (options.length === 0) return true;
+    return disabled;
+  }, [options, disabled]);
+  
   return (
     <div className={classes.root}>
       {isTextLong(label) && (
@@ -190,7 +195,7 @@ const SelectInput = ({
                 notchedOutline: classes.notchedOutline,
                 focused: classes.focusNotchedOutline
               }}
-              disabled={disabled}
+              disabled={checkDisabled}
             />
           }
         >
