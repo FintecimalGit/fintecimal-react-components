@@ -24,7 +24,8 @@ const TextAreaInput = ({
   type,
   clear,
   onBlur,
-  onClear
+  onClear,
+  disabled
 }) => {
   const classes = useStyles();
   const [labelWidth, setLabelWidth] = useState(0);
@@ -107,6 +108,7 @@ const TextAreaInput = ({
             focused: classes.focusNotchedOutline
           }}
           type={type}
+          disabled={disabled}
         />
       </FormControl>
       {error && isTextLong(errorMessage) && <LongError text={errorMessage}></LongError>}
@@ -121,7 +123,8 @@ TextAreaInput.defaultProps = {
   type: 'text',
   clear: true,
   errorMessage: '',
-  onClear: () => {}
+  onClear: () => {},
+  disabled: false,
 };
 
 TextAreaInput.propTypes = {
@@ -134,7 +137,8 @@ TextAreaInput.propTypes = {
   errorMessage: PropTypes.string,
   handleChange: PropTypes.func.isRequired,
   onBlur: PropTypes.func,
-  onClear: PropTypes.func
+  onClear: PropTypes.func,
+  disabled: PropTypes.bool,
 };
 
 export default TextAreaInput;
