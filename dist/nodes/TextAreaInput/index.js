@@ -49,7 +49,8 @@ var TextAreaInput = function TextAreaInput(_ref) {
       type = _ref.type,
       clear = _ref.clear,
       onBlur = _ref.onBlur,
-      onClear = _ref.onClear;
+      onClear = _ref.onClear,
+      disabled = _ref.disabled;
   var classes = (0, _style.default)();
 
   var _useState = (0, _react.useState)(0),
@@ -134,7 +135,8 @@ var TextAreaInput = function TextAreaInput(_ref) {
       notchedOutline: classes.notchedOutline,
       focused: classes.focusNotchedOutline
     },
-    type: type
+    type: type,
+    disabled: disabled
   })), error && (0, _utils.isTextLong)(errorMessage) && _react.default.createElement(_LongError.default, {
     text: errorMessage
   }));
@@ -147,7 +149,8 @@ TextAreaInput.defaultProps = {
   type: 'text',
   clear: true,
   errorMessage: '',
-  onClear: function onClear() {}
+  onClear: function onClear() {},
+  disabled: false
 };
 TextAreaInput.propTypes = {
   label: _propTypes.default.string.isRequired,
@@ -159,7 +162,8 @@ TextAreaInput.propTypes = {
   errorMessage: _propTypes.default.string,
   handleChange: _propTypes.default.func.isRequired,
   onBlur: _propTypes.default.func,
-  onClear: _propTypes.default.func
+  onClear: _propTypes.default.func,
+  disabled: _propTypes.default.bool
 };
 var _default = TextAreaInput;
 exports.default = _default;
