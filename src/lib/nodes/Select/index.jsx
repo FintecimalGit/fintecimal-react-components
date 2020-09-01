@@ -150,7 +150,7 @@ const SelectInput = ({
   return (
     <div className={classes.root}>
       {isTextLong(label) && (
-        <div>
+        <div className={classes.longPlaceHolder}>
           <LongPlaceHolder text={label} />
         </div>
       )}

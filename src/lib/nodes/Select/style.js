@@ -59,5 +59,8 @@ export default makeStyles(theme => ({
   error: {
     marginTop: 3,
     borderColor: theme.palette.status.danger.main
+  },
+  longPlaceHolder: {
+    marginBottom: '10px',
   }
 }));
