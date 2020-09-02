@@ -4,6 +4,8 @@ import 'moment/locale/es';
 
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from "@material-ui/pickers";
 import DateMomentUtils from '@date-io/moment';
+import ClearIcon from "@material-ui/icons/Clear";
+import IconButton from "@material-ui/core/IconButton";
 
 import useStyles from './style';
 
@@ -18,12 +20,13 @@ const DatePicker = ({
   const classes = useStyles();
 
   const [date, setDate] = useState(value);
+  const [showModal, setShowModal] = useState(false);
 
   /**
    *
    * @param {Date} _date
    */
-  const handleDateChange = (_date) =>  {
+  const handleDateChange = (_date) => {
     setDate(_date);
     onDateChange(_date);
   };
@@ -33,22 +36,38 @@ const DatePicker = ({
   }, [value])
 
   return (
-      <div className={classes.root}>
-        <MuiPickersUtilsProvider locale="es" utils={DateMomentUtils}>
-          <KeyboardDatePicker
-              className={classes.datePicker}
-              variant="inline"
-              inputVariant="outlined"
-              label={label}
-              value={date}
-              format={format}
-              onChange={handleDateChange}
-              disableToolbar
-              disabled={disabled}
-              minDate={minDate}
-          />
-        </MuiPickersUtilsProvider>
-      </div>
+    <div className={classes.root}>
+      <MuiPickersUtilsProvider locale="es" utils={DateMomentUtils}>
+        <KeyboardDatePicker
+          onClick={() => setShowModal(true)}
+          onClose={() => setShowModal(false)}
+          open={showModal}
+          className={classes.datePicker}
+          variant="inline"
+          inputVariant="outlined"
+          label={label}
+          value={date}
+          format={format}
+          onChange={handleDateChange}
+          disableToolbar
+          disabled={disabled}
+          minDate={minDate}
+          InputProps={{
+            endAdornment: (
+              <IconButton onClick={(e) => {
+                e.stopPropagation();
+                handleDateChange(null)
+              }}>
+                <ClearIcon />
+              </IconButton>
+            )
+          }}
+          InputAdornmentProps={{
+            position: date ? "none" : "end"
+          }}
+        />
+      </MuiPickersUtilsProvider>
+    </div>
   );
 };
 
@@ -71,7 +90,7 @@ DatePicker.defaultProps = {
   label: '',
   value: null,
   format: 'DD/MM/YYYY',
-  onDateChange: () => {},
+  onDateChange: () => { },
   disabled: false,
   minDate: '',
 };
