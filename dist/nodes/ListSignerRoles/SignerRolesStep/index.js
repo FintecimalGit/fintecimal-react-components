@@ -26,8 +26,9 @@ var SignerRolesStep = function SignerRolesStep(_ref) {
   };
 
   var label = step.label,
-      complete = step.complete;
-  return _react.default.createElement("div", {
+      complete = step.complete,
+      hidden = step.hidden;
+  return _react.default.createElement(_react.default.Fragment, null, !hidden && _react.default.createElement("div", {
     key: index,
     className: classes.content,
     onClick: onSelectSection
@@ -35,18 +36,20 @@ var SignerRolesStep = function SignerRolesStep(_ref) {
     className: getClassFromStatus(complete)
   }, label), complete && _react.default.createElement(_CheckCircle.default, {
     className: classes.icon
-  }));
+  })));
 };
 
 SignerRolesStep.propTypes = {
   index: _propTypes.default.number,
   step: _propTypes.default.object,
-  onSelectSection: _propTypes.default.func
+  onSelectSection: _propTypes.default.func,
+  hidden: _propTypes.default.bool
 };
 SignerRolesStep.defaultProps = {
   index: 0,
   step: {},
-  onSelectSection: function onSelectSection() {}
+  onSelectSection: function onSelectSection() {},
+  hidden: false
 };
 var _default = SignerRolesStep;
 exports.default = _default;
