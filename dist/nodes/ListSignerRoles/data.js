@@ -27,6 +27,10 @@ var data = [{
   }, {
     label: 'AAAA - 2',
     complete: false
+  }, {
+    label: 'AAAA - 3',
+    complete: false,
+    hidden: true
   }]
 }, {
   label: 'cobranza',
