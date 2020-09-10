@@ -506,7 +506,18 @@ storiesOf('Components|Nodes', module)
     />
   ))
   .add('Map', () => <SignatureMap />)
-  .add('Image Actions', () => <ImageActions />)
+  .add('Image Actions', () => (
+    <div>
+      <Grid container spacing={2}>
+        <Grid item sm={6}>
+          <ImageActions title="INE / IFE - Frente"/>
+        </Grid>
+        <Grid item sm={6}>
+          <ImageActions title="INE / IFE - Reverso"/>
+        </Grid>
+      </Grid>
+    </div>
+  ))
   .add('IDCardUpload', () => <IDCardUpload />)
   .add('ListSignerRoles', () => (
     <ListSignerRoles selected={2} onChangeHandler={action('onChangeHandler')} />

@@ -2,13 +2,16 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
   image: {
-    width: '100%',
-    height: 205,
-    objectFit: 'fill',
+    maxWidth: '100%',
+    maxHeight: '100%',
+    objectFit: 'scale-down',
   },
   imageContainer: {
-    overflow: 'auto',
-    padding: theme.spacing(2)
+    width: '100%',
+    height: '100%',
+    display: 'flex',
+    justifyContent: 'center',
+    alignContent: 'center',
   },
   footer: {
     display: 'flex',

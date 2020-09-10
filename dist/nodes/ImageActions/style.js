@@ -10,13 +10,16 @@ var _styles = require("@material-ui/core/styles");
 var useStyles = (0, _styles.makeStyles)(function (theme) {
   return {
     image: {
-      width: '100%',
-      height: 205,
-      objectFit: 'fill'
+      maxWidth: '100%',
+      maxHeight: '100%',
+      objectFit: 'scale-down'
     },
     imageContainer: {
-      overflow: 'auto',
-      padding: theme.spacing(2)
+      width: '100%',
+      height: '100%',
+      display: 'flex',
+      justifyContent: 'center',
+      alignContent: 'center'
     },
     footer: {
       display: 'flex',
