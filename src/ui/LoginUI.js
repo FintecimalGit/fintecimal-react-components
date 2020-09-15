@@ -19,10 +19,12 @@ class LoginUI extends Component {
 					</div>
 					<div className='fnt-login-ui-form-input-content'>
 						<Input
+						  label="Correo"
 							type={'email'}
 							onKeyUp={ (e) => this.props.onKeyPressEmail(e)}
 						></Input>
 						<Input
+						  label="Contraseña"
 							type={'password'}
 							onKeyUp={ (e) => this.props.onKeyPressPassword(e)}
 						></Input>
