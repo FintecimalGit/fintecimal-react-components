@@ -65,11 +65,13 @@ function (_Component) {
       })), _react.default.createElement("div", {
         className: "fnt-login-ui-form-input-content"
       }, _react.default.createElement(Input, {
+        label: "Correo",
         type: 'email',
         onKeyUp: function onKeyUp(e) {
           return _this.props.onKeyPressEmail(e);
         }
       }), _react.default.createElement(Input, {
+        label: "Contrase\xF1a",
         type: 'password',
         onKeyUp: function onKeyUp(e) {
           return _this.props.onKeyPressPassword(e);
