@@ -47,7 +47,8 @@ var _default = (0, _styles.makeStyles)(function (theme) {
     icon: {
       alignSelf: 'stretch',
       display: 'flex',
-      alignItems: 'stretch'
+      alignItems: 'stretch',
+      maxHeight: '54px'
     },
     asterisk: {
       color: theme.palette.error.main,
