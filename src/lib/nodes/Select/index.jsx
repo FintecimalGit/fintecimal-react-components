@@ -45,8 +45,9 @@ const SelectInput = ({
   const [mOpen, setOpen] = useState(false);
 
   useEffect(() => {
-    if(defaultValue){
+    if(defaultValue && !value){
       setValue(defaultValue);
+      handleChange(defaultValue);
     }
   }, []);
 
