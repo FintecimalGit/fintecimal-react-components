@@ -119,7 +119,11 @@ DocumentList.propTypes = {
     })
   ).isRequired,
   onClickDocument: PropTypes.func,
-  onDownload: PropTypes.func,
+  onDownload: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.oneOf([null]),
+    PropTypes.func,
+  ]),
   open: PropTypes.bool,
   iconTooltip: PropTypes.string,
 };

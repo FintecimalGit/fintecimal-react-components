@@ -101,7 +101,7 @@ HeaderCollapse.propTypes = {
   title: _propTypes.default.string,
   children: _propTypes.default.oneOfType([_propTypes.default.arrayOf(_propTypes.default.node), _propTypes.default.node, _propTypes.default.string]),
   container: _propTypes.default.bool,
-  onDownload: _propTypes.default.oneOfType([_propTypes.default.number, _propTypes.default.oneOf([null])]),
+  onDownload: _propTypes.default.oneOfType([_propTypes.default.number, _propTypes.default.oneOf([null]), _propTypes.default.func]),
   iconTooltip: _propTypes.default.string
 };
 HeaderCollapse.defaultProps = {

@@ -91,6 +91,7 @@ HeaderCollapse.propTypes = {
   onDownload: PropTypes.oneOfType([
     PropTypes.number,
     PropTypes.oneOf([null]),
+    PropTypes.func,
   ]),
   iconTooltip: PropTypes.string,
 };

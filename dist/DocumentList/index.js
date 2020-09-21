@@ -156,7 +156,7 @@ DocumentList.propTypes = {
     status: _propTypes.default.string.isRequired
   })).isRequired,
   onClickDocument: _propTypes.default.func,
-  onDownload: _propTypes.default.func,
+  onDownload: _propTypes.default.oneOfType([_propTypes.default.number, _propTypes.default.oneOf([null]), _propTypes.default.func]),
   open: _propTypes.default.bool,
   iconTooltip: _propTypes.default.string
 };
