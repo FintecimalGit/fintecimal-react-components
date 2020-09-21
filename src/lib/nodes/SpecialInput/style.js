@@ -38,6 +38,7 @@ export default makeStyles(theme => ({
     alignSelf: 'stretch',
     display: 'flex',
     alignItems: 'stretch',
+    maxHeight: '54px',
   },
   asterisk: {
     color: theme.palette.error.main,
