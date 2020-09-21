@@ -6,6 +6,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Collapse from '@material-ui/core/Collapse';
 import IconButton from '@material-ui/core/IconButton';
+import Tooltip from '@material-ui/core/Tooltip';
 
 import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
@@ -19,7 +20,8 @@ const HeaderCollapse = ({
   title,
   children,
   container,
-  onDownload
+  onDownload,
+  iconTooltip,
 }) => {
   const clasess = useStyle();
   const [isOpen, setOpen] = useState(false);
@@ -48,12 +50,14 @@ const HeaderCollapse = ({
       >
         <ListItemText className={clasess.listItemText} primary={title} />
         { onDownload && (
-          <IconButton
-            className={clasess.iconButtonContainer}
-            onClick={handleOnDownload}
-          >
-            <GetAppIcon />
-          </IconButton>
+          <Tooltip title={iconTooltip}>
+            <IconButton
+              className={clasess.iconButtonContainer}
+              onClick={handleOnDownload}
+            >
+              <GetAppIcon />
+            </IconButton>
+          </Tooltip>
         )}
         {
           !container && (
@@ -87,7 +91,8 @@ HeaderCollapse.propTypes = {
   onDownload: PropTypes.oneOfType([
     PropTypes.number,
     PropTypes.oneOf([null]),
-  ])
+  ]),
+  iconTooltip: PropTypes.string,
 };
 
 HeaderCollapse.defaultProps = {
@@ -97,6 +102,7 @@ HeaderCollapse.defaultProps = {
   children: '',
   container: false,
   onDownload: null,
+  iconTooltip: '',
 };
 
 export default HeaderCollapse;
