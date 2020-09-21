@@ -26,13 +26,15 @@ var TextInput = function TextInput(_ref) {
       type = _ref.type,
       required = _ref.required,
       disabled = _ref.disabled,
-      handleBlur = _ref.handleBlur;
+      handleBlur = _ref.handleBlur,
+      defaultValue = _ref.defaultValue;
   var config = {
     type: type,
     label: label,
     value: value,
     required: required,
-    handleChange: handleChange
+    handleChange: handleChange,
+    defaultValue: defaultValue
   };
   var errors = {
     error: error,
