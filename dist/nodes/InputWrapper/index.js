@@ -97,8 +97,9 @@ var InputWrapper = function InputWrapper(_ref) {
   };
 
   (0, _react.useEffect)(function () {
-    if (defaultValue) {
+    if (defaultValue && !value) {
       setValue(defaultValue);
+      handleChange(defaultValue);
     }
   }, []);
   (0, _react.useEffect)(function () {

@@ -51,10 +51,11 @@ const InputWrapper = ({ config, errors, isValid, disabled, onBlur }) => {
   };
 
   useEffect(() => {
-    if(defaultValue){
+    if(defaultValue && !value){
       setValue(defaultValue);
+      handleChange(defaultValue);
     }
-  },[]);
+  }, []);
 
   useEffect(() => {
     if(mValue !== value){
