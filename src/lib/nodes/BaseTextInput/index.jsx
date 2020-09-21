@@ -14,13 +14,15 @@ const TextInput = ({
   required,
   disabled,
   handleBlur,
+  defaultValue,
 }) => {
   const config = {
     type,
     label,
     value,
     required,
-    handleChange
+    handleChange,
+    defaultValue
   };
   const errors = {
     error,
