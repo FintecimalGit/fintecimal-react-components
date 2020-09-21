@@ -52,7 +52,9 @@ var HeaderCollapse = function HeaderCollapse(_ref) {
       children = _ref.children,
       container = _ref.container,
       onDownload = _ref.onDownload,
-      iconTooltip = _ref.iconTooltip;
+      iconTooltip = _ref.iconTooltip,
+      onDownloadSecondary = _ref.onDownloadSecondary,
+      iconTooltipSec = _ref.iconTooltipSec;
   var clasess = (0, _style.default)();
 
   var _useState = (0, _react.useState)(false),
@@ -71,6 +73,12 @@ var HeaderCollapse = function HeaderCollapse(_ref) {
     onDownload(event);
   };
 
+  var handleOnDownloadSec = function handleOnDownloadSec(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    onDownloadSecondary(event);
+  };
+
   (0, _react.useEffect)(function () {
     setOpen(open);
   }, [open]);
@@ -86,6 +94,11 @@ var HeaderCollapse = function HeaderCollapse(_ref) {
   }, _react.default.createElement(_IconButton.default, {
     className: clasess.iconButtonContainer,
     onClick: handleOnDownload
+  }, _react.default.createElement(_GetApp.default, null))), onDownloadSecondary && _react.default.createElement(_Tooltip.default, {
+    title: iconTooltipSec
+  }, _react.default.createElement(_IconButton.default, {
+    className: clasess.iconButtonContainer,
+    onClick: handleOnDownloadSec
   }, _react.default.createElement(_GetApp.default, null))), !container && _react.default.createElement("div", {
     className: clasess.iconContainer
   }, isOpen ? _react.default.createElement(_Remove.default, null) : _react.default.createElement(_Add.default, null))), _react.default.createElement(_Collapse.default, {
@@ -102,7 +115,9 @@ HeaderCollapse.propTypes = {
   children: _propTypes.default.oneOfType([_propTypes.default.arrayOf(_propTypes.default.node), _propTypes.default.node, _propTypes.default.string]),
   container: _propTypes.default.bool,
   onDownload: _propTypes.default.oneOfType([_propTypes.default.number, _propTypes.default.oneOf([null]), _propTypes.default.func]),
-  iconTooltip: _propTypes.default.string
+  iconTooltip: _propTypes.default.string,
+  onDownloadSecondary: _propTypes.default.oneOfType([_propTypes.default.number, _propTypes.default.oneOf([null]), _propTypes.default.func]),
+  iconTooltipSec: _propTypes.default.string
 };
 HeaderCollapse.defaultProps = {
   open: false,
@@ -111,7 +126,9 @@ HeaderCollapse.defaultProps = {
   children: '',
   container: false,
   onDownload: null,
-  iconTooltip: ''
+  iconTooltip: '',
+  onDownloadSecondary: null,
+  iconTooltipSec: ''
 };
 var _default = HeaderCollapse;
 exports.default = _default;

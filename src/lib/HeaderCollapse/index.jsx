@@ -22,6 +22,8 @@ const HeaderCollapse = ({
   container,
   onDownload,
   iconTooltip,
+  onDownloadSecondary,
+  iconTooltipSec,
 }) => {
   const clasess = useStyle();
   const [isOpen, setOpen] = useState(false);
@@ -35,6 +37,12 @@ const HeaderCollapse = ({
     event.preventDefault();
     event.stopPropagation();
     onDownload(event);
+  }
+  
+  const handleOnDownloadSec = (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    onDownloadSecondary(event);
   }
 
   useEffect(() => {
@@ -54,6 +62,16 @@ const HeaderCollapse = ({
             <IconButton
               className={clasess.iconButtonContainer}
               onClick={handleOnDownload}
+            >
+              <GetAppIcon />
+            </IconButton>
+          </Tooltip>
+        )}
+        { onDownloadSecondary && (
+          <Tooltip title={iconTooltipSec}>
+            <IconButton
+              className={clasess.iconButtonContainer}
+              onClick={handleOnDownloadSec}
             >
               <GetAppIcon />
             </IconButton>
@@ -94,6 +112,12 @@ HeaderCollapse.propTypes = {
     PropTypes.func,
   ]),
   iconTooltip: PropTypes.string,
+  onDownloadSecondary: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.oneOf([null]),
+    PropTypes.func,
+  ]),
+  iconTooltipSec: PropTypes.string,
 };
 
 HeaderCollapse.defaultProps = {
@@ -104,6 +128,8 @@ HeaderCollapse.defaultProps = {
   container: false,
   onDownload: null,
   iconTooltip: '',
+  onDownloadSecondary: null,
+  iconTooltipSec: '',
 };
 
 export default HeaderCollapse;
