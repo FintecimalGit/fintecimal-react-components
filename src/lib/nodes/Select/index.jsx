@@ -32,6 +32,7 @@ const SelectInput = ({
   disabled,
   placeholder,
   handleBlur,
+  defaultValue
 }) => {
   const classes = useStyles();
   const labelRef = useRef(null);
@@ -42,6 +43,12 @@ const SelectInput = ({
   const [mErrorMessage, setErrorMessage] = useState(errorMessage);
   const [mStatus, setStatus] = useState(status.NORMAL);
   const [mOpen, setOpen] = useState(false);
+
+  useEffect(() => {
+    if(defaultValue){
+      setValue(defaultValue);
+    }
+  }, []);
 
   const renderItem = info => {
     const { name, index, category = true, parentName = '' } = info;
@@ -134,12 +141,13 @@ const SelectInput = ({
   };
 
   useEffect(() => {
-    setValue(value);
     setLabelWidth(labelRef.current.offsetWidth);
   }, [label, errorMessage]);
 
   useEffect(() => {
-    setValue(value);
+    if(mValue !== value){
+      setValue(value);
+    }
   }, [value]);
 
   const checkDisabled = useMemo(() => {

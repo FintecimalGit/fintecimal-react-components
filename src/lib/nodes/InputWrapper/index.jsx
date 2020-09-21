@@ -4,7 +4,7 @@ import { isEmpty, formatText } from '../../commons/utils';
 import BaseInput from '../BaseInput';
 
 const InputWrapper = ({ config, errors, isValid, disabled, onBlur }) => {
-  const { value, handleChange, label, type, required, format } = config;
+  const { value, handleChange, label, type, required, format, defaultValue } = config;
   const { error, errorMessage, errorMessages } = errors;
   const [mError, setError] = useState(error);
   const [mErrorMessage, setErrorMessage] = useState(errorMessage);
@@ -51,14 +51,22 @@ const InputWrapper = ({ config, errors, isValid, disabled, onBlur }) => {
   };
 
   useEffect(() => {
-    const newMvalue = format ? formatText(value, format) : value;
-    setValue(newMvalue);
-    if (!newMvalue || isValid(newMvalue)) {
-      setError(false);
-      setErrorMessage('');
-    } else {
-      setError(true);
-      setErrorMessage(errorMessages.validation);
+    if(defaultValue){
+      setValue(defaultValue);
+    }
+  },[]);
+
+  useEffect(() => {
+    if(mValue !== value){
+      const newMvalue = format ? formatText(value, format) : value;
+      setValue(newMvalue);
+      if (!newMvalue || isValid(newMvalue)) {
+       setError(false);
+       setErrorMessage('');
+      } else {
+       setError(true);
+       setErrorMessage(errorMessages.validation);
+      }
     }
   }, [value]);
 

@@ -68,7 +68,8 @@ var SelectInput = function SelectInput(_ref) {
       options = _ref.options,
       disabled = _ref.disabled,
       placeholder = _ref.placeholder,
-      handleBlur = _ref.handleBlur;
+      handleBlur = _ref.handleBlur,
+      defaultValue = _ref.defaultValue;
   var classes = (0, _style.default)();
   var labelRef = (0, _react.useRef)(null);
 
@@ -104,6 +105,12 @@ var SelectInput = function SelectInput(_ref) {
       _useState12 = _slicedToArray(_useState11, 2),
       mOpen = _useState12[0],
       setOpen = _useState12[1];
+
+  (0, _react.useEffect)(function () {
+    if (defaultValue) {
+      setValue(defaultValue);
+    }
+  }, []);
 
   var renderItem = function renderItem(info) {
     var name = info.name,
@@ -215,11 +222,12 @@ var SelectInput = function SelectInput(_ref) {
   };
 
   (0, _react.useEffect)(function () {
-    setValue(value);
     setLabelWidth(labelRef.current.offsetWidth);
   }, [label, errorMessage]);
   (0, _react.useEffect)(function () {
-    setValue(value);
+    if (mValue !== value) {
+      setValue(value);
+    }
   }, [value]);
   var checkDisabled = (0, _react.useMemo)(function () {
     if (options.length === 0) return true;

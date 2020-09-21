@@ -35,7 +35,10 @@ export default makeStyles(theme => ({
     margin: 0
   },
   icon: {
-    flex: 1
+    alignSelf: 'stretch',
+    display: 'flex',
+    alignItems: 'stretch',
+    maxHeight: '54px',
   },
   asterisk: {
     color: theme.palette.error.main,
