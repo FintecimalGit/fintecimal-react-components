@@ -107,8 +107,9 @@ var SelectInput = function SelectInput(_ref) {
       setOpen = _useState12[1];
 
   (0, _react.useEffect)(function () {
-    if (defaultValue) {
+    if (defaultValue && !value) {
       setValue(defaultValue);
+      handleChange(defaultValue);
     }
   }, []);
 
