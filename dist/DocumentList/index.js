@@ -40,7 +40,10 @@ var DocumentList = function DocumentList(_ref) {
       documents = _ref.documents,
       onClickDocument = _ref.onClickDocument,
       onDownload = _ref.onDownload,
-      open = _ref.open;
+      open = _ref.open,
+      iconTooltip = _ref.iconTooltip,
+      onDownloadSecondary = _ref.onDownloadSecondary,
+      iconTooltipSec = _ref.iconTooltipSec;
   var clasess = (0, _style.default)();
   /**
    *
@@ -130,7 +133,10 @@ var DocumentList = function DocumentList(_ref) {
   return _react.default.createElement(_HeaderCollapse.default, {
     open: open,
     title: title,
-    onDownload: onDownload
+    onDownload: onDownload,
+    iconTooltip: iconTooltip,
+    onDownloadSecondary: onDownloadSecondary,
+    iconTooltipSec: iconTooltipSec
   }, _react.default.createElement(_List.default, {
     className: clasess.noPadding
   }, documents.map(function (document, index) {
@@ -154,15 +160,21 @@ DocumentList.propTypes = {
     status: _propTypes.default.string.isRequired
   })).isRequired,
   onClickDocument: _propTypes.default.func,
-  onDownload: _propTypes.default.func,
-  open: _propTypes.default.bool
+  onDownload: _propTypes.default.oneOfType([_propTypes.default.number, _propTypes.default.oneOf([null]), _propTypes.default.func]),
+  open: _propTypes.default.bool,
+  iconTooltip: _propTypes.default.string,
+  onDownloadSecondary: _propTypes.default.oneOfType([_propTypes.default.number, _propTypes.default.oneOf([null]), _propTypes.default.func]),
+  iconTooltipSec: _propTypes.default.string
 };
 DocumentList.defaultProps = {
   title: '',
   documents: [],
   onClickDocument: function onClickDocument() {},
   onDownload: function onDownload() {},
-  open: false
+  open: false,
+  iconTooltip: '',
+  onDownloadSecondary: null,
+  iconTooltipSec: ''
 };
 var _default = DocumentList;
 exports.default = _default;

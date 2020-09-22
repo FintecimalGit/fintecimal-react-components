@@ -6,6 +6,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Collapse from '@material-ui/core/Collapse';
 import IconButton from '@material-ui/core/IconButton';
+import Tooltip from '@material-ui/core/Tooltip';
 
 import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
@@ -19,7 +20,10 @@ const HeaderCollapse = ({
   title,
   children,
   container,
-  onDownload
+  onDownload,
+  iconTooltip,
+  onDownloadSecondary,
+  iconTooltipSec,
 }) => {
   const clasess = useStyle();
   const [isOpen, setOpen] = useState(false);
@@ -33,6 +37,12 @@ const HeaderCollapse = ({
     event.preventDefault();
     event.stopPropagation();
     onDownload(event);
+  }
+  
+  const handleOnDownloadSec = (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    onDownloadSecondary(event);
   }
 
   useEffect(() => {
@@ -48,12 +58,24 @@ const HeaderCollapse = ({
       >
         <ListItemText className={clasess.listItemText} primary={title} />
         { onDownload && (
-          <IconButton
-            className={clasess.iconButtonContainer}
-            onClick={handleOnDownload}
-          >
-            <GetAppIcon />
-          </IconButton>
+          <Tooltip title={iconTooltip}>
+            <IconButton
+              className={clasess.iconButtonContainer}
+              onClick={handleOnDownload}
+            >
+              <GetAppIcon />
+            </IconButton>
+          </Tooltip>
+        )}
+        { onDownloadSecondary && (
+          <Tooltip title={iconTooltipSec}>
+            <IconButton
+              className={clasess.iconButtonContainer}
+              onClick={handleOnDownloadSec}
+            >
+              <GetAppIcon />
+            </IconButton>
+          </Tooltip>
         )}
         {
           !container && (
@@ -87,7 +109,15 @@ HeaderCollapse.propTypes = {
   onDownload: PropTypes.oneOfType([
     PropTypes.number,
     PropTypes.oneOf([null]),
-  ])
+    PropTypes.func,
+  ]),
+  iconTooltip: PropTypes.string,
+  onDownloadSecondary: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.oneOf([null]),
+    PropTypes.func,
+  ]),
+  iconTooltipSec: PropTypes.string,
 };
 
 HeaderCollapse.defaultProps = {
@@ -97,6 +127,9 @@ HeaderCollapse.defaultProps = {
   children: '',
   container: false,
   onDownload: null,
+  iconTooltip: '',
+  onDownloadSecondary: null,
+  iconTooltipSec: '',
 };
 
 export default HeaderCollapse;

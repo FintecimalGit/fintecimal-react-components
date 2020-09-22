@@ -21,6 +21,8 @@ var _Collapse = _interopRequireDefault(require("@material-ui/core/Collapse"));
 
 var _IconButton = _interopRequireDefault(require("@material-ui/core/IconButton"));
 
+var _Tooltip = _interopRequireDefault(require("@material-ui/core/Tooltip"));
+
 var _Add = _interopRequireDefault(require("@material-ui/icons/Add"));
 
 var _Remove = _interopRequireDefault(require("@material-ui/icons/Remove"));
@@ -49,7 +51,10 @@ var HeaderCollapse = function HeaderCollapse(_ref) {
       title = _ref.title,
       children = _ref.children,
       container = _ref.container,
-      onDownload = _ref.onDownload;
+      onDownload = _ref.onDownload,
+      iconTooltip = _ref.iconTooltip,
+      onDownloadSecondary = _ref.onDownloadSecondary,
+      iconTooltipSec = _ref.iconTooltipSec;
   var clasess = (0, _style.default)();
 
   var _useState = (0, _react.useState)(false),
@@ -68,6 +73,12 @@ var HeaderCollapse = function HeaderCollapse(_ref) {
     onDownload(event);
   };
 
+  var handleOnDownloadSec = function handleOnDownloadSec(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    onDownloadSecondary(event);
+  };
+
   (0, _react.useEffect)(function () {
     setOpen(open);
   }, [open]);
@@ -78,10 +89,17 @@ var HeaderCollapse = function HeaderCollapse(_ref) {
   }, _react.default.createElement(_ListItemText.default, {
     className: clasess.listItemText,
     primary: title
-  }), onDownload && _react.default.createElement(_IconButton.default, {
+  }), onDownload && _react.default.createElement(_Tooltip.default, {
+    title: iconTooltip
+  }, _react.default.createElement(_IconButton.default, {
     className: clasess.iconButtonContainer,
     onClick: handleOnDownload
-  }, _react.default.createElement(_GetApp.default, null)), !container && _react.default.createElement("div", {
+  }, _react.default.createElement(_GetApp.default, null))), onDownloadSecondary && _react.default.createElement(_Tooltip.default, {
+    title: iconTooltipSec
+  }, _react.default.createElement(_IconButton.default, {
+    className: clasess.iconButtonContainer,
+    onClick: handleOnDownloadSec
+  }, _react.default.createElement(_GetApp.default, null))), !container && _react.default.createElement("div", {
     className: clasess.iconContainer
   }, isOpen ? _react.default.createElement(_Remove.default, null) : _react.default.createElement(_Add.default, null))), _react.default.createElement(_Collapse.default, {
     in: isOpen || container,
@@ -96,7 +114,10 @@ HeaderCollapse.propTypes = {
   title: _propTypes.default.string,
   children: _propTypes.default.oneOfType([_propTypes.default.arrayOf(_propTypes.default.node), _propTypes.default.node, _propTypes.default.string]),
   container: _propTypes.default.bool,
-  onDownload: _propTypes.default.oneOfType([_propTypes.default.number, _propTypes.default.oneOf([null])])
+  onDownload: _propTypes.default.oneOfType([_propTypes.default.number, _propTypes.default.oneOf([null]), _propTypes.default.func]),
+  iconTooltip: _propTypes.default.string,
+  onDownloadSecondary: _propTypes.default.oneOfType([_propTypes.default.number, _propTypes.default.oneOf([null]), _propTypes.default.func]),
+  iconTooltipSec: _propTypes.default.string
 };
 HeaderCollapse.defaultProps = {
   open: false,
@@ -104,7 +125,10 @@ HeaderCollapse.defaultProps = {
   title: '',
   children: '',
   container: false,
-  onDownload: null
+  onDownload: null,
+  iconTooltip: '',
+  onDownloadSecondary: null,
+  iconTooltipSec: ''
 };
 var _default = HeaderCollapse;
 exports.default = _default;

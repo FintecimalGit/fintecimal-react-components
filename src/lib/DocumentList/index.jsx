@@ -13,7 +13,7 @@ import HeaderCollapse from '../HeaderCollapse';
 
 import useStyle from './style';
 
-const DocumentList = ({ title, documents, onClickDocument, onDownload, open }) => {
+const DocumentList = ({ title, documents, onClickDocument, onDownload, open, iconTooltip, onDownloadSecondary, iconTooltipSec }) => {
   const clasess = useStyle();
 
   /**
@@ -79,7 +79,14 @@ const DocumentList = ({ title, documents, onClickDocument, onDownload, open }) =
   const isNotPending = status => status !== 'Pendiente';
 
   return (
-    <HeaderCollapse open={open} title={title} onDownload={onDownload}>
+    <HeaderCollapse
+      open={open}
+      title={title}
+      onDownload={onDownload}
+      iconTooltip={iconTooltip}
+      onDownloadSecondary={onDownloadSecondary}
+      iconTooltipSec={iconTooltipSec}
+    >
       <List className={clasess.noPadding}>
         {documents.map((document, index) => (
           <ListItem
@@ -119,8 +126,19 @@ DocumentList.propTypes = {
     })
   ).isRequired,
   onClickDocument: PropTypes.func,
-  onDownload: PropTypes.func,
+  onDownload: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.oneOf([null]),
+    PropTypes.func,
+  ]),
   open: PropTypes.bool,
+  iconTooltip: PropTypes.string,
+  onDownloadSecondary: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.oneOf([null]),
+    PropTypes.func,
+  ]),
+  iconTooltipSec: PropTypes.string,
 };
 
 DocumentList.defaultProps = {
@@ -129,6 +147,9 @@ DocumentList.defaultProps = {
   onClickDocument: () => {},
   onDownload: () => {},
   open: false,
+  iconTooltip: '',
+  onDownloadSecondary: null,
+  iconTooltipSec: '',
 };
 
 export default DocumentList;
