@@ -17,6 +17,12 @@ var _Paper = _interopRequireDefault(require("@material-ui/core/Paper"));
 
 var _Typography = _interopRequireDefault(require("@material-ui/core/Typography"));
 
+var _IconButton = _interopRequireDefault(require("@material-ui/core/IconButton"));
+
+var _InputAdornment = _interopRequireDefault(require("@material-ui/core/InputAdornment"));
+
+var _icons = require("@material-ui/icons");
+
 var _reactAutosuggest = _interopRequireDefault(require("react-autosuggest"));
 
 var _style = _interopRequireDefault(require("./style"));
@@ -53,7 +59,8 @@ var renderInputComponent = function renderInputComponent(inputProps) {
       _inputRef = _inputProps$inputRef === void 0 ? function () {} : _inputProps$inputRef,
       ref = inputProps.ref,
       fullWidth = inputProps.fullWidth,
-      other = _objectWithoutProperties(inputProps, ["classes", "inputRef", "ref", "fullWidth"]);
+      endAdornment = inputProps.endAdornment,
+      other = _objectWithoutProperties(inputProps, ["classes", "inputRef", "ref", "fullWidth", "endAdornment"]);
 
   return _react.default.createElement(_TextField.default, _extends({
     fullWidth: fullWidth,
@@ -65,7 +72,8 @@ var renderInputComponent = function renderInputComponent(inputProps) {
       },
       classes: {
         input: classes.input
-      }
+      },
+      endAdornment: endAdornment
     }
   }, other));
 };
@@ -273,7 +281,14 @@ var Autocomplete = function Autocomplete(_ref) {
       variant: variant,
       required: required,
       disabled: disabled,
-      fullWidth: fullWidth
+      fullWidth: fullWidth,
+      endAdornment: localValue && _react.default.createElement(_InputAdornment.default, {
+        position: "end"
+      }, _react.default.createElement(_IconButton.default, {
+        onClick: function onClick() {
+          return setLocalValue('');
+        }
+      }, _react.default.createElement(_icons.Clear, null)))
     },
     renderInputComponent: renderInputComponent,
     theme: {

@@ -1307,6 +1307,8 @@ storiesOf('Components|AutoComplete', module).add('Auto Complete', () => (
     errorMessage={longText}
     // value={'Seleccion mal'}
     options={listWithCategories}
+    handleOnChangeWhen={['click', 'type']}
+    onClear={action('handleChange')}
     // value="3"
   />
 ));

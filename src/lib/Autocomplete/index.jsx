@@ -4,6 +4,9 @@ import PropTypes from 'prop-types';
 import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
+import IconButton from '@material-ui/core/IconButton';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import { Clear } from '@material-ui/icons';
 
 import Autosuggest from 'react-autosuggest';
 
@@ -15,6 +18,7 @@ const renderInputComponent = (inputProps) => {
     inputRef = () => {},
     ref,
     fullWidth,
+    endAdornment,
     ...other
   } = inputProps;
 
@@ -29,6 +33,7 @@ const renderInputComponent = (inputProps) => {
         classes: {
           input: classes.input,
         },
+        endAdornment,
       }}
       {...other}
     />
@@ -216,6 +221,13 @@ const Autocomplete = ({
           required: required,
           disabled: disabled,
           fullWidth: fullWidth,
+          endAdornment: localValue && (
+            <InputAdornment position="end">
+              <IconButton onClick={() => setLocalValue('')}>
+                <Clear />
+              </IconButton>
+            </InputAdornment>
+          )
         }}
         renderInputComponent={renderInputComponent}
 
