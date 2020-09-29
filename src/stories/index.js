@@ -527,12 +527,14 @@ storiesOf('Components|Nodes', module)
     const [headers, setHeaders] = useState(defaultHeader);
 
     const handleChange = (newValue) => {
-      setValues(newValue);
+      const { headers: newHeaders, values: newValues } = newValue;
+      setValues(newValues);
+      setHeaders(newHeaders);
       action('handleHeaders');
     }
 
     return (
-      <InputTable value={values} headers={headers} handleChange={handleChange} handleHeaders={(data) => setHeaders(data)} />
+      <InputTable value={values} headers={headers} handleHeadersAndValues={handleChange} />
     );
   })
   .add('CardApp', () => <CardApp onClick={action('onClick')} />);

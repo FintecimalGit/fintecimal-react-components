@@ -16,7 +16,7 @@ import { defaultData, defaultHeader } from './defaults';
 import * as utils from './utils';
 import useStyles from './style';
 
-const InputTable = ({ value, headers, handleChange, handleHeaders }) => {
+const InputTable = ({ value, headers, handleHeadersAndValues }) => {
   const classes = useStyles();
   const [fields, setFields] = useState([]);
   const [localHeaders, setLocalHeaders] = useState([]);
@@ -60,19 +60,28 @@ const InputTable = ({ value, headers, handleChange, handleHeaders }) => {
     if (edit) {
       const newInfo = _.cloneDeep(localValue);
       newInfo[editPosition] = generateData(dataField)
-      handleChange(newInfo);
+      handleHeadersAndValues({
+        headers,
+        values: newInfo
+      });
       setEdit(false);
       setEditPosition(0);
     } else {
       const newInformation = [...localValue, generateData(dataField)];
-      handleChange(newInformation);
+      handleHeadersAndValues({
+        headers,
+        values: newInformation
+      });
     }
   };
 
   const deleteRow =(item, index) => {
     const newInformation = [...localValue];
     newInformation.splice(index, 1);
-    handleChange(newInformation);
+    handleHeadersAndValues({
+      headers,
+      values: newInformation
+    });
   };
 
   const editRow = (value, index) => {
@@ -85,8 +94,10 @@ const InputTable = ({ value, headers, handleChange, handleHeaders }) => {
   const handleOnDropFile = (result) => {
     const { isValid, data, headersCSV, messages } = result;
     if (isValid) {
-      handleHeaders(headersCSV);
-      handleChange([...localValue, ...data]);
+      handleHeadersAndValues({
+        headers: headersCSV,
+        values: [...localValue, ...data]
+      });
       setErrorMessages([]);
     } else {
       setErrorMessages(messages);
@@ -153,15 +164,13 @@ const InputTable = ({ value, headers, handleChange, handleHeaders }) => {
 InputTable.propTypes = {
   value: PropTypes.array,
   headers: PropTypes.array,
-  handleChange: PropTypes.func,
-  handleHeaders: PropTypes.func,
+  handleHeadersAndValues: PropTypes.func,
 };
 
 InputTable.defaultProps = {
   value: defaultData,
   headers: defaultHeader,
-  handleChange: () => {},
-  handleHeaders: () => {},
+  handleHeadersAndValues: () => {},
 };
 
 export default InputTable;
