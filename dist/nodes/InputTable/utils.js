@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.defaultHeader2 = exports.defaultData = exports.defaultHeader = exports.generateFieldsWithValue = exports.generateValueEmpty = void 0;
+exports.ObjectNotEmpty = exports.createItemsFromCSV = exports.createHeadersFromCSV = exports.includesHeaders = exports.getHeadersFromCSV = exports.generateFieldsWithValue = exports.generateValueEmpty = void 0;
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
@@ -36,66 +36,71 @@ var generateFieldsWithValue = function generateFieldsWithValue(fields, values) {
 };
 
 exports.generateFieldsWithValue = generateFieldsWithValue;
-var defaultHeader = [{
-  'id': 0,
-  'name': 'no',
-  'label': 'No.',
-  'type': 'número',
-  'required': true
-}, {
-  'id': 1,
-  'name': 'fechaPago',
-  'label': 'Fecha de pago',
-  'type': 'respuesta corta',
-  'required': false
-}, {
-  'id': 2,
-  'name': 'montoSinIva',
-  'label': 'Monto sin iva',
-  'type': 'número',
-  'required': true
-}, {
-  'id': 3,
-  'name': 'iva',
-  'label': 'IVA',
-  'type': 'número',
-  'required': false
-}, {
-  'id': 4,
-  'name': 'total',
-  'label': 'Total a pagar',
-  'type': 'número',
-  'required': true
-}];
-exports.defaultHeader = defaultHeader;
-var defaultData = [[{
-  'name': 'no',
-  'value': '1234'
-}, {
-  'name': 'fechaPago',
-  'value': '20 de marzo 2020'
-}, {
-  'name': 'montoSinIva',
-  'value': '1000'
-}, {
-  'name': 'iva',
-  'value': '160'
-}, {
-  'name': 'total',
-  'value': '1160'
-}]];
-exports.defaultData = defaultData;
-var defaultHeader2 = [[{
-  "id": 1,
-  "name": "cantidadbien",
-  "label": "Cantidad",
-  "type": "número",
-  "required": true
-}, {
-  "id": 2,
-  "name": "descripcionbien",
-  "label": "Descripción",
-  "type": "respuesta larga",
-  "required": true
-}]];
-exports.defaultHeader2 = defaultHeader2;
+
+var getHeadersFromCSV = function getHeadersFromCSV() {
+  var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+  var firstRow = data[0];
+  return Object.keys(firstRow).map(function (key) {
+    return key;
+  });
+};
+
+exports.getHeadersFromCSV = getHeadersFromCSV;
+
+var includesHeaders = function includesHeaders(arr1, arr2) {
+  return arr1.map(function (item) {
+    return arr2.includes(item) ? null : item;
+  }).filter(function (item) {
+    return item;
+  });
+};
+
+exports.includesHeaders = includesHeaders;
+
+var createHeadersFromCSV = function createHeadersFromCSV(headers) {
+  return headers.reduce(function (acc, header, index) {
+    acc.push({
+      id: index,
+      name: header,
+      label: header.replaceAll('_', ' '),
+      type: 'respuesta corta',
+      required: false
+    });
+    return acc;
+  }, []);
+};
+
+exports.createHeadersFromCSV = createHeadersFromCSV;
+
+var checkColumnsHasDataByRow = function checkColumnsHasDataByRow(row) {
+  return Object.keys(row).some(function (r) {
+    return row[r] !== '';
+  });
+};
+
+var createItemsFromCSV = function createItemsFromCSV(items, headers) {
+  return items.reduce(function (acc, item) {
+    var data = [];
+
+    if (checkColumnsHasDataByRow(item)) {
+      headers.map(function (header) {
+        data.push({
+          name: header,
+          label: header.replaceAll('_', ' '),
+          value: item[header]
+        });
+      });
+      acc.push(data);
+    }
+
+    return acc;
+  }, []);
+};
+
+exports.createItemsFromCSV = createItemsFromCSV;
+
+var ObjectNotEmpty = function ObjectNotEmpty(obj) {
+  return Object.keys(obj).length;
+};
+
+exports.ObjectNotEmpty = ObjectNotEmpty;

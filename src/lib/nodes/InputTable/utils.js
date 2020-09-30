@@ -18,75 +18,43 @@ export const generateFieldsWithValue = (fields, values) => {
   },[]);
 }
 
-export const defaultHeader = [
-    {
-    'id': 0,
-    'name': 'no',
-    'label': 'No.',
-    'type': 'número',
-    'required': true
-  },{
-    'id': 1,
-    'name': 'fechaPago',
-    'label': 'Fecha de pago',
-    'type': 'respuesta corta',
-    'required': false
-  },{
-    'id': 2,
-    'name': 'montoSinIva',
-    'label': 'Monto sin iva',
-    'type': 'número',
-    'required': true
-  },{
-    'id': 3,
-    'name': 'iva',
-    'label': 'IVA',
-    'type': 'número',
-    'required': false
-  },{
-    'id': 4,
-    'name': 'total',
-    'label': 'Total a pagar',
-    'type': 'número',
-    'required': true
-  }
-];
+export const getHeadersFromCSV = (data = []) => {
+  const firstRow = data[0];
+  return Object.keys(firstRow).map((key) => key);
+};
 
-export const defaultData = [
-  [{
-    'name': 'no',
-    'value': '1234'
-  },{
-    'name': 'fechaPago',
-    'value': '20 de marzo 2020'
-  },{
-    'name': 'montoSinIva',
-    'value': '1000'
-  },{
-    'name': 'iva',
-    'value': '160'
-  },{
-    'name': 'total',
-    'value': '1160'
-  }]
-];
+export const includesHeaders = (arr1, arr2) => arr1.map(item => arr2.includes(item) ? null : item).filter(item => item);
 
+export const createHeadersFromCSV = (headers) => {
+  return headers.reduce((acc, header, index) => {
+    acc.push({
+      id: index,
+      name: header,
+      label: header.replaceAll('_', ' '),
+      type: 'respuesta corta',
+      required: false
+    })
+    return acc;
+  }, []);
+};
 
-export const defaultHeader2 = [
-  [
-    {
-      "id" : 1,
-      "name" : "cantidadbien",
-      "label" : "Cantidad",
-      "type" : "número",
-      "required" : true
-    },
-    {
-      "id" : 2,
-      "name" : "descripcionbien",
-      "label" : "Descripción",
-      "type" : "respuesta larga",
-      "required" : true
+const checkColumnsHasDataByRow = (row) => Object.keys(row).some((r) => row[r] !== '');
+
+export const createItemsFromCSV = (items, headers) => {
+  return items.reduce((acc, item) => {
+    const data = [];
+    if (checkColumnsHasDataByRow(item)) {
+      headers.map((header) => {
+        data.push({
+          name: header,
+          label: header.replaceAll('_', ' '),
+          value: item[header]
+        })
+      })
+      acc.push(data);
     }
-  ]
-]
+    return acc;
+  }, []);
+};
+
+export const ObjectNotEmpty = (obj) => Object.keys(obj).length;

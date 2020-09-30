@@ -15,13 +15,15 @@ var _lodash = _interopRequireDefault(require("lodash"));
 
 var _clsx3 = _interopRequireDefault(require("clsx"));
 
-var _Fields = _interopRequireDefault(require("./Fields"));
-
 var _Table = _interopRequireDefault(require("../../Table"));
 
 var _CsvReader = _interopRequireDefault(require("./components/CsvReader"));
 
-var _utils = require("./utils");
+var _Fields = _interopRequireDefault(require("./components/Fields"));
+
+var _defaults = require("./defaults");
+
+var utils = _interopRequireWildcard(require("./utils"));
 
 var _style = _interopRequireDefault(require("./style"));
 
@@ -53,13 +55,10 @@ function _iterableToArrayLimit(arr, i) { if (!(Symbol.iterator in Object(arr) ||
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
-var HEADER_ERROR_MESSAGE = 'La cantidad de columnas no es la correcta, prueba con las siguientes: ';
-var HEADER_ERROR_MESSAGE_2 = 'Las siguientes columnas no son correctas: ';
-
 var InputTable = function InputTable(_ref) {
   var value = _ref.value,
       headers = _ref.headers,
-      handleChange = _ref.handleChange;
+      handleHeadersAndValues = _ref.handleHeadersAndValues;
   var classes = (0, _style.default)();
 
   var _useState = (0, _react.useState)([]),
@@ -111,21 +110,18 @@ var InputTable = function InputTable(_ref) {
     };
   }, []);
   var VALUES = (0, _react.useMemo)(function () {
-    var newValues = [];
-
-    if (localValue.length) {
-      localValue.forEach(function (element) {
-        var toObject = {};
-        element.forEach(function (_ref2) {
-          var name = _ref2.name,
-              _value = _ref2.value;
-          toObject = _objectSpread({}, toObject, _defineProperty({}, name, _value));
-        });
-        if (Object.keys(toObject).length) newValues.push(toObject);
-      });
-      return newValues;
-    } else return newValues;
-  }, [localValue, handleOnDropFile]);
+    if (!localValue.length) return [];
+    return localValue.reduce(function (acc, element) {
+      var row = element.reduce(function (accRow, column) {
+        var name = column.name,
+            _value = column.value;
+        accRow = _objectSpread({}, accRow, _defineProperty({}, name, _value));
+        return accRow;
+      }, {});
+      if (utils.ObjectNotEmpty(row)) acc.push(row);
+      return acc;
+    }, []);
+  }, [localValue]);
   var generateData = (0, _react.useCallback)(function (data) {
     return data.map(function (field) {
       return {
@@ -141,109 +137,71 @@ var InputTable = function InputTable(_ref) {
       var newInfo = _lodash.default.cloneDeep(localValue);
 
       newInfo[editPosition] = generateData(dataField);
-      handleChange(newInfo);
+      handleHeadersAndValues({
+        headers: headers,
+        values: newInfo
+      });
       setEdit(false);
       setEditPosition(0);
     } else {
       var newInformation = [].concat(_toConsumableArray(localValue), [generateData(dataField)]);
-      handleChange(newInformation);
+      handleHeadersAndValues({
+        headers: headers,
+        values: newInformation
+      });
     }
   };
 
-  var DeleteRow = (0, _react.useCallback)(function (item, index) {
+  var deleteRow = function deleteRow(item, index) {
     var newInformation = _toConsumableArray(localValue);
 
     newInformation.splice(index, 1);
-    handleChange(newInformation);
-  }, [localValue, handleChange]);
+    handleHeadersAndValues({
+      headers: headers,
+      values: newInformation
+    });
+  };
 
-  var EditRow = function EditRow(value, index) {
-    var newFields = (0, _utils.generateFieldsWithValue)(fields, value);
+  var editRow = function editRow(value, index) {
+    var newFields = utils.generateFieldsWithValue(fields, value);
     setFields(newFields);
     setEdit(true);
     setEditPosition(index);
   };
 
-  var includesHeaders = function includesHeaders(arr1, arr2) {
-    return arr1.map(function (item) {
-      return arr2.includes(item) ? null : item;
-    }).filter(function (item) {
-      return item;
-    });
-  };
-
-  var formatDataFromCsv = (0, _react.useCallback)(function (data) {
-    var isValid = true;
-    var messages = [];
-    var _data = [];
-    var headersRow = [];
-    var headersNames = headers.map(function (_ref3) {
-      var _ref3$name = _ref3.name,
-          name = _ref3$name === void 0 ? '' : _ref3$name;
-      return name;
-    });
-    var labels = headers.map(function (_ref4) {
-      var _ref4$label = _ref4.label,
-          label = _ref4$label === void 0 ? '' : _ref4$label;
-      return label;
-    });
-    data.forEach(function (row, index) {
-      headersRow = Object.keys(row);
-      _data = [].concat(_toConsumableArray(_data), [headersNames.map(function (name, _index) {
-        if (row[name] === '') {
-          isValid = false;
-          messages = [].concat(_toConsumableArray(messages), ["La fila ".concat(index + 2, " de la columna \"").concat(name, "\" esta vac\xEDa")]);
-        }
-
-        return {
-          name: name,
-          label: labels[_index],
-          value: row[name] || ''
-        };
-      })]);
-    });
-    var headersAreValid = includesHeaders(headersRow, headersNames);
-
-    if (headersAreValid.length) {
-      isValid = false;
-      messages = ["".concat(HEADER_ERROR_MESSAGE_2, " ").concat(headersAreValid.join(', '))].concat(_toConsumableArray(messages));
-    }
-
-    if (headersRow.length !== headersNames.length) {
-      isValid = false;
-      messages = ["".concat(HEADER_ERROR_MESSAGE, " ").concat(headersNames.join(', '))].concat(_toConsumableArray(messages));
-    }
-
-    return {
-      isValid: isValid,
-      data: _data,
-      messages: messages
-    };
-  }, [headers]);
-  var handleOnDropFile = (0, _react.useCallback)(function (_ref5) {
-    var _ref6 = _slicedToArray(_ref5, 2),
-        _data = _ref6[0],
-        fileInfo = _ref6[1];
-
-    var _formatDataFromCsv = formatDataFromCsv(_data),
-        isValid = _formatDataFromCsv.isValid,
-        data = _formatDataFromCsv.data,
-        messages = _formatDataFromCsv.messages;
+  var handleOnDropFile = function handleOnDropFile(result) {
+    var isValid = result.isValid,
+        data = result.data,
+        headersCSV = result.headersCSV,
+        messages = result.messages;
 
     if (isValid) {
-      handleChange([].concat(_toConsumableArray(localValue), _toConsumableArray(data)));
+      handleHeadersAndValues({
+        headers: headersCSV,
+        values: [].concat(_toConsumableArray(localValue), _toConsumableArray(data))
+      });
       setErrorMessages([]);
     } else {
       setErrorMessages(messages);
     }
-  }, [localValue, handleChange]);
+  };
+
+  var closeMessageError = function closeMessageError() {
+    setTimeout(function () {
+      setErrorMessages([]);
+    }, 10000);
+  };
+
   (0, _react.useEffect)(function () {
     if (headers.length) setLocalHeaders(headers);
     if (value.length) setLocalValue(value);else if (localValue.length) setLocalValue([]);
   }, [value, headers]);
   (0, _react.useEffect)(function () {
-    setFields((0, _utils.generateValueEmpty)(localHeaders));
+    setFields(utils.generateValueEmpty(localHeaders));
   }, [localHeaders]);
+  (0, _react.useEffect)(function () {
+    if (errorMessages.length) closeMessageError();
+  }, [errorMessages]);
   return _react.default.createElement("div", {
     className: classes.content
   }, _react.default.createElement(_Fields.default, {
@@ -255,7 +213,9 @@ var InputTable = function InputTable(_ref) {
   }, _react.default.createElement(_CsvReader.default, {
     className: classes.input_loader,
     onFileLoaded: handleOnDropFile,
-    parserOptions: csvOptions
+    parserOptions: csvOptions,
+    headers: headers,
+    localValue: localValue
   }), _react.default.createElement("div", {
     className: (0, _clsx3.default)(classes.errorContainer, _defineProperty({}, classes.errorContainerOn, Boolean(errorMessages.length)), _defineProperty({}, classes.errorContainerOff, !Boolean(errorMessages.length)))
   }, Boolean(errorMessages.length) && _react.default.createElement("div", null, errorMessages.map(function (message, index) {
@@ -269,21 +229,21 @@ var InputTable = function InputTable(_ref) {
     headers: HEADERS,
     items: VALUES,
     deleteRow: true,
-    onDeleteRow: DeleteRow,
+    onDeleteRow: deleteRow,
     edit: true,
-    onEdit: EditRow
+    onEdit: editRow
   })));
 };
 
 InputTable.propTypes = {
   value: _propTypes.default.array,
   headers: _propTypes.default.array,
-  handleChange: _propTypes.default.func
+  handleHeadersAndValues: _propTypes.default.func
 };
 InputTable.defaultProps = {
-  value: _utils.defaultData,
-  headers: _utils.defaultHeader,
-  handleChange: function handleChange() {}
+  value: _defaults.defaultData,
+  headers: _defaults.defaultHeader,
+  handleHeadersAndValues: function handleHeadersAndValues() {}
 };
 var _default = InputTable;
 exports.default = _default;

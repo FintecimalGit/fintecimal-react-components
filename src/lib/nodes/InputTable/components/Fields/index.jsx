@@ -1,10 +1,10 @@
 import React, { Fragment, useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
 
-import CustomField from "./CustomField";
-import Button from "../../Buttons/Button";
+import CustomField from "../CustomField";
+import Button from "../../../Buttons/Button";
 
-import {generateValueEmpty} from '../utils';
+import { generateValueEmpty } from '../../utils';
 import useStyles from "./style";
 
 const Fields = ({fieldValues, addNewRow, edit}) =>{

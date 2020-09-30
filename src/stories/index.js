@@ -10,7 +10,7 @@ import ui from '../ui';
 import tables from '../commons/exampleTable';
 import { listWithCategories, listWithoutCategories } from '../lib/commons/exampleList';
 import { longText, mediumText, shortText } from '../lib/commons/exampleLongText';
-import { defaultData, defaultHeader } from '../lib/nodes/InputTable/utils';
+import { defaultData, defaultHeader } from '../lib/nodes/InputTable/defaults';
 import {
   SearchBar,
   BaseInput,
@@ -523,9 +523,18 @@ storiesOf('Components|Nodes', module)
     <ListSignerRoles selected={2} onChangeHandler={action('onChangeHandler')} />
   ))
   .add('Input Table', () => {
-    const [values, setValues] = useState(defaultData);
+    const [values, setValues] = useState([]);
+    const [headers, setHeaders] = useState(defaultHeader);
+
+    const handleChange = (newValue) => {
+      const { headers: newHeaders, values: newValues } = newValue;
+      setValues(newValues);
+      setHeaders(newHeaders);
+      action('handleHeaders');
+    }
+
     return (
-      <InputTable value={values} headers={defaultHeader} handleChange={(newValue) => setValues(newValue)} />
+      <InputTable value={values} headers={headers} handleHeadersAndValues={handleChange} />
     );
   })
   .add('CardApp', () => <CardApp onClick={action('onClick')} />);
