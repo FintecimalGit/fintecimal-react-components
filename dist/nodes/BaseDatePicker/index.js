@@ -17,6 +17,10 @@ require("moment/locale/es");
 
 var _pickers = require("@material-ui/pickers");
 
+var _IconButton = _interopRequireDefault(require("@material-ui/core/IconButton"));
+
+var _Clear = _interopRequireDefault(require("@material-ui/icons/Clear"));
+
 var _moment2 = _interopRequireDefault(require("@date-io/moment"));
 
 var _style = _interopRequireDefault(require("./style"));
@@ -57,7 +61,7 @@ var BaseDatePicker = function BaseDatePicker(_ref) {
 
   var handleDateChange = function handleDateChange(_date) {
     setDate(_date);
-    var formattedDate = format ? (0, _moment.default)(_date).format(format) : _date;
+    var formattedDate = format && _date ? (0, _moment.default)(_date).format(format) : _date;
     onDateChange(formattedDate);
   };
 
@@ -80,7 +84,18 @@ var BaseDatePicker = function BaseDatePicker(_ref) {
     onChange: handleDateChange,
     disableToolbar: disableToolBar,
     disabled: disabled,
-    minDate: minDate
+    minDate: minDate,
+    InputProps: {
+      endAdornment: _react.default.createElement(_IconButton.default, {
+        onClick: function onClick(e) {
+          e.stopPropagation();
+          handleDateChange(null);
+        }
+      }, _react.default.createElement(_Clear.default, null))
+    },
+    InputAdornmentProps: {
+      position: date ? "none" : "end"
+    }
   })));
 };
 
