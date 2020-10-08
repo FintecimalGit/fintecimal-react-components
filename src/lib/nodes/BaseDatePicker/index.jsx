@@ -4,6 +4,8 @@ import moment from 'moment';
 import 'moment/locale/es';
 
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
+import IconButton from "@material-ui/core/IconButton";
+import ClearIcon from "@material-ui/icons/Clear";
 import DateMomentUtils from '@date-io/moment';
 
 import useStyles from './style';
@@ -27,7 +29,7 @@ const BaseDatePicker = ({
    */
   const handleDateChange = _date => {
     setDate(_date);
-    const formattedDate = format ? moment(_date).format(format) : _date;
+    const formattedDate = format && _date ? moment(_date).format(format) : _date;
     onDateChange(formattedDate);
   };
 
@@ -50,6 +52,19 @@ const BaseDatePicker = ({
           disableToolbar={disableToolBar}
           disabled={disabled}
           minDate={minDate}
+          InputProps={{
+            endAdornment: (
+                <IconButton onClick={(e) => {
+                  e.stopPropagation();
+                  handleDateChange(null)
+                }}>
+                  <ClearIcon />
+                </IconButton>
+            )
+          }}
+          InputAdornmentProps={{
+            position: date ? "none" : "end"
+          }}
         />
       </MuiPickersUtilsProvider>
     </div>

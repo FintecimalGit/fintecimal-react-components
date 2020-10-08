@@ -10,21 +10,21 @@ const useStyles = makeStyles(theme => ({
     marginRight: theme.spacing(2),
     verticalAlign: 'middle'
   },
-  dotPending: {
+  dotOnHold: {
     backgroundColor: 'transparent',
-    borderColor: 'transparent'
+    borderColor: '#7B7B7B',
   },
   dotPending: {
-    backgroundColor: '#000',
-    borderColor: '#000'
+    backgroundColor: theme.palette.status.warning.main,
+    borderColor: theme.palette.status.warning.main
   },
   dotSuccess: {
-    backgroundColor: '#53d5c5',
-    borderColor: '#53d5c5'
+    backgroundColor: theme.palette.status.success.main,
+    borderColor: theme.palette.status.success.main
   },
   dotDanger: {
-    backgroundColor: 'red',
-    borderColor: 'red'
+    backgroundColor: theme.palette.status.danger.main,
+    borderColor: theme.palette.status.danger.main
   },
   name: {
     color: theme.palette.text.primary
@@ -33,7 +33,7 @@ const useStyles = makeStyles(theme => ({
     opacity: '0.5'
   },
   successIcon: {
-    color: '#53d5c5'
+    color:theme.palette.status.success.main
   },
   dangerIcon: {
     color: 'red'
@@ -43,7 +43,10 @@ const useStyles = makeStyles(theme => ({
     '&:hover': {
       boxShadow:
         '0 11px 15px 2px rgba(141, 140, 140, 0.16), 0 9px 46px 8px rgba(225, 225, 225, 0.07), 0 24px 38px 25px rgba(3, 3, 3, 0.05)', // estandar
-      backgroundColor: 'inherit'
+      backgroundColor: 'inherit',
+      '& > div > span > span': {
+        color: theme.palette.primary.main,
+      }
     }
   },
   noPadding: {
