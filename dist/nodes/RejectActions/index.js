@@ -103,7 +103,7 @@ var RejectActions = function RejectActions(_ref) {
     setRejected(true);
     setRejectionData(newData);
     handlerReject(data);
-    setShowPopover(!showUndo);
+    setShowPopover(false);
   };
 
   var onClosePopOver = function onClosePopOver(event) {
