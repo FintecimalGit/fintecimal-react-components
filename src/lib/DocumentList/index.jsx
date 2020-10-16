@@ -13,7 +13,9 @@ import HeaderCollapse from '../HeaderCollapse';
 
 import useStyle from './style';
 
-const DocumentList = ({ title, documents, onClickDocument, onDownload, open, iconTooltip, onDownloadSecondary, iconTooltipSec }) => {
+const DocumentList = ({
+  title, documents, onClickDocument, onDownload, open, iconTooltip, onDownloadSecondary, iconTooltipSec,
+}) => {
   const clasess = useStyle();
 
   /**
@@ -29,11 +31,12 @@ const DocumentList = ({ title, documents, onClickDocument, onDownload, open, ico
    * @param {String} status
    * @returns {String}
    */
-  const getDotColorClass = status => {
+  const getDotColorClass = (status) => {
     switch (status) {
       case 'En Espera':
-      case 'En Revisión':
         return clasess.dotOnHold;
+      case 'En Revisión':
+        return clasess.dotReview;
       case 'Pendiente':
         return clasess.dotPending;
       case 'Aceptado':
@@ -50,7 +53,7 @@ const DocumentList = ({ title, documents, onClickDocument, onDownload, open, ico
    * @param {String} status
    * @returns {String|DOMElement}
    */
-  const getLabelStatus = status => {
+  const getLabelStatus = (status) => {
     switch (status) {
       case 'Aceptado':
         return <DoneIcon className={clasess.successIcon} />;
@@ -60,7 +63,12 @@ const DocumentList = ({ title, documents, onClickDocument, onDownload, open, ico
       case 'En Revisión':
       case 'Pendiente':
       default:
-        return <span className={clasess.statusName}>{status} </span>;
+        return (
+          <span className={clasess.statusName}>
+            {status}
+            {' '}
+          </span>
+        );
     }
   };
 
@@ -69,14 +77,14 @@ const DocumentList = ({ title, documents, onClickDocument, onDownload, open, ico
    * @param {String} status
    * @returns {Boolean}
    */
-  const isOnHold = status => status === 'En Espera' || status === 'En Revisión';
+  const isOnHold = (status) => status === 'En Espera' || status === 'En Revisión';
 
   /**
    *
    * @param {String} status
    * @returns {Boolean}
    */
-  const isNotPending = status => status !== 'Pendiente';
+  const isNotPending = (status) => status !== 'Pendiente';
 
   return (
     <HeaderCollapse
@@ -101,7 +109,7 @@ const DocumentList = ({ title, documents, onClickDocument, onDownload, open, ico
               <span className={classnames(clasess.dot, getDotColorClass(document.status))} />
               <span
                 className={classnames(clasess.name, {
-                  [clasess.nameOnHole]: isOnHold(document.status)
+                  [clasess.nameOnHole]: isOnHold(document.status),
                 })}
               >
                 {document.name}
@@ -122,8 +130,8 @@ DocumentList.propTypes = {
   documents: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string.isRequired,
-      status: PropTypes.string.isRequired
-    })
+      status: PropTypes.string.isRequired,
+    }),
   ).isRequired,
   onClickDocument: PropTypes.func,
   onDownload: PropTypes.oneOfType([

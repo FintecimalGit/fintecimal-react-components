@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   dot: {
     height: '10px',
     width: '10px',
@@ -8,7 +8,7 @@ const useStyles = makeStyles(theme => ({
     display: 'inline-block',
     border: 'solid 2px',
     marginRight: theme.spacing(2),
-    verticalAlign: 'middle'
+    verticalAlign: 'middle',
   },
   dotOnHold: {
     backgroundColor: 'transparent',
@@ -16,27 +16,31 @@ const useStyles = makeStyles(theme => ({
   },
   dotPending: {
     backgroundColor: theme.palette.status.warning.main,
-    borderColor: theme.palette.status.warning.main
+    borderColor: theme.palette.status.warning.main,
+  },
+  dotReview: {
+    backgroundColor: theme.palette.status.review.main,
+    borderColor: theme.palette.status.review.main,
   },
   dotSuccess: {
     backgroundColor: theme.palette.status.success.main,
-    borderColor: theme.palette.status.success.main
+    borderColor: theme.palette.status.success.main,
   },
   dotDanger: {
     backgroundColor: theme.palette.status.danger.main,
-    borderColor: theme.palette.status.danger.main
+    borderColor: theme.palette.status.danger.main,
   },
   name: {
-    color: theme.palette.text.primary
+    color: theme.palette.text.primary,
   },
   nameOnHole: {
-    opacity: '0.5'
+    opacity: '0.5',
   },
   successIcon: {
-    color:theme.palette.status.success.main
+    color: theme.palette.status.success.main,
   },
   dangerIcon: {
-    color: 'red'
+    color: 'red',
   },
   listItem: {
     borderBottom: 'solid 1px #f1f1f1',
@@ -46,18 +50,18 @@ const useStyles = makeStyles(theme => ({
       backgroundColor: 'inherit',
       '& > div > span > span': {
         color: theme.palette.primary.main,
-      }
-    }
+      },
+    },
   },
   noPadding: {
-    padding: 0
+    padding: 0,
   },
   statusName: {
     fontSize: '14px',
     letterSpacing: '0.29px',
     fontWeight: '600',
-    paddingRight: theme.spacing(6.5)
-  }
+    paddingRight: theme.spacing(6.5),
+  },
 }));
 
 export default useStyles;
