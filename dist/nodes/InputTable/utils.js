@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.ObjectNotEmpty = exports.createItemsFromCSV = exports.createHeadersFromCSV = exports.includesHeaders = exports.getHeadersFromCSV = exports.generateFieldsWithValue = exports.generateValueEmpty = void 0;
+exports.getExtensionFile = exports.ObjectNotEmpty = exports.createItemsFromCSV = exports.createHeadersFromCSV = exports.includesHeaders = exports.getHeadersFromCSV = exports.generateFieldsWithValue = exports.generateValueEmpty = void 0;
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
@@ -11,8 +11,8 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-var generateValueEmpty = function generateValueEmpty(fieldArray) {
-  return fieldArray.map(function (field) {
+var generateValueEmpty = fieldArray => {
+  return fieldArray.map(field => {
     return {
       id: field.id,
       name: field.name,
@@ -26,9 +26,9 @@ var generateValueEmpty = function generateValueEmpty(fieldArray) {
 
 exports.generateValueEmpty = generateValueEmpty;
 
-var generateFieldsWithValue = function generateFieldsWithValue(fields, values) {
-  return fields.reduce(function (acc, field) {
-    acc.push(_objectSpread({}, field, {
+var generateFieldsWithValue = (fields, values) => {
+  return fields.reduce((acc, field) => {
+    acc.push(_objectSpread(_objectSpread({}, field), {}, {
       value: values[field.name]
     }));
     return acc;
@@ -37,34 +37,26 @@ var generateFieldsWithValue = function generateFieldsWithValue(fields, values) {
 
 exports.generateFieldsWithValue = generateFieldsWithValue;
 
-var getHeadersFromCSV = function getHeadersFromCSV() {
-  var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+var getHeadersFromCSV = (data = []) => {
   var firstRow = data[0];
-  return Object.keys(firstRow).map(function (key) {
-    return key;
-  });
+  return Object.keys(firstRow).map(key => key);
 };
 
 exports.getHeadersFromCSV = getHeadersFromCSV;
 
-var includesHeaders = function includesHeaders(arr1, arr2) {
-  return arr1.map(function (item) {
-    return arr2.includes(item) ? null : item;
-  }).filter(function (item) {
-    return item;
-  });
-};
+var includesHeaders = (arr1, arr2) => arr1.map(item => arr2.includes(item) ? null : item).filter(item => item);
 
 exports.includesHeaders = includesHeaders;
 
-var createHeadersFromCSV = function createHeadersFromCSV(headers) {
-  return headers.reduce(function (acc, header, index) {
+var createHeadersFromCSV = (headersFromCSV, headersColumns) => {
+  return headersFromCSV.reduce((acc, header, index) => {
+    var headerFounded = headersColumns.find(headerColumn => headerColumn.name === header);
     acc.push({
       id: index,
       name: header,
       label: header.replaceAll('_', ' '),
       type: 'respuesta corta',
-      required: false
+      required: headerFounded ? headerFounded.required : false
     });
     return acc;
   }, []);
@@ -72,18 +64,16 @@ var createHeadersFromCSV = function createHeadersFromCSV(headers) {
 
 exports.createHeadersFromCSV = createHeadersFromCSV;
 
-var checkColumnsHasDataByRow = function checkColumnsHasDataByRow(row) {
-  return Object.keys(row).some(function (r) {
-    return row[r] !== '';
-  });
-};
+var checkColumnsHasDataByRow = row => Object.keys(row).some(r => {
+  return row[r] !== '' && row[r] !== undefined;
+});
 
-var createItemsFromCSV = function createItemsFromCSV(items, headers) {
-  return items.reduce(function (acc, item) {
+var createItemsFromCSV = (items, headers) => {
+  return items.reduce((acc, item) => {
     var data = [];
 
     if (checkColumnsHasDataByRow(item)) {
-      headers.map(function (header) {
+      headers.map(header => {
         data.push({
           name: header,
           label: header.replaceAll('_', ' '),
@@ -99,8 +89,12 @@ var createItemsFromCSV = function createItemsFromCSV(items, headers) {
 
 exports.createItemsFromCSV = createItemsFromCSV;
 
-var ObjectNotEmpty = function ObjectNotEmpty(obj) {
-  return Object.keys(obj).length;
-};
+var ObjectNotEmpty = obj => Object.keys(obj).length;
 
 exports.ObjectNotEmpty = ObjectNotEmpty;
+
+var getExtensionFile = ({
+  name = ''
+}) => name.split('.').pop();
+
+exports.getExtensionFile = getExtensionFile;

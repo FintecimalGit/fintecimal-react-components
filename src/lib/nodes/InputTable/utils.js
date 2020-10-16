@@ -25,20 +25,23 @@ export const getHeadersFromCSV = (data = []) => {
 
 export const includesHeaders = (arr1, arr2) => arr1.map(item => arr2.includes(item) ? null : item).filter(item => item);
 
-export const createHeadersFromCSV = (headers) => {
-  return headers.reduce((acc, header, index) => {
+export const createHeadersFromCSV = (headersFromCSV, headersColumns) => {
+  return headersFromCSV.reduce((acc, header, index) => {
+    const headerFounded = headersColumns.find((headerColumn) => headerColumn.name === header);
     acc.push({
       id: index,
       name: header,
       label: header.replaceAll('_', ' '),
       type: 'respuesta corta',
-      required: false
+      required: (headerFounded) ? headerFounded.required : false
     })
     return acc;
   }, []);
 };
 
-const checkColumnsHasDataByRow = (row) => Object.keys(row).some((r) => row[r] !== '');
+const checkColumnsHasDataByRow = (row) => Object.keys(row).some((r) => {
+  return row[r] !== '' && row[r] !== undefined;
+});
 
 export const createItemsFromCSV = (items, headers) => {
   return items.reduce((acc, item) => {
@@ -58,3 +61,5 @@ export const createItemsFromCSV = (items, headers) => {
 };
 
 export const ObjectNotEmpty = (obj) => Object.keys(obj).length;
+
+export const getExtensionFile = ({ name = '' }) => name.split('.').pop();

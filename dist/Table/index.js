@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
-var _react = _interopRequireDefault(require("react"));
+var _react = _interopRequireWildcard(require("react"));
 
 var _propTypes = _interopRequireDefault(require("prop-types"));
 
@@ -17,20 +17,30 @@ var _style = _interopRequireDefault(require("./style"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var Table = function Table(_ref) {
-  var headers = _ref.headers,
-      items = _ref.items,
-      onClickRow = _ref.onClickRow,
-      edit = _ref.edit,
-      onEdit = _ref.onEdit,
-      deleteRow = _ref.deleteRow,
-      onDeleteRow = _ref.onDeleteRow;
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+var Table = ({
+  headers,
+  items,
+  onClickRow,
+  edit,
+  onEdit,
+  deleteRow,
+  onDeleteRow,
+  cleanTable,
+  handleCleanTable
+}) => {
   var classes = (0, _style.default)();
-  return _react.default.createElement("table", {
+  var visibleCleanTable = (0, _react.useMemo)(() => cleanTable && items.length > 0, [items, cleanTable]);
+  return /*#__PURE__*/_react.default.createElement("table", {
     className: classes.table
-  }, _react.default.createElement(_Thead.default, {
-    headers: headers
-  }), _react.default.createElement(_Tbody.default, {
+  }, /*#__PURE__*/_react.default.createElement(_Thead.default, {
+    headers: headers,
+    cleanTable: visibleCleanTable,
+    handleCleanTable: handleCleanTable
+  }), /*#__PURE__*/_react.default.createElement(_Tbody.default, {
     headers: headers,
     items: items,
     onClickRow: onClickRow,
@@ -51,16 +61,20 @@ Table.propTypes = {
   edit: _propTypes.default.bool,
   onEdit: _propTypes.default.func,
   deleteRow: _propTypes.default.bool,
-  onDeleteRow: _propTypes.default.func
+  onDeleteRow: _propTypes.default.func,
+  cleanTable: _propTypes.default.bool,
+  handleCleanTable: _propTypes.default.func
 };
 Table.defaultProps = {
   headers: [],
   items: [],
-  onClickRow: function onClickRow() {},
+  onClickRow: () => {},
   edit: false,
-  onEdit: function onEdit() {},
+  onEdit: () => {},
   deleteRow: false,
-  onDeleteRow: function onDeleteRow() {}
+  onDeleteRow: () => {},
+  cleanTable: false,
+  handleCleanTable: () => {}
 };
 var _default = Table;
 exports.default = _default;

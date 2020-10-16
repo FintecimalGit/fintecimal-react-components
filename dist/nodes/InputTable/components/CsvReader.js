@@ -1,7 +1,5 @@
 "use strict";
 
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
@@ -13,23 +11,31 @@ var _propTypes = _interopRequireDefault(require("prop-types"));
 
 var _papaparse = _interopRequireDefault(require("papaparse"));
 
+var _xlsx = _interopRequireDefault(require("xlsx"));
+
 var utils = _interopRequireWildcard(require("../utils"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+function _toArray(arr) { return _arrayWithHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableRest(); }
 
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 
-function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
@@ -37,99 +43,168 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-function _toArray(arr) { return _arrayWithHoles(arr) || _iterableToArray(arr) || _nonIterableRest(); }
-
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
-
-function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
-
-function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
-
 var HEADER_ERROR_MESSAGE = 'La cantidad de columnas no es la correcta ya que es diferente a la informacion con la que cuenta la tabla, prueba con las siguientes: ';
 var HEADER_ERROR_MESSAGE_2 = 'Las siguientes columnas no son correctas: ';
+var HEADER_ERROR_MESSAGE_3 = 'La siguientes columnas son requeridas que existan y su nombre sea: ';
 
-var CSVReader = function CSVReader(_ref) {
-  var accept = _ref.accept,
-      className = _ref.className,
-      inputClass = _ref.inputClass,
-      fileEncoding = _ref.fileEncoding,
-      inputId = _ref.inputId,
-      label = _ref.label,
-      onError = _ref.onError,
-      onFileLoaded = _ref.onFileLoaded,
-      parserOptions = _ref.parserOptions,
-      _ref$disabled = _ref.disabled,
-      disabled = _ref$disabled === void 0 ? false : _ref$disabled,
-      headers = _ref.headers,
-      localValue = _ref.localValue;
+var CSVReader = ({
+  accept,
+  className,
+  inputClass,
+  fileEncoding,
+  inputId,
+  label,
+  onError,
+  onFileLoaded,
+  parserOptions,
+  disabled = false,
+  headers,
+  localValue
+}) => {
   var refE = (0, _react.useRef)();
-  var readFile = (0, _react.useCallback)(function (event) {
-    return new Promise(function (resolve, reject) {
-      var reader = new FileReader();
 
-      var _refE$current$files = _toArray(refE.current.files),
-          _refE$current$files$ = _refE$current$files[0],
-          file = _refE$current$files$ === void 0 ? null : _refE$current$files$,
-          rest = _refE$current$files.slice(1);
+  var readExcel = file => new Promise((resolve, reject) => {
+    var reader = new FileReader();
 
-      if (file) {
-        reader.onload = function (_event) {
-          var csvData = _papaparse.default.parse(reader.result, _objectSpread({}, parserOptions, {
-            error: onError,
-            encoding: fileEncoding
-          }));
+    reader.onload = _event => {
+      var data = _event.target.result;
 
-          resolve(csvData.data);
-          refE.current.value = null;
-        };
+      var workbook = _xlsx.default.read(data, {
+        type: 'binary'
+      });
 
-        reader.readAsText(file, fileEncoding);
+      workbook.SheetNames.forEach(sheetName => {
+        var XL_row_object = _xlsx.default.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+
+        resolve(XL_row_object);
+        refE.current.value = null;
+      });
+    };
+
+    reader.onerror = ex => {
+      reject(ex);
+    };
+
+    reader.readAsBinaryString(file);
+  });
+
+  var readCSV = file => new Promise((resolve, reject) => {
+    var reader = new FileReader();
+
+    reader.onload = _event => {
+      var csvData = _papaparse.default.parse(reader.result, _objectSpread(_objectSpread({}, parserOptions), {}, {
+        error: onError,
+        encoding: fileEncoding
+      }));
+
+      resolve(csvData.data);
+      refE.current.value = null;
+    };
+
+    reader.readAsText(file, fileEncoding);
+  });
+
+  var readFile = (0, _react.useCallback)(event => new Promise((resolve, reject) => {
+    var _refE$current$files = _toArray(refE.current.files),
+        _refE$current$files$ = _refE$current$files[0],
+        file = _refE$current$files$ === void 0 ? null : _refE$current$files$,
+        rest = _refE$current$files.slice(1);
+
+    if (file) {
+      var extension = utils.getExtensionFile(file);
+
+      if (extension.toLowerCase() === 'csv') {
+        resolve(readCSV(file));
+      } else {
+        resolve(readExcel(file));
       }
-    });
-  }, []);
+    }
+  }), []);
 
-  var formatDataFromCsv = function formatDataFromCsv(data) {
+  var validateRequiredColumns = (documentHeaders, headersColumns) => {
+    var columns = [];
+    var message = [];
+    var isInvalid = headersColumns.reduce((acc, header) => {
+      var name = header.name,
+          required = header.required;
+
+      if (required && !documentHeaders.includes(name)) {
+        acc = true;
+        columns.push(name);
+      }
+
+      return acc;
+    }, false);
+
+    if (isInvalid) {
+      message.push("".concat(HEADER_ERROR_MESSAGE_3, " ").concat(columns.join(', ')));
+    }
+
+    return {
+      isInvalid,
+      message
+    };
+  };
+
+  var validateColumnsWithData = documentHeaders => {
+    var isInvalid = false;
+    var messages = [];
+    if (!localValue.length) return {
+      isInvalid,
+      messages
+    };
+    var headersNames = headers.map(({
+      name = ''
+    }) => name);
+    var headersAreValid = utils.includesHeaders(documentHeaders, headersNames);
+
+    if (headersAreValid.length) {
+      isInvalid = true;
+      messages = ["".concat(HEADER_ERROR_MESSAGE_2, " ").concat(headersAreValid.join(', ')), ...messages];
+    }
+
+    if (documentHeaders.length !== headersNames.length) {
+      isInvalid = true;
+      messages = ["".concat(HEADER_ERROR_MESSAGE, " ").concat(headersNames.join(', ')), ...messages];
+    }
+
+    return {
+      isInvalid,
+      messages
+    };
+  };
+
+  var formatDataFromCsv = data => {
     var isValid = true;
     var messages = [];
     var _data = [];
     var headersCSV = headers;
-    var headersNames = headers.map(function (_ref2) {
-      var _ref2$name = _ref2.name,
-          name = _ref2$name === void 0 ? '' : _ref2$name;
-      return name;
-    });
     var documentHeaders = utils.getHeadersFromCSV(data);
+    var headersColumns = headers.map(({
+      name = '',
+      required = false
+    }) => ({
+      name,
+      required
+    }));
+    var statusRequiredColumns = validateRequiredColumns(documentHeaders, headersColumns);
+    var statusColumnWithData = validateColumnsWithData(documentHeaders);
 
-    if (localValue.length > 1) {
-      var headersAreValid = utils.includesHeaders(documentHeaders, headersNames);
-
-      if (headersAreValid.length) {
-        isValid = false;
-        messages = ["".concat(HEADER_ERROR_MESSAGE_2, " ").concat(headersAreValid.join(', '))].concat(_toConsumableArray(messages));
-      }
-
-      if (documentHeaders.length !== headersNames.length) {
-        isValid = false;
-        messages = ["".concat(HEADER_ERROR_MESSAGE, " ").concat(headersNames.join(', '))].concat(_toConsumableArray(messages));
-      }
-    } else {
-      headersCSV = utils.createHeadersFromCSV(documentHeaders);
-    }
+    if (statusRequiredColumns.isInvalid || statusColumnWithData.isInvalid) {
+      isValid = false;
+      messages = statusRequiredColumns.isInvalid ? statusRequiredColumns.message : statusColumnWithData.messages;
+    } else headersCSV = utils.createHeadersFromCSV(documentHeaders, headersColumns);
 
     _data = utils.createItemsFromCSV(data, documentHeaders);
     return {
-      isValid: isValid,
+      isValid,
       data: _data,
-      headersCSV: headersCSV,
-      messages: messages
+      headersCSV,
+      messages
     };
   };
 
-  var handleChangeFile = (0, _react.useCallback)(
-  /*#__PURE__*/
-  _asyncToGenerator(
-  /*#__PURE__*/
-  regeneratorRuntime.mark(function _callee() {
+  var handleChangeFile = (0, _react.useCallback)( /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
     var result, _formatDataFromCsv, isValid, data, headersCSV, messages;
 
     return regeneratorRuntime.wrap(function _callee$(_context) {
@@ -143,10 +218,10 @@ var CSVReader = function CSVReader(_ref) {
             result = _context.sent;
             _formatDataFromCsv = formatDataFromCsv(result), isValid = _formatDataFromCsv.isValid, data = _formatDataFromCsv.data, headersCSV = _formatDataFromCsv.headersCSV, messages = _formatDataFromCsv.messages;
             onFileLoaded({
-              isValid: isValid,
-              data: data,
-              headersCSV: headersCSV,
-              messages: messages
+              isValid,
+              data,
+              headersCSV,
+              messages
             });
 
           case 5:
@@ -156,11 +231,11 @@ var CSVReader = function CSVReader(_ref) {
       }
     }, _callee);
   })), [readFile, onFileLoaded]);
-  return _react.default.createElement("div", {
+  return /*#__PURE__*/_react.default.createElement("div", {
     className: className
-  }, _react.default.createElement("div", null, _react.default.createElement("label", {
+  }, /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("label", {
     htmlFor: inputId
-  }, label), _react.default.createElement("input", {
+  }, label), /*#__PURE__*/_react.default.createElement("input", {
     ref: refE,
     className: inputClass,
     type: "file",
@@ -186,13 +261,13 @@ CSVReader.propTypes = {
   localValue: _propTypes.default.array
 };
 CSVReader.defaultProps = {
-  accept: '.csv, text/csv',
+  accept: '.csv, text/csv, .xlsx',
   className: '',
   inputClass: '',
   fileEncoding: 'UTF-8',
   inputId: 'csv_input',
   label: 'Cargar archivo',
-  onError: function onError() {},
+  onError: () => {},
   parserOptions: {},
   disabled: false,
   headers: [],

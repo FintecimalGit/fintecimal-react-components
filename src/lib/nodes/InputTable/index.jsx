@@ -1,4 +1,4 @@
-import React, { 
+import React, {
   useState,
   useEffect,
   useCallback,
@@ -26,13 +26,13 @@ const InputTable = ({ value, headers, handleHeadersAndValues }) => {
   const [editPosition, setEditPosition] = useState();
 
   const HEADERS = useMemo(() => localHeaders
-    .map(option => { return {key: option.name, value: option.label}}), [localHeaders]);
+    .map((option) => ({ key: option.name, value: option.label })), [localHeaders]);
 
   const csvOptions = useMemo(() => ({
     header: true,
     dynamicTyping: false,
     skipEmptyLines: true,
-    transformHeader: header => header.replace(/\W/g, "_"),
+    transformHeader: (header) => header.replace(/\W/g, '_'),
   }), []);
 
   const VALUES = useMemo(() => {
@@ -50,19 +50,19 @@ const InputTable = ({ value, headers, handleHeadersAndValues }) => {
     }, []);
   }, [localValue]);
 
-  const generateData = useCallback((data) => data.map(field => ({
+  const generateData = useCallback((data) => data.map((field) => ({
     name: field.name,
     label: field.label,
-    value: field.value
+    value: field.value,
   })), []);
 
   const addNewRow = (dataField) => {
     if (edit) {
       const newInfo = _.cloneDeep(localValue);
-      newInfo[editPosition] = generateData(dataField)
+      newInfo[editPosition] = generateData(dataField);
       handleHeadersAndValues({
         headers,
-        values: newInfo
+        values: newInfo,
       });
       setEdit(false);
       setEditPosition(0);
@@ -70,33 +70,42 @@ const InputTable = ({ value, headers, handleHeadersAndValues }) => {
       const newInformation = [...localValue, generateData(dataField)];
       handleHeadersAndValues({
         headers,
-        values: newInformation
+        values: newInformation,
       });
     }
   };
 
-  const deleteRow =(item, index) => {
+  const deleteRow = (item, index) => {
     const newInformation = [...localValue];
     newInformation.splice(index, 1);
     handleHeadersAndValues({
       headers,
-      values: newInformation
+      values: newInformation,
     });
   };
 
-  const editRow = (value, index) => {
-    const newFields = utils.generateFieldsWithValue(fields, value);
+  const editRow = (_value, index) => {
+    const newFields = utils.generateFieldsWithValue(fields, _value);
     setFields(newFields);
     setEdit(true);
     setEditPosition(index);
-  }
+  };
+
+  const handleCleanTable = () => {
+    handleHeadersAndValues({
+      headers,
+      values: [],
+    });
+  };
 
   const handleOnDropFile = (result) => {
-    const { isValid, data, headersCSV, messages } = result;
+    const {
+      isValid, data, headersCSV, messages,
+    } = result;
     if (isValid) {
       handleHeadersAndValues({
         headers: headersCSV,
-        values: [...localValue, ...data]
+        values: [...localValue, ...data],
       });
       setErrorMessages([]);
     } else {
@@ -109,16 +118,16 @@ const InputTable = ({ value, headers, handleHeadersAndValues }) => {
       setErrorMessages([]);
     }, 10000);
   };
-  
+
   useEffect(() => {
     if (headers.length) setLocalHeaders(headers);
-    if (value.length) setLocalValue(value)
+    if (value.length) setLocalValue(value);
     else if (localValue.length) setLocalValue([]);
   }, [value, headers]);
-  
+
   useEffect(() => {
     setFields(utils.generateValueEmpty(localHeaders));
-  }, [localHeaders])
+  }, [localHeaders]);
 
   useEffect(() => {
     if (errorMessages.length) closeMessageError();
@@ -126,7 +135,7 @@ const InputTable = ({ value, headers, handleHeadersAndValues }) => {
 
   return (
     <div className={classes.content}>
-      <Fields fieldValues={fields} addNewRow={addNewRow} edit={edit}/>
+      <Fields fieldValues={fields} addNewRow={addNewRow} edit={edit} />
       <div className={classes.csvActions}>
         <CSVReader
           className={classes.input_loader}
@@ -134,28 +143,43 @@ const InputTable = ({ value, headers, handleHeadersAndValues }) => {
           parserOptions={csvOptions}
           headers={headers}
           localValue={localValue}
-          />
+        />
 
         <div className={clsx(
           classes.errorContainer,
-          {[classes.errorContainerOn]: Boolean(errorMessages.length)},
-          {[classes.errorContainerOff]: !Boolean(errorMessages.length)},
-        )}>
+          { [classes.errorContainerOn]: Boolean(errorMessages.length) },
+          { [classes.errorContainerOff]: !errorMessages.length },
+        )}
+        >
           {
-            Boolean(errorMessages.length) && (<div>
+            Boolean(errorMessages.length) && (
+            <div>
               {
-                errorMessages.map((message, index) => (<span
-                  key={index}
-                  className={classes.errorMessage}>
+                errorMessages.map((message, index) => (
+                  <span
+                    key={index}
+                    className={classes.errorMessage}
+                  >
                     { `${index + 1} - ${message}` }
-                </span>))
+                  </span>
+                ))
               }
-            </div>)
+            </div>
+            )
           }
         </div>
       </div>
       <div className={classes.tableContent}>
-        <Table headers={HEADERS} items={VALUES} deleteRow={true} onDeleteRow={deleteRow} edit={true} onEdit={editRow}/>
+        <Table
+          headers={HEADERS}
+          items={VALUES}
+          deleteRow
+          onDeleteRow={deleteRow}
+          edit
+          onEdit={editRow}
+          cleanTable
+          handleCleanTable={handleCleanTable}
+        />
       </div>
     </div>
   );

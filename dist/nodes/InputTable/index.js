@@ -1,7 +1,5 @@
 "use strict";
 
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
@@ -13,7 +11,7 @@ var _propTypes = _interopRequireDefault(require("prop-types"));
 
 var _lodash = _interopRequireDefault(require("lodash"));
 
-var _clsx3 = _interopRequireDefault(require("clsx"));
+var _clsx = _interopRequireDefault(require("clsx"));
 
 var _Table = _interopRequireDefault(require("../../Table"));
 
@@ -31,15 +29,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
-
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
-
-function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
-
-function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
@@ -47,18 +37,23 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 
-function _iterableToArrayLimit(arr, i) { if (!(Symbol.iterator in Object(arr) || Object.prototype.toString.call(arr) === "[object Arguments]")) { return; } var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
-var InputTable = function InputTable(_ref) {
-  var value = _ref.value,
-      headers = _ref.headers,
-      handleHeadersAndValues = _ref.handleHeadersAndValues;
+var InputTable = ({
+  value,
+  headers,
+  handleHeadersAndValues
+}) => {
   var classes = (0, _style.default)();
 
   var _useState = (0, _react.useState)([]),
@@ -91,85 +86,81 @@ var InputTable = function InputTable(_ref) {
       editPosition = _useState12[0],
       setEditPosition = _useState12[1];
 
-  var HEADERS = (0, _react.useMemo)(function () {
-    return localHeaders.map(function (option) {
-      return {
-        key: option.name,
-        value: option.label
-      };
-    });
-  }, [localHeaders]);
-  var csvOptions = (0, _react.useMemo)(function () {
-    return {
-      header: true,
-      dynamicTyping: false,
-      skipEmptyLines: true,
-      transformHeader: function transformHeader(header) {
-        return header.replace(/\W/g, "_");
-      }
-    };
-  }, []);
-  var VALUES = (0, _react.useMemo)(function () {
+  var HEADERS = (0, _react.useMemo)(() => localHeaders.map(option => ({
+    key: option.name,
+    value: option.label
+  })), [localHeaders]);
+  var csvOptions = (0, _react.useMemo)(() => ({
+    header: true,
+    dynamicTyping: false,
+    skipEmptyLines: true,
+    transformHeader: header => header.replace(/\W/g, '_')
+  }), []);
+  var VALUES = (0, _react.useMemo)(() => {
     if (!localValue.length) return [];
-    return localValue.reduce(function (acc, element) {
-      var row = element.reduce(function (accRow, column) {
+    return localValue.reduce((acc, element) => {
+      var row = element.reduce((accRow, column) => {
         var name = column.name,
             _value = column.value;
-        accRow = _objectSpread({}, accRow, _defineProperty({}, name, _value));
+        accRow = _objectSpread(_objectSpread({}, accRow), {}, {
+          [name]: _value
+        });
         return accRow;
       }, {});
       if (utils.ObjectNotEmpty(row)) acc.push(row);
       return acc;
     }, []);
   }, [localValue]);
-  var generateData = (0, _react.useCallback)(function (data) {
-    return data.map(function (field) {
-      return {
-        name: field.name,
-        label: field.label,
-        value: field.value
-      };
-    });
-  }, []);
+  var generateData = (0, _react.useCallback)(data => data.map(field => ({
+    name: field.name,
+    label: field.label,
+    value: field.value
+  })), []);
 
-  var addNewRow = function addNewRow(dataField) {
+  var addNewRow = dataField => {
     if (edit) {
       var newInfo = _lodash.default.cloneDeep(localValue);
 
       newInfo[editPosition] = generateData(dataField);
       handleHeadersAndValues({
-        headers: headers,
+        headers,
         values: newInfo
       });
       setEdit(false);
       setEditPosition(0);
     } else {
-      var newInformation = [].concat(_toConsumableArray(localValue), [generateData(dataField)]);
+      var newInformation = [...localValue, generateData(dataField)];
       handleHeadersAndValues({
-        headers: headers,
+        headers,
         values: newInformation
       });
     }
   };
 
-  var deleteRow = function deleteRow(item, index) {
-    var newInformation = _toConsumableArray(localValue);
-
+  var deleteRow = (item, index) => {
+    var newInformation = [...localValue];
     newInformation.splice(index, 1);
     handleHeadersAndValues({
-      headers: headers,
+      headers,
       values: newInformation
     });
   };
 
-  var editRow = function editRow(value, index) {
-    var newFields = utils.generateFieldsWithValue(fields, value);
+  var editRow = (_value, index) => {
+    var newFields = utils.generateFieldsWithValue(fields, _value);
     setFields(newFields);
     setEdit(true);
     setEditPosition(index);
   };
 
-  var handleOnDropFile = function handleOnDropFile(result) {
+  var handleCleanTable = () => {
+    handleHeadersAndValues({
+      headers,
+      values: []
+    });
+  };
+
+  var handleOnDropFile = result => {
     var isValid = result.isValid,
         data = result.data,
         headersCSV = result.headersCSV,
@@ -178,7 +169,7 @@ var InputTable = function InputTable(_ref) {
     if (isValid) {
       handleHeadersAndValues({
         headers: headersCSV,
-        values: [].concat(_toConsumableArray(localValue), _toConsumableArray(data))
+        values: [...localValue, ...data]
       });
       setErrorMessages([]);
     } else {
@@ -186,52 +177,56 @@ var InputTable = function InputTable(_ref) {
     }
   };
 
-  var closeMessageError = function closeMessageError() {
-    setTimeout(function () {
+  var closeMessageError = () => {
+    setTimeout(() => {
       setErrorMessages([]);
     }, 10000);
   };
 
-  (0, _react.useEffect)(function () {
+  (0, _react.useEffect)(() => {
     if (headers.length) setLocalHeaders(headers);
     if (value.length) setLocalValue(value);else if (localValue.length) setLocalValue([]);
   }, [value, headers]);
-  (0, _react.useEffect)(function () {
+  (0, _react.useEffect)(() => {
     setFields(utils.generateValueEmpty(localHeaders));
   }, [localHeaders]);
-  (0, _react.useEffect)(function () {
+  (0, _react.useEffect)(() => {
     if (errorMessages.length) closeMessageError();
   }, [errorMessages]);
-  return _react.default.createElement("div", {
+  return /*#__PURE__*/_react.default.createElement("div", {
     className: classes.content
-  }, _react.default.createElement(_Fields.default, {
+  }, /*#__PURE__*/_react.default.createElement(_Fields.default, {
     fieldValues: fields,
     addNewRow: addNewRow,
     edit: edit
-  }), _react.default.createElement("div", {
+  }), /*#__PURE__*/_react.default.createElement("div", {
     className: classes.csvActions
-  }, _react.default.createElement(_CsvReader.default, {
+  }, /*#__PURE__*/_react.default.createElement(_CsvReader.default, {
     className: classes.input_loader,
     onFileLoaded: handleOnDropFile,
     parserOptions: csvOptions,
     headers: headers,
     localValue: localValue
-  }), _react.default.createElement("div", {
-    className: (0, _clsx3.default)(classes.errorContainer, _defineProperty({}, classes.errorContainerOn, Boolean(errorMessages.length)), _defineProperty({}, classes.errorContainerOff, !Boolean(errorMessages.length)))
-  }, Boolean(errorMessages.length) && _react.default.createElement("div", null, errorMessages.map(function (message, index) {
-    return _react.default.createElement("span", {
-      key: index,
-      className: classes.errorMessage
-    }, "".concat(index + 1, " - ").concat(message));
-  })))), _react.default.createElement("div", {
+  }), /*#__PURE__*/_react.default.createElement("div", {
+    className: (0, _clsx.default)(classes.errorContainer, {
+      [classes.errorContainerOn]: Boolean(errorMessages.length)
+    }, {
+      [classes.errorContainerOff]: !errorMessages.length
+    })
+  }, Boolean(errorMessages.length) && /*#__PURE__*/_react.default.createElement("div", null, errorMessages.map((message, index) => /*#__PURE__*/_react.default.createElement("span", {
+    key: index,
+    className: classes.errorMessage
+  }, "".concat(index + 1, " - ").concat(message)))))), /*#__PURE__*/_react.default.createElement("div", {
     className: classes.tableContent
-  }, _react.default.createElement(_Table.default, {
+  }, /*#__PURE__*/_react.default.createElement(_Table.default, {
     headers: HEADERS,
     items: VALUES,
     deleteRow: true,
     onDeleteRow: deleteRow,
     edit: true,
-    onEdit: editRow
+    onEdit: editRow,
+    cleanTable: true,
+    handleCleanTable: handleCleanTable
   })));
 };
 
@@ -243,7 +238,7 @@ InputTable.propTypes = {
 InputTable.defaultProps = {
   value: _defaults.defaultData,
   headers: _defaults.defaultHeader,
-  handleHeadersAndValues: function handleHeadersAndValues() {}
+  handleHeadersAndValues: () => {}
 };
 var _default = InputTable;
 exports.default = _default;
