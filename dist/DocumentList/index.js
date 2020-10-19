@@ -65,8 +65,10 @@ var DocumentList = function DocumentList(_ref) {
   var getDotColorClass = function getDotColorClass(status) {
     switch (status) {
       case 'En Espera':
-      case 'En Revisión':
         return clasess.dotOnHold;
+
+      case 'En Revisión':
+        return clasess.dotReview;
 
       case 'Pendiente':
         return clasess.dotPending;
@@ -106,7 +108,7 @@ var DocumentList = function DocumentList(_ref) {
       default:
         return _react.default.createElement("span", {
           className: clasess.statusName
-        }, status, " ");
+        }, status, ' ');
     }
   };
   /**
