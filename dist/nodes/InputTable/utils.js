@@ -11,78 +11,107 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-var generateValueEmpty = fieldArray => fieldArray.map(field => ({
-  id: field.id,
-  name: field.name,
-  label: field.label,
-  type: field.type,
-  value: '',
-  required: field.required
-}));
+var generateValueEmpty = function generateValueEmpty(fieldArray) {
+  return fieldArray.map(function (field) {
+    return {
+      id: field.id,
+      name: field.name,
+      label: field.label,
+      type: field.type,
+      value: '',
+      required: field.required
+    };
+  });
+};
 
 exports.generateValueEmpty = generateValueEmpty;
 
-var generateFieldsWithValue = (fields, values) => fields.reduce((acc, field) => {
-  acc.push(_objectSpread(_objectSpread({}, field), {}, {
-    value: values[field.name]
-  }));
-  return acc;
-}, []);
+var generateFieldsWithValue = function generateFieldsWithValue(fields, values) {
+  return fields.reduce(function (acc, field) {
+    acc.push(_objectSpread({}, field, {
+      value: values[field.name]
+    }));
+    return acc;
+  }, []);
+};
 
 exports.generateFieldsWithValue = generateFieldsWithValue;
 
-var getHeadersFromCSV = (data = []) => {
+var getHeadersFromCSV = function getHeadersFromCSV() {
+  var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
   var firstRow = data[0];
-  return Object.keys(firstRow).map(key => key);
+  return Object.keys(firstRow).map(function (key) {
+    return key;
+  });
 };
 
 exports.getHeadersFromCSV = getHeadersFromCSV;
 
-var includesHeaders = (arr1, arr2) => arr1.map(item => arr2.includes(item) ? null : item).filter(item => item);
+var includesHeaders = function includesHeaders(arr1, arr2) {
+  return arr1.map(function (item) {
+    return arr2.includes(item) ? null : item;
+  }).filter(function (item) {
+    return item;
+  });
+};
 
 exports.includesHeaders = includesHeaders;
 
-var createHeadersFromCSV = (headersFromCSV, headersColumns) => headersFromCSV.reduce((acc, header, index) => {
-  var headerFounded = headersColumns.find(headerColumn => headerColumn.name === header);
-  acc.push({
-    id: index,
-    name: header.replace(/\W/g, '_'),
-    label: header.replaceAll('_', ' '),
-    type: 'respuesta corta',
-    required: headerFounded ? headerFounded.required : false
-  });
-  return acc;
-}, []);
+var createHeadersFromCSV = function createHeadersFromCSV(headersFromCSV, headersColumns) {
+  return headersFromCSV.reduce(function (acc, header, index) {
+    var headerFounded = headersColumns.find(function (headerColumn) {
+      return headerColumn.name === header;
+    });
+    acc.push({
+      id: index,
+      name: header.replace(/\W/g, '_'),
+      label: header.replaceAll('_', ' '),
+      type: 'respuesta corta',
+      required: headerFounded ? headerFounded.required : false
+    });
+    return acc;
+  }, []);
+};
 
 exports.createHeadersFromCSV = createHeadersFromCSV;
 
-var checkColumnsHasDataByRow = row => Object.keys(row).some(r => row[r] !== '' && row[r] !== undefined);
+var checkColumnsHasDataByRow = function checkColumnsHasDataByRow(row) {
+  return Object.keys(row).some(function (r) {
+    return row[r] !== '' && row[r] !== undefined;
+  });
+};
 
-var createItemsFromCSV = (items, headers) => items.reduce((acc, item) => {
-  var data = [];
+var createItemsFromCSV = function createItemsFromCSV(items, headers) {
+  return items.reduce(function (acc, item) {
+    var data = [];
 
-  if (checkColumnsHasDataByRow(item)) {
-    headers.map(header => {
-      data.push({
-        name: header.replace(/\W/g, '_'),
-        label: header.replaceAll('_', ' '),
-        value: item[header]
+    if (checkColumnsHasDataByRow(item)) {
+      headers.map(function (header) {
+        data.push({
+          name: header.replace(/\W/g, '_'),
+          label: header.replaceAll('_', ' '),
+          value: item[header]
+        });
       });
-    });
-    acc.push(data);
-  }
+      acc.push(data);
+    }
 
-  return acc;
-}, []);
+    return acc;
+  }, []);
+};
 
 exports.createItemsFromCSV = createItemsFromCSV;
 
-var ObjectNotEmpty = obj => Object.keys(obj).length;
+var ObjectNotEmpty = function ObjectNotEmpty(obj) {
+  return Object.keys(obj).length;
+};
 
 exports.ObjectNotEmpty = ObjectNotEmpty;
 
-var getExtensionFile = ({
-  name = ''
-}) => name.split('.').pop();
+var getExtensionFile = function getExtensionFile(_ref) {
+  var _ref$name = _ref.name,
+      name = _ref$name === void 0 ? '' : _ref$name;
+  return name.split('.').pop();
+};
 
 exports.getExtensionFile = getExtensionFile;

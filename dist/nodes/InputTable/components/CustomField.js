@@ -37,45 +37,45 @@ function _objectWithoutProperties(source, excluded) { if (source == null) return
 
 function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
 
-var CustomField = (_ref) => {
+var CustomField = function CustomField(_ref) {
   var type = _ref.type,
       props = _objectWithoutProperties(_ref, ["type"]);
 
   switch (type) {
     case 'CURP':
-      return /*#__PURE__*/_react.default.createElement(_CURPInput.default, props);
+      return _react.default.createElement(_CURPInput.default, props);
 
     case 'CLABE':
-      return /*#__PURE__*/_react.default.createElement(_CLABEInput.default, props);
+      return _react.default.createElement(_CLABEInput.default, props);
 
     case 'lista':
-      return /*#__PURE__*/_react.default.createElement(_Select.default, props);
+      return _react.default.createElement(_Select.default, props);
 
     case 'RFC':
-      return /*#__PURE__*/_react.default.createElement(_BaseRFCInput.default, props);
+      return _react.default.createElement(_BaseRFCInput.default, props);
 
     case 'cantidad':
     case 'número':
-      return /*#__PURE__*/_react.default.createElement(_BaseNumberInput.default, props);
+      return _react.default.createElement(_BaseNumberInput.default, props);
 
     case 'radio':
     case 'email':
-      return /*#__PURE__*/_react.default.createElement(_BaseEmailInput.default, props);
+      return _react.default.createElement(_BaseEmailInput.default, props);
 
     case 'celular':
-      return /*#__PURE__*/_react.default.createElement(_BasePhoneInput.default, props);
+      return _react.default.createElement(_BasePhoneInput.default, props);
 
     case 'respuesta larga':
-      return /*#__PURE__*/_react.default.createElement(_TextAreaInput.default, props);
+      return _react.default.createElement(_TextAreaInput.default, props);
 
     case 'respuesta corta':
-      return /*#__PURE__*/_react.default.createElement(_BaseTextInput.default, props);
+      return _react.default.createElement(_BaseTextInput.default, props);
 
     case 'fecha':
-      return /*#__PURE__*/_react.default.createElement(_DatePicker.default, props);
+      return _react.default.createElement(_DatePicker.default, props);
 
     case 'document':
-      return /*#__PURE__*/_react.default.createElement(_UploadDocuments.default, props);
+      return _react.default.createElement(_UploadDocuments.default, props);
 
     default:
       return '';
