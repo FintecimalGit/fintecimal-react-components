@@ -11,29 +11,23 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-var generateValueEmpty = fieldArray => {
-  return fieldArray.map(field => {
-    return {
-      id: field.id,
-      name: field.name,
-      label: field.label,
-      type: field.type,
-      value: '',
-      required: field.required
-    };
-  });
-};
+var generateValueEmpty = fieldArray => fieldArray.map(field => ({
+  id: field.id,
+  name: field.name,
+  label: field.label,
+  type: field.type,
+  value: '',
+  required: field.required
+}));
 
 exports.generateValueEmpty = generateValueEmpty;
 
-var generateFieldsWithValue = (fields, values) => {
-  return fields.reduce((acc, field) => {
-    acc.push(_objectSpread(_objectSpread({}, field), {}, {
-      value: values[field.name]
-    }));
-    return acc;
-  }, []);
-};
+var generateFieldsWithValue = (fields, values) => fields.reduce((acc, field) => {
+  acc.push(_objectSpread(_objectSpread({}, field), {}, {
+    value: values[field.name]
+  }));
+  return acc;
+}, []);
 
 exports.generateFieldsWithValue = generateFieldsWithValue;
 
@@ -48,44 +42,38 @@ var includesHeaders = (arr1, arr2) => arr1.map(item => arr2.includes(item) ? nul
 
 exports.includesHeaders = includesHeaders;
 
-var createHeadersFromCSV = (headersFromCSV, headersColumns) => {
-  return headersFromCSV.reduce((acc, header, index) => {
-    var headerFounded = headersColumns.find(headerColumn => headerColumn.name === header);
-    acc.push({
-      id: index,
-      name: header,
-      label: header.replaceAll('_', ' '),
-      type: 'respuesta corta',
-      required: headerFounded ? headerFounded.required : false
-    });
-    return acc;
-  }, []);
-};
+var createHeadersFromCSV = (headersFromCSV, headersColumns) => headersFromCSV.reduce((acc, header, index) => {
+  var headerFounded = headersColumns.find(headerColumn => headerColumn.name === header);
+  acc.push({
+    id: index,
+    name: header.replace(/\W/g, '_'),
+    label: header.replaceAll('_', ' '),
+    type: 'respuesta corta',
+    required: headerFounded ? headerFounded.required : false
+  });
+  return acc;
+}, []);
 
 exports.createHeadersFromCSV = createHeadersFromCSV;
 
-var checkColumnsHasDataByRow = row => Object.keys(row).some(r => {
-  return row[r] !== '' && row[r] !== undefined;
-});
+var checkColumnsHasDataByRow = row => Object.keys(row).some(r => row[r] !== '' && row[r] !== undefined);
 
-var createItemsFromCSV = (items, headers) => {
-  return items.reduce((acc, item) => {
-    var data = [];
+var createItemsFromCSV = (items, headers) => items.reduce((acc, item) => {
+  var data = [];
 
-    if (checkColumnsHasDataByRow(item)) {
-      headers.map(header => {
-        data.push({
-          name: header,
-          label: header.replaceAll('_', ' '),
-          value: item[header]
-        });
+  if (checkColumnsHasDataByRow(item)) {
+    headers.map(header => {
+      data.push({
+        name: header.replace(/\W/g, '_'),
+        label: header.replaceAll('_', ' '),
+        value: item[header]
       });
-      acc.push(data);
-    }
+    });
+    acc.push(data);
+  }
 
-    return acc;
-  }, []);
-};
+  return acc;
+}, []);
 
 exports.createItemsFromCSV = createItemsFromCSV;
 

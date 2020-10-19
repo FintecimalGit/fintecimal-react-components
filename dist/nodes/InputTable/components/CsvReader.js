@@ -43,9 +43,10 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-var HEADER_ERROR_MESSAGE = 'La cantidad de columnas no es la correcta ya que es diferente a la informacion con la que cuenta la tabla, prueba con las siguientes: ';
+var HEADER_ERROR_MESSAGE = 'El formato actual de columnas es diferente al que se intenga cargar, prueba con las siguientes columnas: ';
 var HEADER_ERROR_MESSAGE_2 = 'Las siguientes columnas no son correctas: ';
-var HEADER_ERROR_MESSAGE_3 = 'La siguientes columnas son requeridas que existan y su nombre sea: ';
+var HEADER_ERROR_MESSAGE_3 = 'La siguientes columnas son obligatorias que existan: ';
+var HEADER_INVALID = 'El documento que intenga cargar, no tiene definido en la primera fila, el nombre de las columnas.';
 
 var CSVReader = ({
   accept,
@@ -74,9 +75,9 @@ var CSVReader = ({
       });
 
       workbook.SheetNames.forEach(sheetName => {
-        var XL_row_object = _xlsx.default.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+        var XLRowObject = _xlsx.default.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
 
-        resolve(XL_row_object);
+        resolve(XLRowObject);
         refE.current.value = null;
       });
     };
@@ -112,12 +113,7 @@ var CSVReader = ({
 
     if (file) {
       var extension = utils.getExtensionFile(file);
-
-      if (extension.toLowerCase() === 'csv') {
-        resolve(readCSV(file));
-      } else {
-        resolve(readExcel(file));
-      }
+      if (extension.toLowerCase() === 'csv') resolve(readCSV(file));else resolve(readExcel(file));
     }
   }), []);
 
@@ -148,10 +144,10 @@ var CSVReader = ({
 
   var validateColumnsWithData = documentHeaders => {
     var isInvalid = false;
-    var messages = [];
+    var message = [];
     if (!localValue.length) return {
       isInvalid,
-      messages
+      message
     };
     var headersNames = headers.map(({
       name = ''
@@ -160,18 +156,42 @@ var CSVReader = ({
 
     if (headersAreValid.length) {
       isInvalid = true;
-      messages = ["".concat(HEADER_ERROR_MESSAGE_2, " ").concat(headersAreValid.join(', ')), ...messages];
+      message = ["".concat(HEADER_ERROR_MESSAGE_2, " ").concat(headersAreValid.join(', ')), ...message];
     }
 
     if (documentHeaders.length !== headersNames.length) {
       isInvalid = true;
-      messages = ["".concat(HEADER_ERROR_MESSAGE, " ").concat(headersNames.join(', ')), ...messages];
+      message = ["".concat(HEADER_ERROR_MESSAGE, " ").concat(headersNames.join(', ')), ...message];
     }
 
     return {
       isInvalid,
-      messages
+      message
     };
+  };
+
+  var validateHeaders = data => {
+    if (data.length === 0) return {
+      isInvalid: true,
+      message: []
+    };
+    var headerStatus = Object.keys(data[0]).reduce((acc, key) => {
+      if (key.includes('EMPTY')) acc = true;
+      return acc;
+    }, false);
+    return {
+      isInvalid: headerStatus,
+      message: headerStatus ? HEADER_INVALID : ''
+    };
+  };
+
+  var getMessageErrors = (validations = []) => {
+    return validations.reduce((acc, validation) => {
+      var isInvalid = validation.isInvalid,
+          message = validation.message;
+      if (isInvalid) acc.push(message);
+      return acc;
+    }, []);
   };
 
   var formatDataFromCsv = data => {
@@ -187,12 +207,14 @@ var CSVReader = ({
       name,
       required
     }));
+    var statusHeaders = validateHeaders(data);
     var statusRequiredColumns = validateRequiredColumns(documentHeaders, headersColumns);
     var statusColumnWithData = validateColumnsWithData(documentHeaders);
 
-    if (statusRequiredColumns.isInvalid || statusColumnWithData.isInvalid) {
-      isValid = false;
-      messages = statusRequiredColumns.isInvalid ? statusRequiredColumns.message : statusColumnWithData.messages;
+    if (statusHeaders.isInvalid || statusRequiredColumns.isInvalid || statusColumnWithData.isInvalid) {
+      isValid = false; // eslint-disable-next-line max-len
+
+      messages = getMessageErrors([statusHeaders, statusColumnWithData, statusRequiredColumns]);
     } else headersCSV = utils.createHeadersFromCSV(documentHeaders, headersColumns);
 
     _data = utils.createItemsFromCSV(data, documentHeaders);

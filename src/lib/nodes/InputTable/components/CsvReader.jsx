@@ -5,9 +5,10 @@ import XLSX from 'xlsx';
 
 import * as utils from '../utils';
 
-const HEADER_ERROR_MESSAGE = 'La cantidad de columnas no es la correcta ya que es diferente a la informacion con la que cuenta la tabla, prueba con las siguientes: ';
+const HEADER_ERROR_MESSAGE = 'El formato actual de columnas es diferente al que se intenga cargar, prueba con las siguientes columnas: ';
 const HEADER_ERROR_MESSAGE_2 = 'Las siguientes columnas no son correctas: ';
-const HEADER_ERROR_MESSAGE_3 = 'La siguientes columnas son requeridas que existan y su nombre sea: ';
+const HEADER_ERROR_MESSAGE_3 = 'La siguientes columnas son obligatorias que existan: ';
+const HEADER_INVALID = 'El documento que intenga cargar, no tiene definido en la primera fila, el nombre de las columnas.';
 
 const CSVReader = ({
   accept,
@@ -34,8 +35,8 @@ const CSVReader = ({
       });
 
       workbook.SheetNames.forEach((sheetName) => {
-        const XL_row_object = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
-        resolve(XL_row_object);
+        const XLRowObject = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+        resolve(XLRowObject);
         refE.current.value = null;
       });
     };
@@ -68,11 +69,8 @@ const CSVReader = ({
     const [file = null, ...rest] = refE.current.files;
     if (file) {
       const extension = utils.getExtensionFile(file);
-      if (extension.toLowerCase() === 'csv') {
-        resolve(readCSV(file));
-      } else {
-        resolve(readExcel(file));
-      }
+      if (extension.toLowerCase() === 'csv') resolve(readCSV(file));
+      else resolve(readExcel(file));
     }
   }), []);
 
@@ -98,23 +96,44 @@ const CSVReader = ({
 
   const validateColumnsWithData = (documentHeaders) => {
     let isInvalid = false;
-    let messages = [];
-    if (!localValue.length) return { isInvalid, messages };
+    let message = [];
+    if (!localValue.length) return { isInvalid, message };
 
     const headersNames = headers.map(({ name = '' }) => name);
     const headersAreValid = utils.includesHeaders(documentHeaders, headersNames);
     if (headersAreValid.length) {
       isInvalid = true;
-      messages = [`${HEADER_ERROR_MESSAGE_2} ${headersAreValid.join(', ')}`, ...messages];
+      message = [`${HEADER_ERROR_MESSAGE_2} ${headersAreValid.join(', ')}`, ...message];
     }
     if (documentHeaders.length !== headersNames.length) {
       isInvalid = true;
-      messages = [`${HEADER_ERROR_MESSAGE} ${headersNames.join(', ')}`, ...messages];
+      message = [`${HEADER_ERROR_MESSAGE} ${headersNames.join(', ')}`, ...message];
     }
     return {
       isInvalid,
-      messages,
+      message,
     };
+  };
+
+  const validateHeaders = (data) => {
+    if (data.length === 0) return { isInvalid: true, message: [] };
+    const headerStatus = Object.keys(data[0]).reduce((acc, key) => {
+      if (key.includes('EMPTY')) acc = true;
+      return acc;
+    }, false);
+
+    return {
+      isInvalid: headerStatus,
+      message: (headerStatus) ? HEADER_INVALID : '',
+    };
+  };
+
+  const getMessageErrors = (validations = []) => {
+    return validations.reduce((acc, validation) => {
+      const { isInvalid, message } = validation;
+      if (isInvalid) acc.push(message);
+      return acc;
+    }, []);
   };
 
   const formatDataFromCsv = (data) => {
@@ -124,11 +143,15 @@ const CSVReader = ({
     let headersCSV = headers;
     const documentHeaders = utils.getHeadersFromCSV(data);
     const headersColumns = headers.map(({ name = '', required = false }) => ({ name, required }));
+    const statusHeaders = validateHeaders(data);
     const statusRequiredColumns = validateRequiredColumns(documentHeaders, headersColumns);
     const statusColumnWithData = validateColumnsWithData(documentHeaders);
-    if (statusRequiredColumns.isInvalid || statusColumnWithData.isInvalid) {
+    if (statusHeaders.isInvalid
+        || statusRequiredColumns.isInvalid
+        || statusColumnWithData.isInvalid) {
       isValid = false;
-      messages = (statusRequiredColumns.isInvalid) ? statusRequiredColumns.message : statusColumnWithData.messages;
+      // eslint-disable-next-line max-len
+      messages = getMessageErrors([statusHeaders, statusColumnWithData, statusRequiredColumns]);
     } else headersCSV = utils.createHeadersFromCSV(documentHeaders, headersColumns);
     _data = utils.createItemsFromCSV(data, documentHeaders);
     return {
