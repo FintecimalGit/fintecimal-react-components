@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 
 import Thead from './components/Thead';
@@ -14,11 +14,14 @@ const Table = ({
   onEdit,
   deleteRow,
   onDeleteRow,
+  cleanTable,
+  handleCleanTable,
 }) => {
   const classes = useStyles();
+  const visibleCleanTable = useMemo(() => cleanTable && items.length > 0, [items, cleanTable]);
   return (
     <table className={classes.table}>
-      <Thead headers={headers} />
+      <Thead headers={headers} cleanTable={visibleCleanTable} handleCleanTable={handleCleanTable} />
       <Tbody
         headers={headers}
         items={items}
@@ -45,6 +48,8 @@ Table.propTypes = {
   onEdit: PropTypes.func,
   deleteRow: PropTypes.bool,
   onDeleteRow: PropTypes.func,
+  cleanTable: PropTypes.bool,
+  handleCleanTable: PropTypes.func,
 };
 
 Table.defaultProps = {
@@ -55,6 +60,8 @@ Table.defaultProps = {
   onEdit: () => {},
   deleteRow: false,
   onDeleteRow: () => {},
+  cleanTable: false,
+  handleCleanTable: () => {},
 };
 
 export default Table;

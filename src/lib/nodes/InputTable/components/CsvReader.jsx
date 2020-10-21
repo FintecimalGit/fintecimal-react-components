@@ -1,11 +1,14 @@
-
 import React, { useRef, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import PapaParse from 'papaparse';
-import * as utils from "../utils";
+import XLSX from 'xlsx';
 
-const HEADER_ERROR_MESSAGE = 'La cantidad de columnas no es la correcta ya que es diferente a la informacion con la que cuenta la tabla, prueba con las siguientes: ';
+import * as utils from '../utils';
+
+const HEADER_ERROR_MESSAGE = 'El formato actual de columnas es diferente al que se intenga cargar, prueba con las siguientes columnas: ';
 const HEADER_ERROR_MESSAGE_2 = 'Las siguientes columnas no son correctas: ';
+const HEADER_ERROR_MESSAGE_3 = 'La siguientes columnas son obligatorias que existan: ';
+const HEADER_INVALID = 'El documento que intenga cargar, no tiene definido en la primera fila, el nombre de las columnas.';
 
 const CSVReader = ({
   accept,
@@ -23,58 +26,147 @@ const CSVReader = ({
 }) => {
   const refE = useRef();
 
+  const readExcel = (file) => new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = (_event) => {
+      const data = _event.target.result;
+      const workbook = XLSX.read(data, {
+        type: 'binary',
+      });
+
+      workbook.SheetNames.forEach((sheetName) => {
+        const XLRowObject = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+        resolve(XLRowObject);
+        refE.current.value = null;
+      });
+    };
+
+    reader.onerror = (ex) => {
+      reject(ex);
+    };
+
+    reader.readAsBinaryString(file);
+  });
+
+  const readCSV = (file) => new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = (_event) => {
+      const csvData = PapaParse.parse(
+        reader.result,
+        {
+          ...parserOptions,
+          error: onError,
+          encoding: fileEncoding,
+        },
+      );
+      resolve(csvData.data);
+      refE.current.value = null;
+    };
+    reader.readAsText(file, fileEncoding);
+  });
+
   const readFile = useCallback((event) => new Promise((resolve, reject) => {
-    let reader = new FileReader()
     const [file = null, ...rest] = refE.current.files;
     if (file) {
-      reader.onload = (_event) => {
-        const csvData = PapaParse.parse(
-          reader.result,
-          {
-            ...parserOptions,
-            error: onError,
-            encoding: fileEncoding,
-          },
-        );
-        resolve(csvData.data);
-        refE.current.value = null;
-      };
-      reader.readAsText(file, fileEncoding)
+      const extension = utils.getExtensionFile(file);
+      if (extension.toLowerCase() === 'csv') resolve(readCSV(file));
+      else resolve(readExcel(file));
     }
   }), []);
+
+  const validateRequiredColumns = (documentHeaders, headersColumns) => {
+    const columns = [];
+    const message = [];
+    const isInvalid = headersColumns.reduce((acc, header) => {
+      const { name, required } = header;
+      if (required && !documentHeaders.includes(name)) {
+        acc = true;
+        columns.push(name);
+      }
+      return acc;
+    }, false);
+    if (isInvalid) {
+      message.push(`${HEADER_ERROR_MESSAGE_3} ${columns.join(', ')}`);
+    }
+    return {
+      isInvalid,
+      message,
+    };
+  };
+
+  const validateColumnsWithData = (documentHeaders) => {
+    let isInvalid = false;
+    let message = [];
+    if (!localValue.length) return { isInvalid, message };
+
+    const headersNames = headers.map(({ name = '' }) => name);
+    const headersAreValid = utils.includesHeaders(documentHeaders, headersNames);
+    if (headersAreValid.length) {
+      isInvalid = true;
+      message = [`${HEADER_ERROR_MESSAGE_2} ${headersAreValid.join(', ')}`, ...message];
+    }
+    if (documentHeaders.length !== headersNames.length) {
+      isInvalid = true;
+      message = [`${HEADER_ERROR_MESSAGE} ${headersNames.join(', ')}`, ...message];
+    }
+    return {
+      isInvalid,
+      message,
+    };
+  };
+
+  const validateHeaders = (data) => {
+    if (data.length === 0) return { isInvalid: true, message: [] };
+    const headerStatus = Object.keys(data[0]).reduce((acc, key) => {
+      if (key.includes('EMPTY')) acc = true;
+      return acc;
+    }, false);
+
+    return {
+      isInvalid: headerStatus,
+      message: (headerStatus) ? HEADER_INVALID : '',
+    };
+  };
+
+  const getMessageErrors = (validations = []) => {
+    return validations.reduce((acc, validation) => {
+      const { isInvalid, message } = validation;
+      if (isInvalid) acc.push(message);
+      return acc;
+    }, []);
+  };
 
   const formatDataFromCsv = (data) => {
     let isValid = true;
     let messages = [];
     let _data = [];
     let headersCSV = headers;
-    const headersNames = headers.map(({ name = '' }) => name);
     const documentHeaders = utils.getHeadersFromCSV(data);
-    if (localValue.length > 1) {
-      const headersAreValid = utils.includesHeaders(documentHeaders, headersNames);
-      if (headersAreValid.length) {
-        isValid = false;
-        messages = [`${HEADER_ERROR_MESSAGE_2} ${headersAreValid.join(', ')}`, ...messages];
-      }
-      if (documentHeaders.length !== headersNames.length) {
-        isValid = false;
-        messages = [`${HEADER_ERROR_MESSAGE} ${headersNames.join(', ')}`, ...messages];
-      }
-    } else {
-      headersCSV = utils.createHeadersFromCSV(documentHeaders);
-    }
+    const headersColumns = headers.map(({ name = '', required = false }) => ({ name, required }));
+    const statusHeaders = validateHeaders(data);
+    const statusRequiredColumns = validateRequiredColumns(documentHeaders, headersColumns);
+    const statusColumnWithData = validateColumnsWithData(documentHeaders);
+    if (statusHeaders.isInvalid
+        || statusRequiredColumns.isInvalid
+        || statusColumnWithData.isInvalid) {
+      isValid = false;
+      // eslint-disable-next-line max-len
+      messages = getMessageErrors([statusHeaders, statusColumnWithData, statusRequiredColumns]);
+    } else headersCSV = utils.createHeadersFromCSV(documentHeaders, headersColumns);
     _data = utils.createItemsFromCSV(data, documentHeaders);
     return {
       isValid,
       data: _data,
       headersCSV,
       messages,
-    }
+    };
   };
 
   const handleChangeFile = useCallback(async () => {
     const result = await readFile();
-    const { isValid, data, headersCSV, messages } = formatDataFromCsv(result);
+    const {
+      isValid, data, headersCSV, messages,
+    } = formatDataFromCsv(result);
     onFileLoaded({
       isValid,
       data,
@@ -95,11 +187,11 @@ const CSVReader = ({
           accept={accept}
           onChange={handleChangeFile}
           disabled={disabled}
-          />
+        />
       </div>
     </div>
-  )
-}
+  );
+};
 
 CSVReader.propTypes = {
   accept: PropTypes.string,
@@ -114,10 +206,10 @@ CSVReader.propTypes = {
   disabled: PropTypes.bool,
   headers: PropTypes.array,
   localValue: PropTypes.array,
-}
+};
 
 CSVReader.defaultProps = {
-  accept: '.csv, text/csv',
+  accept: '.csv, text/csv, .xlsx',
   className: '',
   inputClass: '',
   fileEncoding: 'UTF-8',
@@ -128,6 +220,6 @@ CSVReader.defaultProps = {
   disabled: false,
   headers: [],
   localValue: [],
-}
+};
 
 export default CSVReader;

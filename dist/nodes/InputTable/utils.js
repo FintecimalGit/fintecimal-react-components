@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.ObjectNotEmpty = exports.createItemsFromCSV = exports.createHeadersFromCSV = exports.includesHeaders = exports.getHeadersFromCSV = exports.generateFieldsWithValue = exports.generateValueEmpty = void 0;
+exports.getExtensionFile = exports.ObjectNotEmpty = exports.createItemsFromCSV = exports.createHeadersFromCSV = exports.includesHeaders = exports.getHeadersFromCSV = exports.generateFieldsWithValue = exports.generateValueEmpty = void 0;
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
@@ -57,14 +57,17 @@ var includesHeaders = function includesHeaders(arr1, arr2) {
 
 exports.includesHeaders = includesHeaders;
 
-var createHeadersFromCSV = function createHeadersFromCSV(headers) {
-  return headers.reduce(function (acc, header, index) {
+var createHeadersFromCSV = function createHeadersFromCSV(headersFromCSV, headersColumns) {
+  return headersFromCSV.reduce(function (acc, header, index) {
+    var headerFounded = headersColumns.find(function (headerColumn) {
+      return headerColumn.name === header;
+    });
     acc.push({
       id: index,
-      name: header,
+      name: header.replace(/\W/g, '_'),
       label: header.replaceAll('_', ' '),
       type: 'respuesta corta',
-      required: false
+      required: headerFounded ? headerFounded.required : false
     });
     return acc;
   }, []);
@@ -74,7 +77,7 @@ exports.createHeadersFromCSV = createHeadersFromCSV;
 
 var checkColumnsHasDataByRow = function checkColumnsHasDataByRow(row) {
   return Object.keys(row).some(function (r) {
-    return row[r] !== '';
+    return row[r] !== '' && row[r] !== undefined;
   });
 };
 
@@ -85,7 +88,7 @@ var createItemsFromCSV = function createItemsFromCSV(items, headers) {
     if (checkColumnsHasDataByRow(item)) {
       headers.map(function (header) {
         data.push({
-          name: header,
+          name: header.replace(/\W/g, '_'),
           label: header.replaceAll('_', ' '),
           value: item[header]
         });
@@ -104,3 +107,11 @@ var ObjectNotEmpty = function ObjectNotEmpty(obj) {
 };
 
 exports.ObjectNotEmpty = ObjectNotEmpty;
+
+var getExtensionFile = function getExtensionFile(_ref) {
+  var _ref$name = _ref.name,
+      name = _ref$name === void 0 ? '' : _ref$name;
+  return name.split('.').pop();
+};
+
+exports.getExtensionFile = getExtensionFile;

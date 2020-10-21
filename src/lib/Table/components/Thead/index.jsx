@@ -1,20 +1,47 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import DeleteIcon from '@material-ui/icons/Delete';
+import IconButton from '@material-ui/core/IconButton';
+import classnames from 'classnames';
+import Tooltip from '@material-ui/core/Tooltip';
 import useStyles from './style';
 
-const Table = ({ headers }) => {
+const Table = ({ headers, cleanTable, handleCleanTable }) => {
   const classes = useStyles();
+
+  const isLastIndex = (array, currentIndex) => currentIndex === (array.length - 1);
+
   return (
     <thead className={classes.header}>
       <tr>
         {
-          headers.map(({ key, value }) => (
+          headers.map(({ key, value }, index) => (
             <th
               key={`th-${key}-${value}`}
-              className={classes.th}
+              className={classnames(
+                classes.th,
+                { [classes.cleanTable]: cleanTable && isLastIndex(headers, index) },
+              )}
             >
-              { value }
+              <span>
+                { value }
+                {' '}
+              </span>
+              { isLastIndex(headers, index) && (
+                <>
+                  { cleanTable && (
+                  <Tooltip title="Limpiar la tabla">
+                    <IconButton
+                      className={classes.noPadding}
+                      onClick={handleCleanTable}
+                    >
+                      <DeleteIcon />
+                    </IconButton>
+                  </Tooltip>
+                  )}
+                </>
+              )}
             </th>
           ))
         }
@@ -30,10 +57,14 @@ Table.propTypes = {
       value: PropTypes.string,
     }),
   ),
+  cleanTable: PropTypes.bool,
+  handleCleanTable: PropTypes.func,
 };
 
 Table.defaultProps = {
   headers: [],
+  cleanTable: false,
+  handleCleanTable: () => {},
 };
 
 export default Table;

@@ -105,7 +105,7 @@ var InputTable = function InputTable(_ref) {
       dynamicTyping: false,
       skipEmptyLines: true,
       transformHeader: function transformHeader(header) {
-        return header.replace(/\W/g, "_");
+        return header.replace(/\W/g, '_');
       }
     };
   }, []);
@@ -162,11 +162,18 @@ var InputTable = function InputTable(_ref) {
     });
   };
 
-  var editRow = function editRow(value, index) {
-    var newFields = utils.generateFieldsWithValue(fields, value);
+  var editRow = function editRow(_value, index) {
+    var newFields = utils.generateFieldsWithValue(fields, _value);
     setFields(newFields);
     setEdit(true);
     setEditPosition(index);
+  };
+
+  var handleCleanTable = function handleCleanTable() {
+    handleHeadersAndValues({
+      headers: headers,
+      values: []
+    });
   };
 
   var handleOnDropFile = function handleOnDropFile(result) {
@@ -217,7 +224,7 @@ var InputTable = function InputTable(_ref) {
     headers: headers,
     localValue: localValue
   }), _react.default.createElement("div", {
-    className: (0, _clsx3.default)(classes.errorContainer, _defineProperty({}, classes.errorContainerOn, Boolean(errorMessages.length)), _defineProperty({}, classes.errorContainerOff, !Boolean(errorMessages.length)))
+    className: (0, _clsx3.default)(classes.errorContainer, _defineProperty({}, classes.errorContainerOn, Boolean(errorMessages.length)), _defineProperty({}, classes.errorContainerOff, !errorMessages.length))
   }, Boolean(errorMessages.length) && _react.default.createElement("div", null, errorMessages.map(function (message, index) {
     return _react.default.createElement("span", {
       key: index,
@@ -231,7 +238,9 @@ var InputTable = function InputTable(_ref) {
     deleteRow: true,
     onDeleteRow: deleteRow,
     edit: true,
-    onEdit: editRow
+    onEdit: editRow,
+    cleanTable: true,
+    handleCleanTable: handleCleanTable
   })));
 };
 

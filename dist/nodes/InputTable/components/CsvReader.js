@@ -13,6 +13,8 @@ var _propTypes = _interopRequireDefault(require("prop-types"));
 
 var _papaparse = _interopRequireDefault(require("papaparse"));
 
+var _xlsx = _interopRequireDefault(require("xlsx"));
+
 var utils = _interopRequireWildcard(require("../utils"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -31,12 +33,6 @@ function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread n
 
 function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
 
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 function _toArray(arr) { return _arrayWithHoles(arr) || _iterableToArray(arr) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
@@ -45,8 +41,16 @@ function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
-var HEADER_ERROR_MESSAGE = 'La cantidad de columnas no es la correcta ya que es diferente a la informacion con la que cuenta la tabla, prueba con las siguientes: ';
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var HEADER_ERROR_MESSAGE = 'El formato actual de columnas es diferente al que se intenga cargar, prueba con las siguientes columnas: ';
 var HEADER_ERROR_MESSAGE_2 = 'Las siguientes columnas no son correctas: ';
+var HEADER_ERROR_MESSAGE_3 = 'La siguientes columnas son obligatorias que existan: ';
+var HEADER_INVALID = 'El documento que intenga cargar, no tiene definido en la primera fila, el nombre de las columnas.';
 
 var CSVReader = function CSVReader(_ref) {
   var accept = _ref.accept,
@@ -63,58 +67,171 @@ var CSVReader = function CSVReader(_ref) {
       headers = _ref.headers,
       localValue = _ref.localValue;
   var refE = (0, _react.useRef)();
-  var readFile = (0, _react.useCallback)(function (event) {
+
+  var readExcel = function readExcel(file) {
     return new Promise(function (resolve, reject) {
       var reader = new FileReader();
 
+      reader.onload = function (_event) {
+        var data = _event.target.result;
+
+        var workbook = _xlsx.default.read(data, {
+          type: 'binary'
+        });
+
+        workbook.SheetNames.forEach(function (sheetName) {
+          var XLRowObject = _xlsx.default.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+
+          resolve(XLRowObject);
+          refE.current.value = null;
+        });
+      };
+
+      reader.onerror = function (ex) {
+        reject(ex);
+      };
+
+      reader.readAsBinaryString(file);
+    });
+  };
+
+  var readCSV = function readCSV(file) {
+    return new Promise(function (resolve, reject) {
+      var reader = new FileReader();
+
+      reader.onload = function (_event) {
+        var csvData = _papaparse.default.parse(reader.result, _objectSpread({}, parserOptions, {
+          error: onError,
+          encoding: fileEncoding
+        }));
+
+        resolve(csvData.data);
+        refE.current.value = null;
+      };
+
+      reader.readAsText(file, fileEncoding);
+    });
+  };
+
+  var readFile = (0, _react.useCallback)(function (event) {
+    return new Promise(function (resolve, reject) {
       var _refE$current$files = _toArray(refE.current.files),
           _refE$current$files$ = _refE$current$files[0],
           file = _refE$current$files$ === void 0 ? null : _refE$current$files$,
           rest = _refE$current$files.slice(1);
 
       if (file) {
-        reader.onload = function (_event) {
-          var csvData = _papaparse.default.parse(reader.result, _objectSpread({}, parserOptions, {
-            error: onError,
-            encoding: fileEncoding
-          }));
-
-          resolve(csvData.data);
-          refE.current.value = null;
-        };
-
-        reader.readAsText(file, fileEncoding);
+        var extension = utils.getExtensionFile(file);
+        if (extension.toLowerCase() === 'csv') resolve(readCSV(file));else resolve(readExcel(file));
       }
     });
   }, []);
+
+  var validateRequiredColumns = function validateRequiredColumns(documentHeaders, headersColumns) {
+    var columns = [];
+    var message = [];
+    var isInvalid = headersColumns.reduce(function (acc, header) {
+      var name = header.name,
+          required = header.required;
+
+      if (required && !documentHeaders.includes(name)) {
+        acc = true;
+        columns.push(name);
+      }
+
+      return acc;
+    }, false);
+
+    if (isInvalid) {
+      message.push("".concat(HEADER_ERROR_MESSAGE_3, " ").concat(columns.join(', ')));
+    }
+
+    return {
+      isInvalid: isInvalid,
+      message: message
+    };
+  };
+
+  var validateColumnsWithData = function validateColumnsWithData(documentHeaders) {
+    var isInvalid = false;
+    var message = [];
+    if (!localValue.length) return {
+      isInvalid: isInvalid,
+      message: message
+    };
+    var headersNames = headers.map(function (_ref2) {
+      var _ref2$name = _ref2.name,
+          name = _ref2$name === void 0 ? '' : _ref2$name;
+      return name;
+    });
+    var headersAreValid = utils.includesHeaders(documentHeaders, headersNames);
+
+    if (headersAreValid.length) {
+      isInvalid = true;
+      message = ["".concat(HEADER_ERROR_MESSAGE_2, " ").concat(headersAreValid.join(', '))].concat(_toConsumableArray(message));
+    }
+
+    if (documentHeaders.length !== headersNames.length) {
+      isInvalid = true;
+      message = ["".concat(HEADER_ERROR_MESSAGE, " ").concat(headersNames.join(', '))].concat(_toConsumableArray(message));
+    }
+
+    return {
+      isInvalid: isInvalid,
+      message: message
+    };
+  };
+
+  var validateHeaders = function validateHeaders(data) {
+    if (data.length === 0) return {
+      isInvalid: true,
+      message: []
+    };
+    var headerStatus = Object.keys(data[0]).reduce(function (acc, key) {
+      if (key.includes('EMPTY')) acc = true;
+      return acc;
+    }, false);
+    return {
+      isInvalid: headerStatus,
+      message: headerStatus ? HEADER_INVALID : ''
+    };
+  };
+
+  var getMessageErrors = function getMessageErrors() {
+    var validations = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+    return validations.reduce(function (acc, validation) {
+      var isInvalid = validation.isInvalid,
+          message = validation.message;
+      if (isInvalid) acc.push(message);
+      return acc;
+    }, []);
+  };
 
   var formatDataFromCsv = function formatDataFromCsv(data) {
     var isValid = true;
     var messages = [];
     var _data = [];
     var headersCSV = headers;
-    var headersNames = headers.map(function (_ref2) {
-      var _ref2$name = _ref2.name,
-          name = _ref2$name === void 0 ? '' : _ref2$name;
-      return name;
-    });
     var documentHeaders = utils.getHeadersFromCSV(data);
+    var headersColumns = headers.map(function (_ref3) {
+      var _ref3$name = _ref3.name,
+          name = _ref3$name === void 0 ? '' : _ref3$name,
+          _ref3$required = _ref3.required,
+          required = _ref3$required === void 0 ? false : _ref3$required;
+      return {
+        name: name,
+        required: required
+      };
+    });
+    var statusHeaders = validateHeaders(data);
+    var statusRequiredColumns = validateRequiredColumns(documentHeaders, headersColumns);
+    var statusColumnWithData = validateColumnsWithData(documentHeaders);
 
-    if (localValue.length > 1) {
-      var headersAreValid = utils.includesHeaders(documentHeaders, headersNames);
+    if (statusHeaders.isInvalid || statusRequiredColumns.isInvalid || statusColumnWithData.isInvalid) {
+      isValid = false; // eslint-disable-next-line max-len
 
-      if (headersAreValid.length) {
-        isValid = false;
-        messages = ["".concat(HEADER_ERROR_MESSAGE_2, " ").concat(headersAreValid.join(', '))].concat(_toConsumableArray(messages));
-      }
-
-      if (documentHeaders.length !== headersNames.length) {
-        isValid = false;
-        messages = ["".concat(HEADER_ERROR_MESSAGE, " ").concat(headersNames.join(', '))].concat(_toConsumableArray(messages));
-      }
-    } else {
-      headersCSV = utils.createHeadersFromCSV(documentHeaders);
-    }
+      messages = getMessageErrors([statusHeaders, statusColumnWithData, statusRequiredColumns]);
+    } else headersCSV = utils.createHeadersFromCSV(documentHeaders, headersColumns);
 
     _data = utils.createItemsFromCSV(data, documentHeaders);
     return {
@@ -186,7 +303,7 @@ CSVReader.propTypes = {
   localValue: _propTypes.default.array
 };
 CSVReader.defaultProps = {
-  accept: '.csv, text/csv',
+  accept: '.csv, text/csv, .xlsx',
   className: '',
   inputClass: '',
   fileEncoding: 'UTF-8',

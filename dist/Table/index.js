@@ -1,11 +1,13 @@
 "use strict";
 
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
 
-var _react = _interopRequireDefault(require("react"));
+var _react = _interopRequireWildcard(require("react"));
 
 var _propTypes = _interopRequireDefault(require("prop-types"));
 
@@ -17,6 +19,10 @@ var _style = _interopRequireDefault(require("./style"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
 var Table = function Table(_ref) {
   var headers = _ref.headers,
       items = _ref.items,
@@ -24,12 +30,19 @@ var Table = function Table(_ref) {
       edit = _ref.edit,
       onEdit = _ref.onEdit,
       deleteRow = _ref.deleteRow,
-      onDeleteRow = _ref.onDeleteRow;
+      onDeleteRow = _ref.onDeleteRow,
+      cleanTable = _ref.cleanTable,
+      handleCleanTable = _ref.handleCleanTable;
   var classes = (0, _style.default)();
+  var visibleCleanTable = (0, _react.useMemo)(function () {
+    return cleanTable && items.length > 0;
+  }, [items, cleanTable]);
   return _react.default.createElement("table", {
     className: classes.table
   }, _react.default.createElement(_Thead.default, {
-    headers: headers
+    headers: headers,
+    cleanTable: visibleCleanTable,
+    handleCleanTable: handleCleanTable
   }), _react.default.createElement(_Tbody.default, {
     headers: headers,
     items: items,
@@ -51,7 +64,9 @@ Table.propTypes = {
   edit: _propTypes.default.bool,
   onEdit: _propTypes.default.func,
   deleteRow: _propTypes.default.bool,
-  onDeleteRow: _propTypes.default.func
+  onDeleteRow: _propTypes.default.func,
+  cleanTable: _propTypes.default.bool,
+  handleCleanTable: _propTypes.default.func
 };
 Table.defaultProps = {
   headers: [],
@@ -60,7 +75,9 @@ Table.defaultProps = {
   edit: false,
   onEdit: function onEdit() {},
   deleteRow: false,
-  onDeleteRow: function onDeleteRow() {}
+  onDeleteRow: function onDeleteRow() {},
+  cleanTable: false,
+  handleCleanTable: function handleCleanTable() {}
 };
 var _default = Table;
 exports.default = _default;
