@@ -26,6 +26,10 @@ var useStyles = (0, _styles.makeStyles)(function (theme) {
       backgroundColor: theme.palette.status.warning.main,
       borderColor: theme.palette.status.warning.main
     },
+    dotReview: {
+      backgroundColor: theme.palette.status.review.main,
+      borderColor: theme.palette.status.review.main
+    },
     dotSuccess: {
       backgroundColor: theme.palette.status.success.main,
       borderColor: theme.palette.status.success.main
