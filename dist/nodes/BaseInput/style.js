@@ -28,7 +28,7 @@ var _default = (0, _styles.makeStyles)(function (theme) {
       opacity: 1
     },
     input: {
-      flex: '1px',
+      flex: 1,
       fontSize: 14
     },
     notchedOutline: {

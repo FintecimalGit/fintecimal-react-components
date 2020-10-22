@@ -20,7 +20,7 @@ export default makeStyles(theme => ({
     opacity: 1
   },
   input: {
-    flex: '1px',
+    flex: 1,
     fontSize: 14
   },
   notchedOutline: {
