@@ -18,7 +18,7 @@ var _default = (0, _styles.makeStyles)(function (theme) {
       position: 'relative',
       display: 'flex',
       flexDirection: 'row',
-      height: '48px'
+      height: '54px'
     },
     border: {
       border: 'solid 1px',
