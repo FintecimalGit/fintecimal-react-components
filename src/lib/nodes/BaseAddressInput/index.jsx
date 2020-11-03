@@ -17,25 +17,29 @@ const AddressInput = ({
   const [options, setOptions] = useState([]);
   const [searchText, setSearchText] = useState('');
 
-  const objectToString = (_value) => Object.values(_value).reduce((acc, item, index) => {
-    if (index == 0) {
-      return `${item}`
-    }
-    return `${acc}, ${item}`
-  }, '');
+  const buildAddress = (_value) => {
+    const { streetName = '', streetNumber ='', sublocality = '' } = _value;
+    const { locality =  '', administrativeArea = '', country = '' } = value;
+    const newStreetNumber = streetNumber ? ` ${streetNumber}` : '';
+    const newSublocality = sublocality ? `, ${sublocality}` : '';
+    const newLocality = locality ? `, ${locality}` : '';
+    const newAdministrativeArea = administrativeArea ? `, ${administrativeArea}` : '';
+    const newCountry = country ? `, ${country}` : '';
+    const address =  `${streetName}${newStreetNumber}${newSublocality}${newLocality}${newAdministrativeArea}${newCountry}`;
+    
+    return address;
+  };
 
   useEffect(() => {
-    const _searchText = objectToString(value);
+    const _searchText = buildAddress(value);
     setSearchText(_searchText);
   }, []);
 
   const fetchAddress = async () => {
     const response = await getAddress({ value: searchText });
     if (response) {
-      const { predictions = [] } = response;
-      const newOptions = predictions
-        .filter(({ description = '' }) => description.split(',').length === 5)
-        .map(({ description = '' }) => ({ name: description }));
+      const { places = [] } = response;
+      const newOptions = places.map(({ description = '', details = [] }) => ({ name: description, details }));
       setOptions(newOptions);
     }
   };
@@ -54,15 +58,11 @@ const AddressInput = ({
       handleChange({});
       setOptions([]);
     } else {
-      const { name = '' } = _value;
-      const [street = '', suburb = '', municipality = '', state = '', country = ''] = name.split(',');
-      const newValue = {
-        street: street.trim(),
-        suburb: suburb.trim(),
-        municipality: municipality.trim(),
-        state: state.trim(),
-        country: country.trim(),
-      };
+      const { details = [] } = _value;
+      const newValue = details.reduce((acc, item) => {
+        const { type, long_name } = item;
+        return { ...acc, [type]: long_name };
+      }, {});
       handleChange(newValue);
     }
   };

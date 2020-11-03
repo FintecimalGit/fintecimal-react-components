@@ -222,11 +222,12 @@ storiesOf('Components|Inputs', module)
         <BaseAddressInput
           label="Dirección"
           value={{
-            street: 'Arco Graciano',
-            suburb: 'Parques Zapopan',
-            municipality: 'Zapopan',
-            state: 'Jalisco',
-            country: 'México',
+            administrativeArea: "Jalisco",
+            country: "Mexico",
+            locality: "Zapopan",
+            postalCode: "45130",
+            streetName: "Calle Arco Comodo",
+            streetNumber: "1870"
           }}
           handleChange={action('handleChange')}
         />

@@ -1,19 +1,12 @@
 import axios from 'axios';
-
-const URL = 'https://maps.googleapis.com/maps/api';
-const MAP_KEY = process && process.env && process.env.MAP_KEY || "AIzaSyA3C5AilsVhn6xNYDJ73B0eKJwBNFe2RNc";
-const PROXY_URL = 'https://cors-anywhere.herokuapp.com/';
-const isLocal = window.location.hostname === 'localhost';
+import { getServer } from './keys';
 
 const getAddress = async ({ value }) => {
   try {
     if (!value) return [];
-    let url = `${URL}/place/autocomplete/json?input=${value}&types=geocode&components=country:MX&language=es-419&key=${MAP_KEY}`;
-    if (isLocal) {
-      url = PROXY_URL + url;
-    }
-    const response = await fetch(url);
-    const data = await response.json();
+    const { baseURL } = getServer();
+    const url = `${baseURL}/api/googleapis/places?name=${value}&showDetails=true`;
+    const { data } = await await axios.get(url);
     return data;
   } catch (err) {
     return null;
