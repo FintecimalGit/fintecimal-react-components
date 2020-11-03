@@ -41,7 +41,8 @@ const AddressInput = ({
   };
 
   useEffect(() => {
-    fetchAddress();
+    const time = setTimeout(() => fetchAddress(), 500);
+    return () => clearTimeout(time);
   }, [searchText]);
 
   const handleSearch = (_searchText) => {
@@ -49,16 +50,21 @@ const AddressInput = ({
   };
 
   const onChange = (_value) => {
-    const { name = '' } = _value;
-    const [street = '', suburb = '', municipality = '', state = '', country = ''] = name.split(',');
-    const newValue = {
-      street: street.trim(),
-      suburb: suburb.trim(),
-      municipality: municipality.trim(),
-      state: state.trim(),
-      country: country.trim(),
-    };
-    handleChange(newValue);
+    if (!_value) {
+      handleChange({});
+      setOptions([]);
+    } else {
+      const { name = '' } = _value;
+      const [street = '', suburb = '', municipality = '', state = '', country = ''] = name.split(',');
+      const newValue = {
+        street: street.trim(),
+        suburb: suburb.trim(),
+        municipality: municipality.trim(),
+        state: state.trim(),
+        country: country.trim(),
+      };
+      handleChange(newValue);
+    }
   };
 
   return (
