@@ -36,7 +36,9 @@ import {
   RejectSimple,
   BaseDatePicker,
   DynamicFields,
-  BaseCLABEInput
+  BaseCLABEInput,
+  BaseAddressInput,
+  BaseFullAddressInput,
 } from '../lib/nodes';
 
 import Table from '../lib/Table';
@@ -143,7 +145,7 @@ storiesOf('Components|Inputs', module)
       // errorMessage={'Este es un mensaje de error que puede tener cualquier cosa'}
       required
       clear
-      // value={'Este input viene lleno'}
+    // value={'Este input viene lleno'}
     />
   ))
   .add('Email Input', () => (
@@ -152,7 +154,7 @@ storiesOf('Components|Inputs', module)
       handleChange={action('handleChange')}
       required
       error={false}
-      // errorMessage={'Este es un mensaje de error que puede tener cualquier cosa'}
+    // errorMessage={'Este es un mensaje de error que puede tener cualquier cosa'}
     />
   ))
   .add('RFC Input', () => (
@@ -208,6 +210,75 @@ storiesOf('Components|Inputs', module)
       // value={'Seleccion mal'}
       options={listWithCategories}
     />
+  ))
+  .add('Address Input', () => (
+    <Grid container spacing={0}>
+      <Grid item sm={12}>
+        <BaseAddressInput
+          label="Dirección"
+          handleChange={action('handleChange')}
+        />
+      </Grid>
+      <Grid item sm={12}>
+        <BaseAddressInput
+          label="Dirección"
+          value={{
+            administrativeArea: "Jalisco",
+            country: "Mexico",
+            locality: "Zapopan",
+            postalCode: "45130",
+            streetName: "Calle Arco Comodo",
+            streetNumber: "1870"
+          }}
+          handleChange={action('handleChange')}
+        />
+      </Grid>
+      <Grid item sm={12}>
+        <BaseAddressInput
+          label="Dirección"
+          handleChange={action('handleChange')}
+          required
+        />
+      </Grid>
+      <Grid item sm={12}>
+        <BaseAddressInput
+          label="Dirección"
+          handleChange={action('handleChange')}
+          disabled
+        />
+      </Grid>
+    </Grid>
+  )).add('Full Address Input', () => (
+    <Grid container spacing={0}>
+      <Grid item sm={12}>
+        <BaseFullAddressInput
+          label="Dirección"
+          handleChange={action('handleChange')}
+          required
+        />
+      </Grid>
+      <Grid item sm={12}>
+        <BaseFullAddressInput
+          label="Dirección"
+          value={{
+            administrativeArea: "Jalisco",
+            country: "Mexico",
+            locality: "Zapopan",
+            postalCode: "45130",
+            streetName: "Calle Arco Comodo",
+            streetNumber: "1870"
+          }}
+          handleChange={action('handleChange')}
+        />
+      </Grid>
+      <Grid item sm={12}>
+        <BaseFullAddressInput
+          label="Dirección"
+          handleChange={action('handleChange')}
+          disabled
+        />
+      </Grid>
+    </Grid>
   ));
 
 storiesOf('Components|Nodes', module)
@@ -415,7 +486,7 @@ storiesOf('Components|Nodes', module)
       required
       // error={true}
       errorMessage={shortText}
-      // value={'Todo TODOS'}
+    // value={'Todo TODOS'}
     />
   ))
   .add('Phone', () => (
@@ -425,7 +496,7 @@ storiesOf('Components|Nodes', module)
       required
       // error={true}
       errorMessage={shortText}
-      // value={'Todo TODOS'}
+    // value={'Todo TODOS'}
     />
   ))
   .add('Number', () => (
@@ -435,7 +506,7 @@ storiesOf('Components|Nodes', module)
       required
       // error={true}
       errorMessage={shortText}
-      // value={'Todo TODOS'}
+    // value={'Todo TODOS'}
     />
   ))
   .add('RFC', () => (
@@ -445,7 +516,7 @@ storiesOf('Components|Nodes', module)
       required
       // error={true}
       errorMessage={shortText}
-      // value={'Todo TODOS'}
+    // value={'Todo TODOS'}
     />
   ))
   .add('CLABE', () => (
@@ -455,7 +526,7 @@ storiesOf('Components|Nodes', module)
       required
       // error={true}
       errorMessage={shortText}
-      // value={'Todo TODOS'}
+    // value={'Todo TODOS'}
     />
   ))
   .add('Reject button', () => (
@@ -510,10 +581,10 @@ storiesOf('Components|Nodes', module)
     <div>
       <Grid container spacing={2}>
         <Grid item sm={6}>
-          <ImageActions title="INE / IFE - Frente"/>
+          <ImageActions title="INE / IFE - Frente" />
         </Grid>
         <Grid item sm={6}>
-          <ImageActions title="INE / IFE - Reverso"/>
+          <ImageActions title="INE / IFE - Reverso" />
         </Grid>
       </Grid>
     </div>
@@ -587,7 +658,7 @@ storiesOf('Components|Form', module).add('Validations', () => (
         handleChange={action('handleChange')}
         required
         error={false}
-        // errorMessage={'Este es un mensaje de error que puede tener cualquier cosa'}
+      // errorMessage={'Este es un mensaje de error que puede tener cualquier cosa'}
       />
       <button
         type="submit"
@@ -1318,7 +1389,7 @@ storiesOf('Components|AutoComplete', module).add('Auto Complete', () => (
     options={listWithCategories}
     handleOnChangeWhen={['click', 'type']}
     onClear={action('handleChange')}
-    // value="3"
+  // value="3"
   />
 ));
 
@@ -1350,6 +1421,6 @@ storiesOf('Components|AutoComplete', module).add('Auto Complete single', () => (
     errorMessage={longText}
     // value={'Seleccion mal'}
     options={singleOptions}
-    // value="3"
+  // value="3"
   />
 ));
