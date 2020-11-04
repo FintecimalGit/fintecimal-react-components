@@ -26,6 +26,7 @@ import BaseDatePicker from './BaseDatePicker';
 import DynamicFields from './DynamicFields';
 import BaseCLABEInput from './BaseClabeInput';
 import BaseAddressInput from './BaseAddressInput';
+import BaseFullAddressInput from './BaseFullAddressInput';
 
 export {
   Maps,
@@ -56,4 +57,5 @@ export {
   BaseDatePicker,
   DynamicFields,
   BaseAddressInput,
+  BaseFullAddressInput,
 };

@@ -33,7 +33,7 @@ const AddressInput = ({
   useEffect(() => {
     const _searchText = buildAddress(value);
     setSearchText(_searchText);
-  }, []);
+  }, [value]);
 
   const fetchAddress = async () => {
     const response = await getAddress({ value: searchText });

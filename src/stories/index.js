@@ -38,6 +38,7 @@ import {
   DynamicFields,
   BaseCLABEInput,
   BaseAddressInput,
+  BaseFullAddressInput,
 } from '../lib/nodes';
 
 import Table from '../lib/Table';
@@ -210,7 +211,7 @@ storiesOf('Components|Inputs', module)
       options={listWithCategories}
     />
   ))
-  .add('Address input', () => (
+  .add('Address Input', () => (
     <Grid container spacing={0}>
       <Grid item sm={12}>
         <BaseAddressInput
@@ -241,6 +242,37 @@ storiesOf('Components|Inputs', module)
       </Grid>
       <Grid item sm={12}>
         <BaseAddressInput
+          label="Dirección"
+          handleChange={action('handleChange')}
+          disabled
+        />
+      </Grid>
+    </Grid>
+  )).add('Full Address Input', () => (
+    <Grid container spacing={0}>
+      <Grid item sm={12}>
+        <BaseFullAddressInput
+          label="Dirección"
+          handleChange={action('handleChange')}
+          required
+        />
+      </Grid>
+      <Grid item sm={12}>
+        <BaseFullAddressInput
+          label="Dirección"
+          value={{
+            administrativeArea: "Jalisco",
+            country: "Mexico",
+            locality: "Zapopan",
+            postalCode: "45130",
+            streetName: "Calle Arco Comodo",
+            streetNumber: "1870"
+          }}
+          handleChange={action('handleChange')}
+        />
+      </Grid>
+      <Grid item sm={12}>
+        <BaseFullAddressInput
           label="Dirección"
           handleChange={action('handleChange')}
           disabled
