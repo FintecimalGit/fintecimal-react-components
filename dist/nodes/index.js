@@ -165,6 +165,18 @@ Object.defineProperty(exports, "BaseCLABEInput", {
     return _BaseClabeInput.default;
   }
 });
+Object.defineProperty(exports, "BaseAddressInput", {
+  enumerable: true,
+  get: function get() {
+    return _BaseAddressInput.default;
+  }
+});
+Object.defineProperty(exports, "BaseFullAddressInput", {
+  enumerable: true,
+  get: function get() {
+    return _BaseFullAddressInput.default;
+  }
+});
 
 var _SearchBar = _interopRequireDefault(require("./SearchBar"));
 
@@ -219,5 +231,9 @@ var _BaseDatePicker = _interopRequireDefault(require("./BaseDatePicker"));
 var _DynamicFields = _interopRequireDefault(require("./DynamicFields"));
 
 var _BaseClabeInput = _interopRequireDefault(require("./BaseClabeInput"));
+
+var _BaseAddressInput = _interopRequireDefault(require("./BaseAddressInput"));
+
+var _BaseFullAddressInput = _interopRequireDefault(require("./BaseFullAddressInput"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
