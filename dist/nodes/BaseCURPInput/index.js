@@ -9,15 +9,17 @@ var _react = _interopRequireDefault(require("react"));
 
 var _propTypes = _interopRequireDefault(require("prop-types"));
 
-var _InputWrapper = _interopRequireDefault(require("../InputWrapper"));
-
 var _InputStrings = require("../../InputStrings");
+
+var _InputWrapper = _interopRequireDefault(require("../InputWrapper"));
 
 var _utils = require("../../commons/utils");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var RFCInput = function RFCInput(_ref) {
+var CURP_LENGTH = 18;
+
+var CURPInput = function CURPInput(_ref) {
   var value = _ref.value,
       handleChange = _ref.handleChange,
       label = _ref.label,
@@ -25,7 +27,6 @@ var RFCInput = function RFCInput(_ref) {
       errorMessage = _ref.errorMessage,
       type = _ref.type,
       required = _ref.required,
-      handleBlur = _ref.handleBlur,
       disabled = _ref.disabled;
   var config = {
     type: type,
@@ -38,54 +39,43 @@ var RFCInput = function RFCInput(_ref) {
   var errors = {
     error: error,
     errorMessage: errorMessage,
-    errorMessages: _InputStrings.rfc.errorMessages
+    errorMessages: _InputStrings.curp.errorMessages
   };
 
   var isValid = function isValid(data) {
     if ((0, _utils.isEmpty)(data) && !required) return true;
     var size = data.length;
 
-    if (size >= 10 && size <= 13) {
-      if (size === 10) {
-        return (0, _utils.validateRegex)(data, /[A-Z]{4}[0-9][0-9][0-1][0-9][0-3][0-9]/);
-      }
-
-      if (size === 12) {
-        return (0, _utils.validateRegex)(data, /[A-Z]{3}[0-9][0-9][0-1][0-9][0-3][0-9][A-Z0-9]{3}/);
-      }
-
-      return (0, _utils.validateRegex)(data, /[A-Z]{4}[0-9][0-9][0-1][0-9][0-3][0-9][A-Z0-9]{3}/);
+    if (size === CURP_LENGTH) {
+      return (0, _utils.validateRegex)(data, /[A-Z]{4}[0-9]{2}[0-1][0-9][0-3][0-9][A-Z0-9]{8}/);
+    } else {
+      return false;
     }
-
-    return false;
   };
 
   return _react.default.createElement(_InputWrapper.default, {
     config: config,
     errors: errors,
-    isValid: isValid,
     disabled: disabled,
-    onBlur: handleBlur
+    isValid: isValid
   });
 };
 
-RFCInput.defaultProps = {
-  label: _InputStrings.rfc.label,
-  type: _InputStrings.rfc.type,
+CURPInput.defaultProps = {
+  label: _InputStrings.curp.label,
+  type: _InputStrings.curp.type,
   error: false,
   errorMessage: '',
   required: false,
-  handleBlur: function handleBlur() {},
   disabled: false
 };
-RFCInput.propTypes = {
+CURPInput.propTypes = {
   label: _propTypes.default.string,
   type: _propTypes.default.string,
   error: _propTypes.default.bool,
   errorMessage: _propTypes.default.string,
   required: _propTypes.default.bool,
-  handleBlur: _propTypes.default.func,
   disabled: _propTypes.default.bool
 };
-var _default = RFCInput;
+var _default = CURPInput;
 exports.default = _default;

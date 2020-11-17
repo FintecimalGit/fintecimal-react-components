@@ -177,6 +177,12 @@ Object.defineProperty(exports, "BaseFullAddressInput", {
     return _BaseFullAddressInput.default;
   }
 });
+Object.defineProperty(exports, "BaseCURPInput", {
+  enumerable: true,
+  get: function get() {
+    return _BaseCURPInput.default;
+  }
+});
 
 var _SearchBar = _interopRequireDefault(require("./SearchBar"));
 
@@ -235,5 +241,7 @@ var _BaseClabeInput = _interopRequireDefault(require("./BaseClabeInput"));
 var _BaseAddressInput = _interopRequireDefault(require("./BaseAddressInput"));
 
 var _BaseFullAddressInput = _interopRequireDefault(require("./BaseFullAddressInput"));
+
+var _BaseCURPInput = _interopRequireDefault(require("./BaseCURPInput"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
