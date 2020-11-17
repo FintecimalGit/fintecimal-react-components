@@ -27,6 +27,7 @@ import DynamicFields from './DynamicFields';
 import BaseCLABEInput from './BaseClabeInput';
 import BaseAddressInput from './BaseAddressInput';
 import BaseFullAddressInput from './BaseFullAddressInput';
+import BaseCURPInput from './BaseCURPInput';
 
 export {
   Maps,
@@ -58,4 +59,5 @@ export {
   DynamicFields,
   BaseAddressInput,
   BaseFullAddressInput,
+  BaseCURPInput,
 };
