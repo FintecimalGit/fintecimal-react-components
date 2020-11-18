@@ -13,6 +13,7 @@ const RFCInput = ({
   type,
   required,
   handleBlur,
+  disabled,
 }) => {
   const config = {
     type,
@@ -41,7 +42,7 @@ const RFCInput = ({
     return false;
   };
 
-  return <InputWrapper config={config} errors={errors} isValid={isValid} onBlur={handleBlur} />;
+  return <InputWrapper config={config} errors={errors} isValid={isValid} disabled={disabled} onBlur={handleBlur} />;
 };
 
 RFCInput.defaultProps = {
@@ -51,6 +52,7 @@ RFCInput.defaultProps = {
   errorMessage: '',
   required: false,
   handleBlur: () => {},
+  disabled: false,
 };
 
 RFCInput.propTypes = {
@@ -60,6 +62,7 @@ RFCInput.propTypes = {
   errorMessage: PropTypes.string,
   required: PropTypes.bool,
   handleBlur: PropTypes.func,
+  disabled: PropTypes.bool,
 };
 
 export default RFCInput;

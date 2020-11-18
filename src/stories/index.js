@@ -39,6 +39,7 @@ import {
   BaseCLABEInput,
   BaseAddressInput,
   BaseFullAddressInput,
+  BaseCURPInput,
 } from '../lib/nodes';
 
 import Table from '../lib/Table';
@@ -516,7 +517,8 @@ storiesOf('Components|Nodes', module)
       required
       // error={true}
       errorMessage={shortText}
-    // value={'Todo TODOS'}
+      // value={'Todo TODOS'}
+      // disabled
     />
   ))
   .add('CLABE', () => (
@@ -527,6 +529,17 @@ storiesOf('Components|Nodes', module)
       // error={true}
       errorMessage={shortText}
     // value={'Todo TODOS'}
+    />
+  ))
+  .add('CURP', () => (
+    <BaseCURPInput
+      label="CURP"
+      handleChange={action('handleChange')}
+      required
+      // error={true}
+      errorMessage={shortText}
+      //value={'HEGG560427MVZRRL04'}
+      //disabled
     />
   ))
   .add('Reject button', () => (
