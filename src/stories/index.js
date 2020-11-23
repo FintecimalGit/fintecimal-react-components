@@ -40,6 +40,7 @@ import {
   BaseAddressInput,
   BaseFullAddressInput,
   BaseCURPInput,
+  ButtonDocuPass
 } from '../lib/nodes';
 
 import Table from '../lib/Table';
@@ -541,6 +542,9 @@ storiesOf('Components|Nodes', module)
       //value={'HEGG560427MVZRRL04'}
       //disabled
     />
+  ))
+  .add('ButtonDocuPass', () => (
+    <ButtonDocuPass/>
   ))
   .add('Reject button', () => (
     <>

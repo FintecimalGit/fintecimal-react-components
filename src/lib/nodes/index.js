@@ -28,6 +28,7 @@ import BaseCLABEInput from './BaseClabeInput';
 import BaseAddressInput from './BaseAddressInput';
 import BaseFullAddressInput from './BaseFullAddressInput';
 import BaseCURPInput from './BaseCURPInput';
+import ButtonDocuPass from './ButtonDocuPass';
 
 export {
   Maps,
@@ -60,4 +61,5 @@ export {
   BaseAddressInput,
   BaseFullAddressInput,
   BaseCURPInput,
+  ButtonDocuPass,
 };
