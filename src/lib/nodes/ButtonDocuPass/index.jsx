@@ -11,6 +11,7 @@ const ButtonDocuPass = ({
   text,
   size,
   url,
+  style
 }) => {
   const classes = useStyles();
   const typeformEmbed = useRef();
@@ -18,7 +19,7 @@ const ButtonDocuPass = ({
   const handleClick = () => typeformEmbed.current.typeform.open();
 
   return (
-    <div>
+    <div className={classes.root}>
       <ReactTypeformEmbed
         popup
         autoOpen={false}
@@ -26,11 +27,12 @@ const ButtonDocuPass = ({
         hideHeaders
         hideFooter
         ref={typeformEmbed}
+        size={size}
+        style={style}
       />
       <Button
         className={classes.button}
         variant="contained"
-        size={size}
         onClick={handleClick}
         startIcon={<DescriptionIcon/>}
       >
@@ -42,14 +44,16 @@ const ButtonDocuPass = ({
 
 ButtonDocuPass.defaultProps = {
   text: "DocuPass",
-  size: "large",
-  url: "http://localhost:8080/portal/test",
+  size: 60,
+  url: "http://fintecimal-nodos-test.herokuapp.com/portal/test",
+  style: {},
 };
 
 ButtonDocuPass.propTypes = {
   text: PropTypes.string,
-  size: PropTypes.string,
+  size: PropTypes.number,
   url: PropTypes.string,
+  style: PropTypes.object,
 };
 
 export default ButtonDocuPass;

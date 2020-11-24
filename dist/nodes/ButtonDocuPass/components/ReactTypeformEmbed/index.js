@@ -90,11 +90,6 @@ function (_Component) {
       }
     }
   }, {
-    key: "componentDidUpdate",
-    value: function componentDidUpdate() {
-      console.info('cambio update');
-    }
-  }, {
     key: "render",
     value: function render() {
       var _this = this;

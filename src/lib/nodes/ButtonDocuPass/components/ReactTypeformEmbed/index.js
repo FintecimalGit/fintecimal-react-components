@@ -52,10 +52,6 @@ class ReactTypeformEmbed extends Component {
     }
   }
 
-  componentDidUpdate() {
-    console.info('cambio update')
-  }
-
   render() {
     const style = Object.assign({}, styleDefault, this.props.style);
     return (

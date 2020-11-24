@@ -24,7 +24,8 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 var ButtonDocuPass = function ButtonDocuPass(_ref) {
   var text = _ref.text,
       size = _ref.size,
-      url = _ref.url;
+      url = _ref.url,
+      style = _ref.style;
   var classes = (0, _style.default)();
   var typeformEmbed = (0, _react.useRef)();
 
@@ -32,17 +33,20 @@ var ButtonDocuPass = function ButtonDocuPass(_ref) {
     return typeformEmbed.current.typeform.open();
   };
 
-  return _react.default.createElement("div", null, _react.default.createElement(_ReactTypeformEmbed.default, {
+  return _react.default.createElement("div", {
+    className: classes.root
+  }, _react.default.createElement(_ReactTypeformEmbed.default, {
     popup: true,
     autoOpen: false,
     url: url,
     hideHeaders: true,
     hideFooter: true,
-    ref: typeformEmbed
+    ref: typeformEmbed,
+    size: size,
+    style: style
   }), _react.default.createElement(_Button.default, {
     className: classes.button,
     variant: "contained",
-    size: size,
     onClick: handleClick,
     startIcon: _react.default.createElement(_Description.default, null)
   }, text));
@@ -50,13 +54,15 @@ var ButtonDocuPass = function ButtonDocuPass(_ref) {
 
 ButtonDocuPass.defaultProps = {
   text: "DocuPass",
-  size: "large",
-  url: "http://localhost:8080/portal/test"
+  size: 60,
+  url: "http://fintecimal-nodos-test.herokuapp.com/portal/test",
+  style: {}
 };
 ButtonDocuPass.propTypes = {
   text: _propTypes.default.string,
-  size: _propTypes.default.string,
-  url: _propTypes.default.string
+  size: _propTypes.default.number,
+  url: _propTypes.default.string,
+  style: _propTypes.default.object
 };
 var _default = ButtonDocuPass;
 exports.default = _default;

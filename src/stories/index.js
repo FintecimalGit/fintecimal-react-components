@@ -544,7 +544,12 @@ storiesOf('Components|Nodes', module)
     />
   ))
   .add('ButtonDocuPass', () => (
-    <ButtonDocuPass/>
+    <Grid container>
+      <Grid item sm={6} xs={6} lg={6}>
+        <ButtonDocuPass url="http://localhost:8080/portal/test"/>
+      </Grid>
+      <Grid item sm={6} xs={6} lg={6} />
+    </Grid>
   ))
   .add('Reject button', () => (
     <>
