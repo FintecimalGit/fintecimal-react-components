@@ -19,13 +19,19 @@ const RejectionField = ({
   onUndoRejection,
   editable,
 }) => {
+  const classes = useStyles();
   const {
     fieldType: type = '', label = '', value = '', config = {},
   } = field;
-  const { required = false, data = '', minDate = '' } = config;
-  const classes = useStyles();
   const [mvalue, setValue] = useState(value);
   const [forceDisplay, setForceDisplay] = useState('none');
+  const {
+    required,
+    data,
+    minDate,
+    format,
+    options,
+  } = config;
 
   useEffect(() => {
     setForceDisplay('none');
@@ -99,12 +105,11 @@ const RejectionField = ({
         error={rejected}
         errorMessage=""
         handleBlur={handleBlur}
-        options={config.options || []}
+        options={options}
         required={required}
         data={data}
         minDate={minDate}
-        error={rejected}
-        errorMessage=""
+        format={format}
       />
     </div>
   );
