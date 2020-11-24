@@ -546,7 +546,7 @@ storiesOf('Components|Nodes', module)
   .add('ButtonDocuPass', () => (
     <Grid container>
       <Grid item sm={6} xs={6} lg={6}>
-        <ButtonDocuPass url="http://localhost:8080/portal/test"/>
+        <ButtonDocuPass url="http://localhost:8080/portal/test" size={80}/>
       </Grid>
       <Grid item sm={6} xs={6} lg={6} />
     </Grid>

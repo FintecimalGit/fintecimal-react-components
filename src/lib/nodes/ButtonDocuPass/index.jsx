@@ -44,7 +44,7 @@ const ButtonDocuPass = ({
 
 ButtonDocuPass.defaultProps = {
   text: "DocuPass",
-  size: 60,
+  size: 80,
   url: "http://fintecimal-nodos-test.herokuapp.com/portal/test",
   style: {},
 };
