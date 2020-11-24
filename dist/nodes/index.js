@@ -183,6 +183,12 @@ Object.defineProperty(exports, "BaseCURPInput", {
     return _BaseCURPInput.default;
   }
 });
+Object.defineProperty(exports, "ButtonDocuPass", {
+  enumerable: true,
+  get: function get() {
+    return _ButtonDocuPass.default;
+  }
+});
 
 var _SearchBar = _interopRequireDefault(require("./SearchBar"));
 
@@ -243,5 +249,7 @@ var _BaseAddressInput = _interopRequireDefault(require("./BaseAddressInput"));
 var _BaseFullAddressInput = _interopRequireDefault(require("./BaseFullAddressInput"));
 
 var _BaseCURPInput = _interopRequireDefault(require("./BaseCURPInput"));
+
+var _ButtonDocuPass = _interopRequireDefault(require("./ButtonDocuPass"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
