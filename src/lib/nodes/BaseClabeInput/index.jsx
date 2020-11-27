@@ -16,14 +16,16 @@ const CLABEInput = ({
   type,
   required,
   disabled,
-  handleBlur
+  handleBlur,
+  maxLength,
 }) => {
   const config = {
     type,
     label,
     value,
     required,
-    handleChange
+    handleChange,
+    maxLength,
   };
   const errors = {
     error,

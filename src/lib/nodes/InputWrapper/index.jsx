@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import { isEmpty, formatText } from '../../commons/utils';
 import BaseInput from '../BaseInput';
 
-const InputWrapper = ({ config, errors, isValid, disabled, onBlur }) => {
+const InputWrapper = ({ config, errors, isValid, disabled, onBlur, }) => {
   const { value, handleChange, label, type, required, format, defaultValue } = config;
+  const { maxLength } = config;
   const { error, errorMessage, errorMessages } = errors;
   const [mError, setError] = useState(error);
   const [mErrorMessage, setErrorMessage] = useState(errorMessage);
@@ -51,29 +52,29 @@ const InputWrapper = ({ config, errors, isValid, disabled, onBlur }) => {
   };
 
   useEffect(() => {
-    if(defaultValue && !value){
+    if (defaultValue && !value) {
       setValue(defaultValue);
       handleChange(defaultValue);
     }
   }, []);
 
   useEffect(() => {
-    if(mValue !== value){
+    if (mValue !== value) {
       const newMvalue = format ? formatText(value, format) : value;
       setValue(newMvalue);
       if (!newMvalue || isValid(newMvalue)) {
-       setError(false);
-       setErrorMessage('');
+        setError(false);
+        setErrorMessage('');
       } else {
-       setError(true);
-       setErrorMessage(errorMessages.validation);
+        setError(true);
+        setErrorMessage(errorMessages.validation);
       }
     }
   }, [value]);
 
-  useEffect(() =>{
+  useEffect(() => {
     setError(error);
-    if(error){
+    if (error) {
       setErrorMessage(errorMessages.empty);
     }
   }, [error]);
@@ -90,6 +91,7 @@ const InputWrapper = ({ config, errors, isValid, disabled, onBlur }) => {
       required={required}
       onClear={onClear}
       disabled={disabled}
+      maxLength={maxLength}
     />
   );
 };
@@ -101,7 +103,7 @@ InputWrapper.propTypes = {
 };
 
 InputWrapper.defaultProps = {
-  onBlur: () => {},
+  onBlur: () => { },
 }
 
 export default InputWrapper;

@@ -25,7 +25,8 @@ const BaseInput = ({
   type,
   clear,
   onBlur,
-  onClear
+  onClear,
+  maxLength,
 }) => {
   const classes = useStyles();
   const [labelWidth, setLabelWidth] = React.useState(0);
@@ -73,6 +74,9 @@ const BaseInput = ({
           labelWidth={labelWidth}
           onBlur={onBlur}
           className={classes.input}
+          inputProps={{
+            ...(maxLength ? { maxLength } : {}),
+          }}
           endAdornment={
             clear &&
             value &&
