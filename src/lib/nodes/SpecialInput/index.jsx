@@ -28,7 +28,8 @@ const SpecialInput = ({
   children,
   onFocus,
   startAdornment,
-  disabled
+  disabled,
+  maxLength,
 }) => {
   const classes = useStyles();
   const [labelWidth, setLabelWidth] = React.useState(0);
@@ -80,6 +81,9 @@ const SpecialInput = ({
             labelWidth={labelWidth}
             onBlur={onBlur}
             onFocus={onFocus}
+            inputProps={{
+              ...(maxLength ? { maxLength } : {}),
+            }}
             startAdornment={
               startAdornment && (
                 <InputAdornment position="start" className={classes.adornment}>

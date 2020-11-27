@@ -16,6 +16,7 @@ const CellPhoneInput = ({
   errorMessage,
   disabled,
   handleBlur,
+  maxLength,
 }) => {
   const { errorMessages } = cellphone;
   const [mError, setError] = useState(error);
@@ -117,6 +118,7 @@ const CellPhoneInput = ({
       onFocus={onFocus}
       startAdornment={mAdornment}
       disabled={disabled}
+      maxLength={maxLength}
     >
       <IconText inputStatus={mError ? status.ERROR : mStatus} imgSrc={flag} text="MXN" />
     </SpecialInput>

@@ -30,13 +30,15 @@ var CLABEInput = function CLABEInput(_ref) {
       type = _ref.type,
       required = _ref.required,
       disabled = _ref.disabled,
-      handleBlur = _ref.handleBlur;
+      handleBlur = _ref.handleBlur,
+      maxLength = _ref.maxLength;
   var config = {
     type: type,
     label: label,
     value: value,
     required: required,
-    handleChange: handleChange
+    handleChange: handleChange,
+    maxLength: maxLength
   };
   var errors = {
     error: error,

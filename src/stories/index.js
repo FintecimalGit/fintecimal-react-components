@@ -498,6 +498,7 @@ storiesOf('Components|Nodes', module)
       required
       // error={true}
       errorMessage={shortText}
+      maxLength={12}
     // value={'Todo TODOS'}
     />
   ))
@@ -529,6 +530,7 @@ storiesOf('Components|Nodes', module)
       required
       // error={true}
       errorMessage={shortText}
+      maxLength={18}
     // value={'Todo TODOS'}
     />
   ))
