@@ -58,13 +58,14 @@ export const getExtensionFile = ({ name = '' }) => name.split('.').pop();
 const checkCellContainsMonths = (cell) => months.some(month => cell.includes(month));
 
 export const formatDateColumnsToSpanish = (data) => {
-  return data.map(flag => {
+  return [...data].map(flag => {
     Object.keys(flag).map((key) => {
       if (checkCellContainsMonths(flag[key])) {
         months.map((month, i) => {
-          if(flag[key].includes(month)) flag[key] = flag[key ../../src/lib/nodes/InputTable/utils.js].replace(month, meses[i]);
+          if(flag[key].includes(month)) flag[key] = flag[key].replace(month, meses[i]);
         });
       }
     })
+    return flag;
   })
 }

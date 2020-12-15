@@ -9,7 +9,7 @@ var _react = _interopRequireDefault(require("react"));
 
 var _propTypes = _interopRequireDefault(require("prop-types"));
 
-var _styles = require("@material-ui/styles");
+var _styles = require("@material-ui/core/styles");
 
 var _utils = require("../../commons/utils");
 
@@ -73,12 +73,12 @@ var IconText = function IconText(_ref) {
       text = _ref.text,
       inputStatus = _ref.inputStatus;
   var classes = useStyles();
-  return _react.default.createElement("div", {
+  return /*#__PURE__*/_react.default.createElement("div", {
     className: (0, _classnames.default)(classes.root, getClassByStatus(inputStatus, classes))
-  }, _react.default.createElement("img", {
+  }, /*#__PURE__*/_react.default.createElement("img", {
     src: imgSrc,
     className: classes.img
-  }), _react.default.createElement("p", {
+  }), /*#__PURE__*/_react.default.createElement("p", {
     className: classes.text
   }, text));
 };
