@@ -32,11 +32,16 @@ const CSVReader = ({
       const data = _event.target.result;
       const workbook = XLSX.read(data, {
         type: 'binary',
+        locale: 'es_ES', // Doesn't work
       });
 
       workbook.SheetNames.forEach((sheetName) => {
-        const XLRowObject = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
-        resolve(XLRowObject);
+        const XLRowObject = XLSX.utils.sheet_to_json(
+          workbook.Sheets[sheetName], {
+            raw: false
+        });
+        const formattedData = utils.formatDateColumnsToSpanish(XLRowObject);
+        resolve(formattedData);
         refE.current.value = null;
       });
     };

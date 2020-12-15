@@ -3,13 +3,16 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.getExtensionFile = exports.ObjectNotEmpty = exports.createItemsFromCSV = exports.createHeadersFromCSV = exports.includesHeaders = exports.getHeadersFromCSV = exports.generateFieldsWithValue = exports.generateValueEmpty = void 0;
+exports.formatDateColumnsToSpanish = exports.getExtensionFile = exports.ObjectNotEmpty = exports.createItemsFromCSV = exports.createHeadersFromCSV = exports.includesHeaders = exports.getHeadersFromCSV = exports.generateFieldsWithValue = exports.generateValueEmpty = void 0;
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+var meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
 
 var generateValueEmpty = function generateValueEmpty(fieldArray) {
   return fieldArray.map(function (field) {
@@ -28,7 +31,7 @@ exports.generateValueEmpty = generateValueEmpty;
 
 var generateFieldsWithValue = function generateFieldsWithValue(fields, values) {
   return fields.reduce(function (acc, field) {
-    acc.push(_objectSpread({}, field, {
+    acc.push(_objectSpread(_objectSpread({}, field), {}, {
       value: values[field.name]
     }));
     return acc;
@@ -115,3 +118,23 @@ var getExtensionFile = function getExtensionFile(_ref) {
 };
 
 exports.getExtensionFile = getExtensionFile;
+
+var checkCellContainsMonths = function checkCellContainsMonths(cell) {
+  return months.some(function (month) {
+    return cell.includes(month);
+  });
+};
+
+var formatDateColumnsToSpanish = function formatDateColumnsToSpanish(data) {
+  return data.map(function (flag) {
+    Object.keys(flag).map(function (key) {
+      if (checkCellContainsMonths(flag[key])) {
+        months.map(function (month, i) {
+          if (flag[key].includes(month)) flag[key] = flag[key].replace(month, meses[i]);
+        });
+      }
+    });
+  });
+};
+
+exports.formatDateColumnsToSpanish = formatDateColumnsToSpanish;
