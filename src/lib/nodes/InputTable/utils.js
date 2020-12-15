@@ -1,3 +1,6 @@
+const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+const meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre']
+
 export const generateValueEmpty = (fieldArray) => fieldArray.map((field) => ({
   id: field.id,
   name: field.name,
@@ -51,3 +54,18 @@ export const createItemsFromCSV = (items, headers) => items.reduce((acc, item) =
 export const ObjectNotEmpty = (obj) => Object.keys(obj).length;
 
 export const getExtensionFile = ({ name = '' }) => name.split('.').pop();
+
+const checkCellContainsMonths = (cell) => months.some(month => cell.includes(month));
+
+export const formatDateColumnsToSpanish = (data) => {
+  return [...data].map(flag => {
+    Object.keys(flag).map((key) => {
+      if (checkCellContainsMonths(flag[key])) {
+        months.map((month, i) => {
+          if(flag[key].includes(month)) flag[key] = flag[key].replace(month, meses[i]);
+        });
+      }
+    })
+    return flag;
+  })
+}

@@ -1,7 +1,5 @@
 "use strict";
 
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
@@ -21,23 +19,27 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 
-function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
 
-function _toArray(arr) { return _arrayWithHoles(arr) || _iterableToArray(arr) || _nonIterableRest(); }
+function _toArray(arr) { return _arrayWithHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableRest(); }
 
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 
-function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
@@ -76,13 +78,18 @@ var CSVReader = function CSVReader(_ref) {
         var data = _event.target.result;
 
         var workbook = _xlsx.default.read(data, {
-          type: 'binary'
+          type: 'binary',
+          locale: 'es_ES' // Doesn't work
+
         });
 
         workbook.SheetNames.forEach(function (sheetName) {
-          var XLRowObject = _xlsx.default.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+          var XLRowObject = _xlsx.default.utils.sheet_to_json(workbook.Sheets[sheetName], {
+            raw: false
+          });
 
-          resolve(XLRowObject);
+          var formattedData = utils.formatDateColumnsToSpanish(XLRowObject);
+          resolve(formattedData);
           refE.current.value = null;
         });
       };
@@ -100,7 +107,7 @@ var CSVReader = function CSVReader(_ref) {
       var reader = new FileReader();
 
       reader.onload = function (_event) {
-        var csvData = _papaparse.default.parse(reader.result, _objectSpread({}, parserOptions, {
+        var csvData = _papaparse.default.parse(reader.result, _objectSpread(_objectSpread({}, parserOptions), {}, {
           error: onError,
           encoding: fileEncoding
         }));
@@ -147,8 +154,8 @@ var CSVReader = function CSVReader(_ref) {
     }
 
     return {
-      isInvalid: isInvalid,
-      message: message
+      isInvalid,
+      message
     };
   };
 
@@ -156,8 +163,8 @@ var CSVReader = function CSVReader(_ref) {
     var isInvalid = false;
     var message = [];
     if (!localValue.length) return {
-      isInvalid: isInvalid,
-      message: message
+      isInvalid,
+      message
     };
     var headersNames = headers.map(function (_ref2) {
       var _ref2$name = _ref2.name,
@@ -177,8 +184,8 @@ var CSVReader = function CSVReader(_ref) {
     }
 
     return {
-      isInvalid: isInvalid,
-      message: message
+      isInvalid,
+      message
     };
   };
 
@@ -219,8 +226,8 @@ var CSVReader = function CSVReader(_ref) {
           _ref3$required = _ref3.required,
           required = _ref3$required === void 0 ? false : _ref3$required;
       return {
-        name: name,
-        required: required
+        name,
+        required
       };
     });
     var statusHeaders = validateHeaders(data);
@@ -235,18 +242,14 @@ var CSVReader = function CSVReader(_ref) {
 
     _data = utils.createItemsFromCSV(data, documentHeaders);
     return {
-      isValid: isValid,
+      isValid,
       data: _data,
-      headersCSV: headersCSV,
-      messages: messages
+      headersCSV,
+      messages
     };
   };
 
-  var handleChangeFile = (0, _react.useCallback)(
-  /*#__PURE__*/
-  _asyncToGenerator(
-  /*#__PURE__*/
-  regeneratorRuntime.mark(function _callee() {
+  var handleChangeFile = (0, _react.useCallback)( /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
     var result, _formatDataFromCsv, isValid, data, headersCSV, messages;
 
     return regeneratorRuntime.wrap(function _callee$(_context) {
@@ -260,10 +263,10 @@ var CSVReader = function CSVReader(_ref) {
             result = _context.sent;
             _formatDataFromCsv = formatDataFromCsv(result), isValid = _formatDataFromCsv.isValid, data = _formatDataFromCsv.data, headersCSV = _formatDataFromCsv.headersCSV, messages = _formatDataFromCsv.messages;
             onFileLoaded({
-              isValid: isValid,
-              data: data,
-              headersCSV: headersCSV,
-              messages: messages
+              isValid,
+              data,
+              headersCSV,
+              messages
             });
 
           case 5:
@@ -273,11 +276,11 @@ var CSVReader = function CSVReader(_ref) {
       }
     }, _callee);
   })), [readFile, onFileLoaded]);
-  return _react.default.createElement("div", {
+  return /*#__PURE__*/_react.default.createElement("div", {
     className: className
-  }, _react.default.createElement("div", null, _react.default.createElement("label", {
+  }, /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("label", {
     htmlFor: inputId
-  }, label), _react.default.createElement("input", {
+  }, label), /*#__PURE__*/_react.default.createElement("input", {
     ref: refE,
     className: inputClass,
     type: "file",

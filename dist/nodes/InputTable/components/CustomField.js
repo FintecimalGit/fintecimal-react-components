@@ -43,39 +43,39 @@ var CustomField = function CustomField(_ref) {
 
   switch (type) {
     case 'CURP':
-      return _react.default.createElement(_CURPInput.default, props);
+      return /*#__PURE__*/_react.default.createElement(_CURPInput.default, props);
 
     case 'CLABE':
-      return _react.default.createElement(_CLABEInput.default, props);
+      return /*#__PURE__*/_react.default.createElement(_CLABEInput.default, props);
 
     case 'lista':
-      return _react.default.createElement(_Select.default, props);
+      return /*#__PURE__*/_react.default.createElement(_Select.default, props);
 
     case 'RFC':
-      return _react.default.createElement(_BaseRFCInput.default, props);
+      return /*#__PURE__*/_react.default.createElement(_BaseRFCInput.default, props);
 
     case 'cantidad':
     case 'número':
-      return _react.default.createElement(_BaseNumberInput.default, props);
+      return /*#__PURE__*/_react.default.createElement(_BaseNumberInput.default, props);
 
     case 'radio':
     case 'email':
-      return _react.default.createElement(_BaseEmailInput.default, props);
+      return /*#__PURE__*/_react.default.createElement(_BaseEmailInput.default, props);
 
     case 'celular':
-      return _react.default.createElement(_BasePhoneInput.default, props);
+      return /*#__PURE__*/_react.default.createElement(_BasePhoneInput.default, props);
 
     case 'respuesta larga':
-      return _react.default.createElement(_TextAreaInput.default, props);
+      return /*#__PURE__*/_react.default.createElement(_TextAreaInput.default, props);
 
     case 'respuesta corta':
-      return _react.default.createElement(_BaseTextInput.default, props);
+      return /*#__PURE__*/_react.default.createElement(_BaseTextInput.default, props);
 
     case 'fecha':
-      return _react.default.createElement(_DatePicker.default, props);
+      return /*#__PURE__*/_react.default.createElement(_DatePicker.default, props);
 
     case 'document':
-      return _react.default.createElement(_UploadDocuments.default, props);
+      return /*#__PURE__*/_react.default.createElement(_UploadDocuments.default, props);
 
     default:
       return '';
