@@ -59,12 +59,6 @@ const BaseDatePicker = ({
   }, [value]);
 
   useEffect(() => {
-    if (error && !mError) {
-      setMError(true)
-    }
-  }, [error])
-
-  useEffect(() => {
     const messageError = generateErrorMessagesByLabel(text, label);
     if (error && !mError) {
       setMError(true)
