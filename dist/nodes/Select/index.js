@@ -1,7 +1,5 @@
 "use strict";
 
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
@@ -31,7 +29,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
@@ -39,11 +37,15 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 
-function _iterableToArrayLimit(arr, i) { if (!(Symbol.iterator in Object(arr) || Object.prototype.toString.call(arr) === "[object Arguments]")) { return; } var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
@@ -126,7 +128,7 @@ var SelectInput = function SelectInput(_ref) {
         category = _info$category === void 0 ? true : _info$category,
         _info$parentName = info.parentName,
         parentName = _info$parentName === void 0 ? '' : _info$parentName;
-    return _react.default.createElement(_core.MenuItem, {
+    return /*#__PURE__*/_react.default.createElement(_core.MenuItem, {
       disabled: category,
       key: "".concat(parentName, "_").concat(name, "_").concat(index),
       className: category ? classes.category : classes.item,
@@ -165,9 +167,9 @@ var SelectInput = function SelectInput(_ref) {
       var name = child.name,
           children = child.children;
       var info = {
-        name: name,
-        index: index,
-        parentName: parentName
+        name,
+        index,
+        parentName
       };
 
       if (isCategory(child)) {
@@ -175,7 +177,7 @@ var SelectInput = function SelectInput(_ref) {
         return renderChildren(children, items, name);
       }
 
-      var newInfo = _objectSpread({}, info, {
+      var newInfo = _objectSpread(_objectSpread({}, info), {}, {
         category: false
       });
 
@@ -185,7 +187,7 @@ var SelectInput = function SelectInput(_ref) {
 
   var renderPlaceholder = function renderPlaceholder(_ref2) {
     var name = _ref2.name;
-    return _react.default.createElement(_core.MenuItem, {
+    return /*#__PURE__*/_react.default.createElement(_core.MenuItem, {
       disabled: true,
       key: "placeholder_".concat(name, "_-1"),
       className: classes.item,
@@ -236,22 +238,29 @@ var SelectInput = function SelectInput(_ref) {
       setValue(value);
     }
   }, [value]);
+  (0, _react.useEffect)(function () {
+    if (error && !mError) {
+      var empty = errorMessages.empty;
+      setError(true);
+      setErrorMessage(empty);
+    }
+  }, [error, mError]);
   var checkDisabled = (0, _react.useMemo)(function () {
     if (options.length === 0) return true;
     return disabled;
   }, [options, disabled]);
-  return _react.default.createElement("div", {
+  return /*#__PURE__*/_react.default.createElement("div", {
     className: classes.root
-  }, (0, _utils.isTextLong)(label) && _react.default.createElement("div", {
+  }, (0, _utils.isTextLong)(label) && /*#__PURE__*/_react.default.createElement("div", {
     className: classes.longPlaceHolder
-  }, _react.default.createElement(_LongPlaceHolder.default, {
+  }, /*#__PURE__*/_react.default.createElement(_LongPlaceHolder.default, {
     text: label
-  })), _react.default.createElement(_core.FormControl, {
+  })), /*#__PURE__*/_react.default.createElement(_core.FormControl, {
     className: classes.form,
     required: required,
     error: mError,
     variant: "outlined"
-  }, _react.default.createElement(_core.InputLabel, {
+  }, /*#__PURE__*/_react.default.createElement(_core.InputLabel, {
     ref: labelRef,
     className: classes.label,
     htmlFor: "component-outlined",
@@ -259,7 +268,7 @@ var SelectInput = function SelectInput(_ref) {
     classes: {
       asterisk: classes.asterisk
     }
-  }, selectLabel()), _react.default.createElement(_core.Select, {
+  }, selectLabel()), /*#__PURE__*/_react.default.createElement(_core.Select, {
     renderValue: function renderValue() {
       return mValue || placeholder;
     },
@@ -279,7 +288,7 @@ var SelectInput = function SelectInput(_ref) {
         paper: mError ? getClassByStatus(_utils.status.ERROR, classes) : getClassByStatus(mStatus, classes)
       }
     },
-    input: _react.default.createElement(_core.OutlinedInput, {
+    input: /*#__PURE__*/_react.default.createElement(_core.OutlinedInput, {
       id: "component-outlined",
       labelWidth: labelWidth,
       className: classes.input,
@@ -289,7 +298,7 @@ var SelectInput = function SelectInput(_ref) {
       },
       disabled: checkDisabled
     })
-  }, renderOptions(options))), mError && (0, _utils.isTextLong)(mErrorMessage) && _react.default.createElement(_LongError.default, {
+  }, renderOptions(options))), mError && (0, _utils.isTextLong)(mErrorMessage) && /*#__PURE__*/_react.default.createElement(_LongError.default, {
     text: mErrorMessage
   }));
 };

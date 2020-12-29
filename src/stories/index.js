@@ -191,16 +191,34 @@ storiesOf('Components|Inputs', module)
     />
   ))
   .add('Select Input', () => (
-    <SelectInput
-      label={longText}
-      placeholder="Placeholder"
-      handleChange={action('handleChange')}
-      required
-      error
-      errorMessage={longText}
-      // value={'Seleccion mal'}
-      options={listWithCategories}
-    />
+    <form
+      onSubmit={event => {
+        event.preventDefault();
+        event.stopPropagation();
+        // const { target } = event;
+        // console.log({ formIsValid: target.checkValidity() })
+      }}
+    >
+      <SelectInput
+        label={longText}
+        placeholder="Placeholder"
+        handleChange={action('handleChange')}
+        required
+        errorMessage={longText}
+        // value={'Seleccion mal'}
+        options={listWithCategories}
+      />
+      <button
+        type="submit"
+        onClick={event => {
+          const { target } = event;
+          const form = target.parentNode;
+          action('onClickSubmit')(JSON.stringify({ formIsValid: form.checkValidity() }));
+        }}
+      >
+        Submit
+      </button>
+    </form>
   ))
   .add('Long Text Input', () => (
     <TextInput
@@ -305,6 +323,7 @@ storiesOf('Components|Nodes', module)
           label="Fecha de nacimiento"
           onDateChange={action('onDateChange')}
           format="DD/MMM/YYYY"
+          required
         />
       </Grid>
       <Grid item sm={12}>
@@ -313,6 +332,8 @@ storiesOf('Components|Nodes', module)
           onDateChange={action('onDateChange')}
           minDate="2000-01-01"
           disableToolBar={true}
+          error
+          required
         />
       </Grid>
       <Grid item sm={12}>
@@ -629,7 +650,7 @@ storiesOf('Components|Nodes', module)
     }
 
     return (
-      <InputTable value={values} headers={headers} handleHeadersAndValues={handleChange} />
+      <InputTable value={values} headers={headers} handleHeadersAndValues={handleChange} required error />
     );
   })
   .add('CardApp', () => <CardApp onClick={action('onClick')} />);

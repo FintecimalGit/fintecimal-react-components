@@ -18,4 +18,14 @@ export default makeStyles((theme) => ({
       flex: '1px',
     }
   },
+  error: {
+    '& > label': {
+      color: `${theme.palette.error.main} !important`,
+    },
+    '& .MuiOutlinedInput-root': {
+      '& .MuiOutlinedInput-notchedOutline': {
+        borderColor: `${theme.palette.error.main} !important`,
+      }
+    }
+  }
 }));

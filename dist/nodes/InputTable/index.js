@@ -21,6 +21,8 @@ var _Fields = _interopRequireDefault(require("./components/Fields"));
 
 var _defaults = require("./defaults");
 
+var _InputStrings = require("../../InputStrings");
+
 var utils = _interopRequireWildcard(require("./utils"));
 
 var _style = _interopRequireDefault(require("./style"));
@@ -60,7 +62,9 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 var InputTable = function InputTable(_ref) {
   var value = _ref.value,
       headers = _ref.headers,
-      handleHeadersAndValues = _ref.handleHeadersAndValues;
+      handleHeadersAndValues = _ref.handleHeadersAndValues,
+      error = _ref.error,
+      required = _ref.required;
   var classes = (0, _style.default)();
 
   var _useState = (0, _react.useState)([]),
@@ -213,6 +217,11 @@ var InputTable = function InputTable(_ref) {
   (0, _react.useEffect)(function () {
     if (errorMessages.length) closeMessageError();
   }, [errorMessages]);
+  (0, _react.useEffect)(function () {
+    if (error && required) {
+      setErrorMessages([_InputStrings.table.errorMessages.empty]);
+    }
+  }, [error, required]);
   return /*#__PURE__*/_react.default.createElement("div", {
     className: classes.content
   }, /*#__PURE__*/_react.default.createElement(_Fields.default, {
@@ -255,11 +264,15 @@ var InputTable = function InputTable(_ref) {
 InputTable.propTypes = {
   value: _propTypes.default.array,
   headers: _propTypes.default.array,
-  handleHeadersAndValues: _propTypes.default.func
+  handleHeadersAndValues: _propTypes.default.func,
+  required: _propTypes.default.bool,
+  error: _propTypes.default.bool
 };
 InputTable.defaultProps = {
   value: _defaults.defaultData,
   headers: _defaults.defaultHeader,
+  required: false,
+  error: false,
   handleHeadersAndValues: function handleHeadersAndValues() {}
 };
 var _default = InputTable;

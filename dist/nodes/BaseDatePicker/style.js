@@ -25,6 +25,16 @@ var _default = (0, _styles.makeStyles)(function (theme) {
         fontSize: 14,
         flex: '1px'
       }
+    },
+    error: {
+      '& > label': {
+        color: "".concat(theme.palette.error.main, " !important")
+      },
+      '& .MuiOutlinedInput-root': {
+        '& .MuiOutlinedInput-notchedOutline': {
+          borderColor: "".concat(theme.palette.error.main, " !important")
+        }
+      }
     }
   };
 });

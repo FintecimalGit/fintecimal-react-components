@@ -13,10 +13,11 @@ import CSVReader from './components/CsvReader';
 import Fields from './components/Fields';
 
 import { defaultData, defaultHeader } from './defaults';
+import { table } from '../../InputStrings';
 import * as utils from './utils';
 import useStyles from './style';
 
-const InputTable = ({ value, headers, handleHeadersAndValues }) => {
+const InputTable = ({ value, headers, handleHeadersAndValues, error, required }) => {
   const classes = useStyles();
   const [fields, setFields] = useState([]);
   const [localHeaders, setLocalHeaders] = useState([]);
@@ -133,6 +134,14 @@ const InputTable = ({ value, headers, handleHeadersAndValues }) => {
     if (errorMessages.length) closeMessageError();
   }, [errorMessages]);
 
+  useEffect(() => {
+    if (error && required) {
+      setErrorMessages([
+        table.errorMessages.empty
+      ])
+    }
+  }, [error, required])
+
   return (
     <div className={classes.content}>
       <Fields fieldValues={fields} addNewRow={addNewRow} edit={edit} />
@@ -189,11 +198,15 @@ InputTable.propTypes = {
   value: PropTypes.array,
   headers: PropTypes.array,
   handleHeadersAndValues: PropTypes.func,
+  required: PropTypes.bool,
+  error: PropTypes.bool,
 };
 
 InputTable.defaultProps = {
   value: defaultData,
   headers: defaultHeader,
+  required: false,
+  error: false,
   handleHeadersAndValues: () => {},
 };
 
