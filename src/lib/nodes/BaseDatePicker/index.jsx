@@ -82,7 +82,7 @@ const BaseDatePicker = ({
           inputVariant="outlined"
           label={
             <>
-              {mLabel}
+              { mLabel }
               { required &&
                 <span className={classes.asterisk}>*</span>
               }
