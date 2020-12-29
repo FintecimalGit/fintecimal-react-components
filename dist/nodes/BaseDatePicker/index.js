@@ -105,11 +105,6 @@ var BaseDatePicker = function BaseDatePicker(_ref) {
     setDate(mValue);
   }, [value]);
   (0, _react.useEffect)(function () {
-    if (error && !mError) {
-      setMError(true);
-    }
-  }, [error]);
-  (0, _react.useEffect)(function () {
     var messageError = (0, _InputStrings.generateErrorMessagesByLabel)(_InputStrings.text, label);
 
     if (error && !mError) {
@@ -132,7 +127,9 @@ var BaseDatePicker = function BaseDatePicker(_ref) {
     }),
     variant: "inline",
     inputVariant: "outlined",
-    label: mLabel,
+    label: /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, mLabel, required && /*#__PURE__*/_react.default.createElement("span", {
+      className: classes.asterisk
+    }, "*")),
     value: date ? date : null,
     format: format,
     onChange: handleDateChange,

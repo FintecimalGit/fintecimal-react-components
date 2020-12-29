@@ -80,7 +80,14 @@ const BaseDatePicker = ({
           )}
           variant="inline"
           inputVariant="outlined"
-          label={mLabel}
+          label={
+            <>
+              {mLabel}
+              { required &&
+                <span className={classes.asterisk}>*</span>
+              }
+            </>
+          }
           value={date ? date : null}
           format={format}
           onChange={handleDateChange}

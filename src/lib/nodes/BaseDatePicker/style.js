@@ -27,5 +27,10 @@ export default makeStyles((theme) => ({
         borderColor: `${theme.palette.error.main} !important`,
       }
     }
-  }
+  },
+  asterisk: {
+    color: theme.palette.error.main,
+    fontSize: 14.2,
+    verticalAlign: 'super'
+  },
 }));

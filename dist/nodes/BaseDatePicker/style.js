@@ -35,6 +35,11 @@ var _default = (0, _styles.makeStyles)(function (theme) {
           borderColor: "".concat(theme.palette.error.main, " !important")
         }
       }
+    },
+    asterisk: {
+      color: theme.palette.error.main,
+      fontSize: 14.2,
+      verticalAlign: 'super'
     }
   };
 });
