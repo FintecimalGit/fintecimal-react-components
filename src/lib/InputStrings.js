@@ -70,6 +70,15 @@ export const clabe = {
     type: 'text'
 };
 
+export const table = {
+    label: 'Tabla',
+    errorMessages: {
+        validation: 'Tabla con formato no válido',
+        empty: 'Es necesario se agregue información válida a la tabla.'
+    },
+    type: 'table'
+};
+
 export const generateErrorMessagesByLabel = (type, label = '') => {
     return  {
         validation: type.errorMessages.validation,

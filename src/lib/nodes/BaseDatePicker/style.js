@@ -18,4 +18,19 @@ export default makeStyles((theme) => ({
       flex: '1px',
     }
   },
+  error: {
+    '& > label': {
+      color: `${theme.palette.error.main} !important`,
+    },
+    '& .MuiOutlinedInput-root': {
+      '& .MuiOutlinedInput-notchedOutline': {
+        borderColor: `${theme.palette.error.main} !important`,
+      }
+    }
+  },
+  asterisk: {
+    color: theme.palette.error.main,
+    fontSize: 14.2,
+    verticalAlign: 'super'
+  },
 }));

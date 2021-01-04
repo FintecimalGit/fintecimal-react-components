@@ -151,6 +151,14 @@ const SelectInput = ({
     }
   }, [value]);
 
+  useEffect(() => {
+    if (error && !mError) {
+      const { empty } = errorMessages;
+      setError(true)
+      setErrorMessage(empty);
+    }
+  }, [error, mError])
+
   const checkDisabled = useMemo(() => {
     if (options.length === 0) return true;
     return disabled;

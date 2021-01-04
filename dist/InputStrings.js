@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.generateErrorMessagesByLabel = exports.clabe = exports.list = exports.cellphone = exports.number = exports.curp = exports.rfc = exports.email = exports.text = void 0;
+exports.generateErrorMessagesByLabel = exports.table = exports.clabe = exports.list = exports.cellphone = exports.number = exports.curp = exports.rfc = exports.email = exports.text = void 0;
 var text = {
   label: 'Texto',
   errorMessages: {
@@ -76,6 +76,15 @@ var clabe = {
   type: 'text'
 };
 exports.clabe = clabe;
+var table = {
+  label: 'Tabla',
+  errorMessages: {
+    validation: 'Tabla con formato no válido',
+    empty: 'Es necesario se agregue información válida a la tabla.'
+  },
+  type: 'table'
+};
+exports.table = table;
 
 var generateErrorMessagesByLabel = function generateErrorMessagesByLabel(type) {
   var label = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
