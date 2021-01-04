@@ -76,7 +76,7 @@ export const table = {
         validation: 'Tabla con formato no válido',
         empty: 'Es necesario se agregue información válida a la tabla.'
     },
-    type: 'text'
+    type: 'table'
 };
 
 export const generateErrorMessagesByLabel = (type, label = '') => {
