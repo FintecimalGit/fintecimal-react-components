@@ -53,6 +53,15 @@ const BaseDatePicker = ({
     }
   }
 
+  const IsClearDisable = ({ isDisable }) => {
+    return isDisable ? null : <IconButton onClick={(e) => {
+      e.stopPropagation();
+      handleDateChange(null)
+    }}>
+      <ClearIcon />
+    </IconButton>
+  }
+
   useEffect(() => {
     const mValue = format && value ? moment(value, format) : value;
     setDate(mValue);
@@ -97,12 +106,7 @@ const BaseDatePicker = ({
           onBlur={mOnBlur}
           InputProps={{
             endAdornment: (
-                <IconButton onClick={(e) => {
-                  e.stopPropagation();
-                  handleDateChange(null)
-                }}>
-                  <ClearIcon />
-                </IconButton>
+              <IsClearDisable isDisable={disabled}/>
             )
           }}
           InputAdornmentProps={{
