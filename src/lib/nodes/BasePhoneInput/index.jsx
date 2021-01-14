@@ -35,11 +35,13 @@ const CellPhoneInput = ({
   };
 
   const mHandleChange = (event) => {
-    const {
+    let {
       target: { value },
       target,
     } = event;
 
+    // verifica si hay algo que no sea numero o parentesis y lo borra haciendo que el formato sea (33)33333333
+    if (validateRegex(value, /[a-zA-ZÀ-ÿñ.,\/#!$%^&*;:{}=\-+_`~´"¨°|'¡¿?\\\[\]]/g)) value = onlyNumbers(value);
     if (isValid(value)) target.setCustomValidity('');
     else target.setCustomValidity(errorMessage || errorMessages.validation);
 
@@ -57,6 +59,11 @@ const CellPhoneInput = ({
     if (isEmpty(data) && !required) return true;
     return validateRegex(data, /\(?([0-9]{2})\)([0-9]{8})$/);
   };
+
+  const onlyNumbers = (inputInvalid) => {
+    inputInvalid = inputInvalid.slice(0, -1);
+    return inputInvalid;
+  }
 
   const onFocus = () => {
     setStatus(status.FOCUS);
