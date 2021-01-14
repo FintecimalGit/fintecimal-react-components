@@ -82,7 +82,9 @@ var CellPhoneInput = function CellPhoneInput(_ref) {
 
   var mHandleChange = function mHandleChange(event) {
     var value = event.target.value,
-        target = event.target;
+        target = event.target; // verifica si hay algo que no sea numero o parentesis y lo borra haciendo que el formato sea (33)33333333
+
+    if ((0, _utils.validateRegex)(value, /[a-zA-ZÀ-ÿñ.,\/#!$%^&*;:{}=\-+_`~´"¨°|'¡¿?\\\[\]]/g)) value = onlyNumbers(value);
     if (isValid(value)) target.setCustomValidity('');else target.setCustomValidity(errorMessage || errorMessages.validation);
     var formattedNumber = addParenthesis(value);
     setValue(formattedNumber);
@@ -97,6 +99,11 @@ var CellPhoneInput = function CellPhoneInput(_ref) {
   var isValid = function isValid(data) {
     if ((0, _utils.isEmpty)(data) && !required) return true;
     return (0, _utils.validateRegex)(data, /\(?([0-9]{2})\)([0-9]{8})$/);
+  };
+
+  var onlyNumbers = function onlyNumbers(inputInvalid) {
+    inputInvalid = inputInvalid.slice(0, -1);
+    return inputInvalid;
   };
 
   var onFocus = function onFocus() {
