@@ -99,11 +99,11 @@ const DocumentList = ({
       case ACCEPTED:
         return '';
       case REJECTED:
-        return `Es necesario corregir ${total - qty} firma(s) para regresar el estatus ${next_status}`;
+        return `Es necesario corregir ${total - qty} firma(s) para regresar el estatus: ${next_status}`;
       case REVISION:
-        return `Faltan ${total - qty} firmante(s) para el siguiente estatus ${next_status}`;
+        return `Faltan ${total - qty} firma(s) de ser aprobada(s) para pasar a el siguiente estatus: ${next_status}`;
       case PENDING:
-        return `Faltan ${total - qty} firmante(s) para el siguiente estatus ${next_status}`;
+        return `Faltan ${total - qty} firma(s) por realizar para pasar a el siguiente estatus: ${next_status}`;
       default: return '';
     }
   }

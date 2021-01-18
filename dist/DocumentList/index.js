@@ -136,13 +136,13 @@ var DocumentList = function DocumentList(_ref) {
         return '';
 
       case _status.REJECTED:
-        return "Es necesario corregir ".concat(total - qty, " firma(s) para regresar el estatus ").concat(next_status);
+        return "Es necesario corregir ".concat(total - qty, " firma(s) para regresar el estatus: ").concat(next_status);
 
       case _status.REVISION:
-        return "Faltan ".concat(total - qty, " firmante(s) para el siguiente estatus ").concat(next_status);
+        return "Faltan ".concat(total - qty, " firma(s) de ser aprobada(s) para pasar a el siguiente estatus: ").concat(next_status);
 
       case _status.PENDING:
-        return "Faltan ".concat(total - qty, " firmante(s) para el siguiente estatus ").concat(next_status);
+        return "Faltan ".concat(total - qty, " firma(s) por realizar para pasar a el siguiente estatus: ").concat(next_status);
 
       default:
         return '';
