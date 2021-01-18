@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
+import Tooltip from "@material-ui/core/Tooltip";
+import Typography from "@material-ui/core/Typography";
 
 import DoneIcon from '@material-ui/icons/Done';
 import ClearIcon from '@material-ui/icons/Clear';
@@ -12,6 +14,13 @@ import ClearIcon from '@material-ui/icons/Clear';
 import HeaderCollapse from '../HeaderCollapse';
 
 import useStyle from './style';
+import {
+  ACCEPTED,
+  REJECTED,
+  PENDING,
+  REVISION,
+  SEQUENCE_STATUS,
+} from './status';
 
 const DocumentList = ({
   title, documents, onClickDocument, onDownload, open, iconTooltip, onDownloadSecondary, iconTooltipSec,
@@ -33,15 +42,13 @@ const DocumentList = ({
    */
   const getDotColorClass = (status) => {
     switch (status) {
-      case 'En Espera':
-        return clasess.dotOnHold;
-      case 'En Revisión':
+      case REVISION:
         return clasess.dotReview;
-      case 'Pendiente':
+      case PENDING:
         return clasess.dotPending;
-      case 'Aceptado':
+      case ACCEPTED:
         return clasess.dotSuccess;
-      case 'Rechazado':
+      case REJECTED:
         return clasess.dotDanger;
       default:
         return clasess.dotOnHold;
@@ -55,13 +62,12 @@ const DocumentList = ({
    */
   const getLabelStatus = (status) => {
     switch (status) {
-      case 'Aceptado':
+      case ACCEPTED:
         return <DoneIcon className={clasess.successIcon} />;
-      case 'Rechazado':
+      case REJECTED:
         return <ClearIcon className={clasess.dangerIcon} />;
-      case 'En Espera':
-      case 'En Revisión':
-      case 'Pendiente':
+      case REVISION:
+      case PENDING:
       default:
         return (
           <span className={clasess.statusName}>
@@ -77,14 +83,41 @@ const DocumentList = ({
    * @param {String} status
    * @returns {Boolean}
    */
-  const isOnHold = (status) => status === 'En Espera' || status === 'En Revisión';
+  const isOnHold = (status) => status === PENDING || status === REVISION;
 
   /**
    *
    * @param {String} status
    * @returns {Boolean}
    */
-  const isNotPending = (status) => status !== 'Pendiente';
+  const isNotPending = (status) => status !== PENDING;
+
+  const createMessageContent = (status, progress) => {
+    const { qty, total } = progress;
+    const next_status = SEQUENCE_STATUS[status];
+    switch (status) {
+      case ACCEPTED:
+        return '';
+      case REJECTED:
+        return `Es necesario corregir ${total - qty} firma(s) para regresar el estatus ${next_status}`;
+      case REVISION:
+        return `Faltan ${total - qty} firmante(s) para el siguiente estatus ${next_status}`;
+      case PENDING:
+        return `Faltan ${total - qty} firmante(s) para el siguiente estatus ${next_status}`;
+      default: return '';
+    }
+  }
+
+  const getTitleProgress = (document) => {
+    const { status, progress = {} } = document;
+    if (!status || !progress) return;
+    return (
+      <>
+        <Typography variant="h6" color="inherit"> {status} </Typography>
+        <span>{createMessageContent(status, progress)}</span>
+      </>
+    )
+  }
 
   return (
     <HeaderCollapse
@@ -97,28 +130,29 @@ const DocumentList = ({
     >
       <List className={clasess.noPadding}>
         {documents.map((document, index) => (
-          <ListItem
-            key={document.name}
-            button={isNotPending(document.status)}
-            onClick={
-              isNotPending(document.status) ? handleOnClickDocument(document, index) : () => {}
-            }
-            className={clasess.listItem}
-          >
-            <ListItemText>
-              <span className={classnames(clasess.dot, getDotColorClass(document.status))} />
-              <span
-                className={classnames(clasess.name, {
-                  [clasess.nameOnHole]: isOnHold(document.status),
-                })}
-              >
+          <Tooltip key={document.name} title={getTitleProgress(document)}>
+            <ListItem
+              button={isNotPending(document.status)}
+              onClick={
+                isNotPending(document.status) ? handleOnClickDocument(document, index) : () => {}
+              }
+              className={clasess.listItem}
+            >
+              <ListItemText>
+                <span className={classnames(clasess.dot, getDotColorClass(document.status))} />
+                <span
+                  className={classnames(clasess.name, {
+                    [clasess.nameOnHole]: isOnHold(document.status),
+                  })}
+                >
                 {document.name}
               </span>
-            </ListItemText>
-            <div>
-              <span>{getLabelStatus(document.status)}</span>
-            </div>
-          </ListItem>
+              </ListItemText>
+              <div>
+                <span>{getLabelStatus(document.status)}</span>
+              </div>
+            </ListItem>
+          </Tooltip>
         ))}
       </List>
     </HeaderCollapse>
