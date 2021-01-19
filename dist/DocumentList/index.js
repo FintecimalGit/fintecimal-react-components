@@ -1,23 +1,25 @@
 "use strict";
 
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
 
-var _react = _interopRequireWildcard(require("react"));
+var _react = _interopRequireDefault(require("react"));
 
 var _propTypes = _interopRequireDefault(require("prop-types"));
 
-var _classnames2 = _interopRequireDefault(require("classnames"));
+var _classnames = _interopRequireDefault(require("classnames"));
 
 var _List = _interopRequireDefault(require("@material-ui/core/List"));
 
 var _ListItem = _interopRequireDefault(require("@material-ui/core/ListItem"));
 
 var _ListItemText = _interopRequireDefault(require("@material-ui/core/ListItemText"));
+
+var _Tooltip = _interopRequireDefault(require("@material-ui/core/Tooltip"));
+
+var _Typography = _interopRequireDefault(require("@material-ui/core/Typography"));
 
 var _Done = _interopRequireDefault(require("@material-ui/icons/Done"));
 
@@ -27,13 +29,9 @@ var _HeaderCollapse = _interopRequireDefault(require("../HeaderCollapse"));
 
 var _style = _interopRequireDefault(require("./style"));
 
+var _status = require("./status");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 var DocumentList = function DocumentList(_ref) {
   var title = _ref.title,
@@ -64,19 +62,16 @@ var DocumentList = function DocumentList(_ref) {
 
   var getDotColorClass = function getDotColorClass(status) {
     switch (status) {
-      case 'En Espera':
-        return clasess.dotOnHold;
-
-      case 'En Revisión':
+      case _status.REVISION:
         return clasess.dotReview;
 
-      case 'Pendiente':
+      case _status.PENDING:
         return clasess.dotPending;
 
-      case 'Aceptado':
+      case _status.ACCEPTED:
         return clasess.dotSuccess;
 
-      case 'Rechazado':
+      case _status.REJECTED:
         return clasess.dotDanger;
 
       default:
@@ -92,21 +87,20 @@ var DocumentList = function DocumentList(_ref) {
 
   var getLabelStatus = function getLabelStatus(status) {
     switch (status) {
-      case 'Aceptado':
-        return _react.default.createElement(_Done.default, {
+      case _status.ACCEPTED:
+        return /*#__PURE__*/_react.default.createElement(_Done.default, {
           className: clasess.successIcon
         });
 
-      case 'Rechazado':
-        return _react.default.createElement(_Clear.default, {
+      case _status.REJECTED:
+        return /*#__PURE__*/_react.default.createElement(_Clear.default, {
           className: clasess.dangerIcon
         });
 
-      case 'En Espera':
-      case 'En Revisión':
-      case 'Pendiente':
+      case _status.REVISION:
+      case _status.PENDING:
       default:
-        return _react.default.createElement("span", {
+        return /*#__PURE__*/_react.default.createElement("span", {
           className: clasess.statusName
         }, status, ' ');
     }
@@ -119,7 +113,7 @@ var DocumentList = function DocumentList(_ref) {
 
 
   var isOnHold = function isOnHold(status) {
-    return status === 'En Espera' || status === 'En Revisión';
+    return status === _status.PENDING || status === _status.REVISION;
   };
   /**
    *
@@ -129,29 +123,77 @@ var DocumentList = function DocumentList(_ref) {
 
 
   var isNotPending = function isNotPending(status) {
-    return status !== 'Pendiente';
+    return status !== _status.PENDING;
+  };
+  /**
+   *
+   * @param {String} status
+   * @returns {Boolean}
+   */
+
+
+  var isValidDocument = function isValidDocument(status) {
+    return status === _status.REVISION || status === _status.ACCEPTED;
   };
 
-  return _react.default.createElement(_HeaderCollapse.default, {
+  var createMessageContent = function createMessageContent(status, progress) {
+    var qty = progress.qty,
+        total = progress.total;
+    var next_status = _status.SEQUENCE_STATUS[status];
+
+    switch (status) {
+      case _status.ACCEPTED:
+        return '';
+
+      case _status.REJECTED:
+        return "Es necesario corregir ".concat(total - qty, " firma(s) para regresar el estatus: ").concat(next_status);
+
+      case _status.REVISION:
+        return "Faltan ".concat(total - qty, " firma(s) de ser aprobada(s) para pasar a el siguiente estatus: ").concat(next_status);
+
+      case _status.PENDING:
+        return "Faltan ".concat(total - qty, " firma(s) por realizar para pasar a el siguiente estatus: ").concat(next_status);
+
+      default:
+        return '';
+    }
+  };
+
+  var getTitleProgress = function getTitleProgress(document) {
+    var status = document.status,
+        _document$progress = document.progress,
+        progress = _document$progress === void 0 ? {} : _document$progress;
+    if (!status || !progress) return;
+    return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement(_Typography.default, {
+      variant: "h6",
+      color: "inherit"
+    }, " ", status, " "), /*#__PURE__*/_react.default.createElement("span", null, createMessageContent(status, progress)));
+  };
+
+  return /*#__PURE__*/_react.default.createElement(_HeaderCollapse.default, {
     open: open,
     title: title,
     onDownload: onDownload,
     iconTooltip: iconTooltip,
     onDownloadSecondary: onDownloadSecondary,
     iconTooltipSec: iconTooltipSec
-  }, _react.default.createElement(_List.default, {
+  }, /*#__PURE__*/_react.default.createElement(_List.default, {
     className: clasess.noPadding
   }, documents.map(function (document, index) {
-    return _react.default.createElement(_ListItem.default, {
+    return /*#__PURE__*/_react.default.createElement(_Tooltip.default, {
       key: document.name,
+      title: getTitleProgress(document)
+    }, /*#__PURE__*/_react.default.createElement(_ListItem.default, {
       button: isNotPending(document.status),
-      onClick: isNotPending(document.status) ? handleOnClickDocument(document, index) : function () {},
+      onClick: isValidDocument(document.status) ? handleOnClickDocument(document, index) : function () {},
       className: clasess.listItem
-    }, _react.default.createElement(_ListItemText.default, null, _react.default.createElement("span", {
-      className: (0, _classnames2.default)(clasess.dot, getDotColorClass(document.status))
-    }), _react.default.createElement("span", {
-      className: (0, _classnames2.default)(clasess.name, _defineProperty({}, clasess.nameOnHole, isOnHold(document.status)))
-    }, document.name)), _react.default.createElement("div", null, _react.default.createElement("span", null, getLabelStatus(document.status))));
+    }, /*#__PURE__*/_react.default.createElement(_ListItemText.default, null, /*#__PURE__*/_react.default.createElement("span", {
+      className: (0, _classnames.default)(clasess.dot, getDotColorClass(document.status))
+    }), /*#__PURE__*/_react.default.createElement("span", {
+      className: (0, _classnames.default)(clasess.name, {
+        [clasess.nameOnHole]: isOnHold(document.status)
+      })
+    }, document.name)), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("span", null, getLabelStatus(document.status)))));
   })));
 };
 

@@ -828,10 +828,10 @@ storiesOf('NewComponents', module)
       <DocumentList
         title="Titulo Documentos"
         documents={[
-          { name: 'Documento 1', status: 'Aceptado' },
-          { name: 'Documento 2', status: 'Pendiente' },
-          { name: 'Documento 3', status: 'En Espera' },
-          { name: 'Documento 3', status: 'En Revisión' }
+          { name: 'Documento 1', status: 'Aceptado', progress : { qty: 2, total: 2 } },
+          { name: 'Documento 2', status: 'Pendiente', progress : { qty: 0, total: 2 } },
+          { name: 'Documento 3', status: 'Rechazado', progress : { qty: 2, total: 3 } },
+          { name: 'Documento 4', status: 'En Revisión', progress : { qty: 1, total: 3 } }
         ]}
         onClickDocument={action('onClickDocument')}
         onDownload={action('onDownload')}

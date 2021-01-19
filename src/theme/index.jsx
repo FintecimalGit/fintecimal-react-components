@@ -41,7 +41,11 @@ const theme = createMuiTheme({
       warning: {
         main: '#ffc107',
         dark: '#CC9B06'
-      }
+      },
+      review: {
+        main: '#133d9b',
+        dark: '#0f317b',
+      },
     }
   },
   logo: 'url(https://fintecimal-test.s3.amazonaws.com/fintecimal-img/logo_web_mega.png)',
