@@ -92,6 +92,13 @@ const DocumentList = ({
    */
   const isNotPending = (status) => status !== PENDING;
 
+  /**
+   *
+   * @param {String} status
+   * @returns {Boolean}
+   */
+  const isOnRevision = (status) => status === REVISION;
+
   const createMessageContent = (status, progress) => {
     const { qty, total } = progress;
     const next_status = SEQUENCE_STATUS[status];
@@ -134,7 +141,7 @@ const DocumentList = ({
             <ListItem
               button={isNotPending(document.status)}
               onClick={
-                isNotPending(document.status) ? handleOnClickDocument(document, index) : () => {}
+                isOnRevision(document.status) ? handleOnClickDocument(document, index) : () => {}
               }
               className={clasess.listItem}
             >

@@ -125,6 +125,16 @@ var DocumentList = function DocumentList(_ref) {
   var isNotPending = function isNotPending(status) {
     return status !== _status.PENDING;
   };
+  /**
+   *
+   * @param {String} status
+   * @returns {Boolean}
+   */
+
+
+  var isOnRevision = function isOnRevision(status) {
+    return status === _status.REVISION;
+  };
 
   var createMessageContent = function createMessageContent(status, progress) {
     var qty = progress.qty,
@@ -175,7 +185,7 @@ var DocumentList = function DocumentList(_ref) {
       title: getTitleProgress(document)
     }, /*#__PURE__*/_react.default.createElement(_ListItem.default, {
       button: isNotPending(document.status),
-      onClick: isNotPending(document.status) ? handleOnClickDocument(document, index) : function () {},
+      onClick: isOnRevision(document.status) ? handleOnClickDocument(document, index) : function () {},
       className: clasess.listItem
     }, /*#__PURE__*/_react.default.createElement(_ListItemText.default, null, /*#__PURE__*/_react.default.createElement("span", {
       className: (0, _classnames.default)(clasess.dot, getDotColorClass(document.status))
