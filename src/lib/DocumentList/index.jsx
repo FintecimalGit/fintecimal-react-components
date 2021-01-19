@@ -97,7 +97,7 @@ const DocumentList = ({
    * @param {String} status
    * @returns {Boolean}
    */
-  const isOnRevision = (status) => status === REVISION;
+  const isValidDocument = (status) => status === REVISION || status === ACCEPTED;
 
   const createMessageContent = (status, progress) => {
     const { qty, total } = progress;
@@ -141,7 +141,7 @@ const DocumentList = ({
             <ListItem
               button={isNotPending(document.status)}
               onClick={
-                isOnRevision(document.status) ? handleOnClickDocument(document, index) : () => {}
+                isValidDocument(document.status) ? handleOnClickDocument(document, index) : () => {}
               }
               className={clasess.listItem}
             >

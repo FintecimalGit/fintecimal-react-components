@@ -132,8 +132,8 @@ var DocumentList = function DocumentList(_ref) {
    */
 
 
-  var isOnRevision = function isOnRevision(status) {
-    return status === _status.REVISION;
+  var isValidDocument = function isValidDocument(status) {
+    return status === _status.REVISION || status === _status.ACCEPTED;
   };
 
   var createMessageContent = function createMessageContent(status, progress) {
@@ -185,7 +185,7 @@ var DocumentList = function DocumentList(_ref) {
       title: getTitleProgress(document)
     }, /*#__PURE__*/_react.default.createElement(_ListItem.default, {
       button: isNotPending(document.status),
-      onClick: isOnRevision(document.status) ? handleOnClickDocument(document, index) : function () {},
+      onClick: isValidDocument(document.status) ? handleOnClickDocument(document, index) : function () {},
       className: clasess.listItem
     }, /*#__PURE__*/_react.default.createElement(_ListItemText.default, null, /*#__PURE__*/_react.default.createElement("span", {
       className: (0, _classnames.default)(clasess.dot, getDotColorClass(document.status))
