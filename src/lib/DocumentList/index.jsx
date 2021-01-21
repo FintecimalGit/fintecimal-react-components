@@ -116,12 +116,17 @@ const DocumentList = ({
   }
 
   const getTitleProgress = (document) => {
-    const { status, progress = {} } = document;
+    const { status, progress = {}, signers = [] } = document;
     if (!status || !progress) return;
     return (
       <>
         <Typography variant="h6" color="inherit"> {status} </Typography>
         <span>{createMessageContent(status, progress)}</span>
+        { signers.length && (
+          <List>
+            { signers.map((signer) => <ListItemText><span className={clasess.signer}>{signer}</span></ListItemText> )}
+          </List>
+        )}
       </>
     )
   }
