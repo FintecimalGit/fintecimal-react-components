@@ -162,12 +162,18 @@ var DocumentList = function DocumentList(_ref) {
   var getTitleProgress = function getTitleProgress(document) {
     var status = document.status,
         _document$progress = document.progress,
-        progress = _document$progress === void 0 ? {} : _document$progress;
+        progress = _document$progress === void 0 ? {} : _document$progress,
+        _document$signers = document.signers,
+        signers = _document$signers === void 0 ? [] : _document$signers;
     if (!status || !progress) return;
     return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement(_Typography.default, {
       variant: "h6",
       color: "inherit"
-    }, " ", status, " "), /*#__PURE__*/_react.default.createElement("span", null, createMessageContent(status, progress)));
+    }, " ", status, " "), /*#__PURE__*/_react.default.createElement("span", null, createMessageContent(status, progress)), signers.length && /*#__PURE__*/_react.default.createElement(_List.default, null, signers.map(function (signer) {
+      return /*#__PURE__*/_react.default.createElement(_ListItemText.default, null, /*#__PURE__*/_react.default.createElement("span", {
+        className: clasess.signer
+      }, signer));
+    })));
   };
 
   return /*#__PURE__*/_react.default.createElement(_HeaderCollapse.default, {

@@ -69,6 +69,10 @@ var useStyles = (0, _styles.makeStyles)(function (theme) {
       letterSpacing: '0.29px',
       fontWeight: '600',
       paddingRight: theme.spacing(6.5)
+    },
+    signer: {
+      fontSize: '10px',
+      color: theme.palette.primary.secondary
     }
   };
 });
