@@ -7,6 +7,7 @@ import RejectActions from "../RejectActions";
 import useStyles from './style';
 import DropZone from "../../DropZone";
 import FilePreview from "../../FilePreview";
+import FileFinder from '../../FileFinder';
 
 const RejectDocuments = ({
                              title,
@@ -23,6 +24,9 @@ const RejectDocuments = ({
                          }) => {
   const classes = useStyles();
   const [file, setFile] = useState(null);
+  const [files, setFiles] = useState([]);
+  const [currentFile, setCurrentFile] = useState(0);
+  const [search, setSearch] = useState('');
 
   const generateFileToURL = async () => {
     let response = await fetch(url);
@@ -34,13 +38,38 @@ const RejectDocuments = ({
     if(file) setFile(file);
   };
 
+  const generateFileToURLArray = async () => {
+    for (let i = 0; i < url.length; i++) {
+      let response = await fetch(url[i]);
+      let data = await response.blob();
+      let metadata = {
+        type: data.type
+      };
+      let file = new File([data], title, metadata);
+      if(file) files[i] = file;
+      console.log(multiple);
+      console.log(files);
+    }
+    setFile(files[0]);
+  };
+
   useEffect(() => {
     if(url !== '' && typeof url === "string") generateFileToURL();
+    else generateFileToURLArray();
   }, [url]);
 
   const handleOnDrop = (value) => {
     onHandlerReject(value);
     setFile(value[0]);
+  };
+
+  const handleOnClick = (index, file) => {
+    setFile(file);
+    setCurrentFile(index);
+  };
+
+  const handleOnSearch = (text) => {
+    setSearch(text);
   };
 
   return (
@@ -86,6 +115,19 @@ const RejectDocuments = ({
                 multiple={multiple}
             />
           )}
+         {
+          multiple && files.length > 0 && (
+            <FileFinder
+              files={files}
+              current={currentFile}
+              onClick={handleOnClick}
+              search={search}
+              onSearch={handleOnSearch}
+              placeholder={'Buscar'}
+              disabled={true}
+            />
+          )
+        }
       </div>
   );
 };
@@ -94,7 +136,7 @@ RejectDocuments.propTypes = {
     title: PropTypes.string.isRequired,
     onDrop: PropTypes.func.isRequired,
     onReject: PropTypes.func,
-    url: PropTypes.string,
+    url: PropTypes.any,
     rejectionOptions: PropTypes.array,
     rejectionData: PropTypes.object,
     onHandlerReject: PropTypes.func.isRequired,
@@ -108,7 +150,7 @@ RejectDocuments.defaultProps = {
   title: '',
   onDrop: () => {},
   onReject: () => {},
-  url: '',
+  url: [],
   rejectionOptions: [],
   rejectionData: {
       reason: '',
@@ -117,7 +159,7 @@ RejectDocuments.defaultProps = {
   showUndo: false,
   onUndoRejection: () => {},
   editable: true,
-  multiple: false,
+  multiple: true,
 };
 
 export default RejectDocuments;
