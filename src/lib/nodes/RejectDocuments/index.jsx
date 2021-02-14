@@ -47,8 +47,6 @@ const RejectDocuments = ({
       };
       let file = new File([data], title, metadata);
       if(file) files[i] = file;
-      console.log(multiple);
-      console.log(files);
     }
     setFile(files[0]);
   };

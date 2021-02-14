@@ -127,7 +127,7 @@ var RejectDocuments = function RejectDocuments(_ref) {
 
             case 1:
               if (!(i < url.length)) {
-                _context2.next = 16;
+                _context2.next = 14;
                 break;
               }
 
@@ -146,18 +146,16 @@ var RejectDocuments = function RejectDocuments(_ref) {
               };
               _file = new File([data], title, metadata);
               if (_file) files[i] = _file;
-              console.log(multiple);
-              console.log(files);
 
-            case 13:
+            case 11:
               i++;
               _context2.next = 1;
               break;
 
-            case 16:
+            case 14:
               setFile(files[0]);
 
-            case 17:
+            case 15:
             case "end":
               return _context2.stop();
           }
