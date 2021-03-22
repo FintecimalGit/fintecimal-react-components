@@ -83,10 +83,10 @@ const CSVReader = ({
     const columns = [];
     const message = [];
     const isInvalid = headersColumns.reduce((acc, header) => {
-      const { name, required } = header;
-      if (required && !documentHeaders.includes(name)) {
+      const { label, required } = header;
+      if (required && !documentHeaders.includes(label)) {
         acc = true;
-        columns.push(name);
+        columns.push(label);
       }
       return acc;
     }, false);
@@ -147,7 +147,7 @@ const CSVReader = ({
     let _data = [];
     let headersCSV = headers;
     const documentHeaders = utils.getHeadersFromCSV(data);
-    const headersColumns = headers.map(({ name = '', required = false }) => ({ name, required }));
+    const headersColumns = headers.map(({ label = '', required = false }) => ({ label, required }));
     const statusHeaders = validateHeaders(data);
     const statusRequiredColumns = validateRequiredColumns(documentHeaders, headersColumns);
     const statusColumnWithData = validateColumnsWithData(documentHeaders);
