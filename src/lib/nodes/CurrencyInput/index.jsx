@@ -33,6 +33,7 @@ const CurrencyInput = props => {
     if (isValid(formattedNumber)) {
       setValue(formatMoney(formattedNumber));
       handleChange(formatMoney(formattedNumber));
+      if (formattedNumber.length === 0) onClear();
     }
   };
   
