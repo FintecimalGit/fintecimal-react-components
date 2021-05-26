@@ -31,7 +31,8 @@ var CurrencyInput = function CurrencyInput(props) {
       label = props.label,
       required = props.required,
       error = props.error,
-      errorMessage = props.errorMessage;
+      errorMessage = props.errorMessage,
+      disabled = props.disabled;
 
   var _useState = (0, _react.useState)(value),
       _useState2 = _slicedToArray(_useState, 2),
@@ -80,6 +81,7 @@ var CurrencyInput = function CurrencyInput(props) {
     value: mValue,
     handleChange: mHandleChange,
     required: required,
+    disabled: disabled,
     error: error,
     onClear: onClear,
     errorMessage: errorMessage
@@ -90,6 +92,7 @@ CurrencyInput.defaultProps = {
   value: '',
   handleChange: function handleChange() {},
   required: false,
+  disabled: false,
   error: false,
   errorMessage: ''
 };
@@ -98,6 +101,7 @@ CurrencyInput.propTypes = {
   value: _propTypes.default.string,
   handleChange: _propTypes.default.func,
   required: _propTypes.default.bool,
+  disabled: _propTypes.default.bool,
   error: _propTypes.default.bool,
   errorMessage: _propTypes.default.string
 };
