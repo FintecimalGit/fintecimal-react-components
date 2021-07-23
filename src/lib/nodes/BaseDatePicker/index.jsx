@@ -63,7 +63,7 @@ const BaseDatePicker = ({
   }
 
   useEffect(() => {
-    const mValue = format && value ? moment(value, format) : value;
+    const mValue = format && value ? moment(value).format(format) : value;
     setDate(mValue);
   }, [value]);
 

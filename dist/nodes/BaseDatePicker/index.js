@@ -107,7 +107,7 @@ var BaseDatePicker = function BaseDatePicker(_ref) {
   };
 
   (0, _react.useEffect)(function () {
-    var mValue = format && value ? (0, _moment.default)(value, format) : value;
+    var mValue = format && value ? (0, _moment.default)(value).format(format) : value;
     setDate(mValue);
   }, [value]);
   (0, _react.useEffect)(function () {
