@@ -77,7 +77,7 @@ var BaseDatePicker = function BaseDatePicker(_ref) {
 
   var handleDateChange = function handleDateChange(_date) {
     setDate(formatDate(_date));
-    var formattedDate = format && _date ? (0, _moment.default)(_date).format() : _date;
+    var formattedDate = format && _date ? (0, _moment.default)(_date).format(format) : _date;
 
     if (!formattedDate && required) {
       setMError(true);

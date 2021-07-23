@@ -36,7 +36,7 @@ const BaseDatePicker = ({
    */
   const handleDateChange = _date => {
     setDate(formatDate(_date));
-    const formattedDate = format && _date ? moment(_date).format() : _date;
+    const formattedDate = format && _date ? moment(_date).format(format) : _date;
     if (!formattedDate && required) {
       setMError(true)
     } else {
