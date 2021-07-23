@@ -76,7 +76,7 @@ var BaseDatePicker = function BaseDatePicker(_ref) {
 
 
   var handleDateChange = function handleDateChange(_date) {
-    setDate(_date);
+    setDate(formatDate(_date));
     var formattedDate = format && _date ? (0, _moment.default)(_date).format(format) : _date;
 
     if (!formattedDate && required) {
@@ -106,10 +106,21 @@ var BaseDatePicker = function BaseDatePicker(_ref) {
     }, _react.default.createElement(_Clear.default, null));
   };
 
+  var formatDate = function formatDate(value) {
+    if (!value) return null;
+    var dateParsed = Date.parse(value);
+
+    if (isNaN(dateParsed)) {
+      return (0, _moment.default)(value, format);
+    }
+
+    return (0, _moment.default)(value);
+  };
+
   (0, _react.useEffect)(function () {
-    var mValue = format && value ? (0, _moment.default)(value).format(format) : value;
-    setDate(mValue);
-  }, [value]);
+    var test = formatDate(value);
+    setDate(test);
+  }, []);
   (0, _react.useEffect)(function () {
     var messageError = (0, _InputStrings.generateErrorMessagesByLabel)(_InputStrings.text, label);
 
@@ -134,7 +145,7 @@ var BaseDatePicker = function BaseDatePicker(_ref) {
     label: _react.default.createElement(_react.default.Fragment, null, mLabel, required && _react.default.createElement("span", {
       className: classes.asterisk
     }, "*")),
-    value: date ? date : null,
+    value: date,
     format: format,
     onChange: handleDateChange,
     disableToolbar: disableToolBar,

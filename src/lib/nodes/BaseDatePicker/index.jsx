@@ -35,7 +35,7 @@ const BaseDatePicker = ({
    * @param {Date} _date
    */
   const handleDateChange = _date => {
-    setDate(_date);
+    setDate(formatDate(_date));
     const formattedDate = format && _date ? moment(_date).format(format) : _date;
     if (!formattedDate && required) {
       setMError(true)
@@ -62,10 +62,19 @@ const BaseDatePicker = ({
     </IconButton>
   }
 
+  const formatDate = (value) => {
+    if(!value) return null;
+    const dateParsed = Date.parse(value);
+    if (isNaN(dateParsed)) {
+      return moment(value, format);
+    }
+    return moment(value);
+  }
+ 
   useEffect(() => {
-    const mValue = format && value ? moment(value).format(format) : value;
-    setDate(mValue);
-  }, [value]);
+    const test = formatDate(value);
+    setDate(test);
+  }, []);
 
   useEffect(() => {
     const messageError = generateErrorMessagesByLabel(text, label);
@@ -97,7 +106,7 @@ const BaseDatePicker = ({
               }
             </>
           }
-          value={date ? date : null}
+          value={date}
           format={format}
           onChange={handleDateChange}
           disableToolbar={disableToolBar}
