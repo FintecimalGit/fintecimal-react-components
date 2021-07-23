@@ -77,7 +77,7 @@ var BaseDatePicker = function BaseDatePicker(_ref) {
 
   var handleDateChange = function handleDateChange(_date) {
     setDate(formatDate(_date));
-    var formattedDate = format && _date ? (0, _moment.default)(_date).format(format) : _date;
+    var formattedDate = format && _date ? (0, _moment.default)(_date).format() : _date;
 
     if (!formattedDate && required) {
       setMError(true);
@@ -108,6 +108,12 @@ var BaseDatePicker = function BaseDatePicker(_ref) {
 
   var formatDate = function formatDate(value) {
     if (!value) return null;
+    var dateParsed = Date.parse(value);
+
+    if (isNaN(dateParsed)) {
+      return (0, _moment.default)(value, format);
+    }
+
     return (0, _moment.default)(value);
   };
 

@@ -36,7 +36,7 @@ const BaseDatePicker = ({
    */
   const handleDateChange = _date => {
     setDate(formatDate(_date));
-    const formattedDate = format && _date ? moment(_date).format(format) : _date;
+    const formattedDate = format && _date ? moment(_date).format() : _date;
     if (!formattedDate && required) {
       setMError(true)
     } else {
@@ -64,9 +64,13 @@ const BaseDatePicker = ({
 
   const formatDate = (value) => {
     if(!value) return null;
+    const dateParsed = Date.parse(value);
+    if (isNaN(dateParsed)) {
+      return moment(value, format);
+    }
     return moment(value);
   }
-
+ 
   useEffect(() => {
     const test = formatDate(value);
     setDate(test);
