@@ -29,6 +29,7 @@ import BaseAddressInput from './BaseAddressInput';
 import BaseFullAddressInput from './BaseFullAddressInput';
 import BaseCURPInput from './BaseCURPInput';
 import ButtonDocuPass from './ButtonDocuPass';
+import PercentageInput from './PercentageInput';
 
 export {
   Maps,
@@ -62,4 +63,5 @@ export {
   BaseFullAddressInput,
   BaseCURPInput,
   ButtonDocuPass,
+  PercentageInput,
 };

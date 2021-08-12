@@ -189,6 +189,12 @@ Object.defineProperty(exports, "ButtonDocuPass", {
     return _ButtonDocuPass.default;
   }
 });
+Object.defineProperty(exports, "PercentageInput", {
+  enumerable: true,
+  get: function get() {
+    return _PercentageInput.default;
+  }
+});
 
 var _SearchBar = _interopRequireDefault(require("./SearchBar"));
 
@@ -251,5 +257,7 @@ var _BaseFullAddressInput = _interopRequireDefault(require("./BaseFullAddressInp
 var _BaseCURPInput = _interopRequireDefault(require("./BaseCURPInput"));
 
 var _ButtonDocuPass = _interopRequireDefault(require("./ButtonDocuPass"));
+
+var _PercentageInput = _interopRequireDefault(require("./PercentageInput"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
