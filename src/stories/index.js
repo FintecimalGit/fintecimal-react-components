@@ -40,7 +40,8 @@ import {
   BaseAddressInput,
   BaseFullAddressInput,
   BaseCURPInput,
-  ButtonDocuPass
+  ButtonDocuPass,
+  PercentageInput,
 } from '../lib/nodes';
 
 import Table from '../lib/Table';
@@ -338,11 +339,131 @@ storiesOf('Components|Nodes', module)
       </Grid>
       <Grid item sm={12}>
         <BaseDatePicker
-          value={"mar., 9 de junio de 2020"}
+          value={"2021-07-25T15:32:00.000Z"}
           label="Fecha de vencimiento"
           onDateChange={action('onDateChange')}
           minDate="2020-01-01"
-          format={"ddd, LL"}
+          format={"lll"}
+          disableToolBar={true}
+        />
+      </Grid>
+      <Grid item sm={12}>
+        <BaseDatePicker
+          value={"2021-07-25T15:32:00.000Z"}
+          label="Fecha de vencimiento"
+          onDateChange={action('onDateChange')}
+          minDate="2020-01-01"
+          format={"llll"}
+          disableToolBar={true}
+        />
+      </Grid>
+      <Grid item sm={12}>
+        <BaseDatePicker
+          value={"2021-07-25T15:32:00.000Z"}
+          label="Fecha de vencimiento"
+          onDateChange={action('onDateChange')}
+          minDate="2020-01-01"
+          format={"LLLL"}
+          disableToolBar={true}
+        />
+      </Grid>
+      <Grid item sm={12}>
+        <BaseDatePicker
+          value={"2021-07-25T15:32:00.000Z"}
+          label="Fecha de vencimiento"
+          onDateChange={action('onDateChange')}
+          minDate="2020-01-01"
+          format={"LLL"}
+          disableToolBar={true}
+        />
+      </Grid>
+      <Grid item sm={12}>
+        <BaseDatePicker
+          value={"2021-07-25T15:32:00.000Z"}
+          label="Fecha de vencimiento"
+          onDateChange={action('onDateChange')}
+          minDate="2020-01-01"
+          format={"LL"}
+          disableToolBar={true}
+        />
+      </Grid>
+      <Grid item sm={12}>
+        <BaseDatePicker
+          value={"23 de jul. de 2021"}
+          label="Fecha de vencimiento"
+          onDateChange={action('onDateChange')}
+          minDate="2020-01-01"
+          format={"ll"}
+          disableToolBar={true}
+        />
+      </Grid>
+      <Grid item sm={12}>
+        <BaseDatePicker
+          value={"2021-07-25T15:32:00.000Z"}
+          label="Fecha de vencimiento 3"
+          onDateChange={action('onDateChange')}
+          minDate="2020-01-01"
+          format={"l"}
+          disableToolBar={true}
+        />
+      </Grid>
+      <Grid item sm={12}>
+        <BaseDatePicker
+          value={"2021-07-25T15:32:00.000Z"}
+          label="Fecha de vencimiento"
+          onDateChange={action('onDateChange')}
+          minDate="2020-01-01"
+          format={"L"}
+          disableToolBar={true}
+        />
+      </Grid>
+      <Grid item sm={12}>
+        <BaseDatePicker
+          value={"2021-07-25T15:32:00.000Z"}
+          label="Fecha de vencimiento"
+          onDateChange={action('onDateChange')}
+          minDate="2020-01-01"
+          format={"LTS"}
+          disableToolBar={true}
+        />
+      </Grid>
+      <Grid item sm={12}>
+        <BaseDatePicker
+          value={"2021-07-25T15:32:00.000Z"}
+          label="Fecha de vencimiento"
+          onDateChange={action('onDateChange')}
+          minDate="2020-01-01"
+          format={"LT"}
+          disableToolBar={true}
+        />
+      </Grid>
+      <Grid item sm={12}>
+        <BaseDatePicker
+          value={"2021-07-25T15:32:00.000Z"}
+          label="Fecha de vencimiento"
+          onDateChange={action('onDateChange')}
+          minDate="2020-01-01"
+          format={"YYYY-MM-DD"}
+          disableToolBar={true}
+        />
+      </Grid>
+      <Grid item sm={12}>
+        <BaseDatePicker
+          value={"2021-07-25T15:32:00.000Z"}
+          label="Fecha de vencimiento"
+          onDateChange={action('onDateChange')}
+          minDate="2020-01-01"
+          format={"DD-MM-YYYY"}
+          disableToolBar={true}
+        />
+      </Grid>
+      <Grid item sm={12}>
+        <BaseDatePicker
+          value={"2021-07-25T15:32:00.000Z"}
+          label="Fecha de vencimiento"
+          onDateChange={action('onDateChange')}
+          minDate="2020-01-01"
+          format={"MM-DD-YYYY"}
           disableToolBar={true}
         />
       </Grid>
@@ -453,6 +574,16 @@ storiesOf('Components|Nodes', module)
       </Grid>
       <Grid key="a2" item sm={6}>
         <CurrencyInput label="Monto Pagare" value='$1,000,000,000' handleChange={action('handleChange')} required clear />
+      </Grid>
+    </Grid>
+  ))
+  .add('Percentage Input', () => (
+    <Grid container spacing={0}>
+      <Grid key="a1" item sm={6}>
+        <PercentageInput label="Interes Moratorio" handleChange={action('handleChange')} required clear />
+      </Grid>
+      <Grid key="a2" item sm={6}>
+        <PercentageInput label="Interes Moratorio" value='10%' handleChange={action('handleChange')} required clear />
       </Grid>
     </Grid>
   ))
@@ -749,6 +880,8 @@ storiesOf('NewComponents', module)
           {}
         )
       );
+      console.log(headers);
+      console.log(items);
     return (
       <Container style={{ paddingTop: '5vh', paddingBottom: '5vh' }}>
         <Table
