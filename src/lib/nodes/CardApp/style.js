@@ -37,7 +37,10 @@ const useStyles = makeStyles(theme => ({
   },
   icon: {
     fontSize: 50
-  }
+  },
+  image: {
+    width: '100px',
+  },
 }));
 
 export default useStyles;
