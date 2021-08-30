@@ -9,7 +9,7 @@ const CardApp = ({ title, count, onClick, Icon }) => {
   return (
     <Paper className={classes.paper} onClick={onClick}>
       <Badge color="secondary" badgeContent={count} classes={{ badge: classes.badge }} max={999}>
-        {typeof Icon === 'string' ? <img src={Icon} className={classes.image} /> : <Icon className={classes.icon} />}
+        { typeof Icon === 'string' ? <img src={Icon} className={classes.image} /> : <Icon className={classes.icon} /> }
       </Badge>
       <p className={classes.title}>{title}</p>
     </Paper>
