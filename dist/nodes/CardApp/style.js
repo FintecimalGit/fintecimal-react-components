@@ -45,6 +45,9 @@ var useStyles = (0, _styles.makeStyles)(function (theme) {
     },
     icon: {
       fontSize: 50
+    },
+    image: {
+      width: '100px'
     }
   };
 });

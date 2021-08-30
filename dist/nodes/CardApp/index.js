@@ -33,7 +33,10 @@ var CardApp = function CardApp(_ref) {
       badge: classes.badge
     },
     max: 999
-  }, _react.default.createElement(Icon, {
+  }, typeof Icon === 'string' ? _react.default.createElement("img", {
+    src: Icon,
+    className: classes.image
+  }) : _react.default.createElement(Icon, {
     className: classes.icon
   })), _react.default.createElement("p", {
     className: classes.title
@@ -44,13 +47,13 @@ CardApp.defaultProps = {
   title: 'FORMAS',
   count: 23,
   onClick: function onClick() {},
-  Icon: _DescriptionOutlined.default
+  Icon: 'https://fintecimal-test.s3.amazonaws.com/fintecimal-img/stepconfigs-icons/verificacion-general.png'
 };
 CardApp.propTypes = {
   title: _propTypes.default.string,
   count: _propTypes.default.number,
   onClick: _propTypes.default.func,
-  Icon: _propTypes.default.object
+  Icon: _propTypes.default.object || _propTypes.default.string
 };
 var _default = CardApp;
 exports.default = _default;
