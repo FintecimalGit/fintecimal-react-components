@@ -62,6 +62,17 @@ var useStyles = (0, _styles.makeStyles)(function (theme) {
       },
       color: theme.palette.tertiary.main
     },
+    labelDisabled: {
+      flex: '1 1 auto',
+      margin: 0,
+      fontSize: 18,
+      paddingLeft: theme.spacing(3),
+      textTransform: 'lowercase',
+      '&::first-letter': {
+        textTransform: 'capitalize'
+      },
+      color: theme.palette.primary.disabled
+    },
     icon: {
       flex: '0 0 auto',
       paddingRight: 20,

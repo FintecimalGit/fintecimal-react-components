@@ -12,9 +12,10 @@ import { data } from './data';
 
 const ListSignerRoles = ({ options, selected, onChangeHandler, onSelectSection }) => {
   const classes = useStyles();
-  const getClassFromStatus = (isSelect, complete) => {
+  const getClassFromStatus = (isSelect, complete, action) => {
     if (isSelect) return classes.labelSelected;
-    if (complete) return classes.labelComplete;
+    if (!action && complete) return classes.labelDisabled;
+    else if (complete) return classes.labelComplete;
     return classes.label;
   };
   const handleOnSelectSection = (section) => () => {
@@ -35,7 +36,7 @@ const ListSignerRoles = ({ options, selected, onChangeHandler, onSelectSection }
               }}
             >
               {isSelected && <div className={classes.selected} />}
-              <p className={getClassFromStatus(isSelected, complete)}>{label}</p>
+              <p className={getClassFromStatus(isSelected, complete, action)}>{label}</p>
               {readOnly && <RemoveRedEyeRoundedIcon className={classes.icon} />}
             </div>
             {isSelected &&
