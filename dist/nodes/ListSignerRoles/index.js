@@ -33,9 +33,9 @@ var ListSignerRoles = function ListSignerRoles(_ref) {
       onSelectSection = _ref.onSelectSection;
   var classes = (0, _style.default)();
 
-  var getClassFromStatus = function getClassFromStatus(isSelect, complete) {
+  var getClassFromStatus = function getClassFromStatus(isSelect, complete, action) {
     if (isSelect) return classes.labelSelected;
-    if (complete) return classes.labelComplete;
+    if (!action && complete) return classes.labelDisabled;else if (complete) return classes.labelComplete;
     return classes.label;
   };
 
@@ -63,7 +63,7 @@ var ListSignerRoles = function ListSignerRoles(_ref) {
     }, isSelected && _react.default.createElement("div", {
       className: classes.selected
     }), _react.default.createElement("p", {
-      className: getClassFromStatus(isSelected, complete)
+      className: getClassFromStatus(isSelected, complete, action)
     }, label), readOnly && _react.default.createElement(_RemoveRedEyeRounded.default, {
       className: classes.icon
     })), isSelected && values.map(function (steps, index_step) {
