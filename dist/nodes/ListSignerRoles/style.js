@@ -37,7 +37,7 @@ var useStyles = (0, _styles.makeStyles)(function (theme) {
         textTransform: 'capitalize'
       },
       fontWeight: 'normal',
-      color: theme.palette.tertiary.main
+      color: theme.palette.primary.main
     },
     labelSelected: {
       flex: '1 1 auto',
@@ -49,7 +49,7 @@ var useStyles = (0, _styles.makeStyles)(function (theme) {
         textTransform: 'capitalize'
       },
       fontWeight: 'bold',
-      color: theme.palette.primary.main
+      color: theme.palette.tertiary.main
     },
     labelComplete: {
       flex: '1 1 auto',
@@ -60,7 +60,7 @@ var useStyles = (0, _styles.makeStyles)(function (theme) {
       '&::first-letter': {
         textTransform: 'capitalize'
       },
-      color: theme.palette.primary.main
+      color: theme.palette.tertiary.main
     },
     icon: {
       flex: '0 0 auto',

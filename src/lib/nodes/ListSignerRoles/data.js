@@ -3,6 +3,7 @@ export const data = [
     label: 'representante legal',
     selected: false,
     complete: true,
+    action: false,
     readOnly: true,
     values: []
   },

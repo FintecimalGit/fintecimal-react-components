@@ -23,7 +23,7 @@ const ListSignerRoles = ({ options, selected, onChangeHandler, onSelectSection }
   return (
     <div>
       {options.map((option, index) => {
-        const { label, complete, readOnly, values } = option;
+        const { label, complete, readOnly, values, action = true } = option;
 
         const isSelected = selected === index;
         return (
@@ -31,7 +31,7 @@ const ListSignerRoles = ({ options, selected, onChangeHandler, onSelectSection }
             <div
               className={classes.content}
               onClick={() => {
-                onChangeHandler(index);
+                action && onChangeHandler(index);
               }}
             >
               {isSelected && <div className={classes.selected} />}
