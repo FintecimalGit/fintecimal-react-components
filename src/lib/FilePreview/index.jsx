@@ -16,7 +16,8 @@ const FilePreview = ({ file, onDelete, disabled, urlDocument }) => {
   const readFile = () => {
     const reader  = new FileReader();
     reader.onloadend = function () {
-      setUrl(reader.result);
+      const _url = URL.createObjectURL(file);
+      setUrl(_url);
     };
     reader.readAsDataURL(file);
   };
