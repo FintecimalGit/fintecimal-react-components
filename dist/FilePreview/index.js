@@ -71,10 +71,6 @@ var FilePreview = function FilePreview(_ref) {
         title: file.name,
         src: url
       });
-      /*return <object data={url} type="application/pdf">
-        <embed src={url} type="application/pdf">
-        </embed>
-      </object>;*/
     } else return 'No Soportado';
   };
 
