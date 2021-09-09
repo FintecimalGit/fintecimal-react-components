@@ -7,7 +7,7 @@ const useStyles = makeStyles(theme => ({
     border: 'solid 1px #fbfbfb',
   },
   cardHeader: {
-    backgroundColor: theme.palette.background.main,
+    backgroundColor: theme.palette.primary.contrastText,
     padding: theme.spacing(2),
     '& > div:first-child > span:first-child': {
       fontSize: '1rem',
