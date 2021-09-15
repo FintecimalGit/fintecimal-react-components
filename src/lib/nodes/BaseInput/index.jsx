@@ -68,7 +68,7 @@ const BaseInput = ({
     } else if(disabled && statusOnly) {
       return (
         <InputAdornment position="end">
-            <h3 style={{ color: STATUS[status] }}>{status}</h3>
+            <h3 style={{ color: STATUS[status] }} className={classes.status}>{status}</h3>
         </InputAdornment>
       );
     }
