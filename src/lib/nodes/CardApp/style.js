@@ -39,7 +39,7 @@ const useStyles = makeStyles(theme => ({
     fontSize: 50
   },
   image: {
-    width: '100px',
+    width: '80px',
   },
 }));
 

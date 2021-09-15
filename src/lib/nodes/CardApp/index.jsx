@@ -20,14 +20,17 @@ CardApp.defaultProps = {
   title: 'FORMAS',
   count: 23,
   onClick: () => {},
-  Icon: 'https://fintecimal-test.s3.amazonaws.com/fintecimal-img/stepconfigs-icons/verificacion-general.png'
+  Icon: DescriptionOutlinedIcon,
 };
 
 CardApp.propTypes = {
   title: PropTypes.string,
   count: PropTypes.number,
   onClick: PropTypes.func,
-  Icon: PropTypes.object || PropTypes.string,
+  Icon: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.object
+  ]),
 };
 
 export default CardApp;

@@ -73,7 +73,8 @@ var BaseInput = function BaseInput(_ref) {
       clear = _ref.clear,
       onBlur = _ref.onBlur,
       onClear = _ref.onClear,
-      disabled = _ref.disabled;
+      disabled = _ref.disabled,
+      statusOnly = _ref.statusOnly;
   var classes = useStyles();
 
   var selectLabel = function selectLabel() {
@@ -87,6 +88,24 @@ var BaseInput = function BaseInput(_ref) {
     } else {
       if ((0, _utils.isTextLong)(label)) return _utils.defaultPlaceHolder;
       return label;
+    }
+  };
+
+  var selectAdorment = function selectAdorment() {
+    if (clear && !disabled) {
+      return _react.default.createElement(_core.InputAdornment, {
+        position: "end"
+      }, _react.default.createElement(_core.IconButton, {
+        "aria-label": "clear input",
+        onClick: onClear,
+        tabIndex: "-1"
+      }, _react.default.createElement(_icons.Clear
+      /*className={classes.icon}*/
+      , null)));
+    } else if (disabled && statusOnly) {
+      return _react.default.createElement(_core.InputAdornment, {
+        position: "end"
+      }, _react.default.createElement("h3", null, "Cargado"));
     }
   };
 
@@ -111,15 +130,7 @@ var BaseInput = function BaseInput(_ref) {
     value: value,
     onChange: handleChange,
     onBlur: onBlur,
-    endAdornment: clear && !disabled && _react.default.createElement(_core.InputAdornment, {
-      position: "end"
-    }, _react.default.createElement(_core.IconButton, {
-      "aria-label": "clear input",
-      onClick: onClear,
-      tabIndex: "-1"
-    }, _react.default.createElement(_icons.Clear
-    /*className={classes.icon}*/
-    , null))),
+    endAdornment: selectAdorment(),
     inputProps: {
       className: classes.input
     },
@@ -141,7 +152,8 @@ BaseInput.defaultProps = {
   type: 'text',
   clear: true,
   errorMessage: '',
-  disabled: false
+  disabled: false,
+  statusOnly: false
 };
 BaseInput.propTypes = {
   label: _propTypes.default.string.isRequired,
@@ -153,7 +165,8 @@ BaseInput.propTypes = {
   errorMessage: _propTypes.default.string,
   handleChange: _propTypes.default.func.isRequired,
   onBlur: _propTypes.default.func,
-  disabled: _propTypes.default.bool
+  disabled: _propTypes.default.bool,
+  status: _propTypes.default.bool
 };
 var _default = BaseInput;
 exports.default = _default;

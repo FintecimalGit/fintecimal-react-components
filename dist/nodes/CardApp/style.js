@@ -47,7 +47,7 @@ var useStyles = (0, _styles.makeStyles)(function (theme) {
       fontSize: 50
     },
     image: {
-      width: '100px'
+      width: '80px'
     }
   };
 });

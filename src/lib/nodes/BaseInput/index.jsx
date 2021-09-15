@@ -14,6 +14,12 @@ import { isTextLong, defaultPlaceHolder } from '../../commons/utils';
 import useStyles from './style';
 import '../../styles/BaseInput.css';
 
+const STATUS ={
+  'Rechazado': '#C25B5B',
+  'Cargado': '#5BC2C2',
+  'Pendiente': '#C1C1C1',
+};
+
 const BaseInput = ({
   label,
   value,
@@ -27,6 +33,8 @@ const BaseInput = ({
   onBlur,
   onClear,
   maxLength,
+  statusOnly,
+  status,
 }) => {
   const classes = useStyles();
   const [labelWidth, setLabelWidth] = React.useState(0);
@@ -45,6 +53,24 @@ const BaseInput = ({
     } else {
       if (isTextLong(label)) return defaultPlaceHolder;
       return label;
+    }
+  };
+
+  const selectAdorment = () => {
+    if (clear && value && !disabled) {
+      return (
+        <InputAdornment position="end">
+            <IconButton aria-label="clear input" onClick={onClear} tabIndex="-1">
+                <Clear /*className={classes.icon}*/ />
+            </IconButton>
+        </InputAdornment>
+      );
+    } else if(disabled && statusOnly) {
+      return (
+        <InputAdornment position="end">
+            <h3 style={{ color: STATUS[status] }}>{status}</h3>
+        </InputAdornment>
+      );
     }
   };
 
@@ -77,17 +103,7 @@ const BaseInput = ({
           inputProps={{
             ...(maxLength ? { maxLength } : {}),
           }}
-          endAdornment={
-            clear &&
-            value &&
-            !disabled && (
-              <InputAdornment position="end">
-                <IconButton aria-label="clear input" onClick={onClear} tabIndex="-1">
-                  <Clear className={classes.icon} />
-                </IconButton>
-              </InputAdornment>
-            )
-          }
+          endAdornment={selectAdorment()}
           classes={{
             notchedOutline: classes.notchedOutline,
             focused: classes.focusNotchedOutline
@@ -108,7 +124,9 @@ BaseInput.defaultProps = {
   type: 'text',
   clear: true,
   errorMessage: '',
-  disabled: false
+  disabled: false,
+  statusOnly: false,
+  status: '',
 };
 
 BaseInput.propTypes = {
@@ -121,7 +139,9 @@ BaseInput.propTypes = {
   clear: PropTypes.bool,
   errorMessage: PropTypes.string,
   handleChange: PropTypes.func.isRequired,
-  onBlur: PropTypes.func
+  onBlur: PropTypes.func,
+  statusOnly: PropTypes.bool,
+  status: PropTypes.string,
 };
 
 export default BaseInput;
