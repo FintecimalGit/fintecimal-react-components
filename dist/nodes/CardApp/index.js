@@ -47,13 +47,13 @@ CardApp.defaultProps = {
   title: 'FORMAS',
   count: 23,
   onClick: function onClick() {},
-  Icon: 'https://fintecimal-test.s3.amazonaws.com/fintecimal-img/stepconfigs-icons/verificacion-general.png'
+  Icon: _DescriptionOutlined.default
 };
 CardApp.propTypes = {
   title: _propTypes.default.string,
   count: _propTypes.default.number,
   onClick: _propTypes.default.func,
-  Icon: _propTypes.default.object || _propTypes.default.string
+  Icon: _propTypes.default.oneOfType([_propTypes.default.string, _propTypes.default.object])
 };
 var _default = CardApp;
 exports.default = _default;

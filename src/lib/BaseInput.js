@@ -62,7 +62,8 @@ const BaseInput = ({
   clear,
   onBlur,
   onClear,
-  disabled
+  disabled,
+  statusOnly
 }) => {
   const classes = useStyles();
   const selectLabel = () => {
@@ -77,6 +78,24 @@ const BaseInput = ({
       return label;
     }
   };
+  const selectAdorment = () => {
+    if (clear && !disabled) {
+      return (
+        <InputAdornment position="end">
+            <IconButton aria-label="clear input" onClick={onClear} tabIndex="-1">
+                <Clear /*className={classes.icon}*/ />
+            </IconButton>
+        </InputAdornment>
+      );
+    } else if(disabled && statusOnly) {
+      return (
+        <InputAdornment position="end">
+            <h3>Cargado</h3>
+        </InputAdornment>
+      );
+    }
+  };
+
   return (
     <div className={classes.root}>
       {isTextLong(label) && (
@@ -100,16 +119,7 @@ const BaseInput = ({
           value={value}
           onChange={handleChange}
           onBlur={onBlur}
-          endAdornment={
-            clear &&
-            !disabled && (
-              <InputAdornment position="end">
-                <IconButton aria-label="clear input" onClick={onClear} tabIndex="-1">
-                  <Clear /*className={classes.icon}*/ />
-                </IconButton>
-              </InputAdornment>
-            )
-          }
+          endAdornment={selectAdorment()}
           inputProps={{
             className: classes.input
           }}
@@ -133,7 +143,8 @@ BaseInput.defaultProps = {
   type: 'text',
   clear: true,
   errorMessage: '',
-  disabled: false
+  disabled: false,
+  statusOnly: false,
 };
 
 BaseInput.propTypes = {
@@ -146,7 +157,8 @@ BaseInput.propTypes = {
   errorMessage: PropTypes.string,
   handleChange: PropTypes.func.isRequired,
   onBlur: PropTypes.func,
-  disabled: PropTypes.bool
+  disabled: PropTypes.bool,
+  status: PropTypes.bool,
 };
 
 export default BaseInput;

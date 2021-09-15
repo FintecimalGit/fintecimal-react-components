@@ -37,6 +37,12 @@ function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = 
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
+var STATUS = {
+  'Rechazado': '#C25B5B',
+  'Cargado': '#5BC2C2',
+  'Pendiente': '#C1C1C1'
+};
+
 var BaseInput = function BaseInput(_ref) {
   var label = _ref.label,
       value = _ref.value,
@@ -49,7 +55,9 @@ var BaseInput = function BaseInput(_ref) {
       clear = _ref.clear,
       onBlur = _ref.onBlur,
       onClear = _ref.onClear,
-      maxLength = _ref.maxLength;
+      maxLength = _ref.maxLength,
+      statusOnly = _ref.statusOnly,
+      status = _ref.status;
   var classes = (0, _style.default)();
 
   var _React$useState = _react.default.useState(0),
@@ -74,6 +82,28 @@ var BaseInput = function BaseInput(_ref) {
     } else {
       if ((0, _utils.isTextLong)(label)) return _utils.defaultPlaceHolder;
       return label;
+    }
+  };
+
+  var selectAdorment = function selectAdorment() {
+    if (clear && value && !disabled) {
+      return _react.default.createElement(_core.InputAdornment, {
+        position: "end"
+      }, _react.default.createElement(_core.IconButton, {
+        "aria-label": "clear input",
+        onClick: onClear,
+        tabIndex: "-1"
+      }, _react.default.createElement(_icons.Clear
+      /*className={classes.icon}*/
+      , null)));
+    } else if (disabled && statusOnly) {
+      return _react.default.createElement(_core.InputAdornment, {
+        position: "end"
+      }, _react.default.createElement("h3", {
+        style: {
+          color: STATUS[status]
+        }
+      }, status));
     }
   };
 
@@ -104,15 +134,7 @@ var BaseInput = function BaseInput(_ref) {
     inputProps: _objectSpread2({}, maxLength ? {
       maxLength: maxLength
     } : {}),
-    endAdornment: clear && value && !disabled && _react.default.createElement(_core.InputAdornment, {
-      position: "end"
-    }, _react.default.createElement(_core.IconButton, {
-      "aria-label": "clear input",
-      onClick: onClear,
-      tabIndex: "-1"
-    }, _react.default.createElement(_icons.Clear, {
-      className: classes.icon
-    }))),
+    endAdornment: selectAdorment(),
     classes: {
       notchedOutline: classes.notchedOutline,
       focused: classes.focusNotchedOutline
@@ -131,7 +153,9 @@ BaseInput.defaultProps = {
   type: 'text',
   clear: true,
   errorMessage: '',
-  disabled: false
+  disabled: false,
+  statusOnly: false,
+  status: ''
 };
 BaseInput.propTypes = {
   label: _propTypes.default.string.isRequired,
@@ -143,7 +167,9 @@ BaseInput.propTypes = {
   clear: _propTypes.default.bool,
   errorMessage: _propTypes.default.string,
   handleChange: _propTypes.default.func.isRequired,
-  onBlur: _propTypes.default.func
+  onBlur: _propTypes.default.func,
+  statusOnly: _propTypes.default.bool,
+  status: _propTypes.default.string
 };
 var _default = BaseInput;
 exports.default = _default;
