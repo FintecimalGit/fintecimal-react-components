@@ -102,7 +102,8 @@ var BaseInput = function BaseInput(_ref) {
       }, _react.default.createElement("h3", {
         style: {
           color: STATUS[status]
-        }
+        },
+        className: classes.status
       }, status));
     }
   };

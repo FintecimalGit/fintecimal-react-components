@@ -27,6 +27,12 @@ export default makeStyles(theme => ({
     borderWidth: 1,
     opacity: 0.7
   },
+  status: {
+    fontFamily: 'Open Sans',
+    fontSize: '1rem',
+    lineHeight: '1.25rem',
+    fontWeight: '700',
+  },
   focusNotchedOutline: {
     borderWidth: 2,
     opacity: 1
