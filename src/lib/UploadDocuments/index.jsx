@@ -52,10 +52,10 @@ const UploadDocuments = ({
    *
    * @param {Array} acceptedFiles 
    */
-  const handleOnDrop = (acceptedFiles) => {
+  const handleOnDrop = (acceptedFiles, rejectedFiles) => {
     setFiles(acceptedFiles);
     setSearch('');
-    onDrop(acceptedFiles);
+    onDrop(acceptedFiles, rejectedFiles);
   };
 
   const handleOnDelete = () => {
