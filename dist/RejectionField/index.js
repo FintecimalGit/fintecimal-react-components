@@ -109,6 +109,9 @@ var RejectionField = function RejectionField(_ref) {
     onHandlerInput(newValue.toString());
   };
 
+  (0, _react.useEffect)(function () {
+    if (mvalue !== value) setValue(field.value);
+  }, [value]);
   return _react.default.createElement("div", {
     className: classes.list
   }, _react.default.createElement("div", {

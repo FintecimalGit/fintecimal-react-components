@@ -74,6 +74,10 @@ const RejectionField = ({
     onHandlerInput(newValue.toString());
   };
 
+  useEffect(() => {
+    if (mvalue !== value) setValue(field.value);
+  }, [value]);
+
   return (
     <div className={classes.list}>
       <div className={classes.listItemSecondaryContainer}>
