@@ -1463,6 +1463,14 @@ storiesOf('NewComponents', module)
         onDrop={action('onDrop')}
         onDelete={action('onDelete')}
       />
+       <UploadDocuments
+        title="CURP"
+        multiple={false}
+        accept=""
+        onDrop={action('onDrop')}
+        onDelete={action('onDelete')}
+        required
+      />
     </Container>
   ))
   .add('FileThumbnail', () => {

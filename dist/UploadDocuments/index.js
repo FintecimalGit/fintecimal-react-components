@@ -51,7 +51,8 @@ var UploadDocuments = function UploadDocuments(_ref) {
       onDelete = _ref.onDelete,
       placeholder = _ref.placeholder,
       url = _ref.url,
-      disabled = _ref.disabled;
+      disabled = _ref.disabled,
+      required = _ref.required;
   var classes = (0, _style.default)();
 
   var _useState = (0, _react.useState)(null),
@@ -257,7 +258,9 @@ var UploadDocuments = function UploadDocuments(_ref) {
     className: classes.titleContainer
   }, _react.default.createElement(_Typography.default, {
     className: classes.title
-  }, title)), file ? _react.default.createElement(_FilePreview.default, {
+  }, title), required && _react.default.createElement(_Typography.default, {
+    className: classes.asterisk
+  }, "*")), file ? _react.default.createElement(_FilePreview.default, {
     file: file,
     onDelete: handleOnDelete,
     disabled: disabled,
@@ -286,7 +289,8 @@ UploadDocuments.propTypes = {
   onDrop: _propTypes.default.func,
   onDelete: _propTypes.default.func,
   placeholder: _propTypes.default.string,
-  disabled: _propTypes.default.bool
+  disabled: _propTypes.default.bool,
+  required: _propTypes.default.bool
 };
 UploadDocuments.defaultProps = {
   title: '',
@@ -296,7 +300,8 @@ UploadDocuments.defaultProps = {
   onDelete: function onDelete() {},
   placeholder: '',
   url: '',
-  disabled: false
+  disabled: false,
+  required: false
 };
 var _default = UploadDocuments;
 exports.default = _default;

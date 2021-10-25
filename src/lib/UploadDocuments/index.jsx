@@ -17,7 +17,8 @@ const UploadDocuments = ({
   onDelete,
   placeholder,
   url,
-  disabled
+  disabled,
+  required
 }) => {
   const classes = useStyles();
   const [file, setFile] = useState(null);
@@ -127,6 +128,11 @@ const UploadDocuments = ({
         <Typography className={classes.title}>
           { title }
         </Typography>
+        {required && (
+          <Typography className={classes.asterisk}>
+            *
+          </Typography>
+        )}
       </div>
       {
         file
@@ -178,7 +184,8 @@ UploadDocuments.propTypes = {
   onDrop: PropTypes.func,
   onDelete: PropTypes.func,
   placeholder: PropTypes.string,
-  disabled: PropTypes.bool
+  disabled: PropTypes.bool,
+  required: PropTypes.bool,
 };
 
 UploadDocuments.defaultProps = {
@@ -189,7 +196,8 @@ UploadDocuments.defaultProps = {
   onDelete: () => {},
   placeholder: '',
   url: '',
-  disabled: false
+  disabled: false,
+  required: false,
 };
 
 export default UploadDocuments;
