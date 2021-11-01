@@ -1457,6 +1457,16 @@ storiesOf('NewComponents', module)
         placeholder="Busca una nómina"
       />
       <UploadDocuments
+        title="DropZone with Delete Dialog"
+        multiple
+        accept=""
+        onDrop={action('onDrop')}
+        onDelete={action('onDelete')}
+        onDeleteAll={action('onDeleteAll')}
+        useDeleteDialog
+        placeholder="Busca una nómina"
+      />
+      <UploadDocuments
         title="DropZone"
         multiple={false}
         accept=""

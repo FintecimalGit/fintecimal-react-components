@@ -6,6 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import DropZone from '../DropZone';
 import FilePreview from '../FilePreview';
 import FileFinder from '../FileFinder';
+import DeleteDialog from './DeleteDialog';
 
 import useStyles from './style';
 
@@ -15,6 +16,8 @@ const UploadDocuments = ({
   accept,
   onDrop,
   onDelete,
+  onDeleteAll,
+  useDeleteDialog,
   placeholder,
   url,
   disabled,
@@ -25,6 +28,7 @@ const UploadDocuments = ({
   const [files, setFiles] = useState([]);
   const [currentFile, setCurrentFile] = useState(0);
   const [search, setSearch] = useState('');
+  const [showModal, setShowModal] = useState(false);
 
   const filteredFiles = useMemo(() => {
     const searchLower = search.toLowerCase();
@@ -46,7 +50,7 @@ const UploadDocuments = ({
     const newFiles = [...files];
     const index = newFiles.findIndex((_file) => _file === file);
     if (index !== -1) newFiles.splice(index, 1);
-    return newFiles;
+    return { newFiles, index };
   };
 
   /**
@@ -60,9 +64,16 @@ const UploadDocuments = ({
   };
 
   const handleOnDelete = () => {
-    const newFiles = deleteFile();
-    onDelete(newFiles, file);
+    const { newFiles, index } = deleteFile();
+    onDelete(newFiles, file, index);
     setFiles(newFiles);
+    setShowModal(false)
+  };
+
+  const handleOnDeleteAll = () => {
+    onDeleteAll();
+    setFiles([]);
+    setShowModal(false)
   };
 
   const handleOnClick = (index, file) => {
@@ -124,6 +135,13 @@ const UploadDocuments = ({
 
   return (
     <div>
+      <DeleteDialog
+        onCancel={() => setShowModal(false)}
+        onDelete={handleOnDelete}
+        onDeleteAll={handleOnDeleteAll}
+        title="¿Deseas Borrar el/los documentos?"
+        showModal={showModal && useDeleteDialog}
+      />
       <div className={classes.titleContainer}>
         <Typography className={classes.title}>
           { title }
@@ -139,7 +157,7 @@ const UploadDocuments = ({
           ? (
               <FilePreview
                 file={file}
-                onDelete={handleOnDelete}
+                onDelete={useDeleteDialog ? () => setShowModal(true) : handleOnDelete}
                 disabled={disabled}
                 urlDocument={url}
               />
@@ -183,6 +201,8 @@ UploadDocuments.propTypes = {
   ]),
   onDrop: PropTypes.func,
   onDelete: PropTypes.func,
+  onDeleteAll: PropTypes.func,
+  useDeleteDialog: PropTypes.bool,
   placeholder: PropTypes.string,
   disabled: PropTypes.bool,
   required: PropTypes.bool,
@@ -194,6 +214,8 @@ UploadDocuments.defaultProps = {
   accept: '',
   onDrop: () => {},
   onDelete: () => {},
+  onDeleteAll: () => {},
+  useDeleteDialog: false,
   placeholder: '',
   url: '',
   disabled: false,
