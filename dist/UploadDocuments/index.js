@@ -17,6 +17,8 @@ var _FilePreview = _interopRequireDefault(require("../FilePreview"));
 
 var _FileFinder = _interopRequireDefault(require("../FileFinder"));
 
+var _DeleteDialog = _interopRequireDefault(require("./DeleteDialog"));
+
 var _style = _interopRequireDefault(require("./style"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -49,6 +51,8 @@ var UploadDocuments = function UploadDocuments(_ref) {
       accept = _ref.accept,
       onDrop = _ref.onDrop,
       onDelete = _ref.onDelete,
+      onDeleteAll = _ref.onDeleteAll,
+      useDeleteDialog = _ref.useDeleteDialog,
       placeholder = _ref.placeholder,
       url = _ref.url,
       disabled = _ref.disabled,
@@ -75,6 +79,11 @@ var UploadDocuments = function UploadDocuments(_ref) {
       search = _useState8[0],
       setSearch = _useState8[1];
 
+  var _useState9 = (0, _react.useState)(false),
+      _useState10 = _slicedToArray(_useState9, 2),
+      showModal = _useState10[0],
+      setShowModal = _useState10[1];
+
   var filteredFiles = (0, _react.useMemo)(function () {
     var searchLower = search.toLowerCase();
     return files.map(function (file) {
@@ -96,7 +105,10 @@ var UploadDocuments = function UploadDocuments(_ref) {
       return _file === file;
     });
     if (index !== -1) newFiles.splice(index, 1);
-    return newFiles;
+    return {
+      newFiles: newFiles,
+      index: index
+    };
   };
   /**
    *
@@ -111,9 +123,19 @@ var UploadDocuments = function UploadDocuments(_ref) {
   };
 
   var handleOnDelete = function handleOnDelete() {
-    var newFiles = deleteFile();
-    onDelete(newFiles, file);
+    var _deleteFile = deleteFile(),
+        newFiles = _deleteFile.newFiles,
+        index = _deleteFile.index;
+
+    onDelete(newFiles, file, index);
     setFiles(newFiles);
+    setShowModal(false);
+  };
+
+  var handleOnDeleteAll = function handleOnDeleteAll() {
+    onDeleteAll();
+    setFiles([]);
+    setShowModal(false);
   };
 
   var handleOnClick = function handleOnClick(index, file) {
@@ -254,7 +276,15 @@ var UploadDocuments = function UploadDocuments(_ref) {
     if (url !== '' && typeof url === "string") generateFileToURL();
     if (Array.isArray(url)) generateFilesToURL();
   }, [url]);
-  return _react.default.createElement("div", null, _react.default.createElement("div", {
+  return _react.default.createElement("div", null, _react.default.createElement(_DeleteDialog.default, {
+    onCancel: function onCancel() {
+      return setShowModal(false);
+    },
+    onDelete: handleOnDelete,
+    onDeleteAll: handleOnDeleteAll,
+    title: "\xBFDeseas Borrar el/los documentos?",
+    showModal: showModal && useDeleteDialog
+  }), _react.default.createElement("div", {
     className: classes.titleContainer
   }, _react.default.createElement(_Typography.default, {
     className: classes.title
@@ -262,7 +292,9 @@ var UploadDocuments = function UploadDocuments(_ref) {
     className: classes.asterisk
   }, "*")), file ? _react.default.createElement(_FilePreview.default, {
     file: file,
-    onDelete: handleOnDelete,
+    onDelete: useDeleteDialog ? function () {
+      return setShowModal(true);
+    } : handleOnDelete,
     disabled: disabled,
     urlDocument: url
   }) : _react.default.createElement(_DropZone.default, {
@@ -288,6 +320,8 @@ UploadDocuments.propTypes = {
   accept: _propTypes.default.oneOfType([_propTypes.default.string, _propTypes.default.arrayOf(_propTypes.default.string)]),
   onDrop: _propTypes.default.func,
   onDelete: _propTypes.default.func,
+  onDeleteAll: _propTypes.default.func,
+  useDeleteDialog: _propTypes.default.bool,
   placeholder: _propTypes.default.string,
   disabled: _propTypes.default.bool,
   required: _propTypes.default.bool
@@ -298,6 +332,8 @@ UploadDocuments.defaultProps = {
   accept: '',
   onDrop: function onDrop() {},
   onDelete: function onDelete() {},
+  onDeleteAll: function onDeleteAll() {},
+  useDeleteDialog: false,
   placeholder: '',
   url: '',
   disabled: false,
