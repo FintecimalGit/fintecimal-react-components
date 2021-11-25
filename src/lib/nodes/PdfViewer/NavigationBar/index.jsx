@@ -22,16 +22,19 @@ const NavigationBar = ({
   };
 
   const onEnterScale = (evt, value) => {
-    if (evt.key !== 'Enter') return;
-    if (value < 50) {
-      setScale(50);
-      return;
+    if (evt.key === 'Enter') {
+      if (value < 50) {
+        setScale(50);
+        return;
+      }
+      if (value > 200) {
+        setScale(200);
+        return;
+      }
+      handleScale(evt, value);
+      evt.preventDefault();
     }
-    if (value > 200) {
-      setScale(200);
-      return;
-    }
-    handleScale(evt, value);
+    return;
   };
 
   const getTitleTruncate = (_title) => `${_title.substring(0, length)}...`;
