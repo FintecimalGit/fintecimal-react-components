@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useMemo } from 'react';
 import { Document, Page } from 'react-pdf/dist/esm/entry.webpack';
 import PropTypes from 'prop-types';
 import NavigationBar from './NavigationBar';
@@ -13,6 +13,8 @@ const PdfViewer = ({ url, onDownloadFile, marginTop }) => {
   const [numPages, setNumPages] = useState(0);
   const [actualPage, setActualPage] = useState(1);
   const classes = useStyles();
+
+  const memoizedUrl = useMemo(() => ({url}), [url]);
 
   const onDocumentLoadSuccess = ({ numPages: pages }) => {
     setNumPages(pages);
@@ -78,7 +80,7 @@ const PdfViewer = ({ url, onDownloadFile, marginTop }) => {
           title={getDocumentName(url)}
         />
         <Document
-          file={{ url }}
+          file={memoizedUrl}
           onLoadSuccess={onDocumentLoadSuccess}
           className={classes.container}
           inputRef={documentRef}
