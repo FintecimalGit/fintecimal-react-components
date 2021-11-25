@@ -38,7 +38,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 var FilePreview = function FilePreview(_ref) {
   var file = _ref.file,
       onDelete = _ref.onDelete,
-      onDonwnloadFile = _ref.onDonwnloadFile,
+      onDownloadFile = _ref.onDownloadFile,
       disabled = _ref.disabled,
       urlDocument = _ref.urlDocument;
   var clasess = (0, _style.default)();
@@ -68,7 +68,7 @@ var FilePreview = function FilePreview(_ref) {
     if (!(0, _detectPdf.default)()) {
       return _react.default.createElement(_nodes.PdfViewer, {
         url: url,
-        onDonwnloadFile: onDonwnloadFile
+        onDownloadFile: onDownloadFile
       });
     }
 
@@ -118,7 +118,7 @@ var FilePreview = function FilePreview(_ref) {
 FilePreview.propTypes = {
   file: _propTypes.default.instanceOf(File),
   onDelete: _propTypes.default.func,
-  onDonwnloadFile: _propTypes.default.func,
+  onDownloadFile: _propTypes.default.func,
   disabled: _propTypes.default.bool,
   urlDocument: _propTypes.default.string
 };
@@ -127,7 +127,7 @@ FilePreview.defaultProps = {
     type: ''
   }),
   onDelete: function onDelete() {},
-  onDonwnloadFile: function onDonwnloadFile() {},
+  onDownloadFile: function onDownloadFile() {},
   disabled: false
 };
 var _default = FilePreview;

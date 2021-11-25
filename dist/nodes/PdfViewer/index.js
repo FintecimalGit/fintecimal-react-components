@@ -41,7 +41,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 var PdfViewer = function PdfViewer(_ref) {
   var url = _ref.url,
-      onDonwnloadFile = _ref.onDonwnloadFile,
+      onDownloadFile = _ref.onDownloadFile,
       marginTop = _ref.marginTop;
   var pageDataRef = (0, _react.useRef)({});
   var documentRef = (0, _react.useRef)(null);
@@ -132,7 +132,7 @@ var PdfViewer = function PdfViewer(_ref) {
     handleScale: handleScale,
     onEnterActualPage: onEnterActualPage,
     numPages: numPages,
-    onDonwnloadFile: onDonwnloadFile,
+    onDownloadFile: onDownloadFile,
     title: getDocumentName(url)
   }), _react.default.createElement(_entry.Document, {
     file: {
@@ -153,7 +153,7 @@ var PdfViewer = function PdfViewer(_ref) {
 };
 
 PdfViewer.propTypes = {
-  onDonwnloadFile: _propTypes.default.func.isRequired,
+  onDownloadFile: _propTypes.default.func.isRequired,
   url: _propTypes.default.string.isRequired,
   marginTop: _propTypes.default.number
 };

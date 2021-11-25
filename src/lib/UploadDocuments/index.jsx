@@ -17,7 +17,7 @@ const UploadDocuments = ({
   onDrop,
   onDelete,
   onDeleteAll,
-  onDonwnloadFile,
+  onDownloadFile,
   useDeleteDialog,
   placeholder,
   url,
@@ -157,7 +157,7 @@ const UploadDocuments = ({
         file
           ? (
             <FilePreview
-              onDonwnloadFile={onDonwnloadFile}
+              onDownloadFile={onDownloadFile}
               file={file}
               onDelete={useDeleteDialog ? () => setShowModal(true) : handleOnDelete}
               disabled={disabled}
@@ -204,7 +204,7 @@ UploadDocuments.propTypes = {
   onDrop: PropTypes.func,
   onDelete: PropTypes.func,
   onDeleteAll: PropTypes.func,
-  onDonwnloadFile: PropTypes.func,
+  onDownloadFile: PropTypes.func,
   useDeleteDialog: PropTypes.bool,
   placeholder: PropTypes.string,
   disabled: PropTypes.bool,
@@ -218,7 +218,7 @@ UploadDocuments.defaultProps = {
   onDrop: () => {},
   onDelete: () => {},
   onDeleteAll: () => {},
-  onDonwnloadFile: () => {},
+  onDownloadFile: () => {},
   useDeleteDialog: false,
   placeholder: '',
   url: '',

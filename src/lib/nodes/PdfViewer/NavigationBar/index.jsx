@@ -10,7 +10,7 @@ import CloudDownloadOutlined from '@material-ui/icons/CloudDownloadOutlined';
 import useStyles from './style';
 
 const NavigationBar = ({
-  title, length, onDonwnloadFile, numPages, onEnterActualPage, handleScale, actualPage, handleActualPage,
+  title, length, onDownloadFile, numPages, onEnterActualPage, handleScale, actualPage, handleActualPage,
 }) => {
   const [scale, setScale] = useState(100);
   const classes = useStyles();
@@ -51,7 +51,7 @@ const NavigationBar = ({
           <span>%</span>
         </div>
 
-        <IconButton edge="start" onClick={() => onDonwnloadFile(url)} className={classes.menuButton} color="inherit" aria-label="menu">
+        <IconButton edge="start" onClick={() => onDownloadFile(url)} className={classes.menuButton} color="inherit" aria-label="menu">
           <CloudDownloadOutlined />
         </IconButton>
       </Toolbar>
@@ -62,7 +62,7 @@ const NavigationBar = ({
 NavigationBar.propTypes = {
   title: PropTypes.string.isRequired,
   length: PropTypes.number,
-  onDonwnloadFile: PropTypes.func.isRequired,
+  onDownloadFile: PropTypes.func.isRequired,
   handleScale: PropTypes.func.isRequired,
   numPages: PropTypes.number,
   onEnterActualPage: PropTypes.func.isRequired,

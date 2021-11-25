@@ -36,7 +36,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 var NavigationBar = function NavigationBar(_ref) {
   var title = _ref.title,
       length = _ref.length,
-      onDonwnloadFile = _ref.onDonwnloadFile,
+      onDownloadFile = _ref.onDownloadFile,
       numPages = _ref.numPages,
       onEnterActualPage = _ref.onEnterActualPage,
       handleScale = _ref.handleScale,
@@ -105,7 +105,7 @@ var NavigationBar = function NavigationBar(_ref) {
   }), _react.default.createElement("span", null, "%")), _react.default.createElement(_IconButton.default, {
     edge: "start",
     onClick: function onClick() {
-      return onDonwnloadFile(url);
+      return onDownloadFile(url);
     },
     className: classes.menuButton,
     color: "inherit",
@@ -116,7 +116,7 @@ var NavigationBar = function NavigationBar(_ref) {
 NavigationBar.propTypes = {
   title: _propTypes.default.string.isRequired,
   length: _propTypes.default.number,
-  onDonwnloadFile: _propTypes.default.func.isRequired,
+  onDownloadFile: _propTypes.default.func.isRequired,
   handleScale: _propTypes.default.func.isRequired,
   numPages: _propTypes.default.number,
   onEnterActualPage: _propTypes.default.func.isRequired,

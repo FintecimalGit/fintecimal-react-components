@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import NavigationBar from './NavigationBar';
 import useStyles from './style';
 
-const PdfViewer = ({ url, onDonwnloadFile, marginTop }) => {
+const PdfViewer = ({ url, onDownloadFile, marginTop }) => {
   const pageDataRef = useRef({});
   const documentRef = useRef(null);
   const stopScrollRef = useRef(false);
@@ -74,7 +74,7 @@ const PdfViewer = ({ url, onDonwnloadFile, marginTop }) => {
           handleScale={handleScale}
           onEnterActualPage={onEnterActualPage}
           numPages={numPages}
-          onDonwnloadFile={onDonwnloadFile}
+          onDownloadFile={onDownloadFile}
           title={getDocumentName(url)}
         />
         <Document
@@ -101,7 +101,7 @@ const PdfViewer = ({ url, onDonwnloadFile, marginTop }) => {
 };
 
 PdfViewer.propTypes = {
-  onDonwnloadFile: PropTypes.func.isRequired,
+  onDownloadFile: PropTypes.func.isRequired,
   url: PropTypes.string.isRequired,
   marginTop: PropTypes.number,
 };

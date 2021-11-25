@@ -11,7 +11,7 @@ import useStyles from './style';
 import { PdfViewer } from '../nodes';
 import DetectPdf from '../nodes/PdfViewer/detectPdf';
 
-const FilePreview = ({ file, onDelete, onDonwnloadFile, disabled, urlDocument }) => {
+const FilePreview = ({ file, onDelete, onDownloadFile, disabled, urlDocument }) => {
   const clasess = useStyles();
   const [url, setUrl] = useState('');
 
@@ -32,7 +32,7 @@ const FilePreview = ({ file, onDelete, onDonwnloadFile, disabled, urlDocument })
       return (
         <PdfViewer 
           url={url}
-          onDonwnloadFile={onDonwnloadFile}
+          onDownloadFile={onDownloadFile}
         />
       );
     }
@@ -89,7 +89,7 @@ const FilePreview = ({ file, onDelete, onDonwnloadFile, disabled, urlDocument })
 FilePreview.propTypes = {
   file: PropTypes.instanceOf(File),
   onDelete: PropTypes.func,
-  onDonwnloadFile: PropTypes.func,
+  onDownloadFile: PropTypes.func,
   disabled: PropTypes.bool,
   urlDocument: PropTypes.string,
 };
@@ -97,7 +97,7 @@ FilePreview.propTypes = {
 FilePreview.defaultProps = {
   file: new File([''], 'No Soportado', { type: '' }),
   onDelete: () => {},
-  onDonwnloadFile: () => {},
+  onDownloadFile: () => {},
   disabled: false
 };
 

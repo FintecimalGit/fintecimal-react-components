@@ -52,7 +52,7 @@ var UploadDocuments = function UploadDocuments(_ref) {
       onDrop = _ref.onDrop,
       onDelete = _ref.onDelete,
       onDeleteAll = _ref.onDeleteAll,
-      onDonwnloadFile = _ref.onDonwnloadFile,
+      onDownloadFile = _ref.onDownloadFile,
       useDeleteDialog = _ref.useDeleteDialog,
       placeholder = _ref.placeholder,
       url = _ref.url,
@@ -292,7 +292,7 @@ var UploadDocuments = function UploadDocuments(_ref) {
   }, title), required && _react.default.createElement(_Typography.default, {
     className: classes.asterisk
   }, "*")), file ? _react.default.createElement(_FilePreview.default, {
-    onDonwnloadFile: onDonwnloadFile,
+    onDownloadFile: onDownloadFile,
     file: file,
     onDelete: useDeleteDialog ? function () {
       return setShowModal(true);
@@ -323,7 +323,7 @@ UploadDocuments.propTypes = {
   onDrop: _propTypes.default.func,
   onDelete: _propTypes.default.func,
   onDeleteAll: _propTypes.default.func,
-  onDonwnloadFile: _propTypes.default.func,
+  onDownloadFile: _propTypes.default.func,
   useDeleteDialog: _propTypes.default.bool,
   placeholder: _propTypes.default.string,
   disabled: _propTypes.default.bool,
@@ -336,7 +336,7 @@ UploadDocuments.defaultProps = {
   onDrop: function onDrop() {},
   onDelete: function onDelete() {},
   onDeleteAll: function onDeleteAll() {},
-  onDonwnloadFile: function onDonwnloadFile() {},
+  onDownloadFile: function onDownloadFile() {},
   useDeleteDialog: false,
   placeholder: '',
   url: '',
