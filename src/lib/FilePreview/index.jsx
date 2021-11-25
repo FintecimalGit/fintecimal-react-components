@@ -28,18 +28,18 @@ const FilePreview = ({ file, onDelete, onDownloadFile, disabled, urlDocument }) 
    * @returns {DOMElement|String}
    */
   const renderFile = () => {
-    if (!DetectPdf()) {
-      return (
-        <PdfViewer 
-          url={url}
-          onDownloadFile={onDownloadFile}
-        />
-      );
-    }
     if (/^image\//.test(file.type)) {
       return <img alt={file.name} src={url} height={'auto'} />;
     }
     else if(/^(text||application)\//.test(file.type)) {
+      if (/^(application\/pdf)/.test(file.type) && !DetectPdf()) {
+        return (
+          <PdfViewer 
+            url={url}
+            onDownloadFile={onDownloadFile}
+          />
+        );
+      }
       return <iframe title={file.name} src={url} />;
     }
     else return 'No Soportado';

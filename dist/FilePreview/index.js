@@ -65,13 +65,6 @@ var FilePreview = function FilePreview(_ref) {
 
 
   var renderFile = function renderFile() {
-    if (!(0, _detectPdf.default)()) {
-      return _react.default.createElement(_nodes.PdfViewer, {
-        url: url,
-        onDownloadFile: onDownloadFile
-      });
-    }
-
     if (/^image\//.test(file.type)) {
       return _react.default.createElement("img", {
         alt: file.name,
@@ -79,6 +72,13 @@ var FilePreview = function FilePreview(_ref) {
         height: 'auto'
       });
     } else if (/^(text||application)\//.test(file.type)) {
+      if (/^(application\/pdf)/.test(file.type) && !(0, _detectPdf.default)()) {
+        return _react.default.createElement(_nodes.PdfViewer, {
+          url: url,
+          onDownloadFile: onDownloadFile
+        });
+      }
+
       return _react.default.createElement("iframe", {
         title: file.name,
         src: url

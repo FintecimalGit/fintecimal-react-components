@@ -64,6 +64,11 @@ var PdfViewer = function PdfViewer(_ref) {
       setActualPage = _useState6[1];
 
   var classes = (0, _style.default)();
+  var memoizedUrl = (0, _react.useMemo)(function () {
+    return {
+      url: url
+    };
+  }, [url]);
 
   var onDocumentLoadSuccess = function onDocumentLoadSuccess(_ref2) {
     var pages = _ref2.numPages;
@@ -135,9 +140,7 @@ var PdfViewer = function PdfViewer(_ref) {
     onDownloadFile: onDownloadFile,
     title: getDocumentName(url)
   }), _react.default.createElement(_entry.Document, {
-    file: {
-      url: url
-    },
+    file: memoizedUrl,
     onLoadSuccess: onDocumentLoadSuccess,
     className: classes.container,
     inputRef: documentRef
