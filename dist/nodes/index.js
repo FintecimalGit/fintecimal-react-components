@@ -195,6 +195,12 @@ Object.defineProperty(exports, "PercentageInput", {
     return _PercentageInput.default;
   }
 });
+Object.defineProperty(exports, "PdfViewer", {
+  enumerable: true,
+  get: function get() {
+    return _PdfViewer.default;
+  }
+});
 
 var _SearchBar = _interopRequireDefault(require("./SearchBar"));
 
@@ -259,5 +265,7 @@ var _BaseCURPInput = _interopRequireDefault(require("./BaseCURPInput"));
 var _ButtonDocuPass = _interopRequireDefault(require("./ButtonDocuPass"));
 
 var _PercentageInput = _interopRequireDefault(require("./PercentageInput"));
+
+var _PdfViewer = _interopRequireDefault(require("./PdfViewer"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }

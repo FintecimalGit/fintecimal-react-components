@@ -8,8 +8,10 @@ import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 
 import useStyles from './style';
+import { PdfViewer } from '../nodes';
+import DetectPdf from '../nodes/PdfViewer/detectPdf';
 
-const FilePreview = ({ file, onDelete, disabled, urlDocument }) => {
+const FilePreview = ({ file, onDelete, onDonwnloadFile, disabled, urlDocument }) => {
   const clasess = useStyles();
   const [url, setUrl] = useState('');
 
@@ -26,6 +28,14 @@ const FilePreview = ({ file, onDelete, disabled, urlDocument }) => {
    * @returns {DOMElement|String}
    */
   const renderFile = () => {
+    if (!DetectPdf()) {
+      return (
+        <PdfViewer 
+          url={url}
+          onDonwnloadFile={onDonwnloadFile}
+        />
+      );
+    }
     if (/^image\//.test(file.type)) {
       return <img alt={file.name} src={url} height={'auto'} />;
     }
@@ -79,6 +89,7 @@ const FilePreview = ({ file, onDelete, disabled, urlDocument }) => {
 FilePreview.propTypes = {
   file: PropTypes.instanceOf(File),
   onDelete: PropTypes.func,
+  onDonwnloadFile: PropTypes.func,
   disabled: PropTypes.bool,
   urlDocument: PropTypes.string,
 };
@@ -86,6 +97,7 @@ FilePreview.propTypes = {
 FilePreview.defaultProps = {
   file: new File([''], 'No Soportado', { type: '' }),
   onDelete: () => {},
+  onDonwnloadFile: () => {},
   disabled: false
 };
 

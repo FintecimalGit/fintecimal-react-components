@@ -42,6 +42,7 @@ import {
   BaseCURPInput,
   ButtonDocuPass,
   PercentageInput,
+  PdfViewer,
 } from '../lib/nodes';
 
 import Table from '../lib/Table';
@@ -77,9 +78,10 @@ const {
   SelectInput,
   CLABEInput,
   RadioSwitch,
-  SelectBasic
+  SelectBasic,
 } = lib;
 const { LoginUI, MultiDrop } = ui;
+
 
 storiesOf('UI|MultiDropdown', module).add('MultiDropdown', () => <MultiDrop />);
 
@@ -89,6 +91,13 @@ storiesOf('UI|Login', module).add('Login', () => (
     onKeyPressPassword={action('onKeyDownPassword')}
     onClickBtnSend={action('onClickBtnSend')}
   />
+));
+
+storiesOf('Components|Pdf', module).add('PdfViewer', () => (
+  <PdfViewer
+    donwnloadFile={() => {}}
+    url="https://s3.amazonaws.com/fintecimal-test/7bda983f-5ff6-4180-9d92-6e7aecfbe38b.pdf"
+      />
 ));
 
 storiesOf('Components|Loader', module)
