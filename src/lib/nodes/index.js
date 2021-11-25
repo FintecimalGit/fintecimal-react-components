@@ -30,6 +30,7 @@ import BaseFullAddressInput from './BaseFullAddressInput';
 import BaseCURPInput from './BaseCURPInput';
 import ButtonDocuPass from './ButtonDocuPass';
 import PercentageInput from './PercentageInput';
+import PdfViewer from './PdfViewer';
 
 export {
   Maps,
@@ -64,4 +65,5 @@ export {
   BaseCURPInput,
   ButtonDocuPass,
   PercentageInput,
+  PdfViewer,
 };

@@ -19,6 +19,10 @@ var _Delete = _interopRequireDefault(require("@material-ui/icons/Delete"));
 
 var _style = _interopRequireDefault(require("./style"));
 
+var _nodes = require("../nodes");
+
+var _detectPdf = _interopRequireDefault(require("../nodes/PdfViewer/detectPdf"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
@@ -34,6 +38,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 var FilePreview = function FilePreview(_ref) {
   var file = _ref.file,
       onDelete = _ref.onDelete,
+      onDownloadFile = _ref.onDownloadFile,
       disabled = _ref.disabled,
       urlDocument = _ref.urlDocument;
   var clasess = (0, _style.default)();
@@ -60,6 +65,13 @@ var FilePreview = function FilePreview(_ref) {
 
 
   var renderFile = function renderFile() {
+    if (!(0, _detectPdf.default)()) {
+      return _react.default.createElement(_nodes.PdfViewer, {
+        url: url,
+        onDownloadFile: onDownloadFile
+      });
+    }
+
     if (/^image\//.test(file.type)) {
       return _react.default.createElement("img", {
         alt: file.name,
@@ -106,6 +118,7 @@ var FilePreview = function FilePreview(_ref) {
 FilePreview.propTypes = {
   file: _propTypes.default.instanceOf(File),
   onDelete: _propTypes.default.func,
+  onDownloadFile: _propTypes.default.func,
   disabled: _propTypes.default.bool,
   urlDocument: _propTypes.default.string
 };
@@ -114,6 +127,7 @@ FilePreview.defaultProps = {
     type: ''
   }),
   onDelete: function onDelete() {},
+  onDownloadFile: function onDownloadFile() {},
   disabled: false
 };
 var _default = FilePreview;
