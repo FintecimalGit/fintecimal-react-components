@@ -57,19 +57,22 @@ var NavigationBar = function NavigationBar(_ref) {
   };
 
   var onEnterScale = function onEnterScale(evt, value) {
-    if (evt.key !== 'Enter') return;
+    if (evt.key === 'Enter') {
+      if (value < 50) {
+        setScale(50);
+        return;
+      }
 
-    if (value < 50) {
-      setScale(50);
-      return;
+      if (value > 200) {
+        setScale(200);
+        return;
+      }
+
+      handleScale(evt, value);
+      evt.preventDefault();
     }
 
-    if (value > 200) {
-      setScale(200);
-      return;
-    }
-
-    handleScale(evt, value);
+    return;
   };
 
   var getTitleTruncate = function getTitleTruncate(_title) {

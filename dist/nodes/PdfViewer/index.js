@@ -105,6 +105,7 @@ var PdfViewer = function PdfViewer(_ref) {
 
       stopScrollRef.current = true;
       documentRef.current.scrollTop = offsetTop;
+      evt.preventDefault();
     }
   };
 

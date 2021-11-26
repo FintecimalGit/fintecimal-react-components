@@ -42,6 +42,7 @@ const PdfViewer = ({ url, onDownloadFile, marginTop }) => {
       }, 0);
       stopScrollRef.current = true;
       documentRef.current.scrollTop = offsetTop;
+      evt.preventDefault();
     }
   };
 
