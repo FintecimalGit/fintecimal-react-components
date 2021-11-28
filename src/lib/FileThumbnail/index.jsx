@@ -77,36 +77,25 @@ const FileThumbnail = ({ file, selected, onClick }) => {
    */
   const transformFirstPDFPageToImage = (pdf) => {
     pdf.getPage(1).then(async (page) => {
-      console.log('super chale');
-      console.log({page});
       const canvasPDF = await transformPageToCanvas(page);
       const thumbnailPDF = canvasPDF.toDataURL();
       setUrl(thumbnailPDF);
     });
-    console.log('Afuera perros');
   };
 
   const readPDF = async () => {
     try {
-      console.log('nunca paso por aki o ok?');
       const file = await fileToUint8Array();
-      console.log(file);
-      console.log('despuesito');
-      console.log('-------------------------');
       const pdf = await pdfjsLib.getDocument(file).promise;
-      console.log(pdf);
-      console.log('-------------------------');
       await transformFirstPDFPageToImage(pdf);
     }
     catch(error) {
-      console.log('traes el omnitrix');
       setUrl('');
     }
   };
 
   const readImage = async () => {
     try {
-      console.log('readImage');
       const file = await fileToBase64();
       setUrl(file);
     }
@@ -122,7 +111,6 @@ const FileThumbnail = ({ file, selected, onClick }) => {
   useEffect(() => {
     const { type } = file;
     if (isPDF(type)) readPDF();
-    console.log('pos no paso nada');
     if (isImage(type)) readImage();
   }, [file]);
 

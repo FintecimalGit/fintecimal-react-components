@@ -162,19 +162,15 @@ var FileThumbnail = function FileThumbnail(_ref) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                console.log('super chale');
-                console.log({
-                  page: page
-                });
-                _context2.next = 4;
+                _context2.next = 2;
                 return transformPageToCanvas(page);
 
-              case 4:
+              case 2:
                 canvasPDF = _context2.sent;
                 thumbnailPDF = canvasPDF.toDataURL();
                 setUrl(thumbnailPDF);
 
-              case 7:
+              case 5:
               case "end":
                 return _context2.stop();
             }
@@ -186,7 +182,6 @@ var FileThumbnail = function FileThumbnail(_ref) {
         return _ref3.apply(this, arguments);
       };
     }());
-    console.log('Afuera perros');
   };
 
   var readPDF =
@@ -202,41 +197,34 @@ var FileThumbnail = function FileThumbnail(_ref) {
           switch (_context3.prev = _context3.next) {
             case 0:
               _context3.prev = 0;
-              console.log('nunca paso por aki o ok?');
-              _context3.next = 4;
+              _context3.next = 3;
               return fileToUint8Array();
 
-            case 4:
+            case 3:
               _file = _context3.sent;
-              console.log(_file);
-              console.log('despuesito');
-              console.log('-------------------------');
-              _context3.next = 10;
+              _context3.next = 6;
               return _pdf.default.getDocument(_file).promise;
 
-            case 10:
+            case 6:
               pdf = _context3.sent;
-              console.log(pdf);
-              console.log('-------------------------');
-              _context3.next = 15;
+              _context3.next = 9;
               return transformFirstPDFPageToImage(pdf);
 
-            case 15:
-              _context3.next = 21;
+            case 9:
+              _context3.next = 14;
               break;
 
-            case 17:
-              _context3.prev = 17;
+            case 11:
+              _context3.prev = 11;
               _context3.t0 = _context3["catch"](0);
-              console.log('traes el omnitrix');
               setUrl('');
 
-            case 21:
+            case 14:
             case "end":
               return _context3.stop();
           }
         }
-      }, _callee3, null, [[0, 17]]);
+      }, _callee3, null, [[0, 11]]);
     }));
 
     return function readPDF() {
@@ -257,27 +245,26 @@ var FileThumbnail = function FileThumbnail(_ref) {
           switch (_context4.prev = _context4.next) {
             case 0:
               _context4.prev = 0;
-              console.log('readImage');
-              _context4.next = 4;
+              _context4.next = 3;
               return fileToBase64();
 
-            case 4:
+            case 3:
               _file2 = _context4.sent;
               setUrl(_file2);
-              _context4.next = 11;
+              _context4.next = 10;
               break;
 
-            case 8:
-              _context4.prev = 8;
+            case 7:
+              _context4.prev = 7;
               _context4.t0 = _context4["catch"](0);
               setUrl('');
 
-            case 11:
+            case 10:
             case "end":
               return _context4.stop();
           }
         }
-      }, _callee4, null, [[0, 8]]);
+      }, _callee4, null, [[0, 7]]);
     }));
 
     return function readImage() {
@@ -292,7 +279,6 @@ var FileThumbnail = function FileThumbnail(_ref) {
   (0, _react.useEffect)(function () {
     var type = file.type;
     if (isPDF(type)) readPDF();
-    console.log('pos no paso nada');
     if (isImage(type)) readImage();
   }, [file]);
   return _react.default.createElement("div", {
