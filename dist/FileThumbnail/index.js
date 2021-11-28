@@ -1,7 +1,5 @@
 "use strict";
 
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
@@ -23,9 +21,7 @@ var _style = _interopRequireDefault(require("./style"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
@@ -37,11 +33,11 @@ function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArra
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
 
-function _iterableToArrayLimit(arr, i) { if (!(Symbol.iterator in Object(arr) || Object.prototype.toString.call(arr) === "[object Arguments]")) { return; } var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
-_pdf.default.GlobalWorkerOptions.workerSrc = '//mozilla.github.io/pdf.js/build/pdf.worker.js';
+_pdf.default.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.2.228/pdf.min.js';
 
 var FileThumbnail = function FileThumbnail(_ref) {
   var file = _ref.file,
@@ -166,15 +162,19 @@ var FileThumbnail = function FileThumbnail(_ref) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                _context2.next = 2;
+                console.log('super chale');
+                console.log({
+                  page: page
+                });
+                _context2.next = 4;
                 return transformPageToCanvas(page);
 
-              case 2:
+              case 4:
                 canvasPDF = _context2.sent;
                 thumbnailPDF = canvasPDF.toDataURL();
                 setUrl(thumbnailPDF);
 
-              case 5:
+              case 7:
               case "end":
                 return _context2.stop();
             }
@@ -186,6 +186,7 @@ var FileThumbnail = function FileThumbnail(_ref) {
         return _ref3.apply(this, arguments);
       };
     }());
+    console.log('Afuera perros');
   };
 
   var readPDF =
@@ -201,34 +202,41 @@ var FileThumbnail = function FileThumbnail(_ref) {
           switch (_context3.prev = _context3.next) {
             case 0:
               _context3.prev = 0;
-              _context3.next = 3;
+              console.log('nunca paso por aki o ok?');
+              _context3.next = 4;
               return fileToUint8Array();
 
-            case 3:
+            case 4:
               _file = _context3.sent;
-              _context3.next = 6;
+              console.log(_file);
+              console.log('despuesito');
+              console.log('-------------------------');
+              _context3.next = 10;
               return _pdf.default.getDocument(_file).promise;
 
-            case 6:
+            case 10:
               pdf = _context3.sent;
-              _context3.next = 9;
+              console.log(pdf);
+              console.log('-------------------------');
+              _context3.next = 15;
               return transformFirstPDFPageToImage(pdf);
 
-            case 9:
-              _context3.next = 14;
+            case 15:
+              _context3.next = 21;
               break;
 
-            case 11:
-              _context3.prev = 11;
+            case 17:
+              _context3.prev = 17;
               _context3.t0 = _context3["catch"](0);
+              console.log('traes el omnitrix');
               setUrl('');
 
-            case 14:
+            case 21:
             case "end":
               return _context3.stop();
           }
         }
-      }, _callee3, null, [[0, 11]]);
+      }, _callee3, null, [[0, 17]]);
     }));
 
     return function readPDF() {
@@ -249,26 +257,27 @@ var FileThumbnail = function FileThumbnail(_ref) {
           switch (_context4.prev = _context4.next) {
             case 0:
               _context4.prev = 0;
-              _context4.next = 3;
+              console.log('readImage');
+              _context4.next = 4;
               return fileToBase64();
 
-            case 3:
+            case 4:
               _file2 = _context4.sent;
               setUrl(_file2);
-              _context4.next = 10;
+              _context4.next = 11;
               break;
 
-            case 7:
-              _context4.prev = 7;
+            case 8:
+              _context4.prev = 8;
               _context4.t0 = _context4["catch"](0);
               setUrl('');
 
-            case 10:
+            case 11:
             case "end":
               return _context4.stop();
           }
         }
-      }, _callee4, null, [[0, 7]]);
+      }, _callee4, null, [[0, 8]]);
     }));
 
     return function readImage() {
@@ -283,6 +292,7 @@ var FileThumbnail = function FileThumbnail(_ref) {
   (0, _react.useEffect)(function () {
     var type = file.type;
     if (isPDF(type)) readPDF();
+    console.log('pos no paso nada');
     if (isImage(type)) readImage();
   }, [file]);
   return _react.default.createElement("div", {
