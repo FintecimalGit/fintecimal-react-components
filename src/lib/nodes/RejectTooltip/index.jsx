@@ -24,7 +24,6 @@ const RejectTooltip = props => {
   const handleClick = event => {
     const { onClose, active } = props;
     if (active && isOtusidePopover(event) && isSelectClick()) {
-      setReason('');
       setComments('');
     }
   };
