@@ -40,7 +40,6 @@ var _default = (0, _styles.makeStyles)(function (theme) {
       }
     }, _defineProperty(_input, "fontSize", 14.2), _defineProperty(_input, "letterSpacing", 0.25), _defineProperty(_input, "lineHeight", 20), _input),
     icon: {
-      padding: 16,
       color: 'rgba(44,62,80,0.54)'
     }
   };
