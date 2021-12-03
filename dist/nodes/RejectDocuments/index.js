@@ -71,6 +71,8 @@ var RejectDocuments = function RejectDocuments(_ref) {
       search = _useState8[0],
       setSearch = _useState8[1];
 
+  var titleRef = (0, _react.useRef)(null);
+
   var generateFileToURL =
   /*#__PURE__*/
   function () {
@@ -180,6 +182,7 @@ var RejectDocuments = function RejectDocuments(_ref) {
   var handleOnClick = function handleOnClick(index, file) {
     setFile(file);
     setCurrentFile(index);
+    titleRef.current.scrollIntoView();
   };
 
   var handleOnSearch = function handleOnSearch(text) {
@@ -187,7 +190,8 @@ var RejectDocuments = function RejectDocuments(_ref) {
   };
 
   return _react.default.createElement("div", null, _react.default.createElement("div", {
-    className: classes.titleContainer
+    className: classes.titleContainer,
+    ref: titleRef
   }, _react.default.createElement("div", {
     className: classes.titleLine
   }, _react.default.createElement(_Typography.default, {

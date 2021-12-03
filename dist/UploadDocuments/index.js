@@ -85,6 +85,7 @@ var UploadDocuments = function UploadDocuments(_ref) {
       showModal = _useState10[0],
       setShowModal = _useState10[1];
 
+  var titleRef = (0, _react.useRef)(null);
   var filteredFiles = (0, _react.useMemo)(function () {
     var searchLower = search.toLowerCase();
     return files.map(function (file) {
@@ -142,6 +143,7 @@ var UploadDocuments = function UploadDocuments(_ref) {
   var handleOnClick = function handleOnClick(index, file) {
     setFile(file);
     setCurrentFile(index);
+    titleRef.current.scrollIntoView();
   };
   /**
    *
@@ -286,7 +288,8 @@ var UploadDocuments = function UploadDocuments(_ref) {
     title: "\xBFDeseas Borrar el/los documentos?",
     showModal: showModal && useDeleteDialog
   }), _react.default.createElement("div", {
-    className: classes.titleContainer
+    className: classes.titleContainer,
+    ref: titleRef
   }, _react.default.createElement(_Typography.default, {
     className: classes.title
   }, title), required && _react.default.createElement(_Typography.default, {
