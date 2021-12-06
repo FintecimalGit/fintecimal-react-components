@@ -48,6 +48,7 @@ const Search = ({ onEnter, placeholder, value, onChange, disabled }) => {
           <InputAdornment position="end">
             <IconButton
                   aria-label="Search"
+                  className={classes.iconButton} 
                   onClick={onSearch}
                 >
                   <SearchIcon className={classes.icon} />
