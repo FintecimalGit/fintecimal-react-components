@@ -31,7 +31,6 @@ export default makeStyles(theme => ({
     lineHeight: 20
   },
   icon: {
-    padding: 16,
     color: 'rgba(44,62,80,0.54)'
   }
 }));

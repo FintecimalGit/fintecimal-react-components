@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 
 import Typography from '@material-ui/core/Typography';
@@ -30,6 +30,8 @@ const UploadDocuments = ({
   const [currentFile, setCurrentFile] = useState(0);
   const [search, setSearch] = useState('');
   const [showModal, setShowModal] = useState(false);
+
+  const titleRef = useRef(null);
 
   const filteredFiles = useMemo(() => {
     const searchLower = search.toLowerCase();
@@ -80,6 +82,7 @@ const UploadDocuments = ({
   const handleOnClick = (index, file) => {
     setFile(file);
     setCurrentFile(index);
+    titleRef.current.scrollIntoView();
   };
 
   /**
@@ -143,7 +146,7 @@ const UploadDocuments = ({
         title="¿Deseas Borrar el/los documentos?"
         showModal={showModal && useDeleteDialog}
       />
-      <div className={classes.titleContainer}>
+      <div className={classes.titleContainer} ref={titleRef}>
         <Typography className={classes.title}>
           { title }
         </Typography>

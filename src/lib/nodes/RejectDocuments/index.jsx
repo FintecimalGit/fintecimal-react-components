@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import PropTypes from 'prop-types';
 
 import Typography from '@material-ui/core/Typography';
@@ -27,6 +27,8 @@ const RejectDocuments = ({
   const [files, setFiles] = useState([]);
   const [currentFile, setCurrentFile] = useState(0);
   const [search, setSearch] = useState('');
+
+  const titleRef = useRef(null);
 
   const generateFileToURL = async () => {
     let response = await fetch(url);
@@ -64,6 +66,7 @@ const RejectDocuments = ({
   const handleOnClick = (index, file) => {
     setFile(file);
     setCurrentFile(index);
+    titleRef.current.scrollIntoView();
   };
 
   const handleOnSearch = (text) => {
@@ -72,7 +75,7 @@ const RejectDocuments = ({
 
   return (
       <div>
-          <div className={classes.titleContainer}>
+          <div className={classes.titleContainer} ref={titleRef}>
               <div className={classes.titleLine}>
                   <Typography className={classes.title}>
                     { title }

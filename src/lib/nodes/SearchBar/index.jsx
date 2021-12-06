@@ -4,7 +4,7 @@ import classnames from 'classnames';
 import SearchIcon from '@material-ui/icons/Search';
 
 import useStyles from './style';
-import { InputBase, InputAdornment } from '@material-ui/core';
+import { InputBase, InputAdornment, IconButton } from '@material-ui/core';
 
 const ENTER_KEY = 13;
 
@@ -16,6 +16,11 @@ const Search = ({ onEnter, placeholder, value, onChange, disabled }) => {
     const { keyCode } = event;
     if (keyCode === ENTER_KEY) onEnter(event);
   };
+
+  const onSearch = event => {
+    event.currentTarget.value = currentValue;
+    onEnter(event);
+  }
 
   const handleOnChange = (event) => {
     const {
@@ -41,7 +46,12 @@ const Search = ({ onEnter, placeholder, value, onChange, disabled }) => {
         inputProps={{ 'aria-label': 'search' }}
         endAdornment={
           <InputAdornment position="end">
-            <SearchIcon className={classes.icon} />
+            <IconButton
+                  aria-label="Search"
+                  onClick={onSearch}
+                >
+                  <SearchIcon className={classes.icon} />
+            </IconButton>
           </InputAdornment>
         }
         value={currentValue}
