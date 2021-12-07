@@ -32,5 +32,8 @@ export default makeStyles(theme => ({
   },
   icon: {
     color: 'rgba(44,62,80,0.54)'
+  },
+  iconButton: {
+    padding: theme.spacing(1.5),
   }
 }));

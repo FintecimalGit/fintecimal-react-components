@@ -79,6 +79,7 @@ var Search = function Search(_ref) {
       position: "end"
     }, _react.default.createElement(_core.IconButton, {
       "aria-label": "Search",
+      className: classes.iconButton,
       onClick: onSearch
     }, _react.default.createElement(_Search.default, {
       className: classes.icon
