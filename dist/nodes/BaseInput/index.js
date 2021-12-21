@@ -57,7 +57,8 @@ var BaseInput = function BaseInput(_ref) {
       onClear = _ref.onClear,
       maxLength = _ref.maxLength,
       statusOnly = _ref.statusOnly,
-      status = _ref.status;
+      status = _ref.status,
+      autoComplete = _ref.autoComplete;
   var classes = (0, _style.default)();
 
   var _React$useState = _react.default.useState(0),
@@ -126,6 +127,7 @@ var BaseInput = function BaseInput(_ref) {
       asterisk: classes.asterisk
     }
   }, selectLabel()), _react.default.createElement(_core.OutlinedInput, {
+    autoComplete: autoComplete,
     id: "component-outlined",
     value: value,
     onChange: handleChange,
@@ -156,7 +158,8 @@ BaseInput.defaultProps = {
   errorMessage: '',
   disabled: false,
   statusOnly: false,
-  status: ''
+  status: '',
+  autoComplete: 'off'
 };
 BaseInput.propTypes = {
   label: _propTypes.default.string.isRequired,
@@ -170,7 +173,8 @@ BaseInput.propTypes = {
   handleChange: _propTypes.default.func.isRequired,
   onBlur: _propTypes.default.func,
   statusOnly: _propTypes.default.bool,
-  status: _propTypes.default.string
+  status: _propTypes.default.string,
+  autoComplete: _propTypes.default.string
 };
 var _default = BaseInput;
 exports.default = _default;

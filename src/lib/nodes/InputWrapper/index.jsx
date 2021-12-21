@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { isEmpty, formatText } from '../../commons/utils';
 import BaseInput from '../BaseInput';
 
-const InputWrapper = ({ config, errors, isValid, disabled, onBlur, }) => {
+const InputWrapper = ({ config, errors, isValid, disabled, onBlur, autoComplete }) => {
   const { value, handleChange, label, type, required, format, defaultValue } = config;
   const { maxLength } = config;
   const { error, errorMessage, errorMessages } = errors;
@@ -81,6 +81,7 @@ const InputWrapper = ({ config, errors, isValid, disabled, onBlur, }) => {
 
   return (
     <BaseInput
+      autoComplete={autoComplete}
       value={mValue}
       handleChange={mHandleChange}
       label={label}
@@ -99,11 +100,13 @@ const InputWrapper = ({ config, errors, isValid, disabled, onBlur, }) => {
 InputWrapper.propTypes = {
   config: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired,
-  isValid: PropTypes.func.isRequired
+  isValid: PropTypes.func.isRequired,
+  autoComplete: PropTypes.string,
 };
 
 InputWrapper.defaultProps = {
   onBlur: () => { },
+  autoComplete: 'off',
 }
 
 export default InputWrapper;
