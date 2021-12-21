@@ -18,6 +18,7 @@ const CLABEInput = ({
   disabled,
   handleBlur,
   maxLength,
+  autoComplete,
 }) => {
   const config = {
     type,
@@ -45,6 +46,7 @@ const CLABEInput = ({
 
   return (
     <InputWrapper
+      autoComplete={autoComplete}
       config={config}
       errors={errors}
       isValid={isValid}
@@ -60,7 +62,8 @@ CLABEInput.defaultProps = {
   error: false,
   errorMessage: '',
   required: false,
-  disabled: false
+  disabled: false,
+  autoComplete: 'off',
 };
 
 CLABEInput.propTypes = {
@@ -70,7 +73,8 @@ CLABEInput.propTypes = {
   errorMessage: PropTypes.string,
   required: PropTypes.bool,
   disabled: PropTypes.bool,
-  handleBlur: PropTypes.func
+  handleBlur: PropTypes.func,
+  autoComplete: PropTypes.string,
 };
 
 export default CLABEInput;

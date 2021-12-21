@@ -27,7 +27,8 @@ var CURPInput = function CURPInput(_ref) {
       errorMessage = _ref.errorMessage,
       type = _ref.type,
       required = _ref.required,
-      disabled = _ref.disabled;
+      disabled = _ref.disabled,
+      autoComplete = _ref.autoComplete;
   var config = {
     type: type,
     label: label,
@@ -54,6 +55,7 @@ var CURPInput = function CURPInput(_ref) {
   };
 
   return _react.default.createElement(_InputWrapper.default, {
+    autoComplete: autoComplete,
     config: config,
     errors: errors,
     disabled: disabled,
@@ -67,7 +69,8 @@ CURPInput.defaultProps = {
   error: false,
   errorMessage: '',
   required: false,
-  disabled: false
+  disabled: false,
+  autoComplete: 'off'
 };
 CURPInput.propTypes = {
   label: _propTypes.default.string,
@@ -75,7 +78,8 @@ CURPInput.propTypes = {
   error: _propTypes.default.bool,
   errorMessage: _propTypes.default.string,
   required: _propTypes.default.bool,
-  disabled: _propTypes.default.bool
+  disabled: _propTypes.default.bool,
+  autoComplete: _propTypes.default.string
 };
 var _default = CURPInput;
 exports.default = _default;

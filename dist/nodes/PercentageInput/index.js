@@ -32,7 +32,8 @@ var PercentageInput = function PercentageInput(props) {
       required = props.required,
       error = props.error,
       errorMessage = props.errorMessage,
-      disabled = props.disabled;
+      disabled = props.disabled,
+      autoComplete = props.autoComplete;
 
   var _useState = (0, _react.useState)(value),
       _useState2 = _slicedToArray(_useState, 2),
@@ -87,6 +88,7 @@ var PercentageInput = function PercentageInput(props) {
     }
   }, [value]);
   return _react.default.createElement(_BaseInput.default, {
+    autoComplete: autoComplete,
     label: label,
     value: mValue,
     handleChange: mHandleChange,
@@ -104,7 +106,8 @@ PercentageInput.defaultProps = {
   required: false,
   disabled: false,
   error: false,
-  errorMessage: ''
+  errorMessage: '',
+  autoComplete: 'off'
 };
 PercentageInput.propTypes = {
   label: _propTypes.default.string.isRequired,
@@ -113,7 +116,8 @@ PercentageInput.propTypes = {
   required: _propTypes.default.bool,
   disabled: _propTypes.default.bool,
   error: _propTypes.default.bool,
-  errorMessage: _propTypes.default.string
+  errorMessage: _propTypes.default.string,
+  autoComplete: _propTypes.default.string
 };
 var _default = PercentageInput;
 exports.default = _default;

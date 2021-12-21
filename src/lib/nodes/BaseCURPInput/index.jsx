@@ -14,6 +14,7 @@ const CURPInput = ({
   type,
   required,
   disabled,
+  autoComplete,
 }) => {
   const config = {
     type,
@@ -38,7 +39,7 @@ const CURPInput = ({
     }
   };
 
-  return <InputWrapper config={config} errors={errors} disabled={disabled} isValid={isValid} />;
+  return <InputWrapper autoComplete={autoComplete} config={config} errors={errors} disabled={disabled} isValid={isValid} />;
 };
 
 CURPInput.defaultProps = {
@@ -48,6 +49,7 @@ CURPInput.defaultProps = {
   errorMessage: '',
   required: false,
   disabled: false,
+  autoComplete: 'off',
 };
 
 CURPInput.propTypes = {
@@ -57,6 +59,7 @@ CURPInput.propTypes = {
   errorMessage: PropTypes.string,
   required: PropTypes.bool,
   disabled: PropTypes.bool,
+  autoComplete: PropTypes.string,
 };
 
 export default CURPInput;

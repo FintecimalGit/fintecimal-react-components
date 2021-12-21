@@ -4,7 +4,7 @@ import BaseInput from '../BaseInput';
 import { validateRegex, isEmpty, isNumber } from '../../commons/utils';
 
 const CurrencyInput = props => {
-  const { value, handleChange, label, required, error, errorMessage, disabled } = props;
+  const { value, handleChange, label, required, error, errorMessage, disabled, autoComplete, } = props;
   const [mValue, setValue] = useState(value);
 
   const onClear = () => {
@@ -48,6 +48,7 @@ const CurrencyInput = props => {
 
   return (
     <BaseInput
+      autoComplete={autoComplete}
       label={label}
       value={mValue}
       handleChange={mHandleChange}
@@ -66,7 +67,8 @@ CurrencyInput.defaultProps = {
   required: false,
   disabled: false,
   error: false,
-  errorMessage: ''
+  errorMessage: '',
+  autoComplete: 'off',
 };
 
 CurrencyInput.propTypes = {
@@ -76,7 +78,8 @@ CurrencyInput.propTypes = {
   required: PropTypes.bool,
   disabled: PropTypes.bool,
   error: PropTypes.bool,
-  errorMessage: PropTypes.string
+  errorMessage: PropTypes.string,
+  autoComplete: PropTypes.string,
 };
 
 export default CurrencyInput;

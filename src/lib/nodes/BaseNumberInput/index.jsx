@@ -14,6 +14,7 @@ const NumberInput = ({
   required,
   disabled,
   handleBlur,
+  autoComplete,
 }) => {
   const config = {
     type,
@@ -35,7 +36,7 @@ const NumberInput = ({
     return true;
   };
 
-  return <InputWrapper config={config} errors={errors} isValid={isValid} disabled={disabled} onBlur={handleBlur}/>;
+  return <InputWrapper autoComplete={autoComplete} config={config} errors={errors} isValid={isValid} disabled={disabled} onBlur={handleBlur}/>;
 };
 
 NumberInput.defaultProps = {
@@ -44,7 +45,8 @@ NumberInput.defaultProps = {
   error: false,
   errorMessage: '',
   required: false,
-  disabled: false
+  disabled: false,
+  autoComplete: 'off',
 };
 
 NumberInput.propTypes = {
@@ -55,6 +57,7 @@ NumberInput.propTypes = {
   required: PropTypes.bool,
   disabled: PropTypes.bool,
   handleBlur: PropTypes.func,
+  autoComplete: PropTypes.string,
 };
 
 export default NumberInput;
