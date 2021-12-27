@@ -14,6 +14,7 @@ const RFCInput = ({
   required,
   handleBlur,
   disabled,
+  autoComplete,
 }) => {
   const config = {
     type,
@@ -42,7 +43,7 @@ const RFCInput = ({
     return false;
   };
 
-  return <InputWrapper config={config} errors={errors} isValid={isValid} disabled={disabled} onBlur={handleBlur} />;
+  return <InputWrapper autoComplete={autoComplete} config={config} errors={errors} isValid={isValid} disabled={disabled} onBlur={handleBlur} />;
 };
 
 RFCInput.defaultProps = {
@@ -53,6 +54,7 @@ RFCInput.defaultProps = {
   required: false,
   handleBlur: () => {},
   disabled: false,
+  autoComplete: 'off',
 };
 
 RFCInput.propTypes = {
@@ -63,6 +65,7 @@ RFCInput.propTypes = {
   required: PropTypes.bool,
   handleBlur: PropTypes.func,
   disabled: PropTypes.bool,
+  autoComplete: PropTypes.string,
 };
 
 export default RFCInput;

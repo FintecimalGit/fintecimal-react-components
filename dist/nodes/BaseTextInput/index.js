@@ -27,7 +27,8 @@ var TextInput = function TextInput(_ref) {
       required = _ref.required,
       disabled = _ref.disabled,
       handleBlur = _ref.handleBlur,
-      defaultValue = _ref.defaultValue;
+      defaultValue = _ref.defaultValue,
+      autoComplete = _ref.autoComplete;
   var config = {
     type: type,
     label: label,
@@ -48,6 +49,7 @@ var TextInput = function TextInput(_ref) {
   };
 
   return _react.default.createElement(_InputWrapper.default, {
+    autoComplete: autoComplete,
     config: config,
     errors: errors,
     isValid: isValid,
@@ -62,7 +64,8 @@ TextInput.defaultProps = {
   error: false,
   errorMessage: '',
   required: false,
-  disabled: false
+  disabled: false,
+  autoComplete: 'off'
 };
 TextInput.propTypes = {
   label: _propTypes.default.string,
@@ -71,7 +74,8 @@ TextInput.propTypes = {
   errorMessage: _propTypes.default.string,
   required: _propTypes.default.bool,
   disabled: _propTypes.default.bool,
-  handleBlur: _propTypes.default.func
+  handleBlur: _propTypes.default.func,
+  autoComplete: _propTypes.default.string
 };
 var _default = TextInput;
 exports.default = _default;

@@ -13,6 +13,7 @@ const EmailInput = ({
   required,
   disabled,
   handleBlur,
+  autoComplete,
 }) => {
   const config = {
     type,
@@ -33,7 +34,7 @@ const EmailInput = ({
     return reg.test(data);
   };
 
-  return <InputWrapper config={config} errors={errors} isValid={isValid} disabled={disabled} onBlur={handleBlur}/>;
+  return <InputWrapper autoComplete={autoComplete} config={config} errors={errors} isValid={isValid} disabled={disabled} onBlur={handleBlur}/>;
 };
 
 EmailInput.defaultProps = {
@@ -42,7 +43,8 @@ EmailInput.defaultProps = {
   error: false,
   errorMessage: '',
   required: false,
-  disabled: false
+  disabled: false,
+  autoComplete: 'off',
 };
 
 EmailInput.propTypes = {
@@ -53,6 +55,7 @@ EmailInput.propTypes = {
   required: PropTypes.bool,
   disabled: PropTypes.bool,
   handleBlur: PropTypes.func,
+  autoComplete: PropTypes.string,
 };
 
 export default EmailInput;

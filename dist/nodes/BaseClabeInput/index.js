@@ -31,7 +31,8 @@ var CLABEInput = function CLABEInput(_ref) {
       required = _ref.required,
       disabled = _ref.disabled,
       handleBlur = _ref.handleBlur,
-      maxLength = _ref.maxLength;
+      maxLength = _ref.maxLength,
+      autoComplete = _ref.autoComplete;
   var config = {
     type: type,
     label: label,
@@ -58,6 +59,7 @@ var CLABEInput = function CLABEInput(_ref) {
   };
 
   return _react.default.createElement(_InputWrapper.default, {
+    autoComplete: autoComplete,
     config: config,
     errors: errors,
     isValid: isValid,
@@ -72,7 +74,8 @@ CLABEInput.defaultProps = {
   error: false,
   errorMessage: '',
   required: false,
-  disabled: false
+  disabled: false,
+  autoComplete: 'off'
 };
 CLABEInput.propTypes = {
   label: _propTypes.default.string,
@@ -81,7 +84,8 @@ CLABEInput.propTypes = {
   errorMessage: _propTypes.default.string,
   required: _propTypes.default.bool,
   disabled: _propTypes.default.bool,
-  handleBlur: _propTypes.default.func
+  handleBlur: _propTypes.default.func,
+  autoComplete: _propTypes.default.string
 };
 var _default = CLABEInput;
 exports.default = _default;

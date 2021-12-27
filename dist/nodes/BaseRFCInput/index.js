@@ -26,7 +26,8 @@ var RFCInput = function RFCInput(_ref) {
       type = _ref.type,
       required = _ref.required,
       handleBlur = _ref.handleBlur,
-      disabled = _ref.disabled;
+      disabled = _ref.disabled,
+      autoComplete = _ref.autoComplete;
   var config = {
     type: type,
     label: label,
@@ -61,6 +62,7 @@ var RFCInput = function RFCInput(_ref) {
   };
 
   return _react.default.createElement(_InputWrapper.default, {
+    autoComplete: autoComplete,
     config: config,
     errors: errors,
     isValid: isValid,
@@ -76,7 +78,8 @@ RFCInput.defaultProps = {
   errorMessage: '',
   required: false,
   handleBlur: function handleBlur() {},
-  disabled: false
+  disabled: false,
+  autoComplete: 'off'
 };
 RFCInput.propTypes = {
   label: _propTypes.default.string,
@@ -85,7 +88,8 @@ RFCInput.propTypes = {
   errorMessage: _propTypes.default.string,
   required: _propTypes.default.bool,
   handleBlur: _propTypes.default.func,
-  disabled: _propTypes.default.bool
+  disabled: _propTypes.default.bool,
+  autoComplete: _propTypes.default.string
 };
 var _default = RFCInput;
 exports.default = _default;

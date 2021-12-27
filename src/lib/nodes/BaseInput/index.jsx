@@ -35,6 +35,7 @@ const BaseInput = ({
   maxLength,
   statusOnly,
   status,
+  autoComplete,
 }) => {
   const classes = useStyles();
   const [labelWidth, setLabelWidth] = React.useState(0);
@@ -94,6 +95,7 @@ const BaseInput = ({
           {selectLabel()}
         </InputLabel>
         <OutlinedInput
+          autoComplete={autoComplete}
           id="component-outlined"
           value={value}
           onChange={handleChange}
@@ -127,6 +129,7 @@ BaseInput.defaultProps = {
   disabled: false,
   statusOnly: false,
   status: '',
+  autoComplete: 'off',
 };
 
 BaseInput.propTypes = {
@@ -142,6 +145,7 @@ BaseInput.propTypes = {
   onBlur: PropTypes.func,
   statusOnly: PropTypes.bool,
   status: PropTypes.string,
+  autoComplete: PropTypes.string,
 };
 
 export default BaseInput;

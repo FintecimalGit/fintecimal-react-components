@@ -30,7 +30,8 @@ var InputWrapper = function InputWrapper(_ref) {
       errors = _ref.errors,
       isValid = _ref.isValid,
       disabled = _ref.disabled,
-      onBlur = _ref.onBlur;
+      onBlur = _ref.onBlur,
+      autoComplete = _ref.autoComplete;
   var value = config.value,
       handleChange = config.handleChange,
       label = config.label,
@@ -125,6 +126,7 @@ var InputWrapper = function InputWrapper(_ref) {
     }
   }, [error]);
   return _react.default.createElement(_BaseInput.default, {
+    autoComplete: autoComplete,
     value: mValue,
     handleChange: mHandleChange,
     label: label,
@@ -142,10 +144,12 @@ var InputWrapper = function InputWrapper(_ref) {
 InputWrapper.propTypes = {
   config: _propTypes.default.object.isRequired,
   errors: _propTypes.default.object.isRequired,
-  isValid: _propTypes.default.func.isRequired
+  isValid: _propTypes.default.func.isRequired,
+  autoComplete: _propTypes.default.string
 };
 InputWrapper.defaultProps = {
-  onBlur: function onBlur() {}
+  onBlur: function onBlur() {},
+  autoComplete: 'off'
 };
 var _default = InputWrapper;
 exports.default = _default;

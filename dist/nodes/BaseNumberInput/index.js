@@ -26,7 +26,8 @@ var NumberInput = function NumberInput(_ref) {
       type = _ref.type,
       required = _ref.required,
       disabled = _ref.disabled,
-      handleBlur = _ref.handleBlur;
+      handleBlur = _ref.handleBlur,
+      autoComplete = _ref.autoComplete;
   var config = {
     type: type,
     label: label,
@@ -48,6 +49,7 @@ var NumberInput = function NumberInput(_ref) {
   };
 
   return _react.default.createElement(_InputWrapper.default, {
+    autoComplete: autoComplete,
     config: config,
     errors: errors,
     isValid: isValid,
@@ -62,7 +64,8 @@ NumberInput.defaultProps = {
   error: false,
   errorMessage: '',
   required: false,
-  disabled: false
+  disabled: false,
+  autoComplete: 'off'
 };
 NumberInput.propTypes = {
   label: _propTypes.default.string,
@@ -71,7 +74,8 @@ NumberInput.propTypes = {
   errorMessage: _propTypes.default.string,
   required: _propTypes.default.bool,
   disabled: _propTypes.default.bool,
-  handleBlur: _propTypes.default.func
+  handleBlur: _propTypes.default.func,
+  autoComplete: _propTypes.default.string
 };
 var _default = NumberInput;
 exports.default = _default;
