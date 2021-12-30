@@ -91,11 +91,10 @@ var InputWrapper = function InputWrapper(_ref) {
       setError(false);
       setErrorMessage('');
       onBlur();
+      handleChange(value);
     }
 
     onBlur();
-    console.log('OnBlur activado');
-    handleChange(value);
   };
 
   (0, _react.useEffect)(function () {

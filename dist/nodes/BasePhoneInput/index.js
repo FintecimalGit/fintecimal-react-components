@@ -125,8 +125,7 @@ var CellPhoneInput = function CellPhoneInput(_ref) {
     } else {
       setError(false);
       handleBlur();
-      console.log('OnBlur activado');
-      handleChange(formatValue(value));
+      handleChange(formatValue(mValue));
     }
   };
 
