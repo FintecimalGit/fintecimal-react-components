@@ -23,10 +23,10 @@ const InputWrapper = ({ config, errors, isValid, disabled, onBlur, autoComplete 
       else target.setCustomValidity(errorMessage || errorMessages.validation);
 
       setValue(formattedText);
-      handleChange(formattedText);
+      //handleChange(formattedText);
     } else {
       setValue(value);
-      handleChange(value);
+      //handleChange(value);
     }
   };
 
@@ -47,6 +47,7 @@ const InputWrapper = ({ config, errors, isValid, disabled, onBlur, autoComplete 
       setError(false);
       setErrorMessage('');
       onBlur();
+      handleChange(value);
     }
     onBlur();
   };

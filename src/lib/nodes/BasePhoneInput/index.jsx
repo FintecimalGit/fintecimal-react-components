@@ -47,7 +47,7 @@ const CellPhoneInput = ({
 
     const formattedNumber = addParenthesis(value);
     setValue(formattedNumber);
-    handleChange(formatValue(value));
+    //handleChange(formatValue(value));
   };
 
   const onClear = () => {
@@ -83,6 +83,7 @@ const CellPhoneInput = ({
     } else {
       setError(false);
       handleBlur();
+      handleChange(formatValue(mValue));
     }
   };
 
