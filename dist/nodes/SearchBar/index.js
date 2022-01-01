@@ -36,7 +36,8 @@ var Search = function Search(_ref) {
       placeholder = _ref.placeholder,
       value = _ref.value,
       onChange = _ref.onChange,
-      disabled = _ref.disabled;
+      disabled = _ref.disabled,
+      id = _ref.id;
   var classes = (0, _style.default)();
 
   var _useState = (0, _react.useState)(''),
@@ -66,6 +67,7 @@ var Search = function Search(_ref) {
   return _react.default.createElement("div", {
     className: (0, _classnames.default)(classes.root, classes.border)
   }, _react.default.createElement(_core.InputBase, {
+    id: id,
     onKeyUp: onKeyup,
     placeholder: placeholder,
     classes: {
