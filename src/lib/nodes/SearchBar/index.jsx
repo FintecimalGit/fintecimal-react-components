@@ -8,7 +8,7 @@ import { InputBase, InputAdornment, IconButton } from '@material-ui/core';
 
 const ENTER_KEY = 13;
 
-const Search = ({ onEnter, placeholder, value, onChange, disabled }) => {
+const Search = ({ onEnter, placeholder, value, onChange, disabled, id }) => {
   const classes = useStyles();
   const [currentValue, setCurrentValue] = useState('');
 
@@ -37,6 +37,7 @@ const Search = ({ onEnter, placeholder, value, onChange, disabled }) => {
   return (
     <div className={classnames(classes.root, classes.border)}>
       <InputBase
+        id={id}
         onKeyUp={onKeyup}
         placeholder={placeholder}
         classes={{
