@@ -66,11 +66,9 @@ var InputWrapper = function InputWrapper(_ref) {
     if (format) {
       var formattedText = (0, _utils.formatText)(value, format);
       if (isValid(formattedText)) target.setCustomValidity('');else target.setCustomValidity(errorMessage || errorMessages.validation);
-      setValue(formattedText);
-      handleChange(formattedText);
+      setValue(formattedText); //handleChange(formattedText);
     } else {
-      setValue(value);
-      handleChange(value);
+      setValue(value); //handleChange(value);
     }
   };
 
@@ -93,6 +91,7 @@ var InputWrapper = function InputWrapper(_ref) {
       setError(false);
       setErrorMessage('');
       onBlur();
+      handleChange(value);
     }
 
     onBlur();

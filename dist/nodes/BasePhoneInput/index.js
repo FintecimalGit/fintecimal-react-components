@@ -87,8 +87,7 @@ var CellPhoneInput = function CellPhoneInput(_ref) {
     if ((0, _utils.validateRegex)(value, /[a-zA-ZÀ-ÿñ.,\/#!$%^&*;:{}=\-+_`~´"¨°|'¡¿?\\\[\]]/g)) value = onlyNumbers(value);
     if (isValid(value)) target.setCustomValidity('');else target.setCustomValidity(errorMessage || errorMessages.validation);
     var formattedNumber = addParenthesis(value);
-    setValue(formattedNumber);
-    handleChange(formatValue(value));
+    setValue(formattedNumber); //handleChange(formatValue(value));
   };
 
   var onClear = function onClear() {
@@ -126,6 +125,7 @@ var CellPhoneInput = function CellPhoneInput(_ref) {
     } else {
       setError(false);
       handleBlur();
+      handleChange(formatValue(mValue));
     }
   };
 
