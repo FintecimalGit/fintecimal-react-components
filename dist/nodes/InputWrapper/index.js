@@ -91,7 +91,7 @@ var InputWrapper = function InputWrapper(_ref) {
       setError(false);
       setErrorMessage('');
       onBlur();
-      handleChange(value);
+      handleChange(mValue);
     }
 
     onBlur();

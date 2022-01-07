@@ -47,7 +47,7 @@ const InputWrapper = ({ config, errors, isValid, disabled, onBlur, autoComplete 
       setError(false);
       setErrorMessage('');
       onBlur();
-      handleChange(value);
+      handleChange(mValue);
     }
     onBlur();
   };
