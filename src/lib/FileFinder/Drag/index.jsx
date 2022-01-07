@@ -1,12 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { useDrag } from 'react-dnd'
 import { useDrop } from 'react-dnd';
 import FileThumbnail from '../../FileThumbnail';
-
-const Types = {
-  FILE: "file"
-};
 
 const Drag = ({ file, index, moveCard, handleOnClick, selected, dragType }) => {
   const dropMonitor = (item, monitor) => {
@@ -25,7 +22,7 @@ const Drag = ({ file, index, moveCard, handleOnClick, selected, dragType }) => {
 
   const [{ canDrop }, drop] = useDrop(
     () => ({
-      accept: Types.FILE || dragType,
+      accept: dragType,
       drop: dropMonitor,
       collect: (monitor) => ({
         canDrop: !!monitor.canDrop()
@@ -35,7 +32,7 @@ const Drag = ({ file, index, moveCard, handleOnClick, selected, dragType }) => {
   );
 
   const [{isDragging}, drag] = useDrag(() => ({
-    type: Types.FILE || dragType,
+    type: dragType,
     item: {index},
     collect: monitor => ({
       isDragging: !!monitor.isDragging(),
@@ -52,6 +49,22 @@ const Drag = ({ file, index, moveCard, handleOnClick, selected, dragType }) => {
             </div>
             )
                   )
+};
+
+Drag.propTypes = {
+  file: PropTypes.instanceOf(File),
+  moveCard: PropTypes.func.isRequired,
+  index: PropTypes.number.isRequired,
+  selected: PropTypes.bool,
+  handleOnClick: PropTypes.func,
+  dragType: PropTypes.string,
+};
+
+Drag.defaultProps = {
+  file: new File([''], '', { type: '' }),
+  selected: false,
+  handleOnClick: () => {},
+  dragType: 'file',
 };
 
 export default Drag;
