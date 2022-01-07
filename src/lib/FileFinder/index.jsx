@@ -3,8 +3,13 @@ import PropTypes from 'prop-types';
 
 import Grid from '@material-ui/core/Grid';
 
+import { Flipper, Flipped } from "react-flip-toolkit";
+import { HTML5Backend } from 'react-dnd-html5-backend';
+import { DndProvider } from 'react-dnd';
+
 import SearchBar from '../nodes/SearchBar';
-import FileThumbnail from '../FileThumbnail';
+import Add from './Add';
+import Drag from './Drag';
 
 const FileFinder = ({
   files,
@@ -13,7 +18,13 @@ const FileFinder = ({
   search,
   onSearch,
   placeholder,
-  disabled
+  disabled,
+  multiple, 
+  accept, 
+  onDrop, 
+  flipId,
+  moveCard,
+  dragType,
 }) => {
   const handleOnClick = index => (file) => {
     onClick(index, file);
@@ -27,27 +38,46 @@ const FileFinder = ({
   };
 
   return (
-    <Grid container spacing={3}>
-      <Grid item sm={12}>
-        <SearchBar
-          placeholder={placeholder}
-          onEnter={handleOnEnter}
-          value={search}
-          disabled={disabled}
-        />
-      </Grid>
-      {
-        files.map((file, index) => (
-          <Grid key={index} item sm={3}>
-            <FileThumbnail
-              file={file}
-              onClick={handleOnClick(index)}
-              selected={index === current}
+    <DndProvider backend={HTML5Backend}>
+      <Flipper flipKey={flipId} spring="stiff">
+        <Grid container spacing={3}>
+          <Grid item sm={12}>
+            <SearchBar
+              placeholder={placeholder}
+              onEnter={handleOnEnter}
+              value={search}
+              disabled={disabled}
             />
           </Grid>
-        ))
-      }
-    </Grid>
+          {
+            files.map((file, index) => (
+              <Grid key={index} item sm={3}>
+                <Flipped key={`${file.lastModified}${file.size}`} flipId={`${file.lastModified}${file.size}`}>
+                  <div>
+                    <Drag
+                      dragType={dragType}
+                      file={file}
+                      key={`${file.lastModified}${file.size}`}
+                      index={index}
+                      moveCard={moveCard}
+                      handleOnClick={handleOnClick}
+                      selected={index === current}
+                    />
+                  </div>
+                </Flipped>
+              </Grid>
+            ))
+          }
+            <Grid item sm={3}>
+              <Add 
+                multiple={multiple}
+                accept={accept}
+                onDrop={onDrop}
+              />
+            </Grid>
+        </Grid>
+      </Flipper>
+    </DndProvider>
   );
 };
 
@@ -59,6 +89,15 @@ FileFinder.propTypes = {
   onSearch: PropTypes.func,
   placeholder: PropTypes.string,
   disabled: PropTypes.bool,
+  multiple: PropTypes.bool,
+  accept: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.arrayOf(PropTypes.string),
+  ]),
+  onDrop: PropTypes.func,
+  flipId: PropTypes.string,
+  moveCard: PropTypes.func,
+  dragType: PropTypes.string,
 };
 
 FileFinder.defaultProps = {
@@ -68,7 +107,13 @@ FileFinder.defaultProps = {
   search: '',
   onSearch: () => {},
   placeholder: '',
-  disabled: false
+  disabled: false,
+  multiple: false,
+  accept: '',
+  onDrop: () => {},
+  flipId: '1',
+  moveCard: () => {},
+  dragType: '',
 };
 
 export default FileFinder;

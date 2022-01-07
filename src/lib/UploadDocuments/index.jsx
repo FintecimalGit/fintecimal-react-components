@@ -2,6 +2,10 @@ import React, { useState, useMemo, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 
 import Typography from '@material-ui/core/Typography';
+const { v4: uuidv4 } = require('uuid');
+
+import { arrayMoveImmutable } from "array-move";
+
 
 import DropZone from '../DropZone';
 import FilePreview from '../FilePreview';
@@ -18,6 +22,7 @@ const UploadDocuments = ({
   onDelete,
   onDeleteAll,
   onDownloadFile,
+  onMove,
   useDeleteDialog,
   placeholder,
   url,
@@ -30,6 +35,7 @@ const UploadDocuments = ({
   const [currentFile, setCurrentFile] = useState(0);
   const [search, setSearch] = useState('');
   const [showModal, setShowModal] = useState(false);
+  const [flipId, setFlipId] = useState('1');
 
   const titleRef = useRef(null);
 
@@ -66,12 +72,33 @@ const UploadDocuments = ({
     onDrop(acceptedFiles, rejectedFiles);
   };
 
+  const handleOnAdd = (acceptedFiles, rejectedFiles) => {
+   setFiles([...acceptedFiles, ...files]);
+   setSearch('');
+   onDrop(acceptedFiles, rejectedFiles);
+  };
+
   const handleOnDelete = () => {
     const { newFiles, index } = deleteFile();
     onDelete(newFiles, file, index);
     setFiles(newFiles);
     setShowModal(false)
   };
+
+  const moveCard = (oldIndex, newIndex) => {
+    setFlipId((oldFlip) => {
+      return uuidv4();
+    });
+    setFiles((oldFiles) => {
+      return arrayMoveImmutable(
+        oldFiles,
+        oldIndex,
+        newIndex
+      );
+    });
+    onMove(oldIndex, newIndex);
+  };
+
 
   const handleOnDeleteAll = () => {
     onDeleteAll();
@@ -136,7 +163,6 @@ const UploadDocuments = ({
     if(url !== '' && typeof url === "string") generateFileToURL();
     if(Array.isArray(url)) generateFilesToURL();
   }, [url]);
-
   return (
     <div>
       <DeleteDialog
@@ -165,6 +191,9 @@ const UploadDocuments = ({
               onDelete={useDeleteDialog ? () => setShowModal(true) : handleOnDelete}
               disabled={disabled}
               urlDocument={url}
+              multiple={multiple}
+              accept={accept}
+              onDrop={handleOnAdd}
             />
           ) 
           : (
@@ -179,6 +208,7 @@ const UploadDocuments = ({
       {
         multiple && files.length > 0 && (
           <FileFinder
+            dragType={title}
             files={filteredFiles}
             current={currentFile}
             onClick={handleOnClick}
@@ -186,6 +216,11 @@ const UploadDocuments = ({
             onSearch={handleOnSearch}
             placeholder={placeholder}
             disabled={disabled}
+            multiple={multiple}
+            accept={accept}
+            onDrop={handleOnAdd}
+            flipId={flipId}
+            moveCard={moveCard}
           />
         )
       }
@@ -208,6 +243,7 @@ UploadDocuments.propTypes = {
   onDelete: PropTypes.func,
   onDeleteAll: PropTypes.func,
   onDownloadFile: PropTypes.func,
+  onMove: PropTypes.func,
   useDeleteDialog: PropTypes.bool,
   placeholder: PropTypes.string,
   disabled: PropTypes.bool,
@@ -222,6 +258,7 @@ UploadDocuments.defaultProps = {
   onDelete: () => {},
   onDeleteAll: () => {},
   onDownloadFile: () => {},
+  onMove: () => {},
   useDeleteDialog: false,
   placeholder: '',
   url: '',
