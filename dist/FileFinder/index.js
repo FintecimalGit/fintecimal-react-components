@@ -11,9 +11,17 @@ var _propTypes = _interopRequireDefault(require("prop-types"));
 
 var _Grid = _interopRequireDefault(require("@material-ui/core/Grid"));
 
+var _reactFlipToolkit = require("react-flip-toolkit");
+
+var _reactDndHtml5Backend = require("react-dnd-html5-backend");
+
+var _reactDnd = require("react-dnd");
+
 var _SearchBar = _interopRequireDefault(require("../nodes/SearchBar"));
 
-var _FileThumbnail = _interopRequireDefault(require("../FileThumbnail"));
+var _Add = _interopRequireDefault(require("./Add"));
+
+var _Drag = _interopRequireDefault(require("./Drag"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -24,7 +32,13 @@ var FileFinder = function FileFinder(_ref) {
       search = _ref.search,
       onSearch = _ref.onSearch,
       placeholder = _ref.placeholder,
-      disabled = _ref.disabled;
+      disabled = _ref.disabled,
+      multiple = _ref.multiple,
+      accept = _ref.accept,
+      onDrop = _ref.onDrop,
+      flipId = _ref.flipId,
+      moveCard = _ref.moveCard,
+      dragType = _ref.dragType;
 
   var handleOnClick = function handleOnClick(index) {
     return function (file) {
@@ -37,7 +51,12 @@ var FileFinder = function FileFinder(_ref) {
     onSearch(value);
   };
 
-  return _react.default.createElement(_Grid.default, {
+  return _react.default.createElement(_reactDnd.DndProvider, {
+    backend: _reactDndHtml5Backend.HTML5Backend
+  }, _react.default.createElement(_reactFlipToolkit.Flipper, {
+    flipKey: flipId,
+    spring: "stiff"
+  }, _react.default.createElement(_Grid.default, {
     container: true,
     spacing: 3
   }, _react.default.createElement(_Grid.default, {
@@ -53,12 +72,26 @@ var FileFinder = function FileFinder(_ref) {
       key: index,
       item: true,
       sm: 3
-    }, _react.default.createElement(_FileThumbnail.default, {
+    }, _react.default.createElement(_reactFlipToolkit.Flipped, {
+      key: "".concat(file.lastModified).concat(file.size),
+      flipId: "".concat(file.lastModified).concat(file.size)
+    }, _react.default.createElement("div", null, _react.default.createElement(_Drag.default, {
+      dragType: dragType,
       file: file,
-      onClick: handleOnClick(index),
+      key: "".concat(file.lastModified).concat(file.size),
+      index: index,
+      moveCard: moveCard,
+      handleOnClick: handleOnClick,
       selected: index === current
-    }));
-  }));
+    }))));
+  }), _react.default.createElement(_Grid.default, {
+    item: true,
+    sm: 3
+  }, _react.default.createElement(_Add.default, {
+    multiple: multiple,
+    accept: accept,
+    onDrop: onDrop
+  })))));
 };
 
 FileFinder.propTypes = {
@@ -68,7 +101,13 @@ FileFinder.propTypes = {
   search: _propTypes.default.string,
   onSearch: _propTypes.default.func,
   placeholder: _propTypes.default.string,
-  disabled: _propTypes.default.bool
+  disabled: _propTypes.default.bool,
+  multiple: _propTypes.default.bool,
+  accept: _propTypes.default.oneOfType([_propTypes.default.string, _propTypes.default.arrayOf(_propTypes.default.string)]),
+  onDrop: _propTypes.default.func,
+  flipId: _propTypes.default.string,
+  moveCard: _propTypes.default.func,
+  dragType: _propTypes.default.string
 };
 FileFinder.defaultProps = {
   files: [],
@@ -77,7 +116,13 @@ FileFinder.defaultProps = {
   search: '',
   onSearch: function onSearch() {},
   placeholder: '',
-  disabled: false
+  disabled: false,
+  multiple: false,
+  accept: '',
+  onDrop: function onDrop() {},
+  flipId: '1',
+  moveCard: function moveCard() {},
+  dragType: ''
 };
 var _default = FileFinder;
 exports.default = _default;

@@ -11,6 +11,8 @@ var _propTypes = _interopRequireDefault(require("prop-types"));
 
 var _Typography = _interopRequireDefault(require("@material-ui/core/Typography"));
 
+var _arrayMove = require("array-move");
+
 var _DropZone = _interopRequireDefault(require("../DropZone"));
 
 var _FilePreview = _interopRequireDefault(require("../FilePreview"));
@@ -45,6 +47,9 @@ function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = 
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
+var _require = require('uuid'),
+    uuidv4 = _require.v4;
+
 var UploadDocuments = function UploadDocuments(_ref) {
   var title = _ref.title,
       multiple = _ref.multiple,
@@ -53,6 +58,7 @@ var UploadDocuments = function UploadDocuments(_ref) {
       onDelete = _ref.onDelete,
       onDeleteAll = _ref.onDeleteAll,
       onDownloadFile = _ref.onDownloadFile,
+      onMove = _ref.onMove,
       useDeleteDialog = _ref.useDeleteDialog,
       placeholder = _ref.placeholder,
       url = _ref.url,
@@ -84,6 +90,11 @@ var UploadDocuments = function UploadDocuments(_ref) {
       _useState10 = _slicedToArray(_useState9, 2),
       showModal = _useState10[0],
       setShowModal = _useState10[1];
+
+  var _useState11 = (0, _react.useState)('1'),
+      _useState12 = _slicedToArray(_useState11, 2),
+      flipId = _useState12[0],
+      setFlipId = _useState12[1];
 
   var titleRef = (0, _react.useRef)(null);
   var filteredFiles = (0, _react.useMemo)(function () {
@@ -124,6 +135,12 @@ var UploadDocuments = function UploadDocuments(_ref) {
     onDrop(acceptedFiles, rejectedFiles);
   };
 
+  var handleOnAdd = function handleOnAdd(acceptedFiles, rejectedFiles) {
+    setFiles([].concat(_toConsumableArray(acceptedFiles), _toConsumableArray(files)));
+    setSearch('');
+    onDrop(acceptedFiles, rejectedFiles);
+  };
+
   var handleOnDelete = function handleOnDelete() {
     var _deleteFile = deleteFile(),
         newFiles = _deleteFile.newFiles,
@@ -132,6 +149,16 @@ var UploadDocuments = function UploadDocuments(_ref) {
     onDelete(newFiles, file, index);
     setFiles(newFiles);
     setShowModal(false);
+  };
+
+  var moveCard = function moveCard(oldIndex, newIndex) {
+    setFlipId(function (oldFlip) {
+      return uuidv4();
+    });
+    setFiles(function (oldFiles) {
+      return (0, _arrayMove.arrayMoveImmutable)(oldFiles, oldIndex, newIndex);
+    });
+    onMove(oldIndex, newIndex);
   };
 
   var handleOnDeleteAll = function handleOnDeleteAll() {
@@ -301,20 +328,29 @@ var UploadDocuments = function UploadDocuments(_ref) {
       return setShowModal(true);
     } : handleOnDelete,
     disabled: disabled,
-    urlDocument: url
+    urlDocument: url,
+    multiple: multiple,
+    accept: accept,
+    onDrop: handleOnAdd
   }) : _react.default.createElement(_DropZone.default, {
     multiple: multiple,
     accept: accept,
     onDrop: handleOnDrop,
     disabled: disabled
   }), multiple && files.length > 0 && _react.default.createElement(_FileFinder.default, {
+    dragType: title,
     files: filteredFiles,
     current: currentFile,
     onClick: handleOnClick,
     search: search,
     onSearch: handleOnSearch,
     placeholder: placeholder,
-    disabled: disabled
+    disabled: disabled,
+    multiple: multiple,
+    accept: accept,
+    onDrop: handleOnAdd,
+    flipId: flipId,
+    moveCard: moveCard
   }));
 };
 
@@ -327,6 +363,7 @@ UploadDocuments.propTypes = {
   onDelete: _propTypes.default.func,
   onDeleteAll: _propTypes.default.func,
   onDownloadFile: _propTypes.default.func,
+  onMove: _propTypes.default.func,
   useDeleteDialog: _propTypes.default.bool,
   placeholder: _propTypes.default.string,
   disabled: _propTypes.default.bool,
@@ -340,6 +377,7 @@ UploadDocuments.defaultProps = {
   onDelete: function onDelete() {},
   onDeleteAll: function onDeleteAll() {},
   onDownloadFile: function onDownloadFile() {},
+  onMove: function onMove() {},
   useDeleteDialog: false,
   placeholder: '',
   url: '',
