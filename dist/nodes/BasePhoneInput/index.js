@@ -41,7 +41,8 @@ var CellPhoneInput = function CellPhoneInput(_ref) {
       errorMessage = _ref.errorMessage,
       disabled = _ref.disabled,
       handleBlur = _ref.handleBlur,
-      maxLength = _ref.maxLength;
+      maxLength = _ref.maxLength,
+      autoComplete = _ref.autoComplete;
   var errorMessages = _InputStrings.cellphone.errorMessages;
 
   var _useState = (0, _react.useState)(error),
@@ -168,7 +169,8 @@ var CellPhoneInput = function CellPhoneInput(_ref) {
     onFocus: onFocus,
     startAdornment: mAdornment,
     disabled: disabled,
-    maxLength: maxLength
+    maxLength: maxLength,
+    autoComplete: autoComplete
   }, _react.default.createElement(_IconText.default, {
     inputStatus: mError ? _utils.status.ERROR : mStatus,
     imgSrc: _mexicoflag.default,
@@ -183,7 +185,8 @@ CellPhoneInput.defaultProps = {
   errorMessage: '',
   required: false,
   disabled: false,
-  handleBlur: function handleBlur() {}
+  handleBlur: function handleBlur() {},
+  autoComplete: 'off'
 };
 CellPhoneInput.propTypes = {
   label: _propTypes.default.string,
@@ -192,7 +195,8 @@ CellPhoneInput.propTypes = {
   errorMessage: _propTypes.default.string,
   required: _propTypes.default.bool,
   disabled: _propTypes.default.bool,
-  handleBlur: _propTypes.default.func
+  handleBlur: _propTypes.default.func,
+  autoComplete: _propTypes.default.string
 };
 var _default = CellPhoneInput;
 exports.default = _default;

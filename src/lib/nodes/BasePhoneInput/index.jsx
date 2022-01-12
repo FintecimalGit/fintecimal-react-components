@@ -17,6 +17,7 @@ const CellPhoneInput = ({
   disabled,
   handleBlur,
   maxLength,
+  autoComplete,
 }) => {
   const { errorMessages } = cellphone;
   const [mError, setError] = useState(error);
@@ -127,6 +128,7 @@ const CellPhoneInput = ({
       startAdornment={mAdornment}
       disabled={disabled}
       maxLength={maxLength}
+      autoComplete={autoComplete}
     >
       <IconText inputStatus={mError ? status.ERROR : mStatus} imgSrc={flag} text="MXN" />
     </SpecialInput>
@@ -141,6 +143,7 @@ CellPhoneInput.defaultProps = {
   required: false,
   disabled: false,
   handleBlur: () => {},
+  autoComplete: 'off',
 };
 
 CellPhoneInput.propTypes = {
@@ -151,6 +154,7 @@ CellPhoneInput.propTypes = {
   required: PropTypes.bool,
   disabled: PropTypes.bool,
   handleBlur: PropTypes.func,
+  autoComplete: PropTypes.string,
 };
 
 export default CellPhoneInput;

@@ -30,6 +30,7 @@ const SpecialInput = ({
   startAdornment,
   disabled,
   maxLength,
+  autoComplete,
 }) => {
   const classes = useStyles();
   const [labelWidth, setLabelWidth] = React.useState(0);
@@ -81,6 +82,7 @@ const SpecialInput = ({
             labelWidth={labelWidth}
             onBlur={onBlur}
             onFocus={onFocus}
+            autoComplete={autoComplete}
             inputProps={{
               ...(maxLength ? { maxLength } : {}),
             }}
@@ -123,7 +125,8 @@ SpecialInput.defaultProps = {
   type: 'text',
   clear: true,
   errorMessage: '',
-  disabled: false
+  disabled: false,
+  autoComplete: 'off',
 };
 
 SpecialInput.propTypes = {
@@ -138,7 +141,8 @@ SpecialInput.propTypes = {
   onBlur: PropTypes.func,
   onFocus: PropTypes.func,
   startAdornment: PropTypes.string,
-  disabled: PropTypes.bool
+  disabled: PropTypes.bool,
+  autoComplete: PropTypes.string,
 };
 
 export default SpecialInput;

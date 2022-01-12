@@ -54,7 +54,8 @@ var SpecialInput = function SpecialInput(_ref) {
       onFocus = _ref.onFocus,
       startAdornment = _ref.startAdornment,
       disabled = _ref.disabled,
-      maxLength = _ref.maxLength;
+      maxLength = _ref.maxLength,
+      autoComplete = _ref.autoComplete;
   var classes = (0, _style.default)();
 
   var _React$useState = _react.default.useState(0),
@@ -110,7 +111,7 @@ var SpecialInput = function SpecialInput(_ref) {
     onChange: handleChange,
     onBlur: onBlur,
     labelWidth: labelWidth
-  }, _defineProperty(_React$createElement, "onBlur", onBlur), _defineProperty(_React$createElement, "onFocus", onFocus), _defineProperty(_React$createElement, "inputProps", _objectSpread2({}, maxLength ? {
+  }, _defineProperty(_React$createElement, "onBlur", onBlur), _defineProperty(_React$createElement, "onFocus", onFocus), _defineProperty(_React$createElement, "autoComplete", autoComplete), _defineProperty(_React$createElement, "inputProps", _objectSpread2({}, maxLength ? {
     maxLength: maxLength
   } : {})), _defineProperty(_React$createElement, "startAdornment", startAdornment && _react.default.createElement(_core.InputAdornment, {
     position: "start",
@@ -138,7 +139,8 @@ SpecialInput.defaultProps = {
   type: 'text',
   clear: true,
   errorMessage: '',
-  disabled: false
+  disabled: false,
+  autoComplete: 'off'
 };
 SpecialInput.propTypes = {
   label: _propTypes.default.string.isRequired,
@@ -152,7 +154,8 @@ SpecialInput.propTypes = {
   onBlur: _propTypes.default.func,
   onFocus: _propTypes.default.func,
   startAdornment: _propTypes.default.string,
-  disabled: _propTypes.default.bool
+  disabled: _propTypes.default.bool,
+  autoComplete: _propTypes.default.string
 };
 var _default = SpecialInput;
 exports.default = _default;
