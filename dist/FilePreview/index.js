@@ -41,8 +41,6 @@ var FilePreview = function FilePreview(_ref) {
       onDownloadFile = _ref.onDownloadFile,
       disabled = _ref.disabled,
       urlDocument = _ref.urlDocument;
-  console.log('esto es antesx');
-  console.log(file);
   var clasess = (0, _style.default)();
 
   var _useState = (0, _react.useState)(''),
@@ -51,8 +49,6 @@ var FilePreview = function FilePreview(_ref) {
       setUrl = _useState2[1];
 
   var readFile = function readFile() {
-    console.log('lol');
-    console.log(file);
     var reader = new FileReader();
 
     reader.onloadend = function () {

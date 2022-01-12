@@ -62,19 +62,23 @@ const FileFinder = ({
                       moveCard={moveCard}
                       handleOnClick={handleOnClick}
                       selected={index === current}
+                      enableDragDrop={!disabled}
                     />
                   </div>
                 </Flipped>
               </Grid>
             ))
           }
-            <Grid item sm={3}>
-              <Add 
-                multiple={multiple}
-                accept={accept}
-                onDrop={onDrop}
-              />
-            </Grid>
+            { !disabled && (
+              <Grid item sm={3}>
+                <Add 
+                  multiple={multiple}
+                  accept={accept}
+                  onDrop={onDrop}
+                />
+              </Grid>
+              )
+            } 
         </Grid>
       </Flipper>
     </DndProvider>

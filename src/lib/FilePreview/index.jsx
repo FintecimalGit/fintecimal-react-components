@@ -12,14 +12,10 @@ import { PdfViewer } from '../nodes';
 import DetectPdf from '../nodes/PdfViewer/detectPdf';
 
 const FilePreview = ({ file, onDelete, onDownloadFile, disabled, urlDocument }) => {
-  console.log('esto es antesx');
-    console.log(file);
   const clasess = useStyles();
   const [url, setUrl] = useState('');
 
   const readFile = () => {
-    console.log('lol');
-    console.log(file);
     const reader  = new FileReader();
     reader.onloadend = function () {
       const _url = URL.createObjectURL(file);

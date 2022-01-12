@@ -82,9 +82,10 @@ var FileFinder = function FileFinder(_ref) {
       index: index,
       moveCard: moveCard,
       handleOnClick: handleOnClick,
-      selected: index === current
+      selected: index === current,
+      enableDragDrop: !disabled
     }))));
-  }), _react.default.createElement(_Grid.default, {
+  }), !disabled && _react.default.createElement(_Grid.default, {
     item: true,
     sm: 3
   }, _react.default.createElement(_Add.default, {

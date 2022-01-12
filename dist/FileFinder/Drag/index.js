@@ -29,7 +29,8 @@ var Drag = function Drag(_ref) {
       moveCard = _ref.moveCard,
       handleOnClick = _ref.handleOnClick,
       selected = _ref.selected,
-      dragType = _ref.dragType;
+      dragType = _ref.dragType,
+      enableDragDrop = _ref.enableDragDrop;
 
   var dropMonitor = function dropMonitor(item, monitor) {
     var dragIndex = monitor.getItem().index;
@@ -47,6 +48,9 @@ var Drag = function Drag(_ref) {
     return {
       accept: dragType,
       drop: dropMonitor,
+      canDrop: function canDrop(item, monitor) {
+        return enableDragDrop;
+      },
       collect: function collect(monitor) {
         return {
           canDrop: !!monitor.canDrop()
@@ -88,7 +92,8 @@ Drag.propTypes = {
   index: _propTypes.default.number.isRequired,
   selected: _propTypes.default.bool,
   handleOnClick: _propTypes.default.func,
-  dragType: _propTypes.default.string
+  dragType: _propTypes.default.string,
+  enableDragDrop: _propTypes.default.bool
 };
 Drag.defaultProps = {
   file: new File([''], '', {
@@ -96,7 +101,8 @@ Drag.defaultProps = {
   }),
   selected: false,
   handleOnClick: function handleOnClick() {},
-  dragType: 'file'
+  dragType: 'file',
+  enableDragDrop: false
 };
 var _default = Drag;
 exports.default = _default;

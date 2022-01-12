@@ -5,7 +5,7 @@ import { useDrag } from 'react-dnd'
 import { useDrop } from 'react-dnd';
 import FileThumbnail from '../../FileThumbnail';
 
-const Drag = ({ file, index, moveCard, handleOnClick, selected, dragType }) => {
+const Drag = ({ file, index, moveCard, handleOnClick, selected, dragType, enableDragDrop }) => {
   const dropMonitor = (item, monitor) => {
     
     const dragIndex = monitor.getItem().index;
@@ -24,6 +24,7 @@ const Drag = ({ file, index, moveCard, handleOnClick, selected, dragType }) => {
     () => ({
       accept: dragType,
       drop: dropMonitor,
+      canDrop: (item, monitor) => enableDragDrop,
       collect: (monitor) => ({
         canDrop: !!monitor.canDrop()
       })
@@ -58,6 +59,7 @@ Drag.propTypes = {
   selected: PropTypes.bool,
   handleOnClick: PropTypes.func,
   dragType: PropTypes.string,
+  enableDragDrop: PropTypes.bool,
 };
 
 Drag.defaultProps = {
@@ -65,6 +67,7 @@ Drag.defaultProps = {
   selected: false,
   handleOnClick: () => {},
   dragType: 'file',
+  enableDragDrop: false,
 };
 
 export default Drag;

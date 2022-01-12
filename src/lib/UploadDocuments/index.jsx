@@ -27,7 +27,7 @@ const UploadDocuments = ({
   placeholder,
   url,
   disabled,
-  required
+  required,
 }) => {
   const classes = useStyles();
   const [file, setFile] = useState(null);
