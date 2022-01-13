@@ -41,14 +41,6 @@ const FileFinder = ({
     <DndProvider backend={HTML5Backend}>
       <Flipper flipKey={flipId} spring="stiff">
         <Grid container spacing={3}>
-          <Grid item sm={12}>
-            <SearchBar
-              placeholder={placeholder}
-              onEnter={handleOnEnter}
-              value={search}
-              disabled={disabled}
-            />
-          </Grid>
           {
             files.map((file, index) => (
               <Grid key={index} item sm={3}>

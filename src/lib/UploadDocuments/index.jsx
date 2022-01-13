@@ -120,18 +120,8 @@ const UploadDocuments = ({
     setSearch(text);
   };
 
-  const generateFileToURL = async () => {
-    let response = await fetch(url);
-    let data = await response.blob();
-    let metadata = {
-      type: data.type
-    };
-    let file = new File([data], title, metadata);
-    if(file) setFile(file);
-  };
-
-  const generateFilesToURL = async () => {
-    const files = await Promise.all(url.map(
+  const generateFilesToURL = async (arrayUrl) => {
+    const files = await Promise.all(arrayUrl.map(
       async (_url) => {
         let response = await fetch(_url);
         let data = await response.blob();
@@ -160,8 +150,8 @@ const UploadDocuments = ({
   }, [files]);
 
   useEffect(() => {
-    if(url !== '' && typeof url === "string") generateFileToURL();
-    if(Array.isArray(url)) generateFilesToURL();
+    const arrayUrl = (url !== '' && typeof url === "string") ? [url] : url;
+    if(Array.isArray(arrayUrl)) generateFilesToURL(arrayUrl);
   }, [url]);
   return (
     <div>

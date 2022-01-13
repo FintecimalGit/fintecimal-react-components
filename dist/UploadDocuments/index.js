@@ -182,115 +182,75 @@ var UploadDocuments = function UploadDocuments(_ref) {
     setSearch(text);
   };
 
-  var generateFileToURL =
+  var generateFilesToURL =
   /*#__PURE__*/
   function () {
     var _ref2 = _asyncToGenerator(
     /*#__PURE__*/
-    regeneratorRuntime.mark(function _callee() {
-      var response, data, metadata, file;
-      return regeneratorRuntime.wrap(function _callee$(_context) {
-        while (1) {
-          switch (_context.prev = _context.next) {
-            case 0:
-              _context.next = 2;
-              return fetch(url);
-
-            case 2:
-              response = _context.sent;
-              _context.next = 5;
-              return response.blob();
-
-            case 5:
-              data = _context.sent;
-              metadata = {
-                type: data.type
-              };
-              file = new File([data], title, metadata);
-              if (file) setFile(file);
-
-            case 9:
-            case "end":
-              return _context.stop();
-          }
-        }
-      }, _callee);
-    }));
-
-    return function generateFileToURL() {
-      return _ref2.apply(this, arguments);
-    };
-  }();
-
-  var generateFilesToURL =
-  /*#__PURE__*/
-  function () {
-    var _ref3 = _asyncToGenerator(
-    /*#__PURE__*/
-    regeneratorRuntime.mark(function _callee3() {
+    regeneratorRuntime.mark(function _callee2(arrayUrl) {
       var files, _files, file;
 
-      return regeneratorRuntime.wrap(function _callee3$(_context3) {
+      return regeneratorRuntime.wrap(function _callee2$(_context2) {
         while (1) {
-          switch (_context3.prev = _context3.next) {
+          switch (_context2.prev = _context2.next) {
             case 0:
-              _context3.next = 2;
-              return Promise.all(url.map(
+              _context2.next = 2;
+              return Promise.all(arrayUrl.map(
               /*#__PURE__*/
               function () {
-                var _ref4 = _asyncToGenerator(
+                var _ref3 = _asyncToGenerator(
                 /*#__PURE__*/
-                regeneratorRuntime.mark(function _callee2(_url) {
+                regeneratorRuntime.mark(function _callee(_url) {
                   var response, data, metadata, file;
-                  return regeneratorRuntime.wrap(function _callee2$(_context2) {
+                  return regeneratorRuntime.wrap(function _callee$(_context) {
                     while (1) {
-                      switch (_context2.prev = _context2.next) {
+                      switch (_context.prev = _context.next) {
                         case 0:
-                          _context2.next = 2;
+                          _context.next = 2;
                           return fetch(_url);
 
                         case 2:
-                          response = _context2.sent;
-                          _context2.next = 5;
+                          response = _context.sent;
+                          _context.next = 5;
                           return response.blob();
 
                         case 5:
-                          data = _context2.sent;
+                          data = _context.sent;
                           metadata = {
                             type: data.type
                           };
                           file = new File([data], title, metadata);
-                          return _context2.abrupt("return", file);
+                          return _context.abrupt("return", file);
 
                         case 9:
                         case "end":
-                          return _context2.stop();
+                          return _context.stop();
                       }
                     }
-                  }, _callee2);
+                  }, _callee);
                 }));
 
-                return function (_x) {
-                  return _ref4.apply(this, arguments);
+                return function (_x2) {
+                  return _ref3.apply(this, arguments);
                 };
               }()));
 
             case 2:
-              files = _context3.sent;
+              files = _context2.sent;
               _files = _slicedToArray(files, 1), file = _files[0];
               if (files) setFiles(files);
               if (file) setFile(file);
 
             case 6:
             case "end":
-              return _context3.stop();
+              return _context2.stop();
           }
         }
-      }, _callee3);
+      }, _callee2);
     }));
 
-    return function generateFilesToURL() {
-      return _ref3.apply(this, arguments);
+    return function generateFilesToURL(_x) {
+      return _ref2.apply(this, arguments);
     };
   }();
 
@@ -303,8 +263,8 @@ var UploadDocuments = function UploadDocuments(_ref) {
     if (files.length <= 0) setFile(null);
   }, [files]);
   (0, _react.useEffect)(function () {
-    if (url !== '' && typeof url === "string") generateFileToURL();
-    if (Array.isArray(url)) generateFilesToURL();
+    var arrayUrl = url !== '' && typeof url === "string" ? [url] : url;
+    if (Array.isArray(arrayUrl)) generateFilesToURL(arrayUrl);
   }, [url]);
   return _react.default.createElement("div", null, _react.default.createElement(_DeleteDialog.default, {
     onCancel: function onCancel() {

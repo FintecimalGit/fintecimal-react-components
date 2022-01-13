@@ -59,15 +59,7 @@ var FileFinder = function FileFinder(_ref) {
   }, _react.default.createElement(_Grid.default, {
     container: true,
     spacing: 3
-  }, _react.default.createElement(_Grid.default, {
-    item: true,
-    sm: 12
-  }, _react.default.createElement(_SearchBar.default, {
-    placeholder: placeholder,
-    onEnter: handleOnEnter,
-    value: search,
-    disabled: disabled
-  })), files.map(function (file, index) {
+  }, files.map(function (file, index) {
     return _react.default.createElement(_Grid.default, {
       key: index,
       item: true,
