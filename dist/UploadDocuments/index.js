@@ -188,13 +188,14 @@ var UploadDocuments = function UploadDocuments(_ref) {
     var _ref2 = _asyncToGenerator(
     /*#__PURE__*/
     regeneratorRuntime.mark(function _callee2(arrayUrl) {
-      var files, _files, file;
+      var _files, _files2, _file2;
 
       return regeneratorRuntime.wrap(function _callee2$(_context2) {
         while (1) {
           switch (_context2.prev = _context2.next) {
             case 0:
-              _context2.next = 2;
+              _context2.prev = 0;
+              _context2.next = 3;
               return Promise.all(arrayUrl.map(
               /*#__PURE__*/
               function () {
@@ -235,18 +236,25 @@ var UploadDocuments = function UploadDocuments(_ref) {
                 };
               }()));
 
-            case 2:
-              files = _context2.sent;
-              _files = _slicedToArray(files, 1), file = _files[0];
-              if (files) setFiles(files);
-              if (file) setFile(file);
+            case 3:
+              _files = _context2.sent;
+              _files2 = _slicedToArray(_files, 1), _file2 = _files2[0];
+              if (_files) setFiles(_files);
+              if (_file2) setFile(_file2);
+              _context2.next = 12;
+              break;
 
-            case 6:
+            case 9:
+              _context2.prev = 9;
+              _context2.t0 = _context2["catch"](0);
+              console.log(_context2.t0);
+
+            case 12:
             case "end":
               return _context2.stop();
           }
         }
-      }, _callee2);
+      }, _callee2, null, [[0, 9]]);
     }));
 
     return function generateFilesToURL(_x) {

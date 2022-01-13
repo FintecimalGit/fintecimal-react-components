@@ -11,7 +11,7 @@ import VisibilityIcon from '@material-ui/icons/Visibility';
 
 import useStyles from './style';
 
-const FileThumbnail = ({ file, selected, onClick }) => {
+const FileThumbnail = ({ file, selected, onClick, isOver }) => {
   const clasess = useStyles();
   const [url, setUrl] = useState('');
 
@@ -116,7 +116,10 @@ const FileThumbnail = ({ file, selected, onClick }) => {
 
   return (
     <div className={clasess.root} onClick={handleOnClick}>
-      <div className={clasess.imageContainer}>
+      <div className={classnames(
+      clasess.imageContainer,
+      { [clasess.isOver]: isOver },
+    )}>
         <img
           alt={file.name}
           src={url}
@@ -144,11 +147,13 @@ const FileThumbnail = ({ file, selected, onClick }) => {
 FileThumbnail.propTypes = {
   file: PropTypes.instanceOf(File),
   selected: PropTypes.bool,
+  isOver: PropTypes.bool,
 };
 
 FileThumbnail.defaultProps = {
   file: new File([''], '', { type: '' }),
   selected: false,
+  isOver: false,
 };
 
 export default FileThumbnail;

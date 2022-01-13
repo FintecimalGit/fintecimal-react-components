@@ -20,13 +20,13 @@ const Drag = ({ file, index, moveCard, handleOnClick, selected, dragType, enable
     monitor.getItem().index = hoverIndex;
   };
 
-  const [{ canDrop }, drop] = useDrop(
+  const [{ isOver }, drop] = useDrop(
     () => ({
       accept: dragType,
       drop: dropMonitor,
       canDrop: (item, monitor) => enableDragDrop,
       collect: (monitor) => ({
-        canDrop: !!monitor.canDrop()
+        isOver: !!monitor.isOver()
       })
     }), 
     [index]
@@ -46,6 +46,7 @@ const Drag = ({ file, index, moveCard, handleOnClick, selected, dragType, enable
               file={file}
               onClick={handleOnClick(index)}
               selected={selected}
+              isOver={isDragging ? false : isOver}
             />
             </div>
             )
