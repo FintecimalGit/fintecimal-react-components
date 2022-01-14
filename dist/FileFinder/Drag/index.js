@@ -53,13 +53,13 @@ var Drag = function Drag(_ref) {
       },
       collect: function collect(monitor) {
         return {
-          canDrop: !!monitor.canDrop()
+          isOver: !!monitor.isOver()
         };
       }
     };
   }, [index]),
       _useDrop2 = _slicedToArray(_useDrop, 2),
-      canDrop = _useDrop2[0].canDrop,
+      isOver = _useDrop2[0].isOver,
       drop = _useDrop2[1];
 
   var _useDrag = (0, _reactDnd.useDrag)(function () {
@@ -82,7 +82,8 @@ var Drag = function Drag(_ref) {
   return drag(drop(_react.default.createElement("div", null, _react.default.createElement(_FileThumbnail.default, {
     file: file,
     onClick: handleOnClick(index),
-    selected: selected
+    selected: selected,
+    isOver: isDragging ? false : isOver
   }))));
 };
 

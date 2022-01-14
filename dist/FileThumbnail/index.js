@@ -9,7 +9,7 @@ var _react = _interopRequireWildcard(require("react"));
 
 var _propTypes = _interopRequireDefault(require("prop-types"));
 
-var _classnames2 = _interopRequireDefault(require("classnames"));
+var _classnames3 = _interopRequireDefault(require("classnames"));
 
 var _pdf = _interopRequireDefault(require("pdfjs-dist/build/pdf"));
 
@@ -42,7 +42,8 @@ _pdf.default.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/
 var FileThumbnail = function FileThumbnail(_ref) {
   var file = _ref.file,
       selected = _ref.selected,
-      onClick = _ref.onClick;
+      onClick = _ref.onClick,
+      isOver = _ref.isOver;
   var clasess = (0, _style.default)();
 
   var _useState = (0, _react.useState)(''),
@@ -285,7 +286,7 @@ var FileThumbnail = function FileThumbnail(_ref) {
     className: clasess.root,
     onClick: handleOnClick
   }, _react.default.createElement("div", {
-    className: clasess.imageContainer
+    className: (0, _classnames3.default)(clasess.imageContainer, _defineProperty({}, clasess.isOver, isOver))
   }, _react.default.createElement("img", {
     alt: file.name,
     src: url,
@@ -296,19 +297,21 @@ var FileThumbnail = function FileThumbnail(_ref) {
       display: 'flex'
     } : {}
   }, _react.default.createElement(_Visibility.default, null))), _react.default.createElement(_Typography.default, {
-    className: (0, _classnames2.default)(clasess.typography, _defineProperty({}, clasess.typographySelected, selected))
+    className: (0, _classnames3.default)(clasess.typography, _defineProperty({}, clasess.typographySelected, selected))
   }, file.name));
 };
 
 FileThumbnail.propTypes = {
   file: _propTypes.default.instanceOf(File),
-  selected: _propTypes.default.bool
+  selected: _propTypes.default.bool,
+  isOver: _propTypes.default.bool
 };
 FileThumbnail.defaultProps = {
   file: new File([''], '', {
     type: ''
   }),
-  selected: false
+  selected: false,
+  isOver: false
 };
 var _default = FileThumbnail;
 exports.default = _default;

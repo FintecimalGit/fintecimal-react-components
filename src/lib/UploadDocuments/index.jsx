@@ -121,21 +121,26 @@ const UploadDocuments = ({
   };
 
   const generateFilesToURL = async (arrayUrl) => {
-    const files = await Promise.all(arrayUrl.map(
-      async (_url) => {
-        let response = await fetch(_url);
-        let data = await response.blob();
-        let metadata = {
-          type: data.type
-        };
-        let file = new File([data], title, metadata);
-        return file;
-      }
-    ));
-  
-    const [file] = files;
-    if(files) setFiles(files);
-    if(file) setFile(file);
+    try {
+      const files = await Promise.all(arrayUrl.map(
+        async (_url) => {
+          let response = await fetch(_url);
+          let data = await response.blob();
+          let metadata = {
+            type: data.type
+          };
+          let file = new File([data], title, metadata);
+          return file;
+        }
+      ));
+    
+      const [file] = files;
+      if(files) setFiles(files);
+      if(file) setFile(file);
+    }
+    catch(e) {
+      console.log(e);
+    }
   };
 
   useEffect(() => {

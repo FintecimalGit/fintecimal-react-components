@@ -16,6 +16,9 @@ const useStyles = makeStyles(theme => ({
     border: 'solid 1px #E0E0E0',
     borderRadius: '4px',
   },
+  isOver: {
+    border: `1px dashed ${theme.palette.primary.main}`
+  },
   image: {
     width: '100%',
     height: '100%',
