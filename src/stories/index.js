@@ -1458,6 +1458,16 @@ storiesOf('NewComponents', module)
   .add('UploadDocuments', () => (
     <Container style={{ paddingTop: '5vh', paddingBottom: '5vh' }}>
       <UploadDocuments
+        title="DropZone INE"
+        multiple
+        accept=""
+        onDrop={action('onDrop')}
+        onDelete={action('onDelete')}
+        placeholder="Busca una nómina"
+        useEditorIne
+        useDeleteDialog
+      />
+      <UploadDocuments
         title="DropZone Multiple"
         multiple
         accept=""

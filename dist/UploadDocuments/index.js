@@ -21,6 +21,8 @@ var _FileFinder = _interopRequireDefault(require("../FileFinder"));
 
 var _DeleteDialog = _interopRequireDefault(require("./DeleteDialog"));
 
+var _IneEditor = _interopRequireDefault(require("../IneEditor"));
+
 var _style = _interopRequireDefault(require("./style"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -63,7 +65,8 @@ var UploadDocuments = function UploadDocuments(_ref) {
       placeholder = _ref.placeholder,
       url = _ref.url,
       disabled = _ref.disabled,
-      required = _ref.required;
+      required = _ref.required,
+      useEditorIne = _ref.useEditorIne;
   var classes = (0, _style.default)();
 
   var _useState = (0, _react.useState)(null),
@@ -100,11 +103,11 @@ var UploadDocuments = function UploadDocuments(_ref) {
   var filteredFiles = (0, _react.useMemo)(function () {
     var searchLower = search.toLowerCase();
     return files.map(function (file) {
-      var fileNameLower = file.name.toLowerCase();
+      var fileNameLower = file ? file.name.toLowerCase() : '';
       if (fileNameLower.includes(searchLower) || searchLower === '') return file;
       return null;
     }).filter(function (file) {
-      return file !== null;
+      return file !== null && file !== '';
     });
   }, [files, search]);
   /**
@@ -121,6 +124,26 @@ var UploadDocuments = function UploadDocuments(_ref) {
     return {
       newFiles: newFiles,
       index: index
+    };
+  };
+
+  var deleteFileByIndex = function deleteFileByIndex() {
+    var newFiles = _toConsumableArray(files);
+
+    var index = newFiles.findIndex(function (_file) {
+      return _file === file;
+    });
+    if (index !== -1) newFiles[index] = '';
+    newFiles = newFiles.map(function (_file) {
+      return _file === undefined ? '' : _file;
+    });
+    var filterFiles = newFiles.filter(function (_file) {
+      return _file !== '';
+    });
+    return {
+      newFiles: newFiles,
+      index: index,
+      filterFiles: filterFiles
     };
   };
   /**
@@ -141,13 +164,32 @@ var UploadDocuments = function UploadDocuments(_ref) {
     onDrop(acceptedFiles, rejectedFiles);
   };
 
-  var handleOnDelete = function handleOnDelete() {
-    var _deleteFile = deleteFile(),
-        newFiles = _deleteFile.newFiles,
-        index = _deleteFile.index;
+  var handleOnDropByIndex = function handleOnDropByIndex(acceptedFiles, rejectedFiles, index) {
+    var newValues = _toConsumableArray(files);
 
-    onDelete(newFiles, file, index);
-    setFiles(newFiles);
+    if (acceptedFiles.length) newValues[index] = acceptedFiles[0];
+    setFiles(newValues);
+    onDrop(acceptedFiles, rejectedFiles);
+  };
+
+  var handleOnDelete = function handleOnDelete() {
+    if (useEditorIne) {
+      var _deleteFileByIndex = deleteFileByIndex(),
+          newFiles = _deleteFileByIndex.newFiles,
+          index = _deleteFileByIndex.index,
+          filterFiles = _deleteFileByIndex.filterFiles;
+
+      onDelete(filterFiles, file, index);
+      setFiles(newFiles);
+    } else {
+      var _deleteFile = deleteFile(),
+          _newFiles = _deleteFile.newFiles,
+          _index = _deleteFile.index;
+
+      onDelete(_newFiles, file, _index);
+      setFiles(_newFiles);
+    }
+
     setShowModal(false);
   };
 
@@ -262,6 +304,41 @@ var UploadDocuments = function UploadDocuments(_ref) {
     };
   }();
 
+  var checkFiles = function checkFiles() {
+    return files.filter(function (_file) {
+      return _file !== '';
+    }).length < 2;
+  };
+
+  var getTheDocument = function getTheDocument() {
+    if (useEditorIne && checkFiles()) return _react.default.createElement(_IneEditor.default, {
+      title: title,
+      accept: accept,
+      onChange: handleOnDropByIndex,
+      values: files,
+      disabled: disabled,
+      handleOnDelete: useDeleteDialog ? function () {
+        return setShowModal(true);
+      } : handleOnDelete
+    });else if (file) return _react.default.createElement(_FilePreview.default, {
+      onDownloadFile: onDownloadFile,
+      file: file,
+      onDelete: useDeleteDialog ? function () {
+        return setShowModal(true);
+      } : handleOnDelete,
+      disabled: disabled,
+      urlDocument: url,
+      multiple: multiple,
+      accept: accept,
+      onDrop: handleOnAdd
+    });else return _react.default.createElement(_DropZone.default, {
+      multiple: multiple,
+      accept: accept,
+      onDrop: handleOnDrop,
+      disabled: disabled
+    });
+  };
+
   (0, _react.useEffect)(function () {
     setCurrentFile(0);
     if (filteredFiles.length > 0) setFile(filteredFiles[0]);else setSearch('');
@@ -289,23 +366,7 @@ var UploadDocuments = function UploadDocuments(_ref) {
     className: classes.title
   }, title), required && _react.default.createElement(_Typography.default, {
     className: classes.asterisk
-  }, "*")), file ? _react.default.createElement(_FilePreview.default, {
-    onDownloadFile: onDownloadFile,
-    file: file,
-    onDelete: useDeleteDialog ? function () {
-      return setShowModal(true);
-    } : handleOnDelete,
-    disabled: disabled,
-    urlDocument: url,
-    multiple: multiple,
-    accept: accept,
-    onDrop: handleOnAdd
-  }) : _react.default.createElement(_DropZone.default, {
-    multiple: multiple,
-    accept: accept,
-    onDrop: handleOnDrop,
-    disabled: disabled
-  }), multiple && files.length > 0 && _react.default.createElement(_FileFinder.default, {
+  }, "*")), getTheDocument(), multiple && files.length > 0 && _react.default.createElement(_FileFinder.default, {
     dragType: title,
     files: filteredFiles,
     current: currentFile,
@@ -313,7 +374,7 @@ var UploadDocuments = function UploadDocuments(_ref) {
     search: search,
     onSearch: handleOnSearch,
     placeholder: placeholder,
-    disabled: disabled,
+    disabled: disabled || useEditorIne,
     multiple: multiple,
     accept: accept,
     onDrop: handleOnAdd,
@@ -335,7 +396,8 @@ UploadDocuments.propTypes = {
   useDeleteDialog: _propTypes.default.bool,
   placeholder: _propTypes.default.string,
   disabled: _propTypes.default.bool,
-  required: _propTypes.default.bool
+  required: _propTypes.default.bool,
+  useEditorIne: _propTypes.default.bool
 };
 UploadDocuments.defaultProps = {
   title: '',
@@ -350,7 +412,8 @@ UploadDocuments.defaultProps = {
   placeholder: '',
   url: '',
   disabled: false,
-  required: false
+  required: false,
+  useEditorIne: false
 };
 var _default = UploadDocuments;
 exports.default = _default;
