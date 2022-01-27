@@ -17,6 +17,9 @@ var _default = (0, _styles.makeStyles)(function (theme) {
       borderRadius: '4px',
       border: '1px solid #fbfbfb'
     },
+    isIneEditor: {
+      flex: 1
+    },
     dropZone: {
       boxSizing: 'border-box',
       width: '100%',

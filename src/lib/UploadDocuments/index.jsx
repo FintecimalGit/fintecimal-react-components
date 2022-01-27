@@ -11,6 +11,7 @@ import DropZone from '../DropZone';
 import FilePreview from '../FilePreview';
 import FileFinder from '../FileFinder';
 import DeleteDialog from './DeleteDialog';
+import IneEditor from '../IneEditor';
 
 import useStyles from './style';
 
@@ -28,6 +29,7 @@ const UploadDocuments = ({
   url,
   disabled,
   required,
+  useEditorIne
 }) => {
   const classes = useStyles();
   const [file, setFile] = useState(null);
@@ -44,22 +46,31 @@ const UploadDocuments = ({
     return (
       files
         .map((file) => {
-          const fileNameLower = file.name.toLowerCase();
+          const fileNameLower = file ? file.name.toLowerCase() : '';
           if (fileNameLower.includes(searchLower) || searchLower === '') return file;
           return null;
         })
-        .filter((file) => file !== null)
+        .filter((file) => file !== null && file !== '')
     );
   }, [files, search]);
 
   /**
    * @returns {Array}
    */
-  const deleteFile = () => {
+   const deleteFile = () => {
     const newFiles = [...files];
     const index = newFiles.findIndex((_file) => _file === file);
     if (index !== -1) newFiles.splice(index, 1);
     return { newFiles, index };
+  };
+
+  const deleteFileByIndex = () => {
+    let newFiles = [...files];
+    const index = newFiles.findIndex((_file) => _file === file);
+    if (index !== -1) newFiles[index] = '';
+    newFiles = newFiles.map((_file) => _file === undefined ? '' : _file);
+    const filterFiles = newFiles.filter((_file) => _file !== '');
+    return { newFiles, index, filterFiles };
   };
 
   /**
@@ -78,11 +89,24 @@ const UploadDocuments = ({
    onDrop(acceptedFiles, rejectedFiles);
   };
 
+  const handleOnDropByIndex = (acceptedFiles, rejectedFiles, index) => {
+    const newValues = [...files];
+    if(acceptedFiles.length) newValues[index] = acceptedFiles[0];
+    setFiles(newValues);
+    onDrop(acceptedFiles, rejectedFiles);
+  };
+
   const handleOnDelete = () => {
-    const { newFiles, index } = deleteFile();
-    onDelete(newFiles, file, index);
-    setFiles(newFiles);
-    setShowModal(false)
+    if (useEditorIne) {
+      const { newFiles, index, filterFiles } = deleteFileByIndex();
+      onDelete(filterFiles, file, index);
+      setFiles(newFiles);
+    } else {
+      const { newFiles, index } = deleteFile();
+      onDelete(newFiles, file, index);
+      setFiles(newFiles);
+    }
+    setShowModal(false);
   };
 
   const moveCard = (oldIndex, newIndex) => {
@@ -143,6 +167,43 @@ const UploadDocuments = ({
     }
   };
 
+  const checkFiles = () => {
+    return files.filter((_file) => _file !== '').length < 2;
+  };
+
+  const getTheDocument = () => {
+    if (useEditorIne && checkFiles()) return (
+      <IneEditor
+        title={title}
+        accept={accept}
+        onChange={handleOnDropByIndex}
+        values={files}
+        disabled={disabled}
+        handleOnDelete={useDeleteDialog ? () => setShowModal(true) : handleOnDelete}
+      />
+    );
+    else if (file) return (
+      <FilePreview
+        onDownloadFile={onDownloadFile}
+        file={file}
+        onDelete={useDeleteDialog ? () => setShowModal(true) : handleOnDelete}
+        disabled={disabled}
+        urlDocument={url}
+        multiple={multiple}
+        accept={accept}
+        onDrop={handleOnAdd}
+      />
+    );
+    else return (
+      <DropZone
+        multiple={multiple}
+        accept={accept}
+        onDrop={handleOnDrop}
+        disabled={disabled}
+      />
+    )
+  };
+
   useEffect(() => {
     setCurrentFile(0);
     if (filteredFiles.length > 0) setFile(filteredFiles[0]);
@@ -178,27 +239,7 @@ const UploadDocuments = ({
         )}
       </div>
       {
-        file
-          ? (
-            <FilePreview
-              onDownloadFile={onDownloadFile}
-              file={file}
-              onDelete={useDeleteDialog ? () => setShowModal(true) : handleOnDelete}
-              disabled={disabled}
-              urlDocument={url}
-              multiple={multiple}
-              accept={accept}
-              onDrop={handleOnAdd}
-            />
-          ) 
-          : (
-            <DropZone
-              multiple={multiple}
-              accept={accept}
-              onDrop={handleOnDrop}
-              disabled={disabled}
-            />
-          )
+        getTheDocument()
       }
       {
         multiple && files.length > 0 && (
@@ -210,7 +251,7 @@ const UploadDocuments = ({
             search={search}
             onSearch={handleOnSearch}
             placeholder={placeholder}
-            disabled={disabled}
+            disabled={disabled || useEditorIne}
             multiple={multiple}
             accept={accept}
             onDrop={handleOnAdd}
@@ -243,6 +284,7 @@ UploadDocuments.propTypes = {
   placeholder: PropTypes.string,
   disabled: PropTypes.bool,
   required: PropTypes.bool,
+  useEditorIne: PropTypes.bool,
 };
 
 UploadDocuments.defaultProps = {
@@ -259,6 +301,7 @@ UploadDocuments.defaultProps = {
   url: '',
   disabled: false,
   required: false,
+  useEditorIne: false,
 };
 
 export default UploadDocuments;
