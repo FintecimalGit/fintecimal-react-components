@@ -15,7 +15,7 @@ import useStyles from './style';
 const FRONT_INDEX = 0; // Note: for reversePhoto flow
 const BACK_INDEX = 1; // Note: for reversePhoto flow
 
-const IneEditor = ({ accept, disabled, isIncorrect, onChange, values, title, handleOnDelete }) => {
+const IneEditor = ({ accept, disabled, isIncorrect, onChange, values, title, handleOnDelete, fileConvertion }) => {
   const [file, setFile] = useState(null);
   const [indexSide, setIndexSide] = useState(null);
 
@@ -23,21 +23,44 @@ const IneEditor = ({ accept, disabled, isIncorrect, onChange, values, title, han
 
   const filterValues = useMemo(() => values.filter((value) => value !== ''), [values]);
 
-  const handleOnDrop = (acceptedFiles, rejectedFiles, side) => {
+  const isPngType = (file) => {
+    return file.type.split('/').pop() === 'png';
+  };
+
+  const convertUrlToFile = async (url) => {
+    if(!url) return '';
+    let response = await fetch(url);
+    let data = await response.blob();
+    let metadata = {
+      type: data.type
+    };
+    let file = new File([data], title, metadata);
+    return file;
+  }
+
+  const handleOnDrop = async (acceptedFiles, rejectedFiles, side) => {
     if (rejectedFiles.length) {
       onChange(acceptedFiles, rejectedFiles, side);
       return;
     }
     if (acceptedFiles.length) {
-      setFile(acceptedFiles[0]);
+      let acceptFiles = acceptedFiles[0];
+      if (!isPngType(acceptFiles)) {
+        const convertedFiles = await fileConvertion(acceptedFiles, 'cropConvertion');
+        acceptFiles = await convertUrlToFile(convertedFiles);
+      }
+      setFile(acceptFiles);
       setIndexSide(side);
     }
   };
 
   const onCrop = (event, blob) => {
-    const name = indexSide ? 'Reverso' : 'Frontal';
+    console.log({ blob: blob.type });
+    const extension = blob.type.split('/').pop();
+    const name = indexSide ? `Reverso.${extension}` : `Frontal.${extension}`;
     const fileCropped = new File([blob], name, { type: blob.type });
     setFile(null);
+    console.log(indexSide);
     onChange([fileCropped], [], indexSide);
   };
 
@@ -101,6 +124,7 @@ IneEditor.propTypes = {
   values: PropTypes.array,
   title: PropTypes.string,
   handleOnDelete: PropTypes.func,
+  fileConvertion: PropTypes.func,
 };
 
 IneEditor.defaultProps = {
@@ -112,6 +136,7 @@ IneEditor.defaultProps = {
   values: [],
   title: '',
   handleOnDelete: () => {},
+  fileConvertion: () => {},
 };
 
 export default IneEditor;
