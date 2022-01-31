@@ -15,7 +15,7 @@ import useStyles from './style';
 const FRONT_INDEX = 0; // Note: for reversePhoto flow
 const BACK_INDEX = 1; // Note: for reversePhoto flow
 
-const IneEditor = ({ accept, disabled, isIncorrect, onChange, values, title, handleOnDelete, fileConvertion }) => {
+const IneEditor = ({ accept, disabled, isIncorrect, onChange, values, title, handleOnDelete, fileConvertion, disabledDelete }) => {
   const [file, setFile] = useState(null);
   const [indexSide, setIndexSide] = useState(null);
 
@@ -55,12 +55,10 @@ const IneEditor = ({ accept, disabled, isIncorrect, onChange, values, title, han
   };
 
   const onCrop = (event, blob) => {
-    console.log({ blob: blob.type });
     const extension = blob.type.split('/').pop();
     const name = indexSide ? `Reverso.${extension}` : `Frontal.${extension}`;
     const fileCropped = new File([blob], name, { type: blob.type });
     setFile(null);
-    console.log(indexSide);
     onChange([fileCropped], [], indexSide);
   };
 
@@ -72,7 +70,7 @@ const IneEditor = ({ accept, disabled, isIncorrect, onChange, values, title, han
         title={title}
         action={
           (
-            (!disabled && filterValues.length > 0) && (
+            (!disabled && filterValues.length > 0 && !disabledDelete) && (
                 <IconButton
                     className={clasess.iconButton}
                     onClick={handleOnDelete}
@@ -125,6 +123,7 @@ IneEditor.propTypes = {
   title: PropTypes.string,
   handleOnDelete: PropTypes.func,
   fileConvertion: PropTypes.func,
+  disabledDelete: PropTypes.func,
 };
 
 IneEditor.defaultProps = {
@@ -137,6 +136,7 @@ IneEditor.defaultProps = {
   title: '',
   handleOnDelete: () => {},
   fileConvertion: () => {},
+  disabledDelete: false,
 };
 
 export default IneEditor;

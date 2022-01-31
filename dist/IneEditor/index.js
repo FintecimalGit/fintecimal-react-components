@@ -51,7 +51,8 @@ var IneEditor = function IneEditor(_ref) {
       values = _ref.values,
       title = _ref.title,
       handleOnDelete = _ref.handleOnDelete,
-      fileConvertion = _ref.fileConvertion;
+      fileConvertion = _ref.fileConvertion,
+      disabledDelete = _ref.disabledDelete;
 
   var _useState = (0, _react.useState)(null),
       _useState2 = _slicedToArray(_useState, 2),
@@ -183,16 +184,12 @@ var IneEditor = function IneEditor(_ref) {
   }();
 
   var onCrop = function onCrop(event, blob) {
-    console.log({
-      blob: blob.type
-    });
     var extension = blob.type.split('/').pop();
     var name = indexSide ? "Reverso.".concat(extension) : "Frontal.".concat(extension);
     var fileCropped = new File([blob], name, {
       type: blob.type
     });
     setFile(null);
-    console.log(indexSide);
     onChange([fileCropped], [], indexSide);
   };
 
@@ -201,7 +198,7 @@ var IneEditor = function IneEditor(_ref) {
   }, _react.default.createElement(_CardHeader.default, {
     className: clasess.cardHeader,
     title: title,
-    action: !disabled && filterValues.length > 0 && _react.default.createElement(_IconButton.default, {
+    action: !disabled && filterValues.length > 0 && !disabledDelete && _react.default.createElement(_IconButton.default, {
       className: clasess.iconButton,
       onClick: handleOnDelete
     }, _react.default.createElement(_Delete.default, null))
@@ -240,7 +237,8 @@ IneEditor.propTypes = {
   values: _propTypes.default.array,
   title: _propTypes.default.string,
   handleOnDelete: _propTypes.default.func,
-  fileConvertion: _propTypes.default.func
+  fileConvertion: _propTypes.default.func,
+  disabledDelete: _propTypes.default.func
 };
 IneEditor.defaultProps = {
   accept: '',
@@ -251,7 +249,8 @@ IneEditor.defaultProps = {
   values: [],
   title: '',
   handleOnDelete: function handleOnDelete() {},
-  fileConvertion: function fileConvertion() {}
+  fileConvertion: function fileConvertion() {},
+  disabledDelete: false
 };
 var _default = IneEditor;
 exports.default = _default;

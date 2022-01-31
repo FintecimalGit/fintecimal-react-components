@@ -21,9 +21,19 @@ var _FilePreview = _interopRequireDefault(require("../../FilePreview"));
 
 var _FileFinder = _interopRequireDefault(require("../../FileFinder"));
 
+var _IneEditor = _interopRequireDefault(require("../../IneEditor"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
@@ -37,6 +47,9 @@ function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = 
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
+var REVERSE = 'Reverse';
+var FRONT = "Front";
+
 var RejectDocuments = function RejectDocuments(_ref) {
   var title = _ref.title,
       rejected = _ref.rejected,
@@ -48,7 +61,10 @@ var RejectDocuments = function RejectDocuments(_ref) {
       showUndo = _ref.showUndo,
       onUndoRejection = _ref.onUndoRejection,
       editable = _ref.editable,
-      multiple = _ref.multiple;
+      useEditorIne = _ref.useEditorIne,
+      multiple = _ref.multiple,
+      accept = _ref.accept,
+      fileConvertion = _ref.fileConvertion;
   var classes = (0, _style.default)();
 
   var _useState = (0, _react.useState)(null),
@@ -70,6 +86,11 @@ var RejectDocuments = function RejectDocuments(_ref) {
       _useState8 = _slicedToArray(_useState7, 2),
       search = _useState8[0],
       setSearch = _useState8[1];
+
+  var _useState9 = (0, _react.useState)(['', '']),
+      _useState10 = _slicedToArray(_useState9, 2),
+      positions = _useState10[0],
+      setPositions = _useState10[1];
 
   var titleRef = (0, _react.useRef)(null);
 
@@ -119,7 +140,7 @@ var RejectDocuments = function RejectDocuments(_ref) {
     var _ref3 = _asyncToGenerator(
     /*#__PURE__*/
     regeneratorRuntime.mark(function _callee2() {
-      var i, response, data, metadata, _file;
+      var i, response, data, metadata, _file2;
 
       return regeneratorRuntime.wrap(function _callee2$(_context2) {
         while (1) {
@@ -146,8 +167,8 @@ var RejectDocuments = function RejectDocuments(_ref) {
               metadata = {
                 type: data.type
               };
-              _file = new File([data], title, metadata);
-              if (_file) files[i] = _file;
+              _file2 = new File([data], title, metadata);
+              if (_file2) files[i] = _file2;
 
             case 11:
               i++;
@@ -175,8 +196,19 @@ var RejectDocuments = function RejectDocuments(_ref) {
   }, [url]);
 
   var handleOnDrop = function handleOnDrop(value) {
-    onHandlerReject(value);
+    var rejectedFiles = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
+    var prefix = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
+    onHandlerReject(value, rejectedFiles, prefix);
     setFile(value[0]);
+  };
+
+  var handleOnDropByIndex = function handleOnDropByIndex(acceptedFiles, rejectedFiles, index) {
+    var newPositions = _toConsumableArray(positions);
+
+    if (acceptedFiles.length) newPositions[index] = acceptedFiles[0];
+    var prefix = index ? REVERSE : FRONT;
+    setPositions(newPositions);
+    handleOnDrop(acceptedFiles, rejectedFiles, prefix);
   };
 
   var handleOnClick = function handleOnClick(index, file) {
@@ -187,6 +219,29 @@ var RejectDocuments = function RejectDocuments(_ref) {
 
   var handleOnSearch = function handleOnSearch(text) {
     setSearch(text);
+  };
+
+  var checkPositionsLenght = function checkPositionsLenght() {
+    return positions.filter(function (_file) {
+      return _file !== '';
+    }).length < 2;
+  };
+
+  var getTheDropType = function getTheDropType() {
+    if (useEditorIne && checkPositionsLenght()) return _react.default.createElement(_IneEditor.default, {
+      title: title,
+      accept: accept,
+      onChange: handleOnDropByIndex,
+      values: positions,
+      fileConvertion: fileConvertion,
+      isIncorrect: true,
+      disabledDelete: true
+    });
+    return _react.default.createElement(_DropZone.default, {
+      onDrop: handleOnDrop,
+      isIncorrect: true,
+      multiple: multiple
+    });
   };
 
   return _react.default.createElement("div", null, _react.default.createElement("div", {
@@ -220,11 +275,7 @@ var RejectDocuments = function RejectDocuments(_ref) {
     },
     disabled: true,
     urlDocument: url
-  }), editable && rejected && _react.default.createElement(_DropZone.default, {
-    onDrop: handleOnDrop,
-    isIncorrect: true,
-    multiple: multiple
-  }), multiple && files.length > 0 && _react.default.createElement(_FileFinder.default, {
+  }), editable && rejected && getTheDropType(), multiple && files.length > 0 && _react.default.createElement(_FileFinder.default, {
     files: files,
     current: currentFile,
     onClick: handleOnClick,
@@ -246,7 +297,10 @@ RejectDocuments.propTypes = {
   showUndo: _propTypes.default.bool,
   onUndoRejection: _propTypes.default.func,
   editable: _propTypes.default.bool,
-  multiple: _propTypes.default.bool
+  useEditorIne: _propTypes.default.bool,
+  multiple: _propTypes.default.bool,
+  accept: _propTypes.default.oneOfType([_propTypes.default.string, _propTypes.default.arrayOf(_propTypes.default.string)]),
+  fileConvertion: _propTypes.default.func
 };
 RejectDocuments.defaultProps = {
   title: '',
@@ -261,7 +315,10 @@ RejectDocuments.defaultProps = {
   showUndo: false,
   onUndoRejection: function onUndoRejection() {},
   editable: true,
-  multiple: true
+  useEditorIne: false,
+  multiple: true,
+  accept: '',
+  fileConvertion: function fileConvertion() {}
 };
 var _default = RejectDocuments;
 exports.default = _default;
