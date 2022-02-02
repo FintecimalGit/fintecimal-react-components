@@ -81,28 +81,31 @@ var IneEditor = function IneEditor(_ref) {
     var _ref2 = _asyncToGenerator(
     /*#__PURE__*/
     regeneratorRuntime.mark(function _callee(url) {
-      var response, data, metadata, file;
+      var _url, response, data, metadata, file;
+
       return regeneratorRuntime.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              if (url) {
-                _context.next = 2;
+              _url = Array.isArray(url) ? url[0] : url;
+
+              if (_url) {
+                _context.next = 3;
                 break;
               }
 
               return _context.abrupt("return", '');
 
-            case 2:
-              _context.next = 4;
-              return fetch(url);
+            case 3:
+              _context.next = 5;
+              return fetch(_url);
 
-            case 4:
+            case 5:
               response = _context.sent;
-              _context.next = 7;
+              _context.next = 8;
               return response.blob();
 
-            case 7:
+            case 8:
               data = _context.sent;
               metadata = {
                 type: data.type
@@ -110,7 +113,7 @@ var IneEditor = function IneEditor(_ref) {
               file = new File([data], title, metadata);
               return _context.abrupt("return", file);
 
-            case 11:
+            case 12:
             case "end":
               return _context.stop();
           }

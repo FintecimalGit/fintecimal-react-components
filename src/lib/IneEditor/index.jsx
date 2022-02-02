@@ -28,8 +28,9 @@ const IneEditor = ({ accept, disabled, isIncorrect, onChange, values, title, han
   };
 
   const convertUrlToFile = async (url) => {
-    if(!url) return '';
-    let response = await fetch(url);
+    let _url = Array.isArray(url) ? url[0] : url;
+    if(!_url) return '';
+    let response = await fetch(_url);
     let data = await response.blob();
     let metadata = {
       type: data.type
