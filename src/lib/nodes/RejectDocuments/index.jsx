@@ -8,6 +8,10 @@ import useStyles from './style';
 import DropZone from "../../DropZone";
 import FilePreview from "../../FilePreview";
 import FileFinder from '../../FileFinder';
+import IneEditor from '../../IneEditor';
+
+const REVERSE = 'Reverse';
+const FRONT = "Front";
 
 const RejectDocuments = ({
                              title,
@@ -20,13 +24,17 @@ const RejectDocuments = ({
                              showUndo,
                              onUndoRejection,
                              editable,
-                             multiple
+                             useEditorIne,
+                             multiple,
+                             accept,
+                             fileConvertion,
                          }) => {
   const classes = useStyles();
   const [file, setFile] = useState(null);
   const [files, setFiles] = useState([]);
   const [currentFile, setCurrentFile] = useState(0);
   const [search, setSearch] = useState('');
+  const [positions, setPositions] = useState(['', '']);
 
   const titleRef = useRef(null);
 
@@ -58,9 +66,17 @@ const RejectDocuments = ({
     else generateFileToURLArray();
   }, [url]);
 
-  const handleOnDrop = (value) => {
-    onHandlerReject(value);
+  const handleOnDrop = (value, rejectedFiles = [], prefix = '') => {
+    onHandlerReject(value, rejectedFiles, prefix);
     setFile(value[0]);
+  };
+
+  const handleOnDropByIndex = (acceptedFiles, rejectedFiles, index) => {
+    const newPositions = [...positions];
+    if(acceptedFiles.length) newPositions[index] = acceptedFiles[0];
+    const prefix = index ? REVERSE : FRONT;
+    setPositions(newPositions);
+    handleOnDrop(acceptedFiles, rejectedFiles, prefix);
   };
 
   const handleOnClick = (index, file) => {
@@ -71,6 +87,31 @@ const RejectDocuments = ({
 
   const handleOnSearch = (text) => {
     setSearch(text);
+  };
+
+  const checkPositionsLenght = () => {
+    return positions.filter((_file) => _file !== '').length < 2;
+  };
+
+  const getTheDropType = () => {
+    if (useEditorIne && checkPositionsLenght()) return (
+      <IneEditor
+        title={title}
+        accept={accept}
+        onChange={handleOnDropByIndex}
+        values={positions}
+        fileConvertion={fileConvertion}
+        isIncorrect={true}
+        disabledDelete
+      />
+    );
+    return (
+      <DropZone
+        onDrop={handleOnDrop}
+        isIncorrect={true}
+        multiple={multiple}
+      />
+    );
   };
 
   return (
@@ -109,13 +150,7 @@ const RejectDocuments = ({
                   urlDocument={url}
               />
           )}
-          {editable && rejected && (
-            <DropZone
-                onDrop={handleOnDrop}
-                isIncorrect={true}
-                multiple={multiple}
-            />
-          )}
+          {editable && rejected && getTheDropType()}
          {
           multiple && files.length > 0 && (
             <FileFinder
@@ -144,7 +179,13 @@ RejectDocuments.propTypes = {
     showUndo: PropTypes.bool,
     onUndoRejection: PropTypes.func,
     editable: PropTypes.bool,
+    useEditorIne: PropTypes.bool,
     multiple: PropTypes.bool,
+    accept: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.arrayOf(PropTypes.string),
+    ]),
+    fileConvertion: PropTypes.func,
 };
 
 RejectDocuments.defaultProps = {
@@ -160,7 +201,10 @@ RejectDocuments.defaultProps = {
   showUndo: false,
   onUndoRejection: () => {},
   editable: true,
+  useEditorIne: false,
   multiple: true,
+  accept: '',
+  fileConvertion: () => {},
 };
 
 export default RejectDocuments;

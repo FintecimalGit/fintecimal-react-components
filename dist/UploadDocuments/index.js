@@ -52,6 +52,11 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 var _require = require('uuid'),
     uuidv4 = _require.v4;
 
+var REVERSE = 'Reverse';
+var FRONT = "Front";
+var REVERSA = 'Reverso';
+var FRONTAL = "Frontal";
+
 var UploadDocuments = function UploadDocuments(_ref) {
   var title = _ref.title,
       multiple = _ref.multiple,
@@ -66,7 +71,8 @@ var UploadDocuments = function UploadDocuments(_ref) {
       url = _ref.url,
       disabled = _ref.disabled,
       required = _ref.required,
-      useEditorIne = _ref.useEditorIne;
+      useEditorIne = _ref.useEditorIne,
+      fileConvertion = _ref.fileConvertion;
   var classes = (0, _style.default)();
 
   var _useState = (0, _react.useState)(null),
@@ -99,6 +105,11 @@ var UploadDocuments = function UploadDocuments(_ref) {
       flipId = _useState12[0],
       setFlipId = _useState12[1];
 
+  var _useState13 = (0, _react.useState)([]),
+      _useState14 = _slicedToArray(_useState13, 2),
+      filesOrder = _useState14[0],
+      setFilesOrder = _useState14[1];
+
   var titleRef = (0, _react.useRef)(null);
   var filteredFiles = (0, _react.useMemo)(function () {
     var searchLower = search.toLowerCase();
@@ -114,36 +125,18 @@ var UploadDocuments = function UploadDocuments(_ref) {
    * @returns {Array}
    */
 
-  var deleteFile = function deleteFile() {
-    var newFiles = _toConsumableArray(files);
+  var deleteFile = function deleteFile(_files) {
+    var remainPostion = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+
+    var newFiles = _toConsumableArray(_files);
 
     var index = newFiles.findIndex(function (_file) {
       return _file === file;
     });
-    if (index !== -1) newFiles.splice(index, 1);
+    if (index !== -1 && remainPostion) newFiles[index] = '';else if (index !== -1) newFiles.splice(index, 1);
     return {
       newFiles: newFiles,
       index: index
-    };
-  };
-
-  var deleteFileByIndex = function deleteFileByIndex() {
-    var newFiles = _toConsumableArray(files);
-
-    var index = newFiles.findIndex(function (_file) {
-      return _file === file;
-    });
-    if (index !== -1) newFiles[index] = '';
-    newFiles = newFiles.map(function (_file) {
-      return _file === undefined ? '' : _file;
-    });
-    var filterFiles = newFiles.filter(function (_file) {
-      return _file !== '';
-    });
-    return {
-      newFiles: newFiles,
-      index: index,
-      filterFiles: filterFiles
     };
   };
   /**
@@ -165,31 +158,29 @@ var UploadDocuments = function UploadDocuments(_ref) {
   };
 
   var handleOnDropByIndex = function handleOnDropByIndex(acceptedFiles, rejectedFiles, index) {
-    var newValues = _toConsumableArray(files);
+    var newFilesOrder = _toConsumableArray(filesOrder);
 
-    if (acceptedFiles.length) newValues[index] = acceptedFiles[0];
-    setFiles(newValues);
-    onDrop(acceptedFiles, rejectedFiles);
+    if (acceptedFiles.length) newFilesOrder[index] = acceptedFiles[0];
+    var prefix = index ? REVERSE : FRONT;
+    setFiles([].concat(_toConsumableArray(acceptedFiles), _toConsumableArray(files)));
+    setFilesOrder(newFilesOrder);
+    onDrop(acceptedFiles, rejectedFiles, prefix);
   };
 
   var handleOnDelete = function handleOnDelete() {
     if (useEditorIne) {
-      var _deleteFileByIndex = deleteFileByIndex(),
-          newFiles = _deleteFileByIndex.newFiles,
-          index = _deleteFileByIndex.index,
-          filterFiles = _deleteFileByIndex.filterFiles;
+      var _deleteFile = deleteFile(filesOrder, true),
+          newFilesOrder = _deleteFile.newFiles;
 
-      onDelete(filterFiles, file, index);
-      setFiles(newFiles);
-    } else {
-      var _deleteFile = deleteFile(),
-          _newFiles = _deleteFile.newFiles,
-          _index = _deleteFile.index;
-
-      onDelete(_newFiles, file, _index);
-      setFiles(_newFiles);
+      setFilesOrder(newFilesOrder);
     }
 
+    var _deleteFile2 = deleteFile(files),
+        newFiles = _deleteFile2.newFiles,
+        index = _deleteFile2.index;
+
+    onDelete(newFiles, file, index);
+    setFiles(newFiles);
     setShowModal(false);
   };
 
@@ -205,6 +196,7 @@ var UploadDocuments = function UploadDocuments(_ref) {
 
   var handleOnDeleteAll = function handleOnDeleteAll() {
     onDeleteAll();
+    setFilesOrder(['', '']);
     setFiles([]);
     setShowModal(false);
   };
@@ -224,13 +216,61 @@ var UploadDocuments = function UploadDocuments(_ref) {
     setSearch(text);
   };
 
+  var sortFiles = function sortFiles(arrayFiles) {
+    return arrayFiles.map(function (_file) {
+      var _file$name = _file.name,
+          name = _file$name === void 0 ? '' : _file$name;
+
+      if (name.includes(REVERSA)) {
+        return {
+          position: 2,
+          _file: _file
+        };
+      } else if (name.includes(FRONTAL)) {
+        return {
+          position: 0,
+          _file: _file
+        };
+      }
+
+      return {
+        position: 1,
+        _file: _file
+      };
+    }).sort(function (a, b) {
+      if (a.position > b.position) return 1;
+      if (a.position < b.position) return -1;
+      return 0;
+    }).map(function (_ref2) {
+      var _file = _ref2._file;
+      return _file;
+    });
+  };
+
+  var fillFiles = function fillFiles(arrayFiles) {
+    if (!arrayFiles.length) return ['', ''];
+    if (arrayFiles.length === 1) return [].concat(_toConsumableArray(arrayFiles), ['']);
+    return arrayFiles;
+  };
+
+  var constructFiles = function constructFiles(arrayFiles) {
+    var newFiles = fillFiles(arrayFiles);
+    return sortFiles(newFiles);
+  };
+
+  var getTitle = function getTitle(_url, title) {
+    if (_url.includes(REVERSE)) return REVERSA;
+    if (_url.includes(FRONT)) return FRONTAL;
+    return title;
+  };
+
   var generateFilesToURL =
   /*#__PURE__*/
   function () {
-    var _ref2 = _asyncToGenerator(
+    var _ref3 = _asyncToGenerator(
     /*#__PURE__*/
     regeneratorRuntime.mark(function _callee2(arrayUrl) {
-      var _files, _files2, _file2;
+      var _files2, newSortFiles, _files3, _file2;
 
       return regeneratorRuntime.wrap(function _callee2$(_context2) {
         while (1) {
@@ -241,10 +281,11 @@ var UploadDocuments = function UploadDocuments(_ref) {
               return Promise.all(arrayUrl.map(
               /*#__PURE__*/
               function () {
-                var _ref3 = _asyncToGenerator(
+                var _ref4 = _asyncToGenerator(
                 /*#__PURE__*/
                 regeneratorRuntime.mark(function _callee(_url) {
-                  var response, data, metadata, file;
+                  var response, data, metadata, _title, file;
+
                   return regeneratorRuntime.wrap(function _callee$(_context) {
                     while (1) {
                       switch (_context.prev = _context.next) {
@@ -262,10 +303,11 @@ var UploadDocuments = function UploadDocuments(_ref) {
                           metadata = {
                             type: data.type
                           };
-                          file = new File([data], title, metadata);
+                          _title = useEditorIne ? getTitle(_url, title) : title;
+                          file = new File([data], _title, metadata);
                           return _context.abrupt("return", file);
 
-                        case 9:
+                        case 10:
                         case "end":
                           return _context.stop();
                       }
@@ -274,33 +316,39 @@ var UploadDocuments = function UploadDocuments(_ref) {
                 }));
 
                 return function (_x2) {
-                  return _ref3.apply(this, arguments);
+                  return _ref4.apply(this, arguments);
                 };
               }()));
 
             case 3:
-              _files = _context2.sent;
-              _files2 = _slicedToArray(_files, 1), _file2 = _files2[0];
-              if (_files) setFiles(_files);
+              _files2 = _context2.sent;
+
+              if (useEditorIne) {
+                newSortFiles = constructFiles(_files2);
+                setFilesOrder(newSortFiles);
+              }
+
+              _files3 = _slicedToArray(_files2, 1), _file2 = _files3[0];
+              if (_files2) setFiles(_files2);
               if (_file2) setFile(_file2);
-              _context2.next = 12;
+              _context2.next = 13;
               break;
 
-            case 9:
-              _context2.prev = 9;
+            case 10:
+              _context2.prev = 10;
               _context2.t0 = _context2["catch"](0);
               console.log(_context2.t0);
 
-            case 12:
+            case 13:
             case "end":
               return _context2.stop();
           }
         }
-      }, _callee2, null, [[0, 9]]);
+      }, _callee2, null, [[0, 10]]);
     }));
 
     return function generateFilesToURL(_x) {
-      return _ref2.apply(this, arguments);
+      return _ref3.apply(this, arguments);
     };
   }();
 
@@ -315,11 +363,12 @@ var UploadDocuments = function UploadDocuments(_ref) {
       title: title,
       accept: accept,
       onChange: handleOnDropByIndex,
-      values: files,
+      values: filesOrder,
       disabled: disabled,
       handleOnDelete: useDeleteDialog ? function () {
         return setShowModal(true);
-      } : handleOnDelete
+      } : handleOnDelete,
+      fileConvertion: fileConvertion
     });else if (file) return _react.default.createElement(_FilePreview.default, {
       onDownloadFile: onDownloadFile,
       file: file,
@@ -397,7 +446,8 @@ UploadDocuments.propTypes = {
   placeholder: _propTypes.default.string,
   disabled: _propTypes.default.bool,
   required: _propTypes.default.bool,
-  useEditorIne: _propTypes.default.bool
+  useEditorIne: _propTypes.default.bool,
+  fileConvertion: _propTypes.default.func
 };
 UploadDocuments.defaultProps = {
   title: '',
@@ -413,7 +463,8 @@ UploadDocuments.defaultProps = {
   url: '',
   disabled: false,
   required: false,
-  useEditorIne: false
+  useEditorIne: false,
+  fileConvertion: function fileConvertion() {}
 };
 var _default = UploadDocuments;
 exports.default = _default;

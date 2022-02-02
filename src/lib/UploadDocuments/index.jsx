@@ -15,6 +15,12 @@ import IneEditor from '../IneEditor';
 
 import useStyles from './style';
 
+const REVERSE = 'Reverse';
+const FRONT = "Front";
+
+const REVERSA = 'Reverso';
+const FRONTAL = "Frontal";
+
 const UploadDocuments = ({
   title,
   multiple,
@@ -29,7 +35,8 @@ const UploadDocuments = ({
   url,
   disabled,
   required,
-  useEditorIne
+  useEditorIne,
+  fileConvertion,
 }) => {
   const classes = useStyles();
   const [file, setFile] = useState(null);
@@ -38,6 +45,7 @@ const UploadDocuments = ({
   const [search, setSearch] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [flipId, setFlipId] = useState('1');
+  const [filesOrder, setFilesOrder] = useState([]);
 
   const titleRef = useRef(null);
 
@@ -57,20 +65,12 @@ const UploadDocuments = ({
   /**
    * @returns {Array}
    */
-   const deleteFile = () => {
-    const newFiles = [...files];
+   const deleteFile = (_files, remainPostion = false) => {
+    const newFiles = [..._files];
     const index = newFiles.findIndex((_file) => _file === file);
-    if (index !== -1) newFiles.splice(index, 1);
+    if (index !== -1 && remainPostion) newFiles[index] = '';
+    else if (index !== -1) newFiles.splice(index, 1);
     return { newFiles, index };
-  };
-
-  const deleteFileByIndex = () => {
-    let newFiles = [...files];
-    const index = newFiles.findIndex((_file) => _file === file);
-    if (index !== -1) newFiles[index] = '';
-    newFiles = newFiles.map((_file) => _file === undefined ? '' : _file);
-    const filterFiles = newFiles.filter((_file) => _file !== '');
-    return { newFiles, index, filterFiles };
   };
 
   /**
@@ -90,22 +90,22 @@ const UploadDocuments = ({
   };
 
   const handleOnDropByIndex = (acceptedFiles, rejectedFiles, index) => {
-    const newValues = [...files];
-    if(acceptedFiles.length) newValues[index] = acceptedFiles[0];
-    setFiles(newValues);
-    onDrop(acceptedFiles, rejectedFiles);
+    const newFilesOrder = [...filesOrder];
+    if(acceptedFiles.length) newFilesOrder[index] = acceptedFiles[0];
+    const prefix = index ? REVERSE : FRONT;
+    setFiles([...acceptedFiles, ...files]);
+    setFilesOrder(newFilesOrder);
+    onDrop(acceptedFiles, rejectedFiles, prefix);
   };
 
   const handleOnDelete = () => {
     if (useEditorIne) {
-      const { newFiles, index, filterFiles } = deleteFileByIndex();
-      onDelete(filterFiles, file, index);
-      setFiles(newFiles);
-    } else {
-      const { newFiles, index } = deleteFile();
-      onDelete(newFiles, file, index);
-      setFiles(newFiles);
+      const { newFiles: newFilesOrder } = deleteFile(filesOrder, true);
+      setFilesOrder(newFilesOrder);
     }
+    const { newFiles, index } = deleteFile(files);
+    onDelete(newFiles, file, index);
+    setFiles(newFiles);
     setShowModal(false);
   };
 
@@ -126,6 +126,7 @@ const UploadDocuments = ({
 
   const handleOnDeleteAll = () => {
     onDeleteAll();
+    setFilesOrder(['', '']);
     setFiles([]);
     setShowModal(false)
   };
@@ -144,6 +145,38 @@ const UploadDocuments = ({
     setSearch(text);
   };
 
+  const sortFiles = (arrayFiles) => arrayFiles.map((_file) => {
+    const { name = '' } = _file;
+    if (name.includes(REVERSA)) {
+      return { position: 2, _file };
+    }
+    else if(name.includes(FRONTAL)) {
+      return { position: 0, _file };
+    }
+    return { position: 1, _file };
+  }).sort((a, b) => {
+    if (a.position > b.position) return 1;
+    if (a.position < b.position) return -1;
+    return 0;
+  }).map(({ _file }) => _file);
+
+  const fillFiles = (arrayFiles) => {
+    if (!arrayFiles.length) return ['', ''];
+    if (arrayFiles.length === 1) return [...arrayFiles, ''];
+    return arrayFiles;
+  };
+
+  const constructFiles = (arrayFiles) => {
+    const newFiles = fillFiles(arrayFiles);
+    return sortFiles(newFiles);
+  };
+
+  const getTitle = (_url, title) => {
+    if (_url.includes(REVERSE)) return REVERSA;
+    if (_url.includes(FRONT)) return FRONTAL;
+    return title;
+  }
+
   const generateFilesToURL = async (arrayUrl) => {
     try {
       const files = await Promise.all(arrayUrl.map(
@@ -153,11 +186,15 @@ const UploadDocuments = ({
           let metadata = {
             type: data.type
           };
-          let file = new File([data], title, metadata);
+          const _title = useEditorIne ? getTitle(_url, title) : title;
+          let file = new File([data], _title, metadata);
           return file;
         }
       ));
-    
+      if (useEditorIne){
+        const newSortFiles = constructFiles(files);
+        setFilesOrder(newSortFiles);
+      }
       const [file] = files;
       if(files) setFiles(files);
       if(file) setFile(file);
@@ -177,9 +214,10 @@ const UploadDocuments = ({
         title={title}
         accept={accept}
         onChange={handleOnDropByIndex}
-        values={files}
+        values={filesOrder}
         disabled={disabled}
         handleOnDelete={useDeleteDialog ? () => setShowModal(true) : handleOnDelete}
+        fileConvertion={fileConvertion}
       />
     );
     else if (file) return (
@@ -285,6 +323,7 @@ UploadDocuments.propTypes = {
   disabled: PropTypes.bool,
   required: PropTypes.bool,
   useEditorIne: PropTypes.bool,
+  fileConvertion: PropTypes.func,
 };
 
 UploadDocuments.defaultProps = {
@@ -302,6 +341,7 @@ UploadDocuments.defaultProps = {
   disabled: false,
   required: false,
   useEditorIne: false,
+  fileConvertion: () => {},
 };
 
 export default UploadDocuments;

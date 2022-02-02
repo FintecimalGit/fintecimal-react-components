@@ -27,6 +27,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
@@ -46,7 +50,9 @@ var IneEditor = function IneEditor(_ref) {
       onChange = _ref.onChange,
       values = _ref.values,
       title = _ref.title,
-      handleOnDelete = _ref.handleOnDelete;
+      handleOnDelete = _ref.handleOnDelete,
+      fileConvertion = _ref.fileConvertion,
+      disabledDelete = _ref.disabledDelete;
 
   var _useState = (0, _react.useState)(null),
       _useState2 = _slicedToArray(_useState, 2),
@@ -65,20 +71,121 @@ var IneEditor = function IneEditor(_ref) {
     });
   }, [values]);
 
-  var handleOnDrop = function handleOnDrop(acceptedFiles, rejectedFiles, side) {
-    if (rejectedFiles.length) {
-      onChange(acceptedFiles, rejectedFiles, side);
-      return;
-    }
-
-    if (acceptedFiles.length) {
-      setFile(acceptedFiles[0]);
-      setIndexSide(side);
-    }
+  var isPngType = function isPngType(file) {
+    return file.type.split('/').pop() === 'png';
   };
 
+  var convertUrlToFile =
+  /*#__PURE__*/
+  function () {
+    var _ref2 = _asyncToGenerator(
+    /*#__PURE__*/
+    regeneratorRuntime.mark(function _callee(url) {
+      var response, data, metadata, file;
+      return regeneratorRuntime.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              if (url) {
+                _context.next = 2;
+                break;
+              }
+
+              return _context.abrupt("return", '');
+
+            case 2:
+              _context.next = 4;
+              return fetch(url);
+
+            case 4:
+              response = _context.sent;
+              _context.next = 7;
+              return response.blob();
+
+            case 7:
+              data = _context.sent;
+              metadata = {
+                type: data.type
+              };
+              file = new File([data], title, metadata);
+              return _context.abrupt("return", file);
+
+            case 11:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }));
+
+    return function convertUrlToFile(_x) {
+      return _ref2.apply(this, arguments);
+    };
+  }();
+
+  var handleOnDrop =
+  /*#__PURE__*/
+  function () {
+    var _ref3 = _asyncToGenerator(
+    /*#__PURE__*/
+    regeneratorRuntime.mark(function _callee2(acceptedFiles, rejectedFiles, side) {
+      var acceptFiles, convertedFiles;
+      return regeneratorRuntime.wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              if (!rejectedFiles.length) {
+                _context2.next = 3;
+                break;
+              }
+
+              onChange(acceptedFiles, rejectedFiles, side);
+              return _context2.abrupt("return");
+
+            case 3:
+              if (!acceptedFiles.length) {
+                _context2.next = 14;
+                break;
+              }
+
+              acceptFiles = acceptedFiles[0];
+
+              if (isPngType(acceptFiles)) {
+                _context2.next = 12;
+                break;
+              }
+
+              _context2.next = 8;
+              return fileConvertion(acceptedFiles, 'cropConvertion');
+
+            case 8:
+              convertedFiles = _context2.sent;
+              _context2.next = 11;
+              return convertUrlToFile(convertedFiles);
+
+            case 11:
+              acceptFiles = _context2.sent;
+
+            case 12:
+              setFile(acceptFiles);
+              setIndexSide(side);
+
+            case 14:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2);
+    }));
+
+    return function handleOnDrop(_x2, _x3, _x4) {
+      return _ref3.apply(this, arguments);
+    };
+  }();
+
   var onCrop = function onCrop(event, blob) {
-    var name = indexSide ? 'Reverso' : 'Frontal';
+    var extension = blob.type.split('/').pop();
+    var name = indexSide ? "Reverso.".concat(extension) : "Frontal.".concat(extension);
     var fileCropped = new File([blob], name, {
       type: blob.type
     });
@@ -91,7 +198,7 @@ var IneEditor = function IneEditor(_ref) {
   }, _react.default.createElement(_CardHeader.default, {
     className: clasess.cardHeader,
     title: title,
-    action: !disabled && filterValues.length > 0 && _react.default.createElement(_IconButton.default, {
+    action: !disabled && filterValues.length > 0 && !disabledDelete && _react.default.createElement(_IconButton.default, {
       className: clasess.iconButton,
       onClick: handleOnDelete
     }, _react.default.createElement(_Delete.default, null))
@@ -129,7 +236,9 @@ IneEditor.propTypes = {
   onChange: _propTypes.default.func,
   values: _propTypes.default.array,
   title: _propTypes.default.string,
-  handleOnDelete: _propTypes.default.func
+  handleOnDelete: _propTypes.default.func,
+  fileConvertion: _propTypes.default.func,
+  disabledDelete: _propTypes.default.func
 };
 IneEditor.defaultProps = {
   accept: '',
@@ -139,7 +248,9 @@ IneEditor.defaultProps = {
   onChange: function onChange() {},
   values: [],
   title: '',
-  handleOnDelete: function handleOnDelete() {}
+  handleOnDelete: function handleOnDelete() {},
+  fileConvertion: function fileConvertion() {},
+  disabledDelete: false
 };
 var _default = IneEditor;
 exports.default = _default;
