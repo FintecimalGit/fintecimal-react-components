@@ -9,6 +9,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 
 import DocumentButton from '../nodes/DocumentButton';
 import DocumentCrop from '../DocumentCrop';
+import InputModal from './InputModal';
 
 import useStyles from './style';
 
@@ -18,6 +19,8 @@ const BACK_INDEX = 1; // Note: for reversePhoto flow
 const IneEditor = ({ accept, disabled, isIncorrect, onChange, values, title, handleOnDelete, fileConvertion, disabledDelete }) => {
   const [file, setFile] = useState(null);
   const [indexSide, setIndexSide] = useState(null);
+  const [openModal, setOpenModal] = useState(false);
+  const [urls, setUrls] = useState([]);
 
   const clasess = useStyles();
 
@@ -28,9 +31,9 @@ const IneEditor = ({ accept, disabled, isIncorrect, onChange, values, title, han
   };
 
   const convertUrlToFile = async (url) => {
-    let _url = Array.isArray(url) ? url[0] : url;
-    if(!_url) return '';
-    let response = await fetch(_url);
+    // let _url = Array.isArray(url) ? url[0] : url;
+    if(!url) return '';
+    let response = await fetch(url);
     let data = await response.blob();
     let metadata = {
       type: data.type
@@ -48,10 +51,19 @@ const IneEditor = ({ accept, disabled, isIncorrect, onChange, values, title, han
       let acceptFiles = acceptedFiles[0];
       if (!isPngType(acceptFiles)) {
         const convertedFiles = await fileConvertion(acceptedFiles, 'cropConvertion');
-        acceptFiles = await convertUrlToFile(convertedFiles);
+        if (Array.isArray(convertedFiles) && convertedFiles.length > 1) {
+          setIndexSide(side);
+          setUrls(convertedFiles);
+          setOpenModal(true);
+        } else {
+          acceptFiles = await convertUrlToFile(convertedFiles);
+          setFile(acceptFiles);
+          setIndexSide(side);
+        }
+      } else {
+        setFile(acceptFiles);
+        setIndexSide(side);
       }
-      setFile(acceptFiles);
-      setIndexSide(side);
     }
   };
 
@@ -63,8 +75,33 @@ const IneEditor = ({ accept, disabled, isIncorrect, onChange, values, title, han
     onChange([fileCropped], [], indexSide);
   };
 
+  const cancel = () => {
+    setFile(null);
+    setIndexSide(null);
+    setUrls([]);
+  };
+
+  const onCloseModal = () => {
+    setOpenModal(false);
+  };
+
+  const onSubmit = async (numPage) => {
+    const theFile = await convertUrlToFile(urls[numPage -1]);
+    setFile(theFile);
+    setUrls([]);
+  };
+
   return (
   <>
+  <InputModal 
+    header="Seleccione la pagina"
+    isOpen={openModal}
+    onClose={onCloseModal}
+    onCancel={cancel}
+    onSubmit={onSubmit}
+    title="Pagina debe ser mayor a 0"
+    maxLength={urls.length}
+  />
   <Card className={clasess.card}>
       <CardHeader
         className={clasess.cardHeader}
@@ -83,7 +120,7 @@ const IneEditor = ({ accept, disabled, isIncorrect, onChange, values, title, han
         }
       />
       <div className={clasess.container}>
-        { file ? <DocumentCrop label={title} value={file} onCrop={onCrop} onBack={() => {}} /> : ( 
+        { file ? <DocumentCrop cancel={cancel} label={title} value={file} onCrop={onCrop} onBack={() => {}} /> : ( 
               <>
                 <DocumentButton
                   text="Frontal"

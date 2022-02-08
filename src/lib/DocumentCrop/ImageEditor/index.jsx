@@ -25,7 +25,7 @@ import useStyles from './style';
 const FLIP_STEAP = -1;
 const ROTATION_STEAP = 90;
 
-const ImageEditor = ({ file, onCrop }) => {
+const ImageEditor = ({ file, onCrop, cancel }) => {
   const classes = useStyles();
 
   const imageRef = useRef(null);
@@ -64,16 +64,6 @@ const ImageEditor = ({ file, onCrop }) => {
     destroyCropper();
     initializeCroppper();
   }, [initializeCroppper, destroyCropper]);
-
-  const flipHorizontal = useCallback(() => {
-    const newScale = horizontalScale * FLIP_STEAP;
-    setHorizontalScale(newScale);
-  }, [horizontalScale]);
-
-  const flipVertical = useCallback(() => {
-    const newScale = verticalScale * FLIP_STEAP;
-    setVerticalScale(newScale);
-  }, [verticalScale]);
 
   const flipImage = useCallback(() => {
     if (!cropper) return;
@@ -147,31 +137,18 @@ const ImageEditor = ({ file, onCrop }) => {
           spacing={1}
           justify="space-around"
         >
-          <Grid item sm={3} xs={4}>
+          <Grid item sm={4} xs={4}>
             <Button
               className={classes.button}
               variant="outlined"
               fullWidth
               color="primary"
-              onClick={flipHorizontal}
+              onClick={cancel}
             >
-              <CropLandscapeIcon />
-              Horizontal
+              Cancelar
             </Button>
           </Grid>
-          <Grid item sm={3} xs={4}>
-            <Button
-              className={classes.button}
-              variant="outlined"
-              fullWidth
-              color="primary"
-              onClick={flipVertical}
-            >
-              <CropPortraitIcon />
-              Vertical
-            </Button>
-          </Grid>
-          <Grid item sm={3} xs={4}>
+          <Grid item sm={4} xs={4}>
             <Button
               className={classes.button}
               variant="outlined"
@@ -183,7 +160,7 @@ const ImageEditor = ({ file, onCrop }) => {
               Girar
             </Button>
           </Grid>
-          <Grid item sm={3} xs={12}>
+          <Grid item sm={4} xs={12}>
             <Button
               className={classes.button}
               variant="contained"
@@ -206,11 +183,13 @@ ImageEditor.propTypes = {
     PropTypes.string,
   ]),
   onCrop: PropTypes.func,
+  cancel: PropTypes.func,
 };
 
 ImageEditor.defaultProps = {
   file: '',
   onCrop: () => {},
+  cancel: () => {},
 };
 
 export default memo(ImageEditor);

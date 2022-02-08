@@ -423,12 +423,13 @@ var UploadDocuments = function UploadDocuments(_ref) {
     search: search,
     onSearch: handleOnSearch,
     placeholder: placeholder,
-    disabled: disabled || useEditorIne,
+    disabled: disabled,
     multiple: multiple,
     accept: accept,
     onDrop: handleOnAdd,
     flipId: flipId,
-    moveCard: moveCard
+    moveCard: moveCard,
+    disabledAdd: disabled || useEditorIne
   }));
 };
 

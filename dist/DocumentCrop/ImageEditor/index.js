@@ -50,7 +50,8 @@ var ROTATION_STEAP = 90;
 
 var ImageEditor = function ImageEditor(_ref) {
   var file = _ref.file,
-      onCrop = _ref.onCrop;
+      onCrop = _ref.onCrop,
+      cancel = _ref.cancel;
   var classes = (0, _style.default)();
   var imageRef = (0, _react.useRef)(null);
   var containerRef = (0, _react.useRef)(_react.useRef);
@@ -100,14 +101,6 @@ var ImageEditor = function ImageEditor(_ref) {
     destroyCropper();
     initializeCroppper();
   }, [initializeCroppper, destroyCropper]);
-  var flipHorizontal = (0, _react.useCallback)(function () {
-    var newScale = horizontalScale * FLIP_STEAP;
-    setHorizontalScale(newScale);
-  }, [horizontalScale]);
-  var flipVertical = (0, _react.useCallback)(function () {
-    var newScale = verticalScale * FLIP_STEAP;
-    setVerticalScale(newScale);
-  }, [verticalScale]);
   var flipImage = (0, _react.useCallback)(function () {
     if (!cropper) return;
     cropper.scale(horizontalScale, verticalScale);
@@ -202,27 +195,17 @@ var ImageEditor = function ImageEditor(_ref) {
     justify: "space-around"
   }, _react.default.createElement(_Grid.default, {
     item: true,
-    sm: 3,
+    sm: 4,
     xs: 4
   }, _react.default.createElement(_Button.default, {
     className: classes.button,
     variant: "outlined",
     fullWidth: true,
     color: "primary",
-    onClick: flipHorizontal
-  }, _react.default.createElement(_CropLandscape.default, null), "Horizontal")), _react.default.createElement(_Grid.default, {
+    onClick: cancel
+  }, "Cancelar")), _react.default.createElement(_Grid.default, {
     item: true,
-    sm: 3,
-    xs: 4
-  }, _react.default.createElement(_Button.default, {
-    className: classes.button,
-    variant: "outlined",
-    fullWidth: true,
-    color: "primary",
-    onClick: flipVertical
-  }, _react.default.createElement(_CropPortrait.default, null), "Vertical")), _react.default.createElement(_Grid.default, {
-    item: true,
-    sm: 3,
+    sm: 4,
     xs: 4
   }, _react.default.createElement(_Button.default, {
     className: classes.button,
@@ -232,7 +215,7 @@ var ImageEditor = function ImageEditor(_ref) {
     onClick: rotateRigth
   }, _react.default.createElement(_Refresh.default, null), "Girar")), _react.default.createElement(_Grid.default, {
     item: true,
-    sm: 3,
+    sm: 4,
     xs: 12
   }, _react.default.createElement(_Button.default, {
     className: classes.button,
@@ -245,11 +228,13 @@ var ImageEditor = function ImageEditor(_ref) {
 
 ImageEditor.propTypes = {
   file: _propTypes.default.oneOfType([_propTypes.default.instanceOf(Blob), _propTypes.default.string]),
-  onCrop: _propTypes.default.func
+  onCrop: _propTypes.default.func,
+  cancel: _propTypes.default.func
 };
 ImageEditor.defaultProps = {
   file: '',
-  onCrop: function onCrop() {}
+  onCrop: function onCrop() {},
+  cancel: function cancel() {}
 };
 
 var _default = (0, _react.memo)(ImageEditor);
