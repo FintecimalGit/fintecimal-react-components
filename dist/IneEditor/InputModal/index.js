@@ -15,7 +15,11 @@ var _Typography = _interopRequireDefault(require("@material-ui/core/Typography")
 
 var _TextField = _interopRequireDefault(require("@material-ui/core/TextField"));
 
+var _Grid = _interopRequireDefault(require("@material-ui/core/Grid"));
+
 var _Modal = _interopRequireDefault(require("../../Modal"));
+
+var _FileThumbnail = _interopRequireDefault(require("../../FileThumbnail"));
 
 var _style = _interopRequireDefault(require("./style"));
 
@@ -38,25 +42,23 @@ var InputModal = function InputModal(_ref) {
       onCancel = _ref.onCancel,
       onSubmit = _ref.onSubmit,
       title = _ref.title,
-      maxLength = _ref.maxLength;
+      maxLength = _ref.maxLength,
+      values = _ref.values;
   var classes = (0, _style.default)();
 
-  var _useState = (0, _react.useState)(''),
+  var _useState = (0, _react.useState)(0),
       _useState2 = _slicedToArray(_useState, 2),
-      fiedlValue = _useState2[0],
-      setFieldValue = _useState2[1];
+      selected = _useState2[0],
+      setSelected = _useState2[1];
 
   var cleanFieldValues = function cleanFieldValues() {
-    setFieldValue('');
+    setSelected(0);
   };
 
-  var handleOnChange = function handleOnChange(e) {
-    var value = e.target.value;
-    var numberValue = +value;
-
-    if (numberValue <= maxLength) {
-      setFieldValue(numberValue.toString());
-    }
+  var handleOnClick = function handleOnClick(index) {
+    return function (file) {
+      setSelected(index);
+    };
   };
 
   var closeModal = function closeModal() {
@@ -70,9 +72,8 @@ var InputModal = function InputModal(_ref) {
   };
 
   var handleOnSubmit = function handleOnSubmit() {
-    if (+fiedlValue <= 0) return;
     closeModal();
-    onSubmit(fiedlValue);
+    onSubmit(selected);
   };
 
   return _react.default.createElement(_Modal.default, {
@@ -85,16 +86,20 @@ var InputModal = function InputModal(_ref) {
     className: classes.form
   }, _react.default.createElement("div", {
     className: classes.formInputContainer
-  }, _react.default.createElement(_Typography.default, {
-    variant: "h6"
-  }, title), _react.default.createElement(_TextField.default, {
-    value: fiedlValue,
-    id: "standard-basic",
-    label: "P\xE1gina",
-    variant: "standard",
-    onChange: handleOnChange,
-    type: "number"
-  })), _react.default.createElement("div", {
+  }, _react.default.createElement(_Grid.default, {
+    container: true,
+    spacing: 3
+  }, values.slice(0, 2).map(function (value, index) {
+    return _react.default.createElement(_Grid.default, {
+      key: index,
+      item: true,
+      sm: 6
+    }, _react.default.createElement(_FileThumbnail.default, {
+      file: value,
+      onClick: handleOnClick(index),
+      selected: selected === index
+    }));
+  }))), _react.default.createElement("div", {
     className: classes.actionContainer
   }, _react.default.createElement(_Button.default, {
     color: "default",
@@ -115,7 +120,8 @@ InputModal.propTypes = {
   onCancel: _propTypes.default.func,
   onSubmit: _propTypes.default.func,
   title: _propTypes.default.string,
-  maxLength: _propTypes.default.number
+  maxLength: _propTypes.default.number,
+  values: _propTypes.default.array
 };
 InputModal.defaultProps = {
   header: '',
@@ -124,7 +130,8 @@ InputModal.defaultProps = {
   onCancel: function onCancel() {},
   onSubmit: function onSubmit() {},
   title: '',
-  maxLength: 1
+  maxLength: 1,
+  values: []
 };
 
 var _default = (0, _react.memo)(InputModal);

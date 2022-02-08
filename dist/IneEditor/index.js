@@ -73,8 +73,8 @@ var IneEditor = function IneEditor(_ref) {
 
   var _useState7 = (0, _react.useState)([]),
       _useState8 = _slicedToArray(_useState7, 2),
-      urls = _useState8[0],
-      setUrls = _useState8[1];
+      files = _useState8[0],
+      setFiles = _useState8[1];
 
   var clasess = (0, _style.default)();
   var filterValues = (0, _react.useMemo)(function () {
@@ -93,36 +93,45 @@ var IneEditor = function IneEditor(_ref) {
     var _ref2 = _asyncToGenerator(
     /*#__PURE__*/
     regeneratorRuntime.mark(function _callee(url) {
-      var response, data, metadata, file;
+      var name,
+          response,
+          data,
+          metadata,
+          fileName,
+          file,
+          _args = arguments;
       return regeneratorRuntime.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
+              name = _args.length > 1 && _args[1] !== undefined ? _args[1] : '';
+
               if (url) {
-                _context.next = 2;
+                _context.next = 3;
                 break;
               }
 
               return _context.abrupt("return", '');
 
-            case 2:
-              _context.next = 4;
+            case 3:
+              _context.next = 5;
               return fetch(url);
 
-            case 4:
+            case 5:
               response = _context.sent;
-              _context.next = 7;
+              _context.next = 8;
               return response.blob();
 
-            case 7:
+            case 8:
               data = _context.sent;
               metadata = {
                 type: data.type
               };
-              file = new File([data], title, metadata);
+              fileName = name || title;
+              file = new File([data], fileName, metadata);
               return _context.abrupt("return", file);
 
-            case 11:
+            case 13:
             case "end":
               return _context.stop();
           }
@@ -156,14 +165,14 @@ var IneEditor = function IneEditor(_ref) {
 
             case 3:
               if (!acceptedFiles.length) {
-                _context2.next = 24;
+                _context2.next = 27;
                 break;
               }
 
               acceptFiles = acceptedFiles[0];
 
               if (isPngType(acceptFiles)) {
-                _context2.next = 22;
+                _context2.next = 25;
                 break;
               }
 
@@ -174,34 +183,41 @@ var IneEditor = function IneEditor(_ref) {
               convertedFiles = _context2.sent;
 
               if (!(Array.isArray(convertedFiles) && convertedFiles.length > 1)) {
-                _context2.next = 15;
+                _context2.next = 18;
                 break;
               }
 
+              _context2.next = 12;
+              return Promise.all(convertedFiles.map(function (convertedFile, index) {
+                return convertUrlToFile(convertedFile, "P\xE1gina ".concat(index + 1));
+              }));
+
+            case 12:
+              acceptFiles = _context2.sent;
               setIndexSide(side);
-              setUrls(convertedFiles);
+              setFiles(acceptFiles);
               setOpenModal(true);
-              _context2.next = 20;
+              _context2.next = 23;
               break;
 
-            case 15:
-              _context2.next = 17;
+            case 18:
+              _context2.next = 20;
               return convertUrlToFile(convertedFiles);
 
-            case 17:
+            case 20:
               acceptFiles = _context2.sent;
               setFile(acceptFiles);
               setIndexSide(side);
 
-            case 20:
-              _context2.next = 24;
+            case 23:
+              _context2.next = 27;
               break;
 
-            case 22:
+            case 25:
               setFile(acceptFiles);
               setIndexSide(side);
 
-            case 24:
+            case 27:
             case "end":
               return _context2.stop();
           }
@@ -227,53 +243,28 @@ var IneEditor = function IneEditor(_ref) {
   var cancel = function cancel() {
     setFile(null);
     setIndexSide(null);
-    setUrls([]);
+    setFiles([]);
   };
 
   var onCloseModal = function onCloseModal() {
     setOpenModal(false);
   };
 
-  var onSubmit =
-  /*#__PURE__*/
-  function () {
-    var _ref4 = _asyncToGenerator(
-    /*#__PURE__*/
-    regeneratorRuntime.mark(function _callee3(numPage) {
-      var theFile;
-      return regeneratorRuntime.wrap(function _callee3$(_context3) {
-        while (1) {
-          switch (_context3.prev = _context3.next) {
-            case 0:
-              _context3.next = 2;
-              return convertUrlToFile(urls[numPage - 1]);
-
-            case 2:
-              theFile = _context3.sent;
-              setFile(theFile);
-              setUrls([]);
-
-            case 5:
-            case "end":
-              return _context3.stop();
-          }
-        }
-      }, _callee3);
-    }));
-
-    return function onSubmit(_x5) {
-      return _ref4.apply(this, arguments);
-    };
-  }();
+  var onSubmit = function onSubmit(numPage) {
+    var theFile = files[numPage];
+    setFile(theFile);
+    setFiles([]);
+  };
 
   return _react.default.createElement(_react.default.Fragment, null, _react.default.createElement(_InputModal.default, {
-    header: "Seleccione la pagina",
+    header: "Seleccione la p\xE1gina",
     isOpen: openModal,
     onClose: onCloseModal,
     onCancel: cancel,
     onSubmit: onSubmit,
     title: "Pagina debe ser mayor a 0",
-    maxLength: urls.length
+    maxLength: files.length,
+    values: files
   }), _react.default.createElement(_Card.default, {
     className: clasess.card
   }, _react.default.createElement(_CardHeader.default, {

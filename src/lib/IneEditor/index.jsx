@@ -20,7 +20,7 @@ const IneEditor = ({ accept, disabled, isIncorrect, onChange, values, title, han
   const [file, setFile] = useState(null);
   const [indexSide, setIndexSide] = useState(null);
   const [openModal, setOpenModal] = useState(false);
-  const [urls, setUrls] = useState([]);
+  const [files, setFiles] = useState([]);
 
   const clasess = useStyles();
 
@@ -30,7 +30,7 @@ const IneEditor = ({ accept, disabled, isIncorrect, onChange, values, title, han
     return file.type.split('/').pop() === 'png';
   };
 
-  const convertUrlToFile = async (url) => {
+  const convertUrlToFile = async (url, name = '') => {
     // let _url = Array.isArray(url) ? url[0] : url;
     if(!url) return '';
     let response = await fetch(url);
@@ -38,7 +38,8 @@ const IneEditor = ({ accept, disabled, isIncorrect, onChange, values, title, han
     let metadata = {
       type: data.type
     };
-    let file = new File([data], title, metadata);
+    let fileName = name || title;
+    let file = new File([data], fileName, metadata);
     return file;
   }
 
@@ -52,8 +53,9 @@ const IneEditor = ({ accept, disabled, isIncorrect, onChange, values, title, han
       if (!isPngType(acceptFiles)) {
         const convertedFiles = await fileConvertion(acceptedFiles, 'cropConvertion');
         if (Array.isArray(convertedFiles) && convertedFiles.length > 1) {
+          acceptFiles = await Promise.all(convertedFiles.map((convertedFile, index) => convertUrlToFile(convertedFile, `Página ${index + 1}`)));
           setIndexSide(side);
-          setUrls(convertedFiles);
+          setFiles(acceptFiles);
           setOpenModal(true);
         } else {
           acceptFiles = await convertUrlToFile(convertedFiles);
@@ -78,29 +80,30 @@ const IneEditor = ({ accept, disabled, isIncorrect, onChange, values, title, han
   const cancel = () => {
     setFile(null);
     setIndexSide(null);
-    setUrls([]);
+    setFiles([]);
   };
 
   const onCloseModal = () => {
     setOpenModal(false);
   };
 
-  const onSubmit = async (numPage) => {
-    const theFile = await convertUrlToFile(urls[numPage -1]);
+  const onSubmit = (numPage) => {
+    const theFile = files[numPage];
     setFile(theFile);
-    setUrls([]);
+    setFiles([]);
   };
 
   return (
   <>
   <InputModal 
-    header="Seleccione la pagina"
+    header="Seleccione la página"
     isOpen={openModal}
     onClose={onCloseModal}
     onCancel={cancel}
     onSubmit={onSubmit}
     title="Pagina debe ser mayor a 0"
-    maxLength={urls.length}
+    maxLength={files.length}
+    values={files}
   />
   <Card className={clasess.card}>
       <CardHeader

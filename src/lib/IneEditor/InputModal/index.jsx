@@ -6,8 +6,10 @@ import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
+import Grid from '@material-ui/core/Grid';
 
 import Modal from '../../Modal';
+import FileThumbnail from '../../FileThumbnail';
 
 import useStyles from './style';
 
@@ -19,20 +21,17 @@ const InputModal = ({
   onSubmit,
   title,
   maxLength,
+  values
 }) => {
   const classes = useStyles();
-  const [fiedlValue, setFieldValue] = useState('');
+  const [selected, setSelected] = useState(0);
 
   const cleanFieldValues = () => {
-    setFieldValue('');
+    setSelected(0);
   };
 
-  const handleOnChange = (e) => {
-    const { target: { value } } = e;
-    const numberValue = +value;
-    if (numberValue <= maxLength) {
-      setFieldValue(numberValue.toString());
-    }
+  const handleOnClick = index => (file) => {
+    setSelected(index);
   };
 
   const closeModal = () => {
@@ -46,9 +45,8 @@ const InputModal = ({
   }
 
   const handleOnSubmit = () => {
-    if (+fiedlValue <= 0) return;
     closeModal();
-    onSubmit(fiedlValue);
+    onSubmit(selected);
   };
 
   return (
@@ -60,17 +58,19 @@ const InputModal = ({
       <div className={classes.container}>
         <div className={classes.form}>
           <div className={classes.formInputContainer}>
-            <Typography variant="h6">
-              {title}
-            </Typography>
-            <TextField
-              value={fiedlValue}
-              id="standard-basic"
-              label="Página"
-              variant="standard"
-              onChange={handleOnChange}
-              type="number"
-            />
+            <Grid container spacing={3}>
+              {
+                values.slice(0, 2).map((value, index) => (
+                  <Grid key={index} item sm={6}>
+                    <FileThumbnail
+                      file={value}
+                      onClick={handleOnClick(index)}
+                      selected={selected === index}
+                    />
+                  </Grid>
+                ))
+              }
+            </Grid>
           </div>
           <div className={classes.actionContainer}>
             <Button
@@ -103,6 +103,7 @@ InputModal.propTypes = {
   onSubmit: PropTypes.func,
   title: PropTypes.string,
   maxLength: PropTypes.number,
+  values: PropTypes.array,
 };
 
 InputModal.defaultProps = {
@@ -113,6 +114,7 @@ InputModal.defaultProps = {
   onSubmit: () => { },
   title: '',
   maxLength: 1,
+  values: [],
 };
 
 export default memo(InputModal);

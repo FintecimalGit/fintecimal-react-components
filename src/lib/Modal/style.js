@@ -14,7 +14,6 @@ export default makeStyles((theme) => ({
   paper: {
     width: '90vw',
     maxWidth: '461px',
-    minHeight: '368px',
     maxHeight: '90vh',
     overflowY: 'auto',
     padding: theme.spacing(3),
