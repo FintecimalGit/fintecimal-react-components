@@ -262,8 +262,6 @@ var IneEditor = function IneEditor(_ref) {
     onClose: onCloseModal,
     onCancel: cancel,
     onSubmit: onSubmit,
-    title: "Pagina debe ser mayor a 0",
-    maxLength: files.length,
     values: files
   }), _react.default.createElement(_Card.default, {
     className: clasess.card

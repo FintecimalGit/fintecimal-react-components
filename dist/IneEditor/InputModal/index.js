@@ -11,10 +11,6 @@ var _propTypes = _interopRequireDefault(require("prop-types"));
 
 var _Button = _interopRequireDefault(require("@material-ui/core/Button"));
 
-var _Typography = _interopRequireDefault(require("@material-ui/core/Typography"));
-
-var _TextField = _interopRequireDefault(require("@material-ui/core/TextField"));
-
 var _Grid = _interopRequireDefault(require("@material-ui/core/Grid"));
 
 var _Modal = _interopRequireDefault(require("../../Modal"));
@@ -41,8 +37,6 @@ var InputModal = function InputModal(_ref) {
       onClose = _ref.onClose,
       onCancel = _ref.onCancel,
       onSubmit = _ref.onSubmit,
-      title = _ref.title,
-      maxLength = _ref.maxLength,
       values = _ref.values;
   var classes = (0, _style.default)();
 
@@ -119,8 +113,6 @@ InputModal.propTypes = {
   onClose: _propTypes.default.func,
   onCancel: _propTypes.default.func,
   onSubmit: _propTypes.default.func,
-  title: _propTypes.default.string,
-  maxLength: _propTypes.default.number,
   values: _propTypes.default.array
 };
 InputModal.defaultProps = {
@@ -129,8 +121,6 @@ InputModal.defaultProps = {
   onClose: function onClose() {},
   onCancel: function onCancel() {},
   onSubmit: function onSubmit() {},
-  title: '',
-  maxLength: 1,
   values: []
 };
 

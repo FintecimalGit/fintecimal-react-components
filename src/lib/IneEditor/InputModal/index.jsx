@@ -4,8 +4,6 @@ import React, {
 import PropTypes from 'prop-types';
 
 import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 
 import Modal from '../../Modal';
@@ -19,8 +17,6 @@ const InputModal = ({
   onClose,
   onCancel,
   onSubmit,
-  title,
-  maxLength,
   values
 }) => {
   const classes = useStyles();
@@ -101,8 +97,6 @@ InputModal.propTypes = {
   onClose: PropTypes.func,
   onCancel: PropTypes.func,
   onSubmit: PropTypes.func,
-  title: PropTypes.string,
-  maxLength: PropTypes.number,
   values: PropTypes.array,
 };
 
@@ -112,8 +106,6 @@ InputModal.defaultProps = {
   onClose: () => { },
   onCancel: () => { },
   onSubmit: () => { },
-  title: '',
-  maxLength: 1,
   values: [],
 };
 
