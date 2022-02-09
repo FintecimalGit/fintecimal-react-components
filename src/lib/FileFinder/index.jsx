@@ -25,6 +25,7 @@ const FileFinder = ({
   flipId,
   moveCard,
   dragType,
+  disabledAdd,
 }) => {
   const handleOnClick = index => (file) => {
     onClick(index, file);
@@ -61,7 +62,7 @@ const FileFinder = ({
               </Grid>
             ))
           }
-            { !disabled && (
+            { !disabledAdd && (
               <Grid item sm={3}>
                 <Add 
                   multiple={multiple}
@@ -85,6 +86,7 @@ FileFinder.propTypes = {
   onSearch: PropTypes.func,
   placeholder: PropTypes.string,
   disabled: PropTypes.bool,
+  disabledAdd: PropTypes.bool,
   multiple: PropTypes.bool,
   accept: PropTypes.oneOfType([
     PropTypes.string,
@@ -104,6 +106,7 @@ FileFinder.defaultProps = {
   onSearch: () => {},
   placeholder: '',
   disabled: false,
+  disabledAdd: false,
   multiple: false,
   accept: '',
   onDrop: () => {},

@@ -23,7 +23,8 @@ var DocumentCrop = function DocumentCrop(_ref) {
   var label = _ref.label,
       value = _ref.value,
       onCrop = _ref.onCrop,
-      onBack = _ref.onBack;
+      onBack = _ref.onBack,
+      cancel = _ref.cancel;
   var classes = (0, _style.default)();
   return _react.default.createElement("div", {
     className: classes.container
@@ -39,7 +40,8 @@ var DocumentCrop = function DocumentCrop(_ref) {
     className: classes.documentContainer
   }, _react.default.createElement(_ImageEditor.default, {
     file: value,
-    onCrop: onCrop
+    onCrop: onCrop,
+    cancel: cancel
   }))));
 };
 
@@ -47,7 +49,8 @@ DocumentCrop.propTypes = {
   label: _propTypes.default.string.isRequired,
   value: _propTypes.default.oneOfType([_propTypes.default.string, _propTypes.default.instanceOf(Blob)]).isRequired,
   onCrop: _propTypes.default.func.isRequired,
-  onBack: _propTypes.default.func.isRequired
+  onBack: _propTypes.default.func.isRequired,
+  cancel: _propTypes.default.func.isRequired
 };
 
 var _default = (0, _react.memo)(DocumentCrop);

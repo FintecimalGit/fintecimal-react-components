@@ -21,6 +21,8 @@ var _DocumentButton = _interopRequireDefault(require("../nodes/DocumentButton"))
 
 var _DocumentCrop = _interopRequireDefault(require("../DocumentCrop"));
 
+var _InputModal = _interopRequireDefault(require("./InputModal"));
+
 var _style = _interopRequireDefault(require("./style"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -64,6 +66,16 @@ var IneEditor = function IneEditor(_ref) {
       indexSide = _useState4[0],
       setIndexSide = _useState4[1];
 
+  var _useState5 = (0, _react.useState)(false),
+      _useState6 = _slicedToArray(_useState5, 2),
+      openModal = _useState6[0],
+      setOpenModal = _useState6[1];
+
+  var _useState7 = (0, _react.useState)([]),
+      _useState8 = _slicedToArray(_useState7, 2),
+      files = _useState8[0],
+      setFiles = _useState8[1];
+
   var clasess = (0, _style.default)();
   var filterValues = (0, _react.useMemo)(function () {
     return values.filter(function (value) {
@@ -81,15 +93,20 @@ var IneEditor = function IneEditor(_ref) {
     var _ref2 = _asyncToGenerator(
     /*#__PURE__*/
     regeneratorRuntime.mark(function _callee(url) {
-      var _url, response, data, metadata, file;
-
+      var name,
+          response,
+          data,
+          metadata,
+          fileName,
+          file,
+          _args = arguments;
       return regeneratorRuntime.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              _url = Array.isArray(url) ? url[0] : url;
+              name = _args.length > 1 && _args[1] !== undefined ? _args[1] : '';
 
-              if (_url) {
+              if (url) {
                 _context.next = 3;
                 break;
               }
@@ -98,7 +115,7 @@ var IneEditor = function IneEditor(_ref) {
 
             case 3:
               _context.next = 5;
-              return fetch(_url);
+              return fetch(url);
 
             case 5:
               response = _context.sent;
@@ -110,10 +127,11 @@ var IneEditor = function IneEditor(_ref) {
               metadata = {
                 type: data.type
               };
-              file = new File([data], title, metadata);
+              fileName = name || title;
+              file = new File([data], fileName, metadata);
               return _context.abrupt("return", file);
 
-            case 12:
+            case 13:
             case "end":
               return _context.stop();
           }
@@ -147,14 +165,14 @@ var IneEditor = function IneEditor(_ref) {
 
             case 3:
               if (!acceptedFiles.length) {
-                _context2.next = 14;
+                _context2.next = 27;
                 break;
               }
 
               acceptFiles = acceptedFiles[0];
 
               if (isPngType(acceptFiles)) {
-                _context2.next = 12;
+                _context2.next = 25;
                 break;
               }
 
@@ -163,17 +181,43 @@ var IneEditor = function IneEditor(_ref) {
 
             case 8:
               convertedFiles = _context2.sent;
-              _context2.next = 11;
-              return convertUrlToFile(convertedFiles);
 
-            case 11:
-              acceptFiles = _context2.sent;
+              if (!(Array.isArray(convertedFiles) && convertedFiles.length > 1)) {
+                _context2.next = 18;
+                break;
+              }
+
+              _context2.next = 12;
+              return Promise.all(convertedFiles.map(function (convertedFile, index) {
+                return convertUrlToFile(convertedFile, "P\xE1gina ".concat(index + 1));
+              }));
 
             case 12:
+              acceptFiles = _context2.sent;
+              setIndexSide(side);
+              setFiles(acceptFiles);
+              setOpenModal(true);
+              _context2.next = 23;
+              break;
+
+            case 18:
+              _context2.next = 20;
+              return convertUrlToFile(convertedFiles);
+
+            case 20:
+              acceptFiles = _context2.sent;
               setFile(acceptFiles);
               setIndexSide(side);
 
-            case 14:
+            case 23:
+              _context2.next = 27;
+              break;
+
+            case 25:
+              setFile(acceptFiles);
+              setIndexSide(side);
+
+            case 27:
             case "end":
               return _context2.stop();
           }
@@ -196,7 +240,30 @@ var IneEditor = function IneEditor(_ref) {
     onChange([fileCropped], [], indexSide);
   };
 
-  return _react.default.createElement(_react.default.Fragment, null, _react.default.createElement(_Card.default, {
+  var cancel = function cancel() {
+    setFile(null);
+    setIndexSide(null);
+    setFiles([]);
+  };
+
+  var onCloseModal = function onCloseModal() {
+    setOpenModal(false);
+  };
+
+  var onSubmit = function onSubmit(numPage) {
+    var theFile = files[numPage];
+    setFile(theFile);
+    setFiles([]);
+  };
+
+  return _react.default.createElement(_react.default.Fragment, null, _react.default.createElement(_InputModal.default, {
+    header: "Seleccione la p\xE1gina",
+    isOpen: openModal,
+    onClose: onCloseModal,
+    onCancel: cancel,
+    onSubmit: onSubmit,
+    values: files
+  }), _react.default.createElement(_Card.default, {
     className: clasess.card
   }, _react.default.createElement(_CardHeader.default, {
     className: clasess.cardHeader,
@@ -208,6 +275,7 @@ var IneEditor = function IneEditor(_ref) {
   }), _react.default.createElement("div", {
     className: clasess.container
   }, file ? _react.default.createElement(_DocumentCrop.default, {
+    cancel: cancel,
     label: title,
     value: file,
     onCrop: onCrop,

@@ -289,12 +289,13 @@ const UploadDocuments = ({
             search={search}
             onSearch={handleOnSearch}
             placeholder={placeholder}
-            disabled={disabled || useEditorIne}
+            disabled={disabled}
             multiple={multiple}
             accept={accept}
             onDrop={handleOnAdd}
             flipId={flipId}
             moveCard={moveCard}
+            disabledAdd={disabled || useEditorIne}
           />
         )
       }

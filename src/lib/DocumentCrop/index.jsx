@@ -11,6 +11,7 @@ const DocumentCrop = ({
   value,
   onCrop,
   onBack,
+  cancel,
 }) => {
   const classes = useStyles();
 
@@ -31,6 +32,7 @@ const DocumentCrop = ({
           <ImageEditor
             file={value}
             onCrop={onCrop}
+            cancel={cancel}
           />
         </div>
       </div>
@@ -46,6 +48,7 @@ DocumentCrop.propTypes = {
   ]).isRequired,
   onCrop: PropTypes.func.isRequired,
   onBack: PropTypes.func.isRequired,
+  cancel: PropTypes.func.isRequired,
 };
 
 export default memo(DocumentCrop);

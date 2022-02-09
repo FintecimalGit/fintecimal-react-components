@@ -38,7 +38,8 @@ var FileFinder = function FileFinder(_ref) {
       onDrop = _ref.onDrop,
       flipId = _ref.flipId,
       moveCard = _ref.moveCard,
-      dragType = _ref.dragType;
+      dragType = _ref.dragType,
+      disabledAdd = _ref.disabledAdd;
 
   var handleOnClick = function handleOnClick(index) {
     return function (file) {
@@ -77,7 +78,7 @@ var FileFinder = function FileFinder(_ref) {
       selected: index === current,
       enableDragDrop: !disabled
     }))));
-  }), !disabled && _react.default.createElement(_Grid.default, {
+  }), !disabledAdd && _react.default.createElement(_Grid.default, {
     item: true,
     sm: 3
   }, _react.default.createElement(_Add.default, {
@@ -95,6 +96,7 @@ FileFinder.propTypes = {
   onSearch: _propTypes.default.func,
   placeholder: _propTypes.default.string,
   disabled: _propTypes.default.bool,
+  disabledAdd: _propTypes.default.bool,
   multiple: _propTypes.default.bool,
   accept: _propTypes.default.oneOfType([_propTypes.default.string, _propTypes.default.arrayOf(_propTypes.default.string)]),
   onDrop: _propTypes.default.func,
@@ -110,6 +112,7 @@ FileFinder.defaultProps = {
   onSearch: function onSearch() {},
   placeholder: '',
   disabled: false,
+  disabledAdd: false,
   multiple: false,
   accept: '',
   onDrop: function onDrop() {},
