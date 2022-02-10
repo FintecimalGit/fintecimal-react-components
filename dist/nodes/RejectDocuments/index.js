@@ -282,7 +282,8 @@ var RejectDocuments = function RejectDocuments(_ref) {
     search: search,
     onSearch: handleOnSearch,
     placeholder: 'Buscar',
-    disabled: true
+    disabled: true,
+    disabledAdd: true
   }));
 };
 
