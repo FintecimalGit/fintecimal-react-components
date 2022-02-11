@@ -161,6 +161,7 @@ const RejectDocuments = ({
               onSearch={handleOnSearch}
               placeholder={'Buscar'}
               disabled={true}
+              disabledAdd
             />
           )
         }
