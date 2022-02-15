@@ -197,8 +197,7 @@ var RejectDocuments = function RejectDocuments(_ref) {
 
   var handleOnDrop = function handleOnDrop(value) {
     var rejectedFiles = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
-    var prefix = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
-    onHandlerReject(value, rejectedFiles, prefix);
+    onHandlerReject(value, rejectedFiles);
     setFile(value[0]);
   };
 
@@ -208,7 +207,8 @@ var RejectDocuments = function RejectDocuments(_ref) {
     if (acceptedFiles.length) newPositions[index] = acceptedFiles[0];
     var prefix = index ? REVERSE : FRONT;
     setPositions(newPositions);
-    handleOnDrop(acceptedFiles, rejectedFiles, prefix);
+    onHandlerReject(acceptedFiles, rejectedFiles || [], prefix);
+    setFile(value[0]);
   };
 
   var handleOnClick = function handleOnClick(index, file) {

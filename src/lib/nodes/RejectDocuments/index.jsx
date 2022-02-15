@@ -66,8 +66,8 @@ const RejectDocuments = ({
     else generateFileToURLArray();
   }, [url]);
 
-  const handleOnDrop = (value, rejectedFiles = [], prefix = '') => {
-    onHandlerReject(value, rejectedFiles, prefix);
+  const handleOnDrop = (value, rejectedFiles = []) => {
+    onHandlerReject(value, rejectedFiles);
     setFile(value[0]);
   };
 
@@ -76,7 +76,8 @@ const RejectDocuments = ({
     if(acceptedFiles.length) newPositions[index] = acceptedFiles[0];
     const prefix = index ? REVERSE : FRONT;
     setPositions(newPositions);
-    handleOnDrop(acceptedFiles, rejectedFiles, prefix);
+    onHandlerReject(acceptedFiles, rejectedFiles || [], prefix);
+    setFile(value[0]);
   };
 
   const handleOnClick = (index, file) => {
