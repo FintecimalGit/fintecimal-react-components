@@ -31,6 +31,8 @@ var _DatePicker = _interopRequireDefault(require("../../../DatePicker"));
 
 var _UploadDocuments = _interopRequireDefault(require("../../../UploadDocuments"));
 
+var _CurrencyInput = _interopRequireDefault(require("../../CurrencyInput"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
@@ -43,39 +45,42 @@ var CustomField = function CustomField(_ref) {
 
   switch (type) {
     case 'CURP':
-      return /*#__PURE__*/_react.default.createElement(_CURPInput.default, props);
+      return _react.default.createElement(_CURPInput.default, props);
 
     case 'CLABE':
-      return /*#__PURE__*/_react.default.createElement(_CLABEInput.default, props);
+      return _react.default.createElement(_CLABEInput.default, props);
 
     case 'lista':
-      return /*#__PURE__*/_react.default.createElement(_Select.default, props);
+      return _react.default.createElement(_Select.default, props);
 
     case 'RFC':
-      return /*#__PURE__*/_react.default.createElement(_BaseRFCInput.default, props);
+      return _react.default.createElement(_BaseRFCInput.default, props);
 
     case 'cantidad':
     case 'número':
-      return /*#__PURE__*/_react.default.createElement(_BaseNumberInput.default, props);
+      return _react.default.createElement(_BaseNumberInput.default, props);
 
     case 'radio':
     case 'email':
-      return /*#__PURE__*/_react.default.createElement(_BaseEmailInput.default, props);
+      return _react.default.createElement(_BaseEmailInput.default, props);
 
     case 'celular':
-      return /*#__PURE__*/_react.default.createElement(_BasePhoneInput.default, props);
+      return _react.default.createElement(_BasePhoneInput.default, props);
 
     case 'respuesta larga':
-      return /*#__PURE__*/_react.default.createElement(_TextAreaInput.default, props);
+      return _react.default.createElement(_TextAreaInput.default, props);
 
     case 'respuesta corta':
-      return /*#__PURE__*/_react.default.createElement(_BaseTextInput.default, props);
+      return _react.default.createElement(_BaseTextInput.default, props);
 
     case 'fecha':
-      return /*#__PURE__*/_react.default.createElement(_DatePicker.default, props);
+      return _react.default.createElement(_DatePicker.default, props);
+
+    case 'currency':
+      return _react.default.createElement(_CurrencyInput.default, props);
 
     case 'document':
-      return /*#__PURE__*/_react.default.createElement(_UploadDocuments.default, props);
+      return _react.default.createElement(_UploadDocuments.default, props);
 
     default:
       return '';
