@@ -80,6 +80,7 @@ var Search = function Search(_ref) {
     endAdornment: _react.default.createElement(_core.InputAdornment, {
       position: "end"
     }, _react.default.createElement(_core.IconButton, {
+      id: id,
       "aria-label": "Search",
       className: classes.iconButton,
       onClick: onSearch
