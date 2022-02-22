@@ -11,6 +11,7 @@ import TextInput from "../../BaseTextInput";
 import TextAreaInput from '../../TextAreaInput';
 import DatePicker from "../../../DatePicker";
 import UploadDocuments from "../../../UploadDocuments";
+import CurrencyInput from "../../CurrencyInput";
 
 const CustomField = ({ type, ...props }) => {
   switch (type) {
@@ -36,6 +37,8 @@ const CustomField = ({ type, ...props }) => {
       return <TextInput {...props} />;
     case 'fecha':
       return <DatePicker {...props} />;
+    case 'currency':
+      return <CurrencyInput {...props} />;
     case 'document':
       return <UploadDocuments {...props} />;
     default:
