@@ -46,7 +46,12 @@ const useStyles = makeStyles(theme => ({
     alignItems: 'center',
     textAlign: 'center',
     margin: theme.spacing(2),
+    alignSelf: 'flex-end',
   },
+  buttonNotification: {
+    alignSelf: 'flex-end',
+    padding: '5px',
+  }
 }));
 
 export default useStyles;

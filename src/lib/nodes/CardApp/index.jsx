@@ -9,7 +9,7 @@ const CardApp = ({ title, count, onClick, Icon, IconNotification, onClickNotific
   let notification;
   if (showNotification) {
     notification = (typeof IconNotification === 'string' ? 
-      <IconButton onClick={() => { onClickNotification(); }}>
+      <IconButton onClick={() => { onClickNotification(); }} className={classes.buttonNotification} >
         <img src={IconNotification} className={classes.iconNotification} />
       </IconButton> :
       <IconNotification className={classes.iconNotification} />);

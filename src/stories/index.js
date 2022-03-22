@@ -793,7 +793,7 @@ storiesOf('Components|Nodes', module)
       <InputTable value={values} headers={headers} handleHeadersAndValues={handleChange} required error />
     );
   })
-  .add('CardApp', () => <CardApp onClick={action('onClick')} />);
+  .add('CardApp', () => <CardApp onClick={action('onClick')} title="Algo asi" showNotification="true" IconNotification="https://fintecimal-test.s3.amazonaws.com/fintecimal-img/stepconfigs-icons/notification_disable_icon.png"/>);
 
 storiesOf('Components|Button', module)
   .add('Classic Button', () => <Button onClick={action('clicked')} />, {
