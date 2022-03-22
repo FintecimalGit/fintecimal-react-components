@@ -48,6 +48,17 @@ var useStyles = (0, _styles.makeStyles)(function (theme) {
     },
     image: {
       width: '80px'
+    },
+    iconNotification: {
+      justifyContent: 'center',
+      alignItems: 'center',
+      textAlign: 'center',
+      margin: theme.spacing(2),
+      alignSelf: 'flex-end'
+    },
+    buttonNotification: {
+      alignSelf: 'flex-end',
+      padding: '5px'
     }
   };
 });

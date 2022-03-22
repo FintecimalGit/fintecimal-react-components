@@ -21,12 +21,31 @@ var CardApp = function CardApp(_ref) {
   var title = _ref.title,
       count = _ref.count,
       onClick = _ref.onClick,
-      Icon = _ref.Icon;
+      Icon = _ref.Icon,
+      IconNotification = _ref.IconNotification,
+      onClickNotification = _ref.onClickNotification,
+      showNotification = _ref.showNotification;
   var classes = (0, _style.default)();
+  var notification;
+
+  if (showNotification) {
+    notification = typeof IconNotification === 'string' ? _react.default.createElement(_core.IconButton, {
+      onClick: function onClick() {
+        onClickNotification();
+      },
+      className: classes.buttonNotification
+    }, _react.default.createElement("img", {
+      src: IconNotification,
+      className: classes.iconNotification
+    })) : _react.default.createElement(IconNotification, {
+      className: classes.iconNotification
+    });
+  }
+
   return _react.default.createElement(_core.Paper, {
     className: classes.paper,
     onClick: onClick
-  }, _react.default.createElement(_core.Badge, {
+  }, notification, _react.default.createElement(_core.Badge, {
     color: "secondary",
     badgeContent: count,
     classes: {
@@ -47,13 +66,19 @@ CardApp.defaultProps = {
   title: 'FORMAS',
   count: 23,
   onClick: function onClick() {},
-  Icon: _DescriptionOutlined.default
+  Icon: _DescriptionOutlined.default,
+  IconNotification: '',
+  onClickNotification: function onClickNotification() {},
+  showNotification: false
 };
 CardApp.propTypes = {
   title: _propTypes.default.string,
   count: _propTypes.default.number,
   onClick: _propTypes.default.func,
-  Icon: _propTypes.default.oneOfType([_propTypes.default.string, _propTypes.default.object])
+  Icon: _propTypes.default.oneOfType([_propTypes.default.string, _propTypes.default.object]),
+  IconNotification: _propTypes.default.oneOfType([_propTypes.default.string, _propTypes.default.object]),
+  onClickNotification: _propTypes.default.func,
+  showNotification: _propTypes.default.bool
 };
 var _default = CardApp;
 exports.default = _default;
