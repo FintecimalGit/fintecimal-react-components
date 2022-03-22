@@ -41,6 +41,12 @@ const useStyles = makeStyles(theme => ({
   image: {
     width: '80px',
   },
+  iconNotification: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    textAlign: 'center',
+    margin: theme.spacing(2),
+  },
 }));
 
 export default useStyles;
