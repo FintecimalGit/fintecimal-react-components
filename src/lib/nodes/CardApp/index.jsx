@@ -7,9 +7,13 @@ import useStyles from './style';
 const CardApp = ({ title, count, onClick, Icon, IconNotification, onClickNotification, showNotification }) => {
   const classes = useStyles();
   let notification;
+  const onEventNotification =  (event) => {
+    onClickNotification();
+    event.stopPropagation();
+  };
   if (showNotification) {
     notification = (typeof IconNotification === 'string' ? 
-      <IconButton onClick={() => { onClickNotification(); }} className={classes.buttonNotification} >
+      <IconButton onClick={onEventNotification} className={classes.buttonNotification} >
         <img src={IconNotification} className={classes.iconNotification} />
       </IconButton> :
       <IconNotification className={classes.iconNotification} />);

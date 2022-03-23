@@ -2,7 +2,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
   paper: {
-    height: '168px',
+    height: '183px',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
@@ -10,6 +10,7 @@ const useStyles = makeStyles(theme => ({
     boxShadow: 'none !important',
     cursor: 'pointer',
     border: 'solid 1px #f8f8f8',
+    paddingTop: '15px',
     borderRadius: theme.spacing(0.5),
     '&:hover': {
       boxShadow: '0px 0px 15px 0px rgba(0,0,0,0.1) !important',
@@ -51,6 +52,7 @@ const useStyles = makeStyles(theme => ({
   buttonNotification: {
     alignSelf: 'flex-end',
     padding: '5px',
+    borderRadius: '50% !important',
   }
 }));
 
