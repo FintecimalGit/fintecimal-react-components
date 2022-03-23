@@ -28,11 +28,14 @@ var CardApp = function CardApp(_ref) {
   var classes = (0, _style.default)();
   var notification;
 
+  var onEventNotification = function onEventNotification(event) {
+    onClickNotification();
+    event.stopPropagation();
+  };
+
   if (showNotification) {
     notification = typeof IconNotification === 'string' ? _react.default.createElement(_core.IconButton, {
-      onClick: function onClick() {
-        onClickNotification();
-      },
+      onClick: onEventNotification,
       className: classes.buttonNotification
     }, _react.default.createElement("img", {
       src: IconNotification,

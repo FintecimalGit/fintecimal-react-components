@@ -10,7 +10,7 @@ var _styles = require("@material-ui/core/styles");
 var useStyles = (0, _styles.makeStyles)(function (theme) {
   return {
     paper: {
-      height: '168px',
+      height: '183px',
       display: 'flex',
       flexDirection: 'column',
       justifyContent: 'center',
@@ -18,6 +18,7 @@ var useStyles = (0, _styles.makeStyles)(function (theme) {
       boxShadow: 'none !important',
       cursor: 'pointer',
       border: 'solid 1px #f8f8f8',
+      paddingTop: '15px',
       borderRadius: theme.spacing(0.5),
       '&:hover': {
         boxShadow: '0px 0px 15px 0px rgba(0,0,0,0.1) !important',
@@ -58,7 +59,8 @@ var useStyles = (0, _styles.makeStyles)(function (theme) {
     },
     buttonNotification: {
       alignSelf: 'flex-end',
-      padding: '5px'
+      padding: '5px',
+      borderRadius: '50% !important'
     }
   };
 });
