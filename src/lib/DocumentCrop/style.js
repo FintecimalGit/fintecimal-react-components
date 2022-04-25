@@ -2,7 +2,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 export default makeStyles(() => ({
   container: {
-    height: '50vh', // Note: This is For Responsive ImageEditor Component
+    height: '59vh', // Note: This is For Responsive ImageEditor Component
   },
 
   containerAbsolute: {
