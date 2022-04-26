@@ -9,6 +9,7 @@ import useClickOutside from '../../hooks/useClickOutside';
 const RejectActions = ({
   rejectionData,
   rejectionOptions,
+  rejectionDefaultNotes,
   handlerReject,
   rejected,
   onOpen,
@@ -106,6 +107,7 @@ const RejectActions = ({
               onClose={onClosePopOver}
               handleReject={handleReject}
               rejectionOptions={rejectionOptions}
+              rejectionDefaultNotes={rejectionDefaultNotes}
             />
           )}
       </Popover>
@@ -116,6 +118,7 @@ const RejectActions = ({
 RejectActions.defaultProps = {
   rejectionData: {},
   rejectionOptions: [],
+  rejectionDefaultNotes: [],
   onOpen: () => { },
   onClose: () => { },
   size: 'large',
@@ -128,6 +131,7 @@ RejectActions.propTypes = {
   rejected: PropTypes.bool.isRequired,
   rejectionData: PropTypes.object,
   rejectionOptions: PropTypes.array,
+  rejectionDefaultNotes: PropTypes.array,
   handlerReject: PropTypes.func.isRequired,
   onOpen: PropTypes.func.isRequired,
   onClose: PropTypes.func,
