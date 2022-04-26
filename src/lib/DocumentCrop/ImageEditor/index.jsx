@@ -13,9 +13,11 @@ import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 
-import CropLandscapeIcon from '@material-ui/icons/CropLandscape';
-import CropPortraitIcon from '@material-ui/icons/CropPortrait';
 import RefreshIcon from '@material-ui/icons/Refresh';
+import ZoomInIcon from '@material-ui/icons/ZoomIn';
+import ZoomOutIcon from '@material-ui/icons/ZoomOut';
+import CropIcon from '@material-ui/icons/Crop';
+import OpenWithIcon from '@material-ui/icons/OpenWith';
 
 import Cropper from 'cropperjs';
 import 'cropperjs/dist/cropper.css';
@@ -36,6 +38,7 @@ const ImageEditor = ({ file, onCrop, cancel }) => {
   const [horizontalScale, setHorizontalScale] = useState(1);
   const [verticalScale, setVerticalScale] = useState(1);
   const [rotation, setRotation] = useState(0);
+  const [isMoveMode, setIsMoveMode] = useState(false);
 
   const destroyCropper = useCallback(() => {
     if (cropper) cropper.destroy();
@@ -82,6 +85,26 @@ const ImageEditor = ({ file, onCrop, cancel }) => {
     cropper.crop();
   }, [cropper, rotation]);
 
+  /*----------------Move----------------*/
+  const changeMoveOrCropImageState = () => {
+    if (!cropper) return;
+    const newMoveMode = !isMoveMode;
+    const mode = newMoveMode ? 'move' : 'crop';
+    cropper.setDragMode(mode);
+    setIsMoveMode(newMoveMode);
+  };
+  
+  /*****************Move****************/
+  /*----------------Zoom----------------*/
+
+  const zoomImage = useCallback((zoomRatio) => {
+    if (!cropper) return;
+    cropper.zoom(zoomRatio);
+  }, [cropper]);
+  /*****************Zoom****************/
+
+
+
   const cropImage = useCallback(async (event) => {
     if (!cropper) return;
     const canvasData = cropper.getData();
@@ -114,13 +137,20 @@ const ImageEditor = ({ file, onCrop, cancel }) => {
     rotateImage();
   }, [rotation, rotateImage]);
 
+  const adjustImageHeight = () => {
+    if (!(containerRef.current && actionsContainerRef.current)) return 0;
+    const imageHeight = containerRef.current.offsetHeight - actionsContainerRef.current.offsetHeight;
+    return imageHeight;
+  };
+  
+
   return (
-    <div ref={containerRef}>
+    <div 
+      ref={containerRef}
+    >
       <div
         style={{
-          height: (
-            (containerRef.current && actionsContainerRef.current) && containerRef.current.offsetHeight - actionsContainerRef.current.offsetHeight
-          ) || 0,
+          height: adjustImageHeight(),
         }}
       >
         <img
@@ -148,16 +178,15 @@ const ImageEditor = ({ file, onCrop, cancel }) => {
               Cancelar
             </Button>
           </Grid>
-          <Grid item sm={4} xs={4}>
+          <Grid item sm={4} xs={12}>
             <Button
               className={classes.button}
               variant="outlined"
               fullWidth
               color="primary"
-              onClick={rotateRigth}
+              onClick={changeMoveOrCropImageState}
             >
-              <RefreshIcon />
-              Girar
+              { isMoveMode ? <CropIcon /> : <OpenWithIcon /> }
             </Button>
           </Grid>
           <Grid item sm={4} xs={12}>
@@ -171,6 +200,42 @@ const ImageEditor = ({ file, onCrop, cancel }) => {
               Recortar
             </Button>
           </Grid>
+
+          <Grid item sm={4} xs={4}>
+            <Button
+              className={classes.button}
+              variant="outlined"
+              fullWidth
+              color="primary"
+              onClick={rotateRigth}
+            >
+              <RefreshIcon />
+            </Button>
+          </Grid>
+
+          <Grid item sm={4} xs={12}>
+            <Button
+              className={classes.button}
+              variant="outlined"
+              fullWidth
+              color="primary"
+              onClick={() => zoomImage(0.1)}
+            >
+              <ZoomInIcon />
+            </Button>
+          </Grid>
+          <Grid item sm={4} xs={12}>
+            <Button
+              className={classes.button}
+              variant="outlined"
+              fullWidth
+              color="primary"
+              onClick={() => zoomImage(-0.1)}
+            >
+              <ZoomOutIcon />
+            </Button>
+          </Grid>
+
         </Grid>
       </div>
     </div>

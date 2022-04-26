@@ -1,5 +1,7 @@
 "use strict";
 
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
@@ -13,11 +15,15 @@ var _Grid = _interopRequireDefault(require("@material-ui/core/Grid"));
 
 var _Button = _interopRequireDefault(require("@material-ui/core/Button"));
 
-var _CropLandscape = _interopRequireDefault(require("@material-ui/icons/CropLandscape"));
-
-var _CropPortrait = _interopRequireDefault(require("@material-ui/icons/CropPortrait"));
-
 var _Refresh = _interopRequireDefault(require("@material-ui/icons/Refresh"));
+
+var _ZoomIn = _interopRequireDefault(require("@material-ui/icons/ZoomIn"));
+
+var _ZoomOut = _interopRequireDefault(require("@material-ui/icons/ZoomOut"));
+
+var _Crop = _interopRequireDefault(require("@material-ui/icons/Crop"));
+
+var _OpenWith = _interopRequireDefault(require("@material-ui/icons/OpenWith"));
 
 var _cropperjs = _interopRequireDefault(require("cropperjs"));
 
@@ -27,9 +33,13 @@ var _style = _interopRequireDefault(require("./style"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
-function _objectSpread2(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
@@ -37,11 +47,15 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 
-function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
@@ -76,6 +90,11 @@ var ImageEditor = function ImageEditor(_ref) {
       _useState8 = _slicedToArray(_useState7, 2),
       rotation = _useState8[0],
       setRotation = _useState8[1];
+
+  var _useState9 = (0, _react.useState)(false),
+      _useState10 = _slicedToArray(_useState9, 2),
+      isMoveMode = _useState10[0],
+      setIsMoveMode = _useState10[1];
 
   var destroyCropper = (0, _react.useCallback)(function () {
     if (cropper) cropper.destroy();
@@ -115,12 +134,28 @@ var ImageEditor = function ImageEditor(_ref) {
     cropper.rotateTo(rotation);
     cropper.crop();
   }, [cropper, rotation]);
-  var cropImage = (0, _react.useCallback)(
-  /*#__PURE__*/
-  function () {
-    var _ref2 = _asyncToGenerator(
-    /*#__PURE__*/
-    regeneratorRuntime.mark(function _callee(event) {
+  /*----------------Move----------------*/
+
+  var changeMoveOrCropImageState = function changeMoveOrCropImageState() {
+    if (!cropper) return;
+    var newMoveMode = !isMoveMode;
+    var mode = newMoveMode ? 'move' : 'crop';
+    cropper.setDragMode(mode);
+    setIsMoveMode(newMoveMode);
+  };
+  /*****************Move****************/
+
+  /*----------------Zoom----------------*/
+
+
+  var zoomImage = (0, _react.useCallback)(function (zoomRatio) {
+    if (!cropper) return;
+    cropper.zoom(zoomRatio);
+  }, [cropper]);
+  /*****************Zoom****************/
+
+  var cropImage = (0, _react.useCallback)( /*#__PURE__*/function () {
+    var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(event) {
       var canvasData, canvas, blob;
       return regeneratorRuntime.wrap(function _callee$(_context) {
         while (1) {
@@ -135,7 +170,7 @@ var ImageEditor = function ImageEditor(_ref) {
 
             case 2:
               canvasData = cropper.getData();
-              cropper.setData(_objectSpread2({}, canvasData, {
+              cropper.setData(_objectSpread(_objectSpread({}, canvasData), {}, {
                 height: canvasData.height + 40,
                 width: canvasData.width + 40,
                 x: canvasData.x - 20,
@@ -175,55 +210,96 @@ var ImageEditor = function ImageEditor(_ref) {
   (0, _react.useEffect)(function () {
     rotateImage();
   }, [rotation, rotateImage]);
-  return _react.default.createElement("div", {
+
+  var adjustImageHeight = function adjustImageHeight() {
+    if (!(containerRef.current && actionsContainerRef.current)) return 0;
+    var imageHeight = containerRef.current.offsetHeight - actionsContainerRef.current.offsetHeight;
+    return imageHeight;
+  };
+
+  return /*#__PURE__*/_react.default.createElement("div", {
     ref: containerRef
-  }, _react.default.createElement("div", {
+  }, /*#__PURE__*/_react.default.createElement("div", {
     style: {
-      height: containerRef.current && actionsContainerRef.current && containerRef.current.offsetHeight - actionsContainerRef.current.offsetHeight || 0
+      height: adjustImageHeight()
     }
-  }, _react.default.createElement("img", {
+  }, /*#__PURE__*/_react.default.createElement("img", {
     ref: imageRef,
     alt: url,
     src: url,
     className: classes.img
-  })), _react.default.createElement("div", {
+  })), /*#__PURE__*/_react.default.createElement("div", {
     ref: actionsContainerRef
-  }, _react.default.createElement(_Grid.default, {
+  }, /*#__PURE__*/_react.default.createElement(_Grid.default, {
     className: classes.actionContainer,
     container: true,
     spacing: 1,
     justify: "space-around"
-  }, _react.default.createElement(_Grid.default, {
+  }, /*#__PURE__*/_react.default.createElement(_Grid.default, {
     item: true,
     sm: 4,
     xs: 4
-  }, _react.default.createElement(_Button.default, {
+  }, /*#__PURE__*/_react.default.createElement(_Button.default, {
     className: classes.button,
     variant: "outlined",
     fullWidth: true,
     color: "primary",
     onClick: cancel
-  }, "Cancelar")), _react.default.createElement(_Grid.default, {
+  }, "Cancelar")), /*#__PURE__*/_react.default.createElement(_Grid.default, {
     item: true,
     sm: 4,
-    xs: 4
-  }, _react.default.createElement(_Button.default, {
+    xs: 12
+  }, /*#__PURE__*/_react.default.createElement(_Button.default, {
     className: classes.button,
     variant: "outlined",
     fullWidth: true,
     color: "primary",
-    onClick: rotateRigth
-  }, _react.default.createElement(_Refresh.default, null), "Girar")), _react.default.createElement(_Grid.default, {
+    onClick: changeMoveOrCropImageState
+  }, isMoveMode ? /*#__PURE__*/_react.default.createElement(_Crop.default, null) : /*#__PURE__*/_react.default.createElement(_OpenWith.default, null))), /*#__PURE__*/_react.default.createElement(_Grid.default, {
     item: true,
     sm: 4,
     xs: 12
-  }, _react.default.createElement(_Button.default, {
+  }, /*#__PURE__*/_react.default.createElement(_Button.default, {
     className: classes.button,
     variant: "contained",
     fullWidth: true,
     color: "primary",
     onClick: cropImage
-  }, "Recortar")))));
+  }, "Recortar")), /*#__PURE__*/_react.default.createElement(_Grid.default, {
+    item: true,
+    sm: 4,
+    xs: 4
+  }, /*#__PURE__*/_react.default.createElement(_Button.default, {
+    className: classes.button,
+    variant: "outlined",
+    fullWidth: true,
+    color: "primary",
+    onClick: rotateRigth
+  }, /*#__PURE__*/_react.default.createElement(_Refresh.default, null))), /*#__PURE__*/_react.default.createElement(_Grid.default, {
+    item: true,
+    sm: 4,
+    xs: 12
+  }, /*#__PURE__*/_react.default.createElement(_Button.default, {
+    className: classes.button,
+    variant: "outlined",
+    fullWidth: true,
+    color: "primary",
+    onClick: function onClick() {
+      return zoomImage(0.1);
+    }
+  }, /*#__PURE__*/_react.default.createElement(_ZoomIn.default, null))), /*#__PURE__*/_react.default.createElement(_Grid.default, {
+    item: true,
+    sm: 4,
+    xs: 12
+  }, /*#__PURE__*/_react.default.createElement(_Button.default, {
+    className: classes.button,
+    variant: "outlined",
+    fullWidth: true,
+    color: "primary",
+    onClick: function onClick() {
+      return zoomImage(-0.1);
+    }
+  }, /*#__PURE__*/_react.default.createElement(_ZoomOut.default, null))))));
 };
 
 ImageEditor.propTypes = {
@@ -237,6 +313,6 @@ ImageEditor.defaultProps = {
   cancel: function cancel() {}
 };
 
-var _default = (0, _react.memo)(ImageEditor);
+var _default = /*#__PURE__*/(0, _react.memo)(ImageEditor);
 
 exports.default = _default;
