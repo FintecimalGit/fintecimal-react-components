@@ -24,7 +24,7 @@ const RejectTooltip = props => {
   const handleClick = event => {
     const { onClose, active } = props;
     if (active && isOtusidePopover(event) && isSelectClick()) {
-      setComments('');
+      if (!rejectionDefaultNotes.length) setComments('');
     }
   };
 
@@ -42,6 +42,16 @@ const RejectTooltip = props => {
     handleReject({ reason, comments });
   };
 
+  const onChangeReason = (value) => {
+    // rejectionOptions
+    const index = rejectionOptions.findIndex((valueToFind) => valueToFind.value === value);
+    setReason(value);
+    if (index !== -1 && rejectionDefaultNotes.length && rejectionDefaultNotes.length > index) {
+      const defaultNote = rejectionDefaultNotes[index];
+      setComments(defaultNote);
+    }
+  }
+
   useEffect(() => {
     document.addEventListener('click', handleClick);
 
@@ -50,7 +60,7 @@ const RejectTooltip = props => {
     };
   });
 
-  const { active, rejectionOptions } = props;
+  const { active, rejectionOptions, rejectionDefaultNotes } = props;
   const classes = useStyles();
 
   return (
@@ -58,7 +68,7 @@ const RejectTooltip = props => {
       <div className={classes.select}>
         <Select
           selected={reason}
-          handleChange={value => setReason(value)}
+          handleChange={onChangeReason}
           onClose={() => setSelectState(CLOSE)}
           onOpen={() => setSelectState(OPEN)}
           label={REJECTION_REASON}
@@ -94,14 +104,16 @@ RejectTooltip.propTypes = {
   active: PropTypes.bool,
   onClose: PropTypes.func,
   handleReject: PropTypes.func,
-  rejectionOptions: PropTypes.array
+  rejectionOptions: PropTypes.array,
+  rejectionDefaultNotes: PropTypes.array,
 };
 
 RejectTooltip.defaultProps = {
   active: false,
   onClose: () => {},
   handleReject: () => {},
-  rejectionOptions: []
+  rejectionOptions: [],
+  rejectionDefaultNotes: [],
 };
 
 export default RejectTooltip;
