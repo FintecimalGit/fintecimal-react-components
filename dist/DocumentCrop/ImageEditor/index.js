@@ -237,49 +237,65 @@ var ImageEditor = function ImageEditor(_ref) {
     xs: 12
   }, /*#__PURE__*/_react.default.createElement(_Button.default, {
     className: classes.button,
-    variant: "outlined",
+    variant: "contained",
     fullWidth: true,
     color: "primary",
     onClick: function onClick() {
       return changeMoveOrCropImageState(MOVE);
     }
-  }, /*#__PURE__*/_react.default.createElement(_OpenWith.default, null))), /*#__PURE__*/_react.default.createElement(_Grid.default, {
+  }, /*#__PURE__*/_react.default.createElement(_OpenWith.default, {
+    style: {
+      color: 'white'
+    }
+  }))), /*#__PURE__*/_react.default.createElement(_Grid.default, {
     item: true,
     sm: 6,
     xs: 12
   }, /*#__PURE__*/_react.default.createElement(_Button.default, {
     className: classes.button,
-    variant: "outlined",
+    variant: "contained",
     fullWidth: true,
     color: "primary",
     onClick: function onClick() {
       return changeMoveOrCropImageState(CROP);
     }
-  }, /*#__PURE__*/_react.default.createElement(_Crop.default, null))), /*#__PURE__*/_react.default.createElement(_Grid.default, {
+  }, /*#__PURE__*/_react.default.createElement(_Crop.default, {
+    style: {
+      color: 'white'
+    }
+  }))), /*#__PURE__*/_react.default.createElement(_Grid.default, {
     item: true,
     sm: 6,
     xs: 12
   }, /*#__PURE__*/_react.default.createElement(_Button.default, {
     className: classes.button,
-    variant: "outlined",
+    variant: "contained",
     fullWidth: true,
     color: "primary",
     onClick: function onClick() {
       return zoomImage(0.1);
     }
-  }, /*#__PURE__*/_react.default.createElement(_ZoomIn.default, null))), /*#__PURE__*/_react.default.createElement(_Grid.default, {
+  }, /*#__PURE__*/_react.default.createElement(_ZoomIn.default, {
+    style: {
+      color: 'white'
+    }
+  }))), /*#__PURE__*/_react.default.createElement(_Grid.default, {
     item: true,
     sm: 6,
     xs: 12
   }, /*#__PURE__*/_react.default.createElement(_Button.default, {
     className: classes.button,
-    variant: "outlined",
+    variant: "contained",
     fullWidth: true,
     color: "primary",
     onClick: function onClick() {
       return zoomImage(-0.1);
     }
-  }, /*#__PURE__*/_react.default.createElement(_ZoomOut.default, null))), /*#__PURE__*/_react.default.createElement(_Grid.default, {
+  }, /*#__PURE__*/_react.default.createElement(_ZoomOut.default, {
+    style: {
+      color: 'white'
+    }
+  }))), /*#__PURE__*/_react.default.createElement(_Grid.default, {
     item: true,
     sm: 6,
     xs: 12
@@ -288,25 +304,33 @@ var ImageEditor = function ImageEditor(_ref) {
     style: {
       transform: 'scaleX(-1)'
     },
-    variant: "outlined",
+    variant: "contained",
     fullWidth: true,
     color: "primary",
     onClick: function onClick() {
       return rotate(ROTATION_LEFT);
     }
-  }, /*#__PURE__*/_react.default.createElement(_Refresh.default, null))), /*#__PURE__*/_react.default.createElement(_Grid.default, {
+  }, /*#__PURE__*/_react.default.createElement(_Refresh.default, {
+    style: {
+      color: 'white'
+    }
+  }))), /*#__PURE__*/_react.default.createElement(_Grid.default, {
     item: true,
     sm: 6,
     xs: 12
   }, /*#__PURE__*/_react.default.createElement(_Button.default, {
     className: classes.button,
-    variant: "outlined",
+    variant: "contained",
     fullWidth: true,
     color: "primary",
     onClick: function onClick() {
       return rotate(ROTATION_RIGHT);
     }
-  }, /*#__PURE__*/_react.default.createElement(_Refresh.default, null))), /*#__PURE__*/_react.default.createElement(_Grid.default, {
+  }, /*#__PURE__*/_react.default.createElement(_Refresh.default, {
+    style: {
+      color: 'white'
+    }
+  }))), /*#__PURE__*/_react.default.createElement(_Grid.default, {
     item: true,
     sm: 12,
     xs: 12
