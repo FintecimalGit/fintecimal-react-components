@@ -31,11 +31,14 @@ const Text = ({
   center,
   disabled,
   children,
+  inline,
 }) => {
   const classes = useStyles();
   const variant = type === TYPES.HEADER ? 'body1' : 'body2';
+  const inlineProps = true ? { display: 'inline' } : {};
   return (
     <Typography
+      { ...inlineProps }
       variant={variant}
       color={color}
       className={classnames(
@@ -52,6 +55,7 @@ const Text = ({
 };
 
 Text.propTypes = {
+  inline: PropTypes.bool,
   type: PropTypes.oneOf(Object.values(TYPES)),
   color: PropTypes.oneOf(Object.values(COLORS)),
   fontWeigth: PropTypes.oneOf(Object.values(FONT_WEIGHTS)),
@@ -66,6 +70,7 @@ Text.propTypes = {
 };
 
 Text.defaultProps = {
+  inline: false,
   type: TYPES.PARAGRAPH,
   color: COLORS.INITIAL,
   fontWeigth: FONT_WEIGHTS.BOLD,

@@ -60,7 +60,10 @@ function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Sy
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 var FLIP_STEAP = -1;
-var ROTATION_STEAP = 90;
+var ROTATION_RIGHT = 90;
+var ROTATION_LEFT = -90;
+var MOVE = 'move';
+var CROP = 'crop';
 
 var ImageEditor = function ImageEditor(_ref) {
   var file = _ref.file,
@@ -91,11 +94,6 @@ var ImageEditor = function ImageEditor(_ref) {
       rotation = _useState8[0],
       setRotation = _useState8[1];
 
-  var _useState9 = (0, _react.useState)(false),
-      _useState10 = _slicedToArray(_useState9, 2),
-      isMoveMode = _useState10[0],
-      setIsMoveMode = _useState10[1];
-
   var destroyCropper = (0, _react.useCallback)(function () {
     if (cropper) cropper.destroy();
   }, [cropper]);
@@ -125,8 +123,8 @@ var ImageEditor = function ImageEditor(_ref) {
     cropper.scale(horizontalScale, verticalScale);
     cropper.crop();
   }, [cropper, horizontalScale, verticalScale]);
-  var rotateRigth = (0, _react.useCallback)(function () {
-    var newRotation = rotation + ROTATION_STEAP;
+  var rotate = (0, _react.useCallback)(function (rotationDirection) {
+    var newRotation = rotation + rotationDirection;
     setRotation(newRotation);
   }, [rotation]);
   var rotateImage = (0, _react.useCallback)(function () {
@@ -136,12 +134,9 @@ var ImageEditor = function ImageEditor(_ref) {
   }, [cropper, rotation]);
   /*----------------Move----------------*/
 
-  var changeMoveOrCropImageState = function changeMoveOrCropImageState() {
+  var changeMoveOrCropImageState = function changeMoveOrCropImageState(mode) {
     if (!cropper) return;
-    var newMoveMode = !isMoveMode;
-    var mode = newMoveMode ? 'move' : 'crop';
     cropper.setDragMode(mode);
-    setIsMoveMode(newMoveMode);
   };
   /*****************Move****************/
 
@@ -212,8 +207,8 @@ var ImageEditor = function ImageEditor(_ref) {
   }, [rotation, rotateImage]);
 
   var adjustImageHeight = function adjustImageHeight() {
-    if (!(containerRef.current && actionsContainerRef.current)) return 0;
-    var imageHeight = containerRef.current.offsetHeight - actionsContainerRef.current.offsetHeight;
+    if (!containerRef.current) return 0;
+    var imageHeight = containerRef.current.offsetHeight;
     return imageHeight;
   };
 
@@ -221,15 +216,16 @@ var ImageEditor = function ImageEditor(_ref) {
     ref: containerRef
   }, /*#__PURE__*/_react.default.createElement("div", {
     style: {
-      height: adjustImageHeight()
+      height: adjustImageHeight(),
+      position: 'relative'
     }
   }, /*#__PURE__*/_react.default.createElement("img", {
     ref: imageRef,
     alt: url,
     src: url,
     className: classes.img
-  })), /*#__PURE__*/_react.default.createElement("div", {
-    ref: actionsContainerRef
+  }), /*#__PURE__*/_react.default.createElement("div", {
+    className: classes.actions
   }, /*#__PURE__*/_react.default.createElement(_Grid.default, {
     className: classes.actionContainer,
     container: true,
@@ -237,47 +233,31 @@ var ImageEditor = function ImageEditor(_ref) {
     justify: "space-around"
   }, /*#__PURE__*/_react.default.createElement(_Grid.default, {
     item: true,
-    sm: 4,
-    xs: 4
-  }, /*#__PURE__*/_react.default.createElement(_Button.default, {
-    className: classes.button,
-    variant: "outlined",
-    fullWidth: true,
-    color: "primary",
-    onClick: cancel
-  }, "Cancelar")), /*#__PURE__*/_react.default.createElement(_Grid.default, {
-    item: true,
-    sm: 4,
+    sm: 6,
     xs: 12
   }, /*#__PURE__*/_react.default.createElement(_Button.default, {
     className: classes.button,
     variant: "outlined",
     fullWidth: true,
     color: "primary",
-    onClick: changeMoveOrCropImageState
-  }, isMoveMode ? /*#__PURE__*/_react.default.createElement(_Crop.default, null) : /*#__PURE__*/_react.default.createElement(_OpenWith.default, null))), /*#__PURE__*/_react.default.createElement(_Grid.default, {
+    onClick: function onClick() {
+      return changeMoveOrCropImageState(MOVE);
+    }
+  }, /*#__PURE__*/_react.default.createElement(_OpenWith.default, null))), /*#__PURE__*/_react.default.createElement(_Grid.default, {
     item: true,
-    sm: 4,
+    sm: 6,
     xs: 12
-  }, /*#__PURE__*/_react.default.createElement(_Button.default, {
-    className: classes.button,
-    variant: "contained",
-    fullWidth: true,
-    color: "primary",
-    onClick: cropImage
-  }, "Recortar")), /*#__PURE__*/_react.default.createElement(_Grid.default, {
-    item: true,
-    sm: 4,
-    xs: 4
   }, /*#__PURE__*/_react.default.createElement(_Button.default, {
     className: classes.button,
     variant: "outlined",
     fullWidth: true,
     color: "primary",
-    onClick: rotateRigth
-  }, /*#__PURE__*/_react.default.createElement(_Refresh.default, null))), /*#__PURE__*/_react.default.createElement(_Grid.default, {
+    onClick: function onClick() {
+      return changeMoveOrCropImageState(CROP);
+    }
+  }, /*#__PURE__*/_react.default.createElement(_Crop.default, null))), /*#__PURE__*/_react.default.createElement(_Grid.default, {
     item: true,
-    sm: 4,
+    sm: 6,
     xs: 12
   }, /*#__PURE__*/_react.default.createElement(_Button.default, {
     className: classes.button,
@@ -289,7 +269,7 @@ var ImageEditor = function ImageEditor(_ref) {
     }
   }, /*#__PURE__*/_react.default.createElement(_ZoomIn.default, null))), /*#__PURE__*/_react.default.createElement(_Grid.default, {
     item: true,
-    sm: 4,
+    sm: 6,
     xs: 12
   }, /*#__PURE__*/_react.default.createElement(_Button.default, {
     className: classes.button,
@@ -299,7 +279,54 @@ var ImageEditor = function ImageEditor(_ref) {
     onClick: function onClick() {
       return zoomImage(-0.1);
     }
-  }, /*#__PURE__*/_react.default.createElement(_ZoomOut.default, null))))));
+  }, /*#__PURE__*/_react.default.createElement(_ZoomOut.default, null))), /*#__PURE__*/_react.default.createElement(_Grid.default, {
+    item: true,
+    sm: 6,
+    xs: 12
+  }, /*#__PURE__*/_react.default.createElement(_Button.default, {
+    className: classes.button,
+    style: {
+      transform: 'scaleX(-1)'
+    },
+    variant: "outlined",
+    fullWidth: true,
+    color: "primary",
+    onClick: function onClick() {
+      return rotate(ROTATION_LEFT);
+    }
+  }, /*#__PURE__*/_react.default.createElement(_Refresh.default, null))), /*#__PURE__*/_react.default.createElement(_Grid.default, {
+    item: true,
+    sm: 6,
+    xs: 12
+  }, /*#__PURE__*/_react.default.createElement(_Button.default, {
+    className: classes.button,
+    variant: "outlined",
+    fullWidth: true,
+    color: "primary",
+    onClick: function onClick() {
+      return rotate(ROTATION_RIGHT);
+    }
+  }, /*#__PURE__*/_react.default.createElement(_Refresh.default, null))), /*#__PURE__*/_react.default.createElement(_Grid.default, {
+    item: true,
+    sm: 12,
+    xs: 12
+  }, /*#__PURE__*/_react.default.createElement(_Button.default, {
+    className: classes.button,
+    variant: "contained",
+    fullWidth: true,
+    color: "primary",
+    onClick: cancel
+  }, "Cancelar")), /*#__PURE__*/_react.default.createElement(_Grid.default, {
+    item: true,
+    sm: 12,
+    xs: 12
+  }, /*#__PURE__*/_react.default.createElement(_Button.default, {
+    className: classes.button,
+    variant: "contained",
+    fullWidth: true,
+    color: "primary",
+    onClick: cropImage
+  }, "Listo"))))));
 };
 
 ImageEditor.propTypes = {

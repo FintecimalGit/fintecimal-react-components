@@ -34,19 +34,21 @@ const Header = ({
           </div>
         )
       }
-      <div>
+      <div >
         <Text
           type={TYPES.HEADER}
           color={COLORS.SECONDARY}
           fontWeigth={FONT_WEIGHTS.NORMAL}
+          inline
         >
           { title }
         </Text>
         <Text
           type={TYPES.HEADER}
           color={COLORS.PRIMARY}
+          inline
         >
-          { description }
+          { ` ${description}` }
         </Text>
       </div>
     </div>

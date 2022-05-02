@@ -1,9 +1,11 @@
 "use strict";
 
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = exports.FONT_WEIGHTS = exports.COLORS = exports.TYPES = void 0;
+exports.default = exports.TYPES = exports.FONT_WEIGHTS = exports.COLORS = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
 
@@ -17,7 +19,11 @@ var _style = _interopRequireDefault(require("./style"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
@@ -48,17 +54,22 @@ var Text = function Text(_ref) {
       fontWeigth = _ref.fontWeigth,
       center = _ref.center,
       disabled = _ref.disabled,
-      children = _ref.children;
+      children = _ref.children,
+      inline = _ref.inline;
   var classes = (0, _style.default)();
   var variant = type === TYPES.HEADER ? 'body1' : 'body2';
-  return _react.default.createElement(_Typography.default, {
+  var inlineProps = true ? {
+    display: 'inline'
+  } : {};
+  return /*#__PURE__*/_react.default.createElement(_Typography.default, _extends({}, inlineProps, {
     variant: variant,
     color: color,
     className: (0, _classnames2.default)([classes[fontWeigth]], (_classnames = {}, _defineProperty(_classnames, classes.center, center), _defineProperty(_classnames, classes.disabled, disabled), _classnames))
-  }, children);
+  }), children);
 };
 
 Text.propTypes = {
+  inline: _propTypes.default.bool,
   type: _propTypes.default.oneOf(Object.values(TYPES)),
   color: _propTypes.default.oneOf(Object.values(COLORS)),
   fontWeigth: _propTypes.default.oneOf(Object.values(FONT_WEIGHTS)),
@@ -67,6 +78,7 @@ Text.propTypes = {
   children: _propTypes.default.oneOfType([_propTypes.default.arrayOf(_propTypes.default.node), _propTypes.default.node, _propTypes.default.string, _propTypes.default.number])
 };
 Text.defaultProps = {
+  inline: false,
   type: TYPES.PARAGRAPH,
   color: COLORS.INITIAL,
   fontWeigth: FONT_WEIGHTS.BOLD,
@@ -75,6 +87,6 @@ Text.defaultProps = {
   children: ''
 };
 
-var _default = (0, _react.memo)(Text);
+var _default = /*#__PURE__*/(0, _react.memo)(Text);
 
 exports.default = _default;
