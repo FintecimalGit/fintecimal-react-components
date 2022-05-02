@@ -1,5 +1,7 @@
 "use strict";
 
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
@@ -19,7 +21,9 @@ var _style = _interopRequireDefault(require("./style"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 var Header = function Header(_ref) {
   var title = _ref.title,
@@ -28,24 +32,26 @@ var Header = function Header(_ref) {
       onBack = _ref.onBack,
       disabled = _ref.disabled;
   var classes = (0, _style.default)();
-  return _react.default.createElement("div", {
+  return /*#__PURE__*/_react.default.createElement("div", {
     className: classes.container
-  }, enableOnBack && _react.default.createElement("div", {
+  }, enableOnBack && /*#__PURE__*/_react.default.createElement("div", {
     className: classes.onBackContainer
-  }, _react.default.createElement(_IconButton.default, {
+  }, /*#__PURE__*/_react.default.createElement(_IconButton.default, {
     className: classes.iconButton,
     onClick: onBack,
     disabled: disabled
-  }, _react.default.createElement(_ArrowBack.default, {
+  }, /*#__PURE__*/_react.default.createElement(_ArrowBack.default, {
     className: classes.icon
-  }))), _react.default.createElement("div", null, _react.default.createElement(_Text.default, {
+  }))), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement(_Text.default, {
     type: _Text.TYPES.HEADER,
     color: _Text.COLORS.SECONDARY,
-    fontWeigth: _Text.FONT_WEIGHTS.NORMAL
-  }, title), _react.default.createElement(_Text.default, {
+    fontWeigth: _Text.FONT_WEIGHTS.NORMAL,
+    inline: true
+  }, title), /*#__PURE__*/_react.default.createElement(_Text.default, {
     type: _Text.TYPES.HEADER,
-    color: _Text.COLORS.PRIMARY
-  }, description)));
+    color: _Text.COLORS.PRIMARY,
+    inline: true
+  }, " ".concat(description))));
 };
 
 Header.propTypes = {
@@ -63,6 +69,6 @@ Header.defaultProps = {
   disabled: false
 };
 
-var _default = (0, _react.memo)(Header);
+var _default = /*#__PURE__*/(0, _react.memo)(Header);
 
 exports.default = _default;

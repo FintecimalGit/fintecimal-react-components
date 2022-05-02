@@ -25,7 +25,11 @@ import 'cropperjs/dist/cropper.css';
 import useStyles from './style';
 
 const FLIP_STEAP = -1;
-const ROTATION_STEAP = 90;
+const ROTATION_RIGHT = 90;
+const ROTATION_LEFT = -90;
+
+const MOVE = 'move';
+const CROP = 'crop'
 
 const ImageEditor = ({ file, onCrop, cancel }) => {
   const classes = useStyles();
@@ -38,7 +42,6 @@ const ImageEditor = ({ file, onCrop, cancel }) => {
   const [horizontalScale, setHorizontalScale] = useState(1);
   const [verticalScale, setVerticalScale] = useState(1);
   const [rotation, setRotation] = useState(0);
-  const [isMoveMode, setIsMoveMode] = useState(false);
 
   const destroyCropper = useCallback(() => {
     if (cropper) cropper.destroy();
@@ -74,8 +77,8 @@ const ImageEditor = ({ file, onCrop, cancel }) => {
     cropper.crop();
   }, [cropper, horizontalScale, verticalScale]);
 
-  const rotateRigth = useCallback(() => {
-    const newRotation = rotation + ROTATION_STEAP;
+  const rotate = useCallback((rotationDirection) => {
+    const newRotation = rotation + rotationDirection;
     setRotation(newRotation);
   }, [rotation]);
 
@@ -86,12 +89,9 @@ const ImageEditor = ({ file, onCrop, cancel }) => {
   }, [cropper, rotation]);
 
   /*----------------Move----------------*/
-  const changeMoveOrCropImageState = () => {
+  const changeMoveOrCropImageState = (mode) => {
     if (!cropper) return;
-    const newMoveMode = !isMoveMode;
-    const mode = newMoveMode ? 'move' : 'crop';
     cropper.setDragMode(mode);
-    setIsMoveMode(newMoveMode);
   };
   
   /*****************Move****************/
@@ -138,8 +138,8 @@ const ImageEditor = ({ file, onCrop, cancel }) => {
   }, [rotation, rotateImage]);
 
   const adjustImageHeight = () => {
-    if (!(containerRef.current && actionsContainerRef.current)) return 0;
-    const imageHeight = containerRef.current.offsetHeight - actionsContainerRef.current.offsetHeight;
+    if (!(containerRef.current)) return 0;
+    const imageHeight = containerRef.current.offsetHeight;
     return imageHeight;
   };
   
@@ -151,6 +151,7 @@ const ImageEditor = ({ file, onCrop, cancel }) => {
       <div
         style={{
           height: adjustImageHeight(),
+          position: 'relative'
         }}
       >
         <img
@@ -159,84 +160,112 @@ const ImageEditor = ({ file, onCrop, cancel }) => {
           src={url}
           className={classes.img}
         />
-      </div>
-      <div ref={actionsContainerRef}>
-        <Grid
-          className={classes.actionContainer}
-          container
-          spacing={1}
-          justify="space-around"
-        >
-          <Grid item sm={4} xs={4}>
-            <Button
-              className={classes.button}
-              variant="outlined"
-              fullWidth
-              color="primary"
-              onClick={cancel}
-            >
-              Cancelar
-            </Button>
-          </Grid>
-          <Grid item sm={4} xs={12}>
-            <Button
-              className={classes.button}
-              variant="outlined"
-              fullWidth
-              color="primary"
-              onClick={changeMoveOrCropImageState}
-            >
-              { isMoveMode ? <CropIcon /> : <OpenWithIcon /> }
-            </Button>
-          </Grid>
-          <Grid item sm={4} xs={12}>
-            <Button
-              className={classes.button}
-              variant="contained"
-              fullWidth
-              color="primary"
-              onClick={cropImage}
-            >
-              Recortar
-            </Button>
-          </Grid>
+        <div className={classes.actions}>
+          <Grid
+            className={classes.actionContainer}
+            container
+            spacing={1}
+            justify="space-around"
+          >
+            
+            <Grid item sm={6} xs={12}>
+              <Button
+                className={classes.button}
+                variant="outlined"
+                fullWidth
+                color="primary"
+                onClick={() => changeMoveOrCropImageState(MOVE)}
+              >
+                <OpenWithIcon />
+              </Button>
+            </Grid>
+            <Grid item sm={6} xs={12}>
+              <Button
+                className={classes.button}
+                variant="outlined"
+                fullWidth
+                color="primary"
+                onClick={() => changeMoveOrCropImageState(CROP)}
+              >
+                <CropIcon />
+              </Button>
+            </Grid>
 
-          <Grid item sm={4} xs={4}>
-            <Button
-              className={classes.button}
-              variant="outlined"
-              fullWidth
-              color="primary"
-              onClick={rotateRigth}
-            >
-              <RefreshIcon />
-            </Button>
-          </Grid>
+            <Grid item sm={6} xs={12}>
+              <Button
+                className={classes.button}
+                variant="outlined"
+                fullWidth
+                color="primary"
+                onClick={() => zoomImage(0.1)}
+              >
+                <ZoomInIcon />
+              </Button>
+            </Grid>
+            <Grid item sm={6} xs={12}>
+              <Button
+                className={classes.button}
+                variant="outlined"
+                fullWidth
+                color="primary"
+                onClick={() => zoomImage(-0.1)}
+              >
+                <ZoomOutIcon />
+              </Button>
+            </Grid>
 
-          <Grid item sm={4} xs={12}>
-            <Button
-              className={classes.button}
-              variant="outlined"
-              fullWidth
-              color="primary"
-              onClick={() => zoomImage(0.1)}
-            >
-              <ZoomInIcon />
-            </Button>
-          </Grid>
-          <Grid item sm={4} xs={12}>
-            <Button
-              className={classes.button}
-              variant="outlined"
-              fullWidth
-              color="primary"
-              onClick={() => zoomImage(-0.1)}
-            >
-              <ZoomOutIcon />
-            </Button>
-          </Grid>
+            <Grid item sm={6} xs={12}>
+              <Button
+                className={classes.button}
+                style={{
+                  transform: 'scaleX(-1)'
+                }}
+                variant="outlined"
+                fullWidth
+                color="primary"
+                onClick={() => rotate(ROTATION_LEFT)}
+              >
+                <RefreshIcon />
+              </Button>
+            </Grid>
+            <Grid item sm={6} xs={12}>
+              <Button
+                className={classes.button}
+                variant="outlined"
+                fullWidth
+                color="primary"
+                onClick={() => rotate(ROTATION_RIGHT)}
+              >
+                <RefreshIcon />
+              </Button>
+            </Grid>
 
-        </Grid>
+
+            <Grid item sm={12} xs={12}>
+              <Button
+                className={classes.button}
+                variant="contained"
+                fullWidth
+                color="primary"
+                onClick={cancel}
+              >
+                Cancelar
+              </Button>
+            </Grid>
+            <Grid item sm={12} xs={12}>
+              <Button
+                className={classes.button}
+                variant="contained"
+                fullWidth
+                color="primary"
+                onClick={cropImage}
+              >
+                Listo
+              </Button>
+            </Grid>
+
+          </Grid>
+        </div>
       </div>
     </div>
   );

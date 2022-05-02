@@ -17,7 +17,17 @@ var _default = (0, _styles.makeStyles)(function (theme) {
       display: 'block'
     },
     actionContainer: {
-      padding: theme.spacing(1)
+      padding: theme.spacing(1),
+      backgroundColor: 'transparent'
+    },
+    actions: {
+      top: 0,
+      right: 0,
+      position: 'absolute',
+      height: '100%',
+      width: '20%',
+      minWidth: '180px',
+      backgroundColor: 'transparent'
     },
     button: {
       fontSize: '12px',
