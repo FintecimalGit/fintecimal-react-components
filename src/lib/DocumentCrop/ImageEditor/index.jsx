@@ -171,46 +171,54 @@ const ImageEditor = ({ file, onCrop, cancel }) => {
             <Grid item sm={6} xs={12}>
               <Button
                 className={classes.button}
-                variant="outlined"
+                variant="contained"
                 fullWidth
                 color="primary"
                 onClick={() => changeMoveOrCropImageState(MOVE)}
               >
-                <OpenWithIcon />
+                <OpenWithIcon
+                  style={{ color: 'white' }}
+                />
               </Button>
             </Grid>
             <Grid item sm={6} xs={12}>
               <Button
                 className={classes.button}
-                variant="outlined"
+                variant="contained"
                 fullWidth
                 color="primary"
                 onClick={() => changeMoveOrCropImageState(CROP)}
               >
-                <CropIcon />
+                <CropIcon
+                    style={{ color: 'white' }}
+                />
               </Button>
             </Grid>
 
             <Grid item sm={6} xs={12}>
               <Button
                 className={classes.button}
-                variant="outlined"
+                variant="contained"
                 fullWidth
                 color="primary"
                 onClick={() => zoomImage(0.1)}
               >
-                <ZoomInIcon />
+                <ZoomInIcon
+                  style={{ color: 'white' }}
+                />
               </Button>
             </Grid>
             <Grid item sm={6} xs={12}>
               <Button
                 className={classes.button}
-                variant="outlined"
+                variant="contained"
                 fullWidth
                 color="primary"
                 onClick={() => zoomImage(-0.1)}
               >
-                <ZoomOutIcon />
+                <ZoomOutIcon
+                  style={{ color: 'white' }}
+                />
               </Button>
             </Grid>
 
@@ -220,23 +228,27 @@ const ImageEditor = ({ file, onCrop, cancel }) => {
                 style={{
                   transform: 'scaleX(-1)'
                 }}
-                variant="outlined"
+                variant="contained"
                 fullWidth
                 color="primary"
                 onClick={() => rotate(ROTATION_LEFT)}
               >
-                <RefreshIcon />
+                <RefreshIcon
+                  style={{ color: 'white' }}
+                />
               </Button>
             </Grid>
             <Grid item sm={6} xs={12}>
               <Button
                 className={classes.button}
-                variant="outlined"
+                variant="contained"
                 fullWidth
                 color="primary"
                 onClick={() => rotate(ROTATION_RIGHT)}
               >
-                <RefreshIcon />
+                <RefreshIcon
+                  style={{ color: 'white' }}
+                />
               </Button>
             </Grid>
 
