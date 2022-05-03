@@ -16,7 +16,8 @@ import Button from '@material-ui/core/Button';
 import RefreshIcon from '@material-ui/icons/Refresh';
 import ZoomInIcon from '@material-ui/icons/ZoomIn';
 import ZoomOutIcon from '@material-ui/icons/ZoomOut';
-import CropIcon from '@material-ui/icons/Crop';
+import CheckIcon from '@material-ui/icons/Check';
+import CloseIcon from '@material-ui/icons/Close';
 import OpenWithIcon from '@material-ui/icons/OpenWith';
 
 import Cropper from 'cropperjs';
@@ -168,7 +169,7 @@ const ImageEditor = ({ file, onCrop, cancel }) => {
             justify="space-around"
           >
             
-            <Grid item sm={6} xs={12}>
+            <Grid item xs={12}>
               <Button
                 className={classes.button}
                 variant="contained"
@@ -181,48 +182,8 @@ const ImageEditor = ({ file, onCrop, cancel }) => {
                 />
               </Button>
             </Grid>
-            <Grid item sm={6} xs={12}>
-              <Button
-                className={classes.button}
-                variant="contained"
-                fullWidth
-                color="primary"
-                onClick={() => changeMoveOrCropImageState(CROP)}
-              >
-                <CropIcon
-                    style={{ color: 'white' }}
-                />
-              </Button>
-            </Grid>
 
-            <Grid item sm={6} xs={12}>
-              <Button
-                className={classes.button}
-                variant="contained"
-                fullWidth
-                color="primary"
-                onClick={() => zoomImage(0.1)}
-              >
-                <ZoomInIcon
-                  style={{ color: 'white' }}
-                />
-              </Button>
-            </Grid>
-            <Grid item sm={6} xs={12}>
-              <Button
-                className={classes.button}
-                variant="contained"
-                fullWidth
-                color="primary"
-                onClick={() => zoomImage(-0.1)}
-              >
-                <ZoomOutIcon
-                  style={{ color: 'white' }}
-                />
-              </Button>
-            </Grid>
-
-            <Grid item sm={6} xs={12}>
+            <Grid item xs={12}>
               <Button
                 className={classes.button}
                 style={{
@@ -238,7 +199,7 @@ const ImageEditor = ({ file, onCrop, cancel }) => {
                 />
               </Button>
             </Grid>
-            <Grid item sm={6} xs={12}>
+            <Grid item xs={12}>
               <Button
                 className={classes.button}
                 variant="contained"
@@ -252,19 +213,34 @@ const ImageEditor = ({ file, onCrop, cancel }) => {
               </Button>
             </Grid>
 
-
-            <Grid item sm={12} xs={12}>
+            <Grid item xs={12}>
               <Button
                 className={classes.button}
                 variant="contained"
                 fullWidth
                 color="primary"
-                onClick={cancel}
+                onClick={() => zoomImage(0.1)}
               >
-                Cancelar
+                <ZoomInIcon
+                  style={{ color: 'white' }}
+                />
               </Button>
             </Grid>
-            <Grid item sm={12} xs={12}>
+            <Grid item xs={12}>
+              <Button
+                className={classes.button}
+                variant="contained"
+                fullWidth
+                color="primary"
+                onClick={() => zoomImage(-0.1)}
+              >
+                <ZoomOutIcon
+                  style={{ color: 'white' }}
+                />
+              </Button>
+            </Grid>
+
+            <Grid item xs={12}>
               <Button
                 className={classes.button}
                 variant="contained"
@@ -272,12 +248,30 @@ const ImageEditor = ({ file, onCrop, cancel }) => {
                 color="primary"
                 onClick={cropImage}
               >
-                Listo
+                <CheckIcon style={{ color: 'white' }} />
               </Button>
             </Grid>
 
           </Grid>
         </div>
+        <Grid
+            className={classes.cancel}
+            container
+            spacing={1}
+            justify="space-around"
+          >
+            <Grid item xs={12}>
+              <Button
+                className={classes.button}
+                variant="contained"
+                fullWidth
+                color="primary"
+                onClick={cancel}
+              >
+                <CloseIcon  style={{ color: 'white' }} />
+              </Button>
+            </Grid>
+          </Grid>
       </div>
     </div>
   );

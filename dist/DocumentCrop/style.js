@@ -10,7 +10,7 @@ var _styles = require("@material-ui/core/styles");
 var _default = (0, _styles.makeStyles)(function () {
   return {
     container: {
-      height: '52vh' // Note: This is For Responsive ImageEditor Component
+      height: '55vh' // Note: This is For Responsive ImageEditor Component
 
     },
     containerAbsolute: {
