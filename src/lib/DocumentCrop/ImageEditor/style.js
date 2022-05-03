@@ -20,7 +20,6 @@ export default makeStyles((theme) => ({
     top: 0,
     right: 0,
     position: 'absolute',
-    height: '100%',
     width: '20%',
     minWidth: '180px',
     backgroundColor: 'transparent'
