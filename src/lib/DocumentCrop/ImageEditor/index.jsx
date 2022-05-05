@@ -248,7 +248,7 @@ const ImageEditor = ({ file, onCrop, cancel }) => {
                 color="primary"
                 onClick={cropImage}
               >
-                <CheckIcon style={{ color: 'white' }} />
+                OK
               </Button>
             </Grid>
 

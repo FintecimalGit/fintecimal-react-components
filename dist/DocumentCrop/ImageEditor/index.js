@@ -320,11 +320,7 @@ var ImageEditor = function ImageEditor(_ref) {
     fullWidth: true,
     color: "primary",
     onClick: cropImage
-  }, /*#__PURE__*/_react.default.createElement(_Check.default, {
-    style: {
-      color: 'white'
-    }
-  }))))), /*#__PURE__*/_react.default.createElement(_Grid.default, {
+  }, "OK")))), /*#__PURE__*/_react.default.createElement(_Grid.default, {
     className: classes.cancel,
     container: true,
     spacing: 1,
