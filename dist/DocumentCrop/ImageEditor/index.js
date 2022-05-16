@@ -21,8 +21,6 @@ var _ZoomIn = _interopRequireDefault(require("@material-ui/icons/ZoomIn"));
 
 var _ZoomOut = _interopRequireDefault(require("@material-ui/icons/ZoomOut"));
 
-var _Check = _interopRequireDefault(require("@material-ui/icons/Check"));
-
 var _Close = _interopRequireDefault(require("@material-ui/icons/Close"));
 
 var _OpenWith = _interopRequireDefault(require("@material-ui/icons/OpenWith"));

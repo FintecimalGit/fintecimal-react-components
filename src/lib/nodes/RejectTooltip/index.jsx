@@ -44,7 +44,7 @@ const RejectTooltip = props => {
 
   const onChangeReason = (value) => {
     // rejectionOptions
-    const index = rejectionOptions.findIndex((valueToFind) => valueToFind.value === value);
+    const index = rejectionOptions.findIndex((valueToFind) => valueToFind.name === value);
     setReason(value);
     if (index !== -1 && rejectionDefaultNotes.length && rejectionDefaultNotes.length > index) {
       const defaultNote = rejectionDefaultNotes[index];
