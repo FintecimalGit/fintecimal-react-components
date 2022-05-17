@@ -95,7 +95,7 @@ var RejectTooltip = function RejectTooltip(props) {
   var onChangeReason = function onChangeReason(value) {
     // rejectionOptions
     var index = rejectionOptions.findIndex(function (valueToFind) {
-      return valueToFind.value === value;
+      return valueToFind.name === value;
     });
     setReason(value);
 

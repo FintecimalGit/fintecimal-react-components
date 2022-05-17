@@ -28,6 +28,7 @@ const RejectDocuments = ({
                              multiple,
                              accept,
                              fileConvertion,
+                             rejectionDefaultNotes,
                          }) => {
   const classes = useStyles();
   const [file, setFile] = useState(null);
@@ -35,7 +36,6 @@ const RejectDocuments = ({
   const [currentFile, setCurrentFile] = useState(0);
   const [search, setSearch] = useState('');
   const [positions, setPositions] = useState(['', '']);
-
   const titleRef = useRef(null);
 
   const generateFileToURL = async () => {
@@ -126,6 +126,7 @@ const RejectDocuments = ({
               <div className={classes.rejectAction}>
                   <RejectActions
                       rejectionOptions={rejectionOptions}
+                      rejectionDefaultNotes={rejectionDefaultNotes}
                       handlerReject={onReject}
                       rejected={rejected}
                       size="small"
@@ -176,6 +177,7 @@ RejectDocuments.propTypes = {
     onReject: PropTypes.func,
     url: PropTypes.any,
     rejectionOptions: PropTypes.array,
+    rejectionDefaultNotes: PropTypes.array,
     rejectionData: PropTypes.object,
     onHandlerReject: PropTypes.func.isRequired,
     showUndo: PropTypes.bool,
@@ -196,6 +198,7 @@ RejectDocuments.defaultProps = {
   onReject: () => {},
   url: [],
   rejectionOptions: [],
+  rejectionDefaultNotes: [],
   rejectionData: {
       reason: '',
       comments: ''
