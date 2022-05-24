@@ -37,7 +37,8 @@ var RejectionField = function RejectionField(_ref) {
       onHandlerInput = _ref.onHandlerInput,
       showUndo = _ref.showUndo,
       onUndoRejection = _ref.onUndoRejection,
-      editable = _ref.editable;
+      editable = _ref.editable,
+      hideActions = _ref.hideActions;
   var classes = (0, _style.default)();
   var _field$fieldType = field.fieldType,
       type = _field$fieldType === void 0 ? '' : _field$fieldType,
@@ -116,7 +117,7 @@ var RejectionField = function RejectionField(_ref) {
     className: classes.list
   }, _react.default.createElement("div", {
     className: classes.listItemSecondaryContainer
-  }, _react.default.createElement("div", {
+  }, !hideActions && _react.default.createElement("div", {
     className: classes.rejectionActions,
     style: getStyles()
   }, _react.default.createElement(_RejectActions.default, {
@@ -167,7 +168,8 @@ RejectionField.propTypes = {
   onHandlerInput: _propTypes.default.func,
   editable: _propTypes.default.bool,
   showUndo: _propTypes.default.bool,
-  onUndoRejection: _propTypes.default.func
+  onUndoRejection: _propTypes.default.func,
+  hideActions: _propTypes.default.bool
 };
 RejectionField.defaultProps = {
   field: {},
@@ -185,7 +187,8 @@ RejectionField.defaultProps = {
   onHandlerInput: function onHandlerInput() {},
   editable: true,
   showUndo: false,
-  onUndoRejection: function onUndoRejection() {}
+  onUndoRejection: function onUndoRejection() {},
+  hideActions: false
 };
 var _default = RejectionField;
 exports.default = _default;

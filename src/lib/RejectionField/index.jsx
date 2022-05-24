@@ -18,6 +18,7 @@ const RejectionField = ({
   showUndo,
   onUndoRejection,
   editable,
+  hideActions,
 }) => {
   const classes = useStyles();
   const {
@@ -81,23 +82,28 @@ const RejectionField = ({
   return (
     <div className={classes.list}>
       <div className={classes.listItemSecondaryContainer}>
-        <div
-          className={classes.rejectionActions}
-          style={getStyles()}
-        >
-          <RejectActions
-            rejectionOptions={rejectionOptions}
-            rejected={rejected}
-            handlerReject={(value) => handlerReject(value)}
-            rejectionData={rejectionData}
-            onOpen={keep}
-            onClose={leave}
-            size="small"
-            rejectionShowed={rejectionShowed}
-            showUndo={showUndo}
-            onUndoRejection={() => handleUndoRejection()}
-          />
-        </div>
+          { 
+            !hideActions &&
+            (
+              <div
+                className={classes.rejectionActions}
+                style={getStyles()}
+              >
+                <RejectActions
+                  rejectionOptions={rejectionOptions}
+                  rejected={rejected}
+                  handlerReject={(value) => handlerReject(value)}
+                  rejectionData={rejectionData}
+                  onOpen={keep}
+                  onClose={leave}
+                  size="small"
+                  rejectionShowed={rejectionShowed}
+                  showUndo={showUndo}
+                  onUndoRejection={() => handleUndoRejection()}
+                />
+              </div>
+            )
+          }
       </div>
       <CustomField
         type={type}
@@ -135,6 +141,7 @@ RejectionField.propTypes = {
   editable: PropTypes.bool,
   showUndo: PropTypes.bool,
   onUndoRejection: PropTypes.func,
+  hideActions: PropTypes.bool,
 };
 
 RejectionField.defaultProps = {
@@ -154,6 +161,7 @@ RejectionField.defaultProps = {
   editable: true,
   showUndo: false,
   onUndoRejection: () => {},
+  hideActions: false,
 };
 
 export default RejectionField;
