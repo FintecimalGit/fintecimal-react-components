@@ -29,6 +29,7 @@ const RejectDocuments = ({
                              accept,
                              fileConvertion,
                              rejectionDefaultNotes,
+                             hideActions,
                          }) => {
   const classes = useStyles();
   const [file, setFile] = useState(null);
@@ -123,18 +124,21 @@ const RejectDocuments = ({
                     { title }
                   </Typography>
               </div>
-              <div className={classes.rejectAction}>
-                  <RejectActions
-                      rejectionOptions={rejectionOptions}
-                      rejectionDefaultNotes={rejectionDefaultNotes}
-                      handlerReject={onReject}
-                      rejected={rejected}
-                      size="small"
-                      rejectionData={rejectionData}
-                      showUndo={showUndo}
-                      onUndoRejection={onUndoRejection}
-                  />
-              </div>
+              { 
+                !hideActions &&
+                (<div className={classes.rejectAction}>
+                    <RejectActions
+                        rejectionOptions={rejectionOptions}
+                        rejectionDefaultNotes={rejectionDefaultNotes}
+                        handlerReject={onReject}
+                        rejected={rejected}
+                        size="small"
+                        rejectionData={rejectionData}
+                        showUndo={showUndo}
+                        onUndoRejection={onUndoRejection}
+                    />
+                </div>)
+              }
           </div>
           {file && !rejected && (
               <FilePreview
@@ -190,6 +194,7 @@ RejectDocuments.propTypes = {
       PropTypes.arrayOf(PropTypes.string),
     ]),
     fileConvertion: PropTypes.func,
+    hideActions: PropTypes.bool,
 };
 
 RejectDocuments.defaultProps = {
@@ -210,6 +215,7 @@ RejectDocuments.defaultProps = {
   multiple: true,
   accept: '',
   fileConvertion: () => {},
+  hideActions: false,
 };
 
 export default RejectDocuments;
