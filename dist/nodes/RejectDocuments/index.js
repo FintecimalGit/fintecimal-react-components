@@ -229,10 +229,6 @@ var RejectDocuments = function RejectDocuments(_ref) {
     }).length < 2;
   };
 
-  var isHideActions = function isHideActions() {
-    return statusStep === 'Terminado' || statusTag === 'Facturado';
-  };
-
   var getTheDropType = function getTheDropType() {
     if (useEditorIne && checkPositionsLenght()) return _react.default.createElement(_IneEditor.default, {
       title: title,

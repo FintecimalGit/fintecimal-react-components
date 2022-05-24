@@ -95,8 +95,6 @@ const RejectDocuments = ({
     return positions.filter((_file) => _file !== '').length < 2;
   };
 
-  const isHideActions = () => statusStep === 'Terminado' || statusTag === 'Facturado';
-
   const getTheDropType = () => {
     if (useEditorIne && checkPositionsLenght()) return (
       <IneEditor
