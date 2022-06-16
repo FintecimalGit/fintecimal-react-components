@@ -1,6 +1,9 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
+  isRejected: {
+    border: '1px dotted red'
+  },
   card: {
     boxShadow: 'none',
     position: 'relative',

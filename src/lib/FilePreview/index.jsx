@@ -10,13 +10,14 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import useStyles from './style';
 import { PdfViewer } from '../nodes';
 import DetectPdf from '../nodes/PdfViewer/detectPdf';
+import classnames from 'classnames';
 
-const FilePreview = ({ file, onDelete, onDownloadFile, disabled, urlDocument }) => {
+const FilePreview = ({ file, onDelete, onDownloadFile, disabled, urlDocument, isRejected }) => {
   const clasess = useStyles();
   const [url, setUrl] = useState('');
 
   const readFile = () => {
-    const reader  = new FileReader();
+    const reader = new FileReader();
     reader.onloadend = function () {
       const _url = URL.createObjectURL(file);
       setUrl(_url);
@@ -31,10 +32,10 @@ const FilePreview = ({ file, onDelete, onDownloadFile, disabled, urlDocument }) 
     if (/^image\//.test(file.type)) {
       return <img alt={file.name} src={url} height={'auto'} />;
     }
-    else if(/^(text||application)\//.test(file.type)) {
+    else if (/^(text||application)\//.test(file.type)) {
       if (/^(application\/pdf)/.test(file.type) && !DetectPdf()) {
         return (
-          <PdfViewer 
+          <PdfViewer
             url={url}
             onDownloadFile={onDownloadFile}
           />
@@ -69,18 +70,21 @@ const FilePreview = ({ file, onDelete, onDownloadFile, disabled, urlDocument }) 
         action={
           (
             !disabled && (
-                <IconButton
-                    className={clasess.iconButton}
-                    onClick={handleOnDelete}
-                >
-                  <DeleteIcon />
-                </IconButton>
+              <IconButton
+                className={clasess.iconButton}
+                onClick={handleOnDelete}
+              >
+                <DeleteIcon />
+              </IconButton>
             )
           )
         }
       />
-      <div className={clasess.container}>
-        { renderFile() }
+      <div className={classnames(
+        clasess.container,
+        { [clasess.isRejected]: isRejected },
+      )}>
+        {renderFile()}
       </div>
     </Card>
   );
@@ -92,13 +96,15 @@ FilePreview.propTypes = {
   onDownloadFile: PropTypes.func,
   disabled: PropTypes.bool,
   urlDocument: PropTypes.string,
+  isRejected: PropTypes.bool,
 };
 
 FilePreview.defaultProps = {
   file: new File([''], 'No Soportado', { type: '' }),
-  onDelete: () => {},
-  onDownloadFile: () => {},
-  disabled: false
+  onDelete: () => { },
+  onDownloadFile: () => { },
+  disabled: false,
+  isRejected: false,
 };
 
 export default FilePreview;

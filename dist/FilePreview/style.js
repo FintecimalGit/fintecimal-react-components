@@ -9,6 +9,9 @@ var _styles = require("@material-ui/core/styles");
 
 var useStyles = (0, _styles.makeStyles)(function (theme) {
   return {
+    isRejected: {
+      border: '1px dotted red'
+    },
     card: {
       boxShadow: 'none',
       position: 'relative',
