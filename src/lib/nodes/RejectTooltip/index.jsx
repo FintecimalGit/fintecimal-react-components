@@ -4,7 +4,6 @@ import useStyles from './style';
 import { Select, ButtonFlat } from '../index';
 
 const ADD_COMMENT = 'Agregar comentario';
-const REJECTION_REASON = 'Razón del rechazo';
 const CLOSE = 'close';
 const OPEN = 'open';
 const CANCEL = 'Cancelar';
@@ -60,7 +59,7 @@ const RejectTooltip = props => {
     };
   });
 
-  const { active, rejectionOptions, rejectionDefaultNotes } = props;
+  const { active, rejectionOptions, rejectionDefaultNotes, rejectReasonLabel } = props;
   const classes = useStyles();
 
   return (
@@ -71,7 +70,7 @@ const RejectTooltip = props => {
           handleChange={onChangeReason}
           onClose={() => setSelectState(CLOSE)}
           onOpen={() => setSelectState(OPEN)}
-          label={REJECTION_REASON}
+          label={rejectReasonLabel}
           options={rejectionOptions}
         />
       </div>
@@ -106,6 +105,7 @@ RejectTooltip.propTypes = {
   handleReject: PropTypes.func,
   rejectionOptions: PropTypes.array,
   rejectionDefaultNotes: PropTypes.array,
+  rejectReasonLabel: PropTypes.string,
 };
 
 RejectTooltip.defaultProps = {
@@ -114,6 +114,7 @@ RejectTooltip.defaultProps = {
   handleReject: () => {},
   rejectionOptions: [],
   rejectionDefaultNotes: [],
+  rejectReasonLabel: 'Razón del rechazo'
 };
 
 export default RejectTooltip;

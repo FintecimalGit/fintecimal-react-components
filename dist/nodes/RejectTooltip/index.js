@@ -34,7 +34,6 @@ function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Sy
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 var ADD_COMMENT = 'Agregar comentario';
-var REJECTION_REASON = 'Razón del rechazo';
 var CLOSE = 'close';
 var OPEN = 'open';
 var CANCEL = 'Cancelar';
@@ -113,7 +112,8 @@ var RejectTooltip = function RejectTooltip(props) {
   });
   var active = props.active,
       rejectionOptions = props.rejectionOptions,
-      rejectionDefaultNotes = props.rejectionDefaultNotes;
+      rejectionDefaultNotes = props.rejectionDefaultNotes,
+      rejectReasonLabel = props.rejectReasonLabel;
   var classes = (0, _style.default)();
   return /*#__PURE__*/_react.default.createElement("div", {
     ref: content,
@@ -132,7 +132,7 @@ var RejectTooltip = function RejectTooltip(props) {
     onOpen: function onOpen() {
       return setSelectState(OPEN);
     },
-    label: REJECTION_REASON,
+    label: rejectReasonLabel,
     options: rejectionOptions
   })), /*#__PURE__*/_react.default.createElement("div", {
     className: classes.textAreaContent
@@ -166,14 +166,16 @@ RejectTooltip.propTypes = {
   onClose: _propTypes.default.func,
   handleReject: _propTypes.default.func,
   rejectionOptions: _propTypes.default.array,
-  rejectionDefaultNotes: _propTypes.default.array
+  rejectionDefaultNotes: _propTypes.default.array,
+  rejectReasonLabel: _propTypes.default.string
 };
 RejectTooltip.defaultProps = {
   active: false,
   onClose: function onClose() {},
   handleReject: function handleReject() {},
   rejectionOptions: [],
-  rejectionDefaultNotes: []
+  rejectionDefaultNotes: [],
+  rejectReasonLabel: 'Razón del rechazo'
 };
 var _default = RejectTooltip;
 exports.default = _default;
