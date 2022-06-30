@@ -9,9 +9,13 @@ import DropZone from "../../DropZone";
 import FilePreview from "../../FilePreview";
 import FileFinder from '../../FileFinder';
 import IneEditor from '../../IneEditor';
+import DocumentEditor from '../DocumentEditor';
+
 
 const REVERSE = 'Reverse';
 const FRONT = "Front";
+
+const MIME_TYPES_INE_EDITOR = ['image/jpeg', 'image/png'];
 
 const RejectDocuments = ({
                              title,
@@ -30,6 +34,7 @@ const RejectDocuments = ({
                              fileConvertion,
                              rejectionDefaultNotes,
                              hideActions,
+                             isEditDocument,
                          }) => {
   const classes = useStyles();
   const [file, setFile] = useState(null);
@@ -37,6 +42,7 @@ const RejectDocuments = ({
   const [currentFile, setCurrentFile] = useState(0);
   const [search, setSearch] = useState('');
   const [positions, setPositions] = useState(['', '']);
+  const [activeIneEditor, setActiveIneEditor] = useState(false);
   const titleRef = useRef(null);
 
   const generateFileToURL = async () => {
@@ -59,7 +65,8 @@ const RejectDocuments = ({
       let file = new File([data], title, metadata);
       if(file) files[i] = file;
     }
-    setFile(files[0]);
+    const indexFile = isEditDocument ? currentFile : 0;
+    setFile(files[indexFile]);
   };
 
   useEffect(() => {
@@ -79,6 +86,12 @@ const RejectDocuments = ({
     setPositions(newPositions);
     onHandlerReject(acceptedFiles, rejectedFiles || [], prefix);
     setFile(value[0]);
+  };
+
+  const onCrop = (newFile) => {
+    setActiveIneEditor(false);
+    setFile(newFile[currentFile]);
+    onHandlerReject(newFile, [], '');
   };
 
   const handleOnClick = (index, file) => {
@@ -140,14 +153,28 @@ const RejectDocuments = ({
                 </div>)
               }
           </div>
-          {file && !rejected && (
+          {file && !rejected && !activeIneEditor && (
               <FilePreview
                   file={file}
                   onDelete={() => { setFile(null) }}
                   disabled={!rejected}
                   urlDocument={url}
+                  edit={MIME_TYPES_INE_EDITOR.includes(file.type) && isEditDocument}
+                  handleOnEdit={() => setActiveIneEditor(true)}
               />
           )}
+
+          {file && !rejected && activeIneEditor && (
+              <DocumentEditor
+                file={file}
+                onChange={onCrop}
+                urlDocument={url}
+                cancel={() => setActiveIneEditor(false)}
+                title={title}
+                currentFileIndex={currentFile}
+              />
+          )}
+
           {file && !editable && rejected && (
               <FilePreview
                   file={file}
@@ -195,6 +222,7 @@ RejectDocuments.propTypes = {
     ]),
     fileConvertion: PropTypes.func,
     hideActions: PropTypes.bool,
+    isEditDocument: PropTypes.bool,
 };
 
 RejectDocuments.defaultProps = {
@@ -216,6 +244,7 @@ RejectDocuments.defaultProps = {
   accept: '',
   fileConvertion: () => {},
   hideActions: false,
+  isEditDocument: false,
 };
 
 export default RejectDocuments;

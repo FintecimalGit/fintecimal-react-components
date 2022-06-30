@@ -1390,6 +1390,23 @@ storiesOf('NewComponents', module)
         editable={false}
       />
       <RejectDocuments
+        title="Estado de cuenta Document Editor"
+        rejected={false}
+        onReject={action('onReject')}
+        url="https://fintecimal-test.s3.amazonaws.com/62bc8b9b7d4aaa0033d536b2/Reverse-Identificacion-Oficial-ab780e53-d00a-467b-9260-4035841c9984.png"
+        rejectionOptions={[
+          { name: 'Calidad baja' },
+          { name: 'Sin imagen' },
+          { name: 'Sin sonido' },
+          { name: 'Sin audio' }
+        ]}
+        rejectionData={{}}
+        onHandlerReject={action('onHandlerReject')}
+        showUndo
+        onUndoRejection={action('onUndoRejection')}
+        editable={false}
+      />
+      <RejectDocuments
         title="Estado de bancarios"
         onReject={action('onReject')}
         url="https://fintecimal-test.s3.amazonaws.com/Screen Shot 2020-03-03 at 10.52.13.png"

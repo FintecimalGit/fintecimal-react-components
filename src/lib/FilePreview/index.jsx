@@ -6,12 +6,13 @@ import CardHeader from '@material-ui/core/CardHeader';
 import IconButton from '@material-ui/core/IconButton';
 
 import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
 
 import useStyles from './style';
 import { PdfViewer } from '../nodes';
 import DetectPdf from '../nodes/PdfViewer/detectPdf';
 
-const FilePreview = ({ file, onDelete, onDownloadFile, disabled, urlDocument }) => {
+const FilePreview = ({ file, onDelete, onDownloadFile, disabled, urlDocument, edit, handleOnEdit }) => {
   const clasess = useStyles();
   const [url, setUrl] = useState('');
 
@@ -68,14 +69,28 @@ const FilePreview = ({ file, onDelete, onDownloadFile, disabled, urlDocument }) 
         title={file.name}
         action={
           (
-            !disabled && (
-                <IconButton
-                    className={clasess.iconButton}
-                    onClick={handleOnDelete}
-                >
-                  <DeleteIcon />
-                </IconButton>
-            )
+            <>
+              {
+                !disabled && (
+                    <IconButton
+                        className={clasess.iconButton}
+                        onClick={handleOnDelete}
+                    >
+                      <DeleteIcon />
+                    </IconButton>
+                )
+              }
+              {
+                edit && (
+                  <IconButton
+                      className={clasess.iconButton}
+                      onClick={handleOnEdit}
+                  >
+                    <EditIcon />
+                  </IconButton>
+                )
+                }
+            </>
           )
         }
       />
@@ -92,13 +107,17 @@ FilePreview.propTypes = {
   onDownloadFile: PropTypes.func,
   disabled: PropTypes.bool,
   urlDocument: PropTypes.string,
+  edit: PropTypes.bool,
+  handleOnEdit: PropTypes.func,
 };
 
 FilePreview.defaultProps = {
   file: new File([''], 'No Soportado', { type: '' }),
   onDelete: () => {},
   onDownloadFile: () => {},
-  disabled: false
+  disabled: false,
+  edit: false,
+  handleOnEdit: () => {},
 };
 
 export default FilePreview;
