@@ -15,6 +15,8 @@ var _InputWrapper = _interopRequireDefault(require("../InputWrapper"));
 
 var _utils = require("../../commons/utils");
 
+var _validateCurp2 = _interopRequireDefault(require("validate-curp"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var CURP_LENGTH = 18;
@@ -45,10 +47,14 @@ var CURPInput = function CURPInput(_ref) {
 
   var isValid = function isValid(data) {
     if ((0, _utils.isEmpty)(data) && !required) return true;
+    console.log(data.length);
     var size = data.length;
 
     if (size === CURP_LENGTH) {
-      return (0, _utils.validateRegex)(data, /[A-Z]{4}[0-9]{2}[0-1][0-9][0-3][0-9][A-Z0-9]{8}/);
+      var _validateCurp = (0, _validateCurp2.default)(data),
+          valid = _validateCurp.isValid;
+
+      return valid;
     } else {
       return false;
     }

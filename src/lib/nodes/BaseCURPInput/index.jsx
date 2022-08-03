@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { curp } from '../../InputStrings';
 import InputWrapper from '../InputWrapper';
 import { textFormats, isEmpty, validateRegex } from '../../commons/utils';
+import validateCurp from 'validate-curp';
+
 const CURP_LENGTH = 18;
 
 const CURPInput = ({
@@ -31,9 +33,11 @@ const CURPInput = ({
   };
   const isValid = data => {
     if (isEmpty(data) && !required) return true;
+    console.log(data.length);
     const size = data.length;
     if (size === CURP_LENGTH) {
-      return validateRegex(data, /[A-Z]{4}[0-9]{2}[0-1][0-9][0-3][0-9][A-Z0-9]{8}/);
+      const { isValid: valid } = validateCurp(data);
+      return valid;
     } else {
       return false;
     }
