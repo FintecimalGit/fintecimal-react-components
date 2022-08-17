@@ -31,6 +31,7 @@ import {
   IDCardUpload,
   ListSignerRoles,
   InputTable,
+  InputTableSigners,
   RejectDocuments,
   RejectionButtons,
   RejectSimple,
@@ -793,7 +794,19 @@ storiesOf('Components|Nodes', module)
       <InputTable value={values} headers={headers} handleHeadersAndValues={handleChange} required error />
     );
   })
-  .add('CardApp', () => <CardApp onClick={action('onClick')} title="Algo asi" showNotification="true" IconNotification="https://fintecimal-test.s3.amazonaws.com/fintecimal-img/stepconfigs-icons/notification_disable_icon.png"/>);
+  .add('CardApp', () => <CardApp onClick={action('onClick')} title="Algo asi" showNotification="true" IconNotification="https://fintecimal-test.s3.amazonaws.com/fintecimal-img/stepconfigs-icons/notification_disable_icon.png"/>)
+  .add('Input Table Signers', () => {
+    const handleChange = (newValue) => {
+      const { headers: newHeaders, values: newValues } = newValue;
+      console.log(newValues);
+      console.log(newHeaders);
+      action('handleHeaders');
+    }
+
+    return (
+      <InputTableSigners handleHeadersAndValues={handleChange} required error />
+    );
+  });
 
 storiesOf('Components|Button', module)
   .add('Classic Button', () => <Button onClick={action('clicked')} />, {
