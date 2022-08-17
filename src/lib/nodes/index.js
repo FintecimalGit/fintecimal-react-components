@@ -19,6 +19,7 @@ import TextAreaInput from './TextAreaInput';
 import IDCardUpload from './IDCardUpload';
 import ListSignerRoles from './ListSignerRoles';
 import InputTable from './InputTable';
+import InputTableSigners from './InputTableSigners';
 import RejectDocuments from './RejectDocuments';
 import RejectionButtons from './RejectionButtons';
 import RejectSimple from './RejectSimple';
@@ -55,6 +56,7 @@ export {
   BaseRFCInput,
   ListSignerRoles,
   InputTable,
+  InputTableSigners,
   RejectDocuments,
   RejectionButtons,
   RejectSimple,
