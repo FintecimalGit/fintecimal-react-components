@@ -9,7 +9,7 @@ import EmailInput from "../../BaseEmailInput";
 import CellPhoneInput from "../../BasePhoneInput";
 import TextInput from "../../BaseTextInput";
 import TextAreaInput from '../../TextAreaInput';
-import DatePicker from "../../../DatePicker";
+import BaseDatePicker from "./Fields/BaseDatePicker";
 import UploadDocuments from "../../../UploadDocuments";
 import CurrencyInput from "../../CurrencyInput";
 
@@ -36,7 +36,7 @@ const CustomField = ({ type, ...props }) => {
     case 'respuesta corta':
       return <TextInput {...props} />;
     case 'fecha':
-      return <DatePicker {...props} />;
+      return <BaseDatePicker {...props} />;
     case 'currency':
       return <CurrencyInput {...props} />;
     case 'document':
