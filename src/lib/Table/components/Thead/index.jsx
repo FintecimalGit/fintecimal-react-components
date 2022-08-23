@@ -24,7 +24,7 @@ const Table = ({ headers, cleanTable, handleCleanTable }) => {
                 { [classes.cleanTable]: cleanTable && isLastIndex(headers, index) },
               )}
             >
-              <span>
+              <span className={classes.tableValue}>
                 { value }
                 {' '}
               </span>
