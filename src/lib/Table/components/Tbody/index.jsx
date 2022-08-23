@@ -73,7 +73,7 @@ const Table = ({
                     { [classes.editButton]: deleteRow && isLastIndex(headers, headerIndex) },
                   )}
                 >
-                  <span>
+                  <span className={classes.tableValue}>
                     { item[key] }
                   </span>
                   { isLastIndex(headers, headerIndex) && (

@@ -18,6 +18,12 @@ export default makeStyles((theme) => ({
     fontWeight: 'normal',
     padding: theme.spacing(2, 1.5),
   },
+  tableValue: {
+    fontSize: '0.75rem',
+    [theme.breakpoints.up('sm')]: {
+      fontSize: '1rem',
+    },
+  },
   noPadding: {
     padding: 4,
   },

@@ -7,6 +7,7 @@ const useStyles = makeStyles(theme => ({
     },
     tableContent: {
         padding: theme.spacing(2,0),
+        overflowX: 'auto',
     },
     csvActions: {
         position: 'relative',
