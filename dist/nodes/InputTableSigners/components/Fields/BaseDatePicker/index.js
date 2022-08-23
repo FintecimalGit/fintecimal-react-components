@@ -76,7 +76,6 @@ var BaseDatePicker = function BaseDatePicker(_ref) {
 
 
   var handleDateChange = function handleDateChange(_date) {
-    console.log('entro al cambiar fecha');
     setDate(formatDate(_date));
     var formattedDate = format && _date ? (0, _moment.default)(_date).format(format) : _date;
 
@@ -119,8 +118,6 @@ var BaseDatePicker = function BaseDatePicker(_ref) {
   };
 
   (0, _react.useEffect)(function () {
-    console.log('eentro al use efect');
-
     if (date !== value) {
       setDate(formatDate(value));
     }

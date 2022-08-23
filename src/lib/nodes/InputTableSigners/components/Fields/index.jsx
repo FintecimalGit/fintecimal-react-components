@@ -13,10 +13,6 @@ const Fields = ({fieldValues, addNewRow, edit}) =>{
     const [deleteInfo, setDeleteInfo] = useState(false);
 
     useEffect(() =>{
-        console.log(fields);
-    }, [fields]);
-
-    useEffect(() =>{
         setFields(fieldValues);
     }, [fieldValues]);
 
@@ -28,8 +24,6 @@ const Fields = ({fieldValues, addNewRow, edit}) =>{
     }, [deleteInfo]);
 
     const handleOnChange = (field, index, value) => {
-        console.log('entro al handleOnChange');
-
         let newFields = fields;
         newFields[index] = { ...field, value};
         setFields(newFields)
@@ -60,7 +54,6 @@ const Fields = ({fieldValues, addNewRow, edit}) =>{
         <Fragment>
             {fields.map((field, index) => {
                 const { id, name, label, type, format, value, error = false, errorMessage = '' } = field;
-                console.log(value);
                 return(
                     <div className={classes.root} key={id} >
                         <CustomField

@@ -35,7 +35,6 @@ const BaseDatePicker = ({
    * @param {Date} _date
    */
   const handleDateChange = _date => {
-    console.log('entro al cambiar fecha');
     setDate(formatDate(_date));
     const formattedDate = format && _date ? moment(_date).format(format) : _date;
     if (!formattedDate && required) {
@@ -73,7 +72,6 @@ const BaseDatePicker = ({
   }
  
   useEffect(() => {
-    console.log('eentro al use efect')
     if (date !== value) {
       setDate(formatDate(value));
     }
