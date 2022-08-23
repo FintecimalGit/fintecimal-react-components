@@ -59,6 +59,7 @@ const InputTableSigners = ({ value, headers, handleHeadersAndValues, error, requ
       setEdit(false);
       setEditPosition(0);
     } else {
+      console.log('entro');
       const newInformation = [...localValue, generateData(dataField)];
       handleHeadersAndValues({
         headers,

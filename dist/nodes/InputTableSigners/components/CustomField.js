@@ -27,7 +27,7 @@ var _BaseTextInput = _interopRequireDefault(require("../../BaseTextInput"));
 
 var _TextAreaInput = _interopRequireDefault(require("../../TextAreaInput"));
 
-var _DatePicker = _interopRequireDefault(require("../../../DatePicker"));
+var _BaseDatePicker = _interopRequireDefault(require("./Fields/BaseDatePicker"));
 
 var _UploadDocuments = _interopRequireDefault(require("../../../UploadDocuments"));
 
@@ -74,7 +74,7 @@ var CustomField = function CustomField(_ref) {
       return _react.default.createElement(_BaseTextInput.default, props);
 
     case 'fecha':
-      return _react.default.createElement(_DatePicker.default, props);
+      return _react.default.createElement(_BaseDatePicker.default, props);
 
     case 'currency':
       return _react.default.createElement(_CurrencyInput.default, props);

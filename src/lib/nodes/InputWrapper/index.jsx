@@ -61,7 +61,7 @@ const InputWrapper = ({ config, errors, isValid, disabled, onBlur, autoComplete 
 
   useEffect(() => {
     if (mValue !== value) {
-      const newMvalue = format ? formatText(value, format) : value;
+      const newMvalue = format ? formatText(value, format) : (value || '');
       setValue(newMvalue);
       if (!newMvalue || isValid(newMvalue)) {
         setError(false);
