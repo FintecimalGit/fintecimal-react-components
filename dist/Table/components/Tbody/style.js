@@ -9,6 +9,8 @@ var _styles = require("@material-ui/core/styles");
 
 var _colorManipulator = require("@material-ui/core/styles/colorManipulator");
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 var _default = (0, _styles.makeStyles)(function (theme) {
   return {
     tr: {
@@ -26,6 +28,11 @@ var _default = (0, _styles.makeStyles)(function (theme) {
       fontWeight: 'normal',
       padding: theme.spacing(2, 1.5)
     },
+    tableValue: _defineProperty({
+      fontSize: '0.75rem'
+    }, theme.breakpoints.up('sm'), {
+      fontSize: '1rem'
+    }),
     noPadding: {
       padding: 4
     },

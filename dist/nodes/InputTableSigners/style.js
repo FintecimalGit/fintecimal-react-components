@@ -14,7 +14,8 @@ var useStyles = (0, _styles.makeStyles)(function (theme) {
       margin: 0
     },
     tableContent: {
-      padding: theme.spacing(2, 0)
+      padding: theme.spacing(2, 0),
+      overflowX: 'auto'
     },
     csvActions: {
       position: 'relative',

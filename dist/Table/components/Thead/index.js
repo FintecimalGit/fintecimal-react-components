@@ -33,20 +33,22 @@ var Table = function Table(_ref) {
     return currentIndex === array.length - 1;
   };
 
-  return _react.default.createElement("thead", {
+  return /*#__PURE__*/_react.default.createElement("thead", {
     className: classes.header
-  }, _react.default.createElement("tr", null, headers.map(function (_ref2, index) {
+  }, /*#__PURE__*/_react.default.createElement("tr", null, headers.map(function (_ref2, index) {
     var key = _ref2.key,
         value = _ref2.value;
-    return _react.default.createElement("th", {
+    return /*#__PURE__*/_react.default.createElement("th", {
       key: "th-".concat(key, "-").concat(value),
       className: (0, _classnames2.default)(classes.th, _defineProperty({}, classes.cleanTable, cleanTable && isLastIndex(headers, index)))
-    }, _react.default.createElement("span", null, value, ' '), isLastIndex(headers, index) && _react.default.createElement(_react.default.Fragment, null, cleanTable && _react.default.createElement(_Tooltip.default, {
+    }, /*#__PURE__*/_react.default.createElement("span", {
+      className: classes.tableValue
+    }, value, ' '), isLastIndex(headers, index) && /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, cleanTable && /*#__PURE__*/_react.default.createElement(_Tooltip.default, {
       title: "Limpiar la tabla"
-    }, _react.default.createElement(_IconButton.default, {
+    }, /*#__PURE__*/_react.default.createElement(_IconButton.default, {
       className: classes.noPadding,
       onClick: handleCleanTable
-    }, _react.default.createElement(_Delete.default, null)))));
+    }, /*#__PURE__*/_react.default.createElement(_Delete.default, null)))));
   })));
 };
 
