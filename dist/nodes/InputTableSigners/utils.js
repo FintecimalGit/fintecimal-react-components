@@ -27,8 +27,8 @@ var generateValueEmpty = function generateValueEmpty(fieldArray) {
       name: field.name,
       label: field.label,
       type: field.type,
-      value: '',
-      required: field.required
+      required: field.required,
+      format: field.format || 'LL'
     };
   });
 };

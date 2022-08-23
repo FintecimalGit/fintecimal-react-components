@@ -75,9 +75,10 @@ var defaultHeaderSigner = [{
   required: false
 }, {
   id: 1,
-  name: 'lastName',
-  label: 'Apellido',
-  type: 'respuesta corta',
+  name: 'fecha',
+  label: 'Fecha',
+  format: "LL",
+  type: 'fecha',
   required: false
 }, {
   id: 2,
@@ -103,8 +104,8 @@ var defaultDataSigner = [[{
   name: 'firstName',
   value: 'Isidro'
 }, {
-  name: 'lastName',
-  value: 'Gonzalez'
+  name: 'fecha',
+  value: '19 de agosto de 2022'
 }, {
   name: 'curp',
   value: 'XEXX010101HNEXXXA4'

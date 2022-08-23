@@ -105,7 +105,7 @@ var InputWrapper = function InputWrapper(_ref) {
   }, []);
   (0, _react.useEffect)(function () {
     if (mValue !== value) {
-      var newMvalue = format ? (0, _utils.formatText)(value, format) : value;
+      var newMvalue = format ? (0, _utils.formatText)(value, format) : value || '';
       setValue(newMvalue);
 
       if (!newMvalue || isValid(newMvalue)) {
