@@ -6,7 +6,6 @@ export const generateValueEmpty = (fieldArray) => fieldArray.map((field) => ({
   name: field.name,
   label: field.label,
   type: field.type,
-  value: null,
   required: field.required,
   format: field.format || 'LL'
 }));
