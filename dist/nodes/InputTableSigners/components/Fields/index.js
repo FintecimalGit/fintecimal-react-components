@@ -58,9 +58,6 @@ var Fields = function Fields(_ref) {
       setDeleteInfo = _useState4[1];
 
   (0, _react.useEffect)(function () {
-    console.log(fields);
-  }, [fields]);
-  (0, _react.useEffect)(function () {
     setFields(fieldValues);
   }, [fieldValues]);
   (0, _react.useEffect)(function () {
@@ -71,7 +68,6 @@ var Fields = function Fields(_ref) {
   }, [deleteInfo]);
 
   var handleOnChange = function handleOnChange(field, index, value) {
-    console.log('entro al handleOnChange');
     var newFields = fields;
     newFields[index] = _objectSpread2({}, field, {
       value: value
@@ -110,7 +106,6 @@ var Fields = function Fields(_ref) {
         error = _field$error === void 0 ? false : _field$error,
         _field$errorMessage = field.errorMessage,
         errorMessage = _field$errorMessage === void 0 ? '' : _field$errorMessage;
-    console.log(value);
     return _react.default.createElement("div", {
       className: classes.root,
       key: id

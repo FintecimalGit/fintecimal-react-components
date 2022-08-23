@@ -128,7 +128,6 @@ var InputTableSigners = function InputTableSigners(_ref) {
       setEdit(false);
       setEditPosition(0);
     } else {
-      console.log('entro');
       var newInformation = [].concat(_toConsumableArray(localValue), [generateData(dataField)]);
       handleHeadersAndValues({
         headers: headers,
