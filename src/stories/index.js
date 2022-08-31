@@ -61,6 +61,7 @@ import FilePreview from '../lib/FilePreview';
 import UploadDocuments from '../lib/UploadDocuments';
 import FileThumbnail from '../lib/FileThumbnail';
 import FileFinder from '../lib/FileFinder';
+import SignersCarousel from '../lib/SignersCarousel';
 
 const {
   Input,
@@ -83,6 +84,25 @@ const {
 } = lib;
 const { LoginUI, MultiDrop } = ui;
 
+const signers = [
+  {
+    _id: '1',
+    label: '+52 APPS SA DE CV',
+    status: 'Firmado',
+  },
+  {
+    _id: '2',
+    label: 'JOSE ALFREDO TORRES',
+    status: 'Firmado',
+  },
+  {
+    _id: '3',
+    label: 'OPERADORA DE SERVICIOS MEGA',
+    status: 'Firmado',
+  },
+  
+];
+
 
 storiesOf('UI|MultiDropdown', module).add('MultiDropdown', () => <MultiDrop />);
 
@@ -99,6 +119,10 @@ storiesOf('Components|Pdf', module).add('PdfViewer', () => (
     donwnloadFile={() => {}}
     url="https://s3.amazonaws.com/fintecimal-test/7bda983f-5ff6-4180-9d92-6e7aecfbe38b.pdf"
       />
+));
+
+storiesOf('Components|SignersCarousel', module).add('SignersCarousel', () => (
+  <SignersCarousel signers={signers} />
 ));
 
 storiesOf('Components|Loader', module)
@@ -1482,6 +1506,7 @@ storiesOf('NewComponents', module)
       <Container style={{ paddingTop: '5vh', paddingBottom: '5vh' }}>
         <FilePreview file={image} onDelete={action('onDelete')} />
         <FilePreview file={pdf} onDelete={action('onDelete')} />
+        <FilePreview signers={signers} file={pdf} onDelete={action('onDelete')} />
       </Container>
     );
   })

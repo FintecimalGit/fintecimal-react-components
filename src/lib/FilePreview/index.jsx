@@ -1,4 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, {
+  useState,
+  useEffect,
+  useMemo,
+} from 'react';
 import PropTypes from 'prop-types';
 
 import Card from '@material-ui/core/Card';
@@ -11,8 +15,22 @@ import EditIcon from '@material-ui/icons/Edit';
 import useStyles from './style';
 import { PdfViewer } from '../nodes';
 import DetectPdf from '../nodes/PdfViewer/detectPdf';
+import SignersCarousel from '../SignersCarousel';
+import HiddenDocument from './HiddenDocument';
 
-const FilePreview = ({ file, onDelete, onDownloadFile, disabled, urlDocument, edit, handleOnEdit }) => {
+const SIGNER_STATUS_PENDING = 'Pendiente';
+const SIGNER_STATUS_SIGNED = 'Firmado';
+
+const FilePreview = ({
+  file,
+  onDelete,
+  onDownloadFile,
+  disabled,
+  urlDocument,
+  edit,
+  handleOnEdit,
+  signers,
+}) => {
   const clasess = useStyles();
   const [url, setUrl] = useState('');
 
@@ -24,6 +42,11 @@ const FilePreview = ({ file, onDelete, onDownloadFile, disabled, urlDocument, ed
     };
     reader.readAsDataURL(file);
   };
+
+  const showDocument = useMemo(() => {
+    if (!signers.length) return true;
+    return !signers.some(({ status }) => status === SIGNER_STATUS_PENDING);
+  }, [signers]);
 
   /**
    * @returns {DOMElement|String}
@@ -94,8 +117,18 @@ const FilePreview = ({ file, onDelete, onDownloadFile, disabled, urlDocument, ed
           )
         }
       />
+      { signers.length ? (
+          <div className={clasess.containerCarousel}>
+            <SignersCarousel signers={signers} />
+          </div>
+        ) : ''
+      }
       <div className={clasess.container}>
-        { renderFile() }
+        { showDocument ? renderFile() : (
+          <HiddenDocument
+            title="Son necesarios todos los firmantes para ver el documento"
+          />
+        ) }
       </div>
     </Card>
   );
@@ -109,6 +142,11 @@ FilePreview.propTypes = {
   urlDocument: PropTypes.string,
   edit: PropTypes.bool,
   handleOnEdit: PropTypes.func,
+  signers: PropTypes.arrayOf(PropTypes.shape({
+    _id: PropTypes.string,
+    label: PropTypes.string,
+    status: PropTypes.string,
+  })),
 };
 
 FilePreview.defaultProps = {
@@ -118,6 +156,7 @@ FilePreview.defaultProps = {
   disabled: false,
   edit: false,
   handleOnEdit: () => {},
+  signers: [],
 };
 
 export default FilePreview;
