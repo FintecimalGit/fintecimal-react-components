@@ -27,6 +27,10 @@ var _nodes = require("../nodes");
 
 var _detectPdf = _interopRequireDefault(require("../nodes/PdfViewer/detectPdf"));
 
+var _SignersCarousel = _interopRequireDefault(require("../SignersCarousel"));
+
+var _HiddenDocument = _interopRequireDefault(require("./HiddenDocument"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
@@ -45,6 +49,9 @@ function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Sy
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
+var SIGNER_STATUS_PENDING = 'Pendiente';
+var SIGNER_STATUS_SIGNED = 'Firmado';
+
 var FilePreview = function FilePreview(_ref) {
   var file = _ref.file,
       onDelete = _ref.onDelete,
@@ -52,7 +59,8 @@ var FilePreview = function FilePreview(_ref) {
       disabled = _ref.disabled,
       urlDocument = _ref.urlDocument,
       edit = _ref.edit,
-      handleOnEdit = _ref.handleOnEdit;
+      handleOnEdit = _ref.handleOnEdit,
+      signers = _ref.signers;
   var clasess = (0, _style.default)();
 
   var _useState = (0, _react.useState)(''),
@@ -71,10 +79,17 @@ var FilePreview = function FilePreview(_ref) {
 
     reader.readAsDataURL(file);
   };
+
+  var showDocument = (0, _react.useMemo)(function () {
+    if (!signers.length) return true;
+    return !signers.some(function (_ref2) {
+      var status = _ref2.status;
+      return status === SIGNER_STATUS_PENDING;
+    });
+  }, [signers]);
   /**
    * @returns {DOMElement|String}
    */
-
 
   var renderFile = function renderFile() {
     if (/^image\//.test(file.type)) {
@@ -125,9 +140,15 @@ var FilePreview = function FilePreview(_ref) {
       className: clasess.iconButton,
       onClick: handleOnEdit
     }, /*#__PURE__*/_react.default.createElement(_Edit.default, null)))
-  }), /*#__PURE__*/_react.default.createElement("div", {
+  }), signers.length ? /*#__PURE__*/_react.default.createElement("div", {
+    className: clasess.containerCarousel
+  }, /*#__PURE__*/_react.default.createElement(_SignersCarousel.default, {
+    signers: signers
+  })) : '', /*#__PURE__*/_react.default.createElement("div", {
     className: clasess.container
-  }, renderFile()));
+  }, showDocument ? renderFile() : /*#__PURE__*/_react.default.createElement(_HiddenDocument.default, {
+    title: "Son necesarios todos los firmantes para ver el documento"
+  })));
 };
 
 FilePreview.propTypes = {
@@ -137,7 +158,12 @@ FilePreview.propTypes = {
   disabled: _propTypes.default.bool,
   urlDocument: _propTypes.default.string,
   edit: _propTypes.default.bool,
-  handleOnEdit: _propTypes.default.func
+  handleOnEdit: _propTypes.default.func,
+  signers: _propTypes.default.arrayOf(_propTypes.default.shape({
+    _id: _propTypes.default.string,
+    label: _propTypes.default.string,
+    status: _propTypes.default.string
+  }))
 };
 FilePreview.defaultProps = {
   file: new File([''], 'No Soportado', {
@@ -147,7 +173,8 @@ FilePreview.defaultProps = {
   onDownloadFile: function onDownloadFile() {},
   disabled: false,
   edit: false,
-  handleOnEdit: function handleOnEdit() {}
+  handleOnEdit: function handleOnEdit() {},
+  signers: []
 };
 var _default = FilePreview;
 exports.default = _default;

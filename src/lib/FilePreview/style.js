@@ -26,9 +26,11 @@ const useStyles = makeStyles(theme => ({
       fontSize: '1.2rem',
     },
   },
+  containerCarousel: {
+    padding: theme.spacing(2, 2, 0, 2),
+  },
   container: {
     padding: theme.spacing(2),
-
     '& > *:not(img)': {
       width: '100%',
       height: '534px',
