@@ -20,6 +20,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 var Signer = function Signer(_ref) {
   var id = _ref.id,
       label = _ref.label,
+      completed = _ref.completed,
       status = _ref.status;
   var classes = (0, _style.default)();
   return /*#__PURE__*/_react.default.createElement(_core.Box, {
@@ -29,7 +30,7 @@ var Signer = function Signer(_ref) {
     className: classes.label,
     component: "span"
   }, label), /*#__PURE__*/_react.default.createElement(_core.Typography, {
-    className: (0, _clsx2.default)(classes.status, _defineProperty({}, classes.completed, status === 'Firmado')),
+    className: (0, _clsx2.default)(classes.status, _defineProperty({}, classes.completed, completed)),
     component: "span"
   }, status));
 };
@@ -42,12 +43,14 @@ var SignersCarousel = function SignersCarousel(_ref2) {
   }, signers.map(function (_ref3, index) {
     var _id = _ref3._id,
         status = _ref3.status,
-        label = _ref3.label;
+        label = _ref3.label,
+        completed = _ref3.completed;
     return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement(Signer, {
       key: _id,
       id: _id,
       status: status,
-      label: label
+      label: label,
+      completed: completed
     }), index + 1 !== signers.length ? /*#__PURE__*/_react.default.createElement(_core.Divider, {
       className: classes.divider,
       orientation: "vertical",

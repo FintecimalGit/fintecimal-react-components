@@ -89,16 +89,19 @@ const signers = [
     _id: '1',
     label: '+52 APPS SA DE CV',
     status: 'Firmado',
+    completed: true,
   },
   {
     _id: '2',
     label: 'JOSE ALFREDO TORRES',
     status: 'Firmado',
+    completed: true,
   },
   {
     _id: '3',
     label: 'OPERADORA DE SERVICIOS MEGA',
     status: 'Firmado',
+    completed: true,
   },
   
 ];

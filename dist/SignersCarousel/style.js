@@ -50,9 +50,11 @@ var _default = (0, _styles.makeStyles)(function (theme) {
       color: '#1A9A9A'
     },
     divider: _defineProperty({
-      margin: '0 40px'
+      margin: '0 40px',
+      height: '38px'
     }, theme.breakpoints.up('sm'), {
-      margin: '0 20px'
+      margin: '0 20px',
+      height: '42px'
     })
   };
 });
