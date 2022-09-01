@@ -50,7 +50,6 @@ function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Sy
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 var SIGNER_STATUS_PENDING = 'Pendiente';
-var SIGNER_STATUS_SIGNED = 'Firmado';
 
 var FilePreview = function FilePreview(_ref) {
   var file = _ref.file,
@@ -147,7 +146,7 @@ var FilePreview = function FilePreview(_ref) {
   })) : '', /*#__PURE__*/_react.default.createElement("div", {
     className: clasess.container
   }, showDocument ? renderFile() : /*#__PURE__*/_react.default.createElement(_HiddenDocument.default, {
-    title: "Son necesarios todos los firmantes para ver el documento"
+    title: "Podr\xE1s ver el documento cuando todos hayan firmado"
   })));
 };
 
@@ -162,7 +161,8 @@ FilePreview.propTypes = {
   signers: _propTypes.default.arrayOf(_propTypes.default.shape({
     _id: _propTypes.default.string,
     label: _propTypes.default.string,
-    status: _propTypes.default.string
+    status: _propTypes.default.string,
+    completed: _propTypes.default.bool
   }))
 };
 FilePreview.defaultProps = {
