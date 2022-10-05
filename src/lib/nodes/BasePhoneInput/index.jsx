@@ -71,7 +71,10 @@ const CellPhoneInput = ({
     setAdornment('+52');
   };
 
-  const onBlur = () => {
+  const onBlur = (event) => {
+    const {
+      target,
+    } = event;
     setStatus(status.NORMAL);
     setAdornment('');
     const { validation, empty } = errorMessages;
@@ -82,6 +85,7 @@ const CellPhoneInput = ({
       setError(true);
       setErrorMessage(validation);
     } else {
+      target.setCustomValidity('');
       setError(false);
       handleBlur();
       handleChange(formatValue(mValue));
@@ -119,7 +123,7 @@ const CellPhoneInput = ({
       handleChange={mHandleChange}
       label={label}
       type={type}
-      onBlur={onBlur}
+      onBlur={(e) => onBlur(e)}
       error={mError}
       errorMessage={mErrorMessage}
       required={required}
