@@ -27,6 +27,8 @@ import {
   BasePhoneInput,
   BaseNumberInput,
   BaseRFCInput,
+  BaseRFCMoralInput,
+  BaseRFCFisicoInput,
   TextAreaInput,
   IDCardUpload,
   ListSignerRoles,
@@ -703,6 +705,28 @@ storiesOf('Components|Nodes', module)
   ))
   .add('RFC', () => (
     <BaseRFCInput
+      label="RFC"
+      handleChange={action('handleChange')}
+      required
+      // error={true}
+      errorMessage={shortText}
+      // value={'Todo TODOS'}
+      // disabled
+    />
+  ))
+  .add('RFC Moral', () => (
+    <BaseRFCMoralInput
+      label="RFC"
+      handleChange={action('handleChange')}
+      required
+      // error={true}
+      errorMessage={shortText}
+      // value={'Todo TODOS'}
+      // disabled
+    />
+  ))
+  .add('RFC Fisico', () => (
+    <BaseRFCFisicoInput
       label="RFC"
       handleChange={action('handleChange')}
       required
