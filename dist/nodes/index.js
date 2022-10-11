@@ -105,6 +105,18 @@ Object.defineProperty(exports, "BaseRFCInput", {
     return _BaseRFCInput.default;
   }
 });
+Object.defineProperty(exports, "BaseRFCMoralInput", {
+  enumerable: true,
+  get: function get() {
+    return _BaseRFCMoralInput.default;
+  }
+});
+Object.defineProperty(exports, "BaseRFCFisicoInput", {
+  enumerable: true,
+  get: function get() {
+    return _BaseRFCFisicoInput.default;
+  }
+});
 Object.defineProperty(exports, "TextAreaInput", {
   enumerable: true,
   get: function get() {
@@ -241,6 +253,10 @@ var _BasePhoneInput = _interopRequireDefault(require("./BasePhoneInput"));
 var _BaseNumberInput = _interopRequireDefault(require("./BaseNumberInput"));
 
 var _BaseRFCInput = _interopRequireDefault(require("./BaseRFCInput"));
+
+var _BaseRFCMoralInput = _interopRequireDefault(require("./BaseRFCMoralInput"));
+
+var _BaseRFCFisicoInput = _interopRequireDefault(require("./BaseRFCFisicoInput"));
 
 var _TextAreaInput = _interopRequireDefault(require("./TextAreaInput"));
 
