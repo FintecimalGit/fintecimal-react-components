@@ -100,6 +100,7 @@ var Fields = function Fields(_ref) {
         name = field.name,
         label = field.label,
         type = field.type,
+        options = field.options,
         format = field.format,
         value = field.value,
         _field$error = field.error,
@@ -121,7 +122,8 @@ var Fields = function Fields(_ref) {
       error: error,
       errorMessage: errorMessage,
       required: error,
-      format: format
+      format: format,
+      options: options
     }));
   }), _react.default.createElement("div", {
     className: classes.button
