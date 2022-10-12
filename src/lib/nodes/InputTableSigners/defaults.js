@@ -100,7 +100,17 @@ export const defaultHeaderSigner = [
     label: 'Teléfono',
     type: 'celular',
     required: false,
-  }
+  }, {
+    id: 5,
+    name: 'notarioocorredor',
+    label: 'notario o corrdor',
+    type: 'lista',
+    required: false,
+    options: [
+      { name: "Notario"},
+      { name: "Corredor"}
+    ]
+  },
 ];
 
 export const defaultDataSigner = [
@@ -119,5 +129,8 @@ export const defaultDataSigner = [
   }, {
     name: 'phone',
     value: '3326238200',
+  }, {
+    name: 'notarioocorredor',
+    value: 'Notario',
   }],
 ];
