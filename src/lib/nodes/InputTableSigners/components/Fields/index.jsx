@@ -53,7 +53,7 @@ const Fields = ({fieldValues, addNewRow, edit}) =>{
     return(
         <Fragment>
             {fields.map((field, index) => {
-                const { id, name, label, type, format, value, error = false, errorMessage = '' } = field;
+                const { id, name, label, type, options, format, value, error = false, errorMessage = '' } = field;
                 return(
                     <div className={classes.root} key={id} >
                         <CustomField
@@ -67,6 +67,7 @@ const Fields = ({fieldValues, addNewRow, edit}) =>{
                             errorMessage={errorMessage}
                             required={error}
                             format={format}
+                            options={options}
                         />
                     </div>
                 )

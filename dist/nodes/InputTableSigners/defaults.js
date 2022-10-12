@@ -98,6 +98,17 @@ var defaultHeaderSigner = [{
   label: 'Teléfono',
   type: 'celular',
   required: false
+}, {
+  id: 5,
+  name: 'notarioocorredor',
+  label: 'notario o corrdor',
+  type: 'lista',
+  required: false,
+  options: [{
+    name: "Notario"
+  }, {
+    name: "Corredor"
+  }]
 }];
 exports.defaultHeaderSigner = defaultHeaderSigner;
 var defaultDataSigner = [[{
@@ -115,5 +126,8 @@ var defaultDataSigner = [[{
 }, {
   name: 'phone',
   value: '3326238200'
+}, {
+  name: 'notarioocorredor',
+  value: 'Notario'
 }]];
 exports.defaultDataSigner = defaultDataSigner;
