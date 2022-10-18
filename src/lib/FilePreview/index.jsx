@@ -8,6 +8,7 @@ import PropTypes from 'prop-types';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import IconButton from '@material-ui/core/IconButton';
+import Tooltip from '@material-ui/core/Tooltip'
 
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
@@ -21,8 +22,26 @@ import HiddenDocument from './HiddenDocument';
 const SIGNER_STATUS_PENDING = 'Pendiente';
 const SIGNER_STATUS_SIGNED = 'Firmado';
 
+const STATUS = {
+  0: {
+    image: "https://fintecimal-test.s3.amazonaws.com/VALIDATE_DOCUMENTS_ICONS/Reject_validation.png",
+    label: "No se pudo hacer la validacion automatica",
+  },
+  1: {
+    image: "https://fintecimal-test.s3.amazonaws.com/VALIDATE_DOCUMENTS_ICONS/Accept_validation.png",
+    label: "Documento Validado",
+  },
+  2: {
+    image: "https://fintecimal-test.s3.amazonaws.com/VALIDATE_DOCUMENTS_ICONS/Reject_validation.png",
+    label: "Documento No Valido",
+  },
+};
+
+
+
 const FilePreview = ({
   file,
+  verify,
   onDelete,
   onDownloadFile,
   disabled,
@@ -94,6 +113,23 @@ const FilePreview = ({
           (
             <>
               {
+                verify.status !== -1 ? 
+                (
+                    <Tooltip
+                    title={STATUS[verify.status].label}
+                    placement="top"
+                    arrow
+                  >
+                    <span className={clasess.tooltipValidation}>
+                      <img 
+                        className={clasess.img}
+                        src={STATUS[verify.status].image}
+                        />
+                    </span>
+                  </Tooltip>
+                  ) : ""
+              }
+              {
                 !disabled && (
                     <IconButton
                         className={clasess.iconButton}
@@ -136,6 +172,7 @@ const FilePreview = ({
 
 FilePreview.propTypes = {
   file: PropTypes.instanceOf(File),
+  verify: PropTypes.object,
   onDelete: PropTypes.func,
   onDownloadFile: PropTypes.func,
   disabled: PropTypes.bool,
@@ -157,6 +194,9 @@ FilePreview.defaultProps = {
   edit: false,
   handleOnEdit: () => {},
   signers: [],
+  verify: {
+    status: -1,
+  },
 };
 
 export default FilePreview;

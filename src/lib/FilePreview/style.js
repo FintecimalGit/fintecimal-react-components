@@ -6,6 +6,16 @@ const useStyles = makeStyles(theme => ({
     position: 'relative',
     border: 'solid 1px #fbfbfb',
   },
+  tooltipValidation: {
+    display: 'inline-block',
+    verticalAlign: 'middle',
+    marginRight: '1rem',
+    height: '30px',
+  },
+  img: {
+    height: '100%',
+    width: 'auto',
+  },
   cardHeader: {
     backgroundColor: theme.palette.primary.contrastText,
     padding: theme.spacing(2),
