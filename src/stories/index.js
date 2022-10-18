@@ -1531,7 +1531,7 @@ storiesOf('NewComponents', module)
 
     return (
       <Container style={{ paddingTop: '5vh', paddingBottom: '5vh' }}>
-        <FilePreview file={image} onDelete={action('onDelete')} />
+        <FilePreview verify={{ status: 1 }} file={image} onDelete={action('onDelete')} />
         <FilePreview file={pdf} onDelete={action('onDelete')} />
         <FilePreview signers={signers} file={pdf} onDelete={action('onDelete')} />
       </Container>

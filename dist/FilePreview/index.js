@@ -1,6 +1,6 @@
 "use strict";
 
-function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -16,6 +16,8 @@ var _Card = _interopRequireDefault(require("@material-ui/core/Card"));
 var _CardHeader = _interopRequireDefault(require("@material-ui/core/CardHeader"));
 
 var _IconButton = _interopRequireDefault(require("@material-ui/core/IconButton"));
+
+var _Tooltip = _interopRequireDefault(require("@material-ui/core/Tooltip"));
 
 var _Delete = _interopRequireDefault(require("@material-ui/icons/Delete"));
 
@@ -33,26 +35,38 @@ var _HiddenDocument = _interopRequireDefault(require("./HiddenDocument"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
 
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
-function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
 
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
 
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
-function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+function _iterableToArrayLimit(arr, i) { if (!(Symbol.iterator in Object(arr) || Object.prototype.toString.call(arr) === "[object Arguments]")) { return; } var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 var SIGNER_STATUS_PENDING = 'Pendiente';
+var SIGNER_STATUS_SIGNED = 'Firmado';
+var STATUS = {
+  0: {
+    image: "https://fintecimal-test.s3.amazonaws.com/VALIDATE_DOCUMENTS_ICONS/Reject_validation.png",
+    label: "No se pudo hacer la validacion automatica"
+  },
+  1: {
+    image: "https://fintecimal-test.s3.amazonaws.com/VALIDATE_DOCUMENTS_ICONS/Accept_validation.png",
+    label: "Documento Validado"
+  },
+  2: {
+    image: "https://fintecimal-test.s3.amazonaws.com/VALIDATE_DOCUMENTS_ICONS/Reject_validation.png",
+    label: "Documento No Valido"
+  }
+};
 
 var FilePreview = function FilePreview(_ref) {
   var file = _ref.file,
+      verify = _ref.verify,
       onDelete = _ref.onDelete,
       onDownloadFile = _ref.onDownloadFile,
       disabled = _ref.disabled,
@@ -92,20 +106,20 @@ var FilePreview = function FilePreview(_ref) {
 
   var renderFile = function renderFile() {
     if (/^image\//.test(file.type)) {
-      return /*#__PURE__*/_react.default.createElement("img", {
+      return _react.default.createElement("img", {
         alt: file.name,
         src: url,
         height: 'auto'
       });
     } else if (/^(text||application)\//.test(file.type)) {
       if (/^(application\/pdf)/.test(file.type) && !(0, _detectPdf.default)()) {
-        return /*#__PURE__*/_react.default.createElement(_nodes.PdfViewer, {
+        return _react.default.createElement(_nodes.PdfViewer, {
           url: url,
           onDownloadFile: onDownloadFile
         });
       }
 
-      return /*#__PURE__*/_react.default.createElement("iframe", {
+      return _react.default.createElement("iframe", {
         title: file.name,
         src: url
       });
@@ -127,31 +141,41 @@ var FilePreview = function FilePreview(_ref) {
       readFile();
     }
   }, [file, urlDocument]);
-  return /*#__PURE__*/_react.default.createElement(_Card.default, {
+  return _react.default.createElement(_Card.default, {
     className: clasess.card
-  }, /*#__PURE__*/_react.default.createElement(_CardHeader.default, {
+  }, _react.default.createElement(_CardHeader.default, {
     className: clasess.cardHeader,
     title: file.name,
-    action: /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, !disabled && /*#__PURE__*/_react.default.createElement(_IconButton.default, {
+    action: _react.default.createElement(_react.default.Fragment, null, verify.status !== -1 ? _react.default.createElement(_Tooltip.default, {
+      title: STATUS[verify.status].label,
+      placement: "top",
+      arrow: true
+    }, _react.default.createElement("span", {
+      className: clasess.tooltipValidation
+    }, _react.default.createElement("img", {
+      className: clasess.img,
+      src: STATUS[verify.status].image
+    }))) : "", !disabled && _react.default.createElement(_IconButton.default, {
       className: clasess.iconButton,
       onClick: handleOnDelete
-    }, /*#__PURE__*/_react.default.createElement(_Delete.default, null)), edit && /*#__PURE__*/_react.default.createElement(_IconButton.default, {
+    }, _react.default.createElement(_Delete.default, null)), edit && _react.default.createElement(_IconButton.default, {
       className: clasess.iconButton,
       onClick: handleOnEdit
-    }, /*#__PURE__*/_react.default.createElement(_Edit.default, null)))
-  }), signers.length ? /*#__PURE__*/_react.default.createElement("div", {
+    }, _react.default.createElement(_Edit.default, null)))
+  }), signers.length ? _react.default.createElement("div", {
     className: clasess.containerCarousel
-  }, /*#__PURE__*/_react.default.createElement(_SignersCarousel.default, {
+  }, _react.default.createElement(_SignersCarousel.default, {
     signers: signers
-  })) : '', /*#__PURE__*/_react.default.createElement("div", {
+  })) : '', _react.default.createElement("div", {
     className: clasess.container
-  }, showDocument ? renderFile() : /*#__PURE__*/_react.default.createElement(_HiddenDocument.default, {
-    title: "Podr\xE1s ver el documento cuando todos hayan firmado"
+  }, showDocument ? renderFile() : _react.default.createElement(_HiddenDocument.default, {
+    title: "Son necesarios todos los firmantes para ver el documento"
   })));
 };
 
 FilePreview.propTypes = {
   file: _propTypes.default.instanceOf(File),
+  verify: _propTypes.default.object,
   onDelete: _propTypes.default.func,
   onDownloadFile: _propTypes.default.func,
   disabled: _propTypes.default.bool,
@@ -161,8 +185,7 @@ FilePreview.propTypes = {
   signers: _propTypes.default.arrayOf(_propTypes.default.shape({
     _id: _propTypes.default.string,
     label: _propTypes.default.string,
-    status: _propTypes.default.string,
-    completed: _propTypes.default.bool
+    status: _propTypes.default.string
   }))
 };
 FilePreview.defaultProps = {
@@ -174,7 +197,10 @@ FilePreview.defaultProps = {
   disabled: false,
   edit: false,
   handleOnEdit: function handleOnEdit() {},
-  signers: []
+  signers: [],
+  verify: {
+    status: -1
+  }
 };
 var _default = FilePreview;
 exports.default = _default;

@@ -35,6 +35,7 @@ const RejectDocuments = ({
                              rejectionDefaultNotes,
                              hideActions,
                              isEditDocument,
+                             verify,
                          }) => {
   const classes = useStyles();
   const [file, setFile] = useState(null);
@@ -155,6 +156,7 @@ const RejectDocuments = ({
           </div>
           {file && !rejected && !activeIneEditor && (
               <FilePreview
+                  verify={verify}
                   file={file}
                   onDelete={() => { setFile(null) }}
                   disabled={!rejected}
@@ -223,6 +225,7 @@ RejectDocuments.propTypes = {
     fileConvertion: PropTypes.func,
     hideActions: PropTypes.bool,
     isEditDocument: PropTypes.bool,
+    verify: PropTypes.object,
 };
 
 RejectDocuments.defaultProps = {
@@ -245,6 +248,9 @@ RejectDocuments.defaultProps = {
   fileConvertion: () => {},
   hideActions: false,
   isEditDocument: false,
+  verify: {
+    status: -1,
+  },
 };
 
 export default RejectDocuments;
