@@ -17,6 +17,8 @@ var _utils = require("../../commons/utils");
 
 var _validateCurp2 = _interopRequireDefault(require("validate-curp"));
 
+var _specialCurps = require("./specialCurps");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var CURP_LENGTH = 18;
@@ -54,6 +56,7 @@ var CURPInput = function CURPInput(_ref) {
       var _validateCurp = (0, _validateCurp2.default)(data),
           valid = _validateCurp.isValid;
 
+      if (_specialCurps.SPECIAL_CURPS_WHITE_LIST.includes(data)) return true;
       return valid;
     } else {
       return false;
