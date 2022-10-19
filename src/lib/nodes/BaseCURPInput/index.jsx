@@ -4,6 +4,7 @@ import { curp } from '../../InputStrings';
 import InputWrapper from '../InputWrapper';
 import { textFormats, isEmpty, validateRegex } from '../../commons/utils';
 import validateCurp from 'validate-curp';
+import { SPECIAL_CURPS_WHITE_LIST } from './specialCurps';
 
 const CURP_LENGTH = 18;
 
@@ -37,6 +38,7 @@ const CURPInput = ({
     const size = data.length;
     if (size === CURP_LENGTH) {
       const { isValid: valid } = validateCurp(data);
+      if (SPECIAL_CURPS_WHITE_LIST.includes(data)) return true;
       return valid;
     } else {
       return false;
