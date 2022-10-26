@@ -17,6 +17,7 @@ var _conf = _interopRequireDefault(require("./conf"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+var config = (0, _conf.default)();
 var DEFAULT_POSITION = {
   lat: 0,
   lng: 0
@@ -32,7 +33,7 @@ var DEFAULT_CONFIG = {
   fullscreenControl: true
 };
 var Maps = (0, _recompose.compose)((0, _recompose.withProps)({
-  googleMapURL: "".concat(_conf.default.URL.googleMaps).concat(_conf.default.KEY.googleKey, "&v=3&libraries=geometry,drawing,places"),
+  googleMapURL: "".concat(config.URL.googleMaps).concat(config.KEY.googleKey, "&v=3&libraries=geometry,drawing,places"),
   loadingElement: _react.default.createElement("div", {
     style: {
       width: '100%',

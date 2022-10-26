@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import { compose, withProps } from 'recompose';
 import { withScriptjs, withGoogleMap, GoogleMap, Marker } from 'react-google-maps';
 
-import config from './conf';
+import getGoogleMapData from './conf';
+const config = getGoogleMapData();
 
 const DEFAULT_POSITION = { lat: 0, lng: 0 };
 const DEFAULT_CONFIG = {
