@@ -118,6 +118,11 @@ var BaseDatePicker = function BaseDatePicker(_ref) {
   };
 
   (0, _react.useEffect)(function () {
+    if (date !== value) {
+      setDate(formatDate(value));
+    }
+  }, [value]);
+  (0, _react.useEffect)(function () {
     var test = formatDate(value);
     setDate(test);
   }, []);
