@@ -70,11 +70,18 @@ const BaseDatePicker = ({
     }
     return moment(value);
   }
+  
+  useEffect(() => {
+    if (date !== value) {
+      setDate(formatDate(value));
+    }
+  }, [value]);
  
   useEffect(() => {
     const test = formatDate(value);
     setDate(test);
   }, []);
+
 
   useEffect(() => {
     const messageError = generateErrorMessagesByLabel(text, label);
