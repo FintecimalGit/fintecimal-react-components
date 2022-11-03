@@ -116,7 +116,7 @@ const ImageEditor = ({ file, onCrop, cancel }) => {
     });
     const canvas = cropper.getCroppedCanvas();
     const blob = await new Promise((resolve) => {
-      canvas.toBlob(resolve);
+      canvas.toBlob(resolve, file.type);
     });
     onCrop(event, blob);
   }, [cropper, onCrop]);
@@ -143,7 +143,6 @@ const ImageEditor = ({ file, onCrop, cancel }) => {
     return imageHeight;
   };
   
-
   return (
     <div 
       ref={containerRef}
