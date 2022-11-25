@@ -29,10 +29,6 @@ function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.
 
 function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
 
-function _objectSpread2(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
@@ -44,6 +40,8 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 var Fields = function Fields(_ref) {
   var fieldValues = _ref.fieldValues,
       addNewRow = _ref.addNewRow,
+      handleOnChangeField = _ref.handleOnChangeField,
+      setFieldsEmpty = _ref.setFieldsEmpty,
       edit = _ref.edit;
   var classes = (0, _style.default)();
 
@@ -58,21 +56,23 @@ var Fields = function Fields(_ref) {
       setDeleteInfo = _useState4[1];
 
   (0, _react.useEffect)(function () {
-    setFields(fieldValues);
+    var fieldsUnhide = fieldValues.filter(function (_ref2) {
+      var _ref2$hide = _ref2.hide,
+          hide = _ref2$hide === void 0 ? false : _ref2$hide;
+      return !hide;
+    });
+    setFields(fieldsUnhide);
   }, [fieldValues]);
   (0, _react.useEffect)(function () {
     if (deleteInfo) {
       setFields((0, _utils.generateValueEmpty)(fields));
+      setFieldsEmpty((0, _utils.generateValueEmpty)(fieldValues));
       setDeleteInfo(false);
     }
   }, [deleteInfo]);
 
   var handleOnChange = function handleOnChange(field, index, value) {
-    var newFields = fields;
-    newFields[index] = _objectSpread2({}, field, {
-      value: value
-    });
-    setFields(newFields);
+    handleOnChangeField(field, index, value);
   };
 
   var onClickAccept = function onClickAccept() {

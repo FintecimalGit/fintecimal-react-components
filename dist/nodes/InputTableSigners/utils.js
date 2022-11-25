@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.formatDateColumnsToSpanish = exports.getExtensionFile = exports.ObjectNotEmpty = exports.createItemsFromCSV = exports.createHeadersFromCSV = exports.includesHeaders = exports.getHeadersFromCSV = exports.generateFieldsWithValue = exports.generateValueEmpty = void 0;
+exports.changeHideChildrens = exports.formatDateColumnsToSpanish = exports.getExtensionFile = exports.ObjectNotEmpty = exports.createItemsFromCSV = exports.createHeadersFromCSV = exports.includesHeaders = exports.getHeadersFromCSV = exports.generateFieldsWithValue = exports.generateValueEmpty = void 0;
 
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
 
@@ -29,6 +29,10 @@ var generateValueEmpty = function generateValueEmpty(fieldArray) {
       type: field.type,
       required: field.required,
       options: field.options || [],
+      hide: field.parentValue ? true : field.hide || false,
+      children: field.children || [],
+      parentValue: field.parentValue,
+      hideRequired: field.hideRequired || false,
       format: field.format || 'LL'
     };
   });
@@ -146,3 +150,47 @@ var formatDateColumnsToSpanish = function formatDateColumnsToSpanish(data) {
 };
 
 exports.formatDateColumnsToSpanish = formatDateColumnsToSpanish;
+
+var changeHideChildrens = function changeHideChildrens(field, fieldsValues) {
+  var newFields = _.cloneDeep(fieldsValues);
+
+  var _field$value = field.value,
+      value = _field$value === void 0 ? '' : _field$value,
+      _field$children = field.children,
+      children = _field$children === void 0 ? [] : _field$children;
+  if (children.length === 0) return newFields;
+  var fieldsValidated = newFields.reduce(function (acc, _field) {
+    var id = _field.id,
+        _field$parentValue = _field.parentValue,
+        parentValue = _field$parentValue === void 0 ? '' : _field$parentValue,
+        _field$hideRequired = _field.hideRequired,
+        hideRequired = _field$hideRequired === void 0 ? false : _field$hideRequired;
+
+    if (children.indexOf(id) === -1) {
+      acc.push(_field);
+      return acc;
+    }
+
+    var newField = _objectSpread2({}, _field);
+
+    if (value === parentValue || parentValue === '') {
+      newField = _objectSpread2({}, newField, {
+        hide: false,
+        required: hideRequired
+      });
+      acc.push(_objectSpread2({}, newField));
+    } else {
+      acc.push(_objectSpread2({}, newField, {
+        hide: true,
+        required: false
+      }));
+    }
+
+    return acc;
+  }, []);
+  return fieldsValidated.sort(function (field, nextField) {
+    return field.id > nextField.id ? 1 : -1;
+  });
+};
+
+exports.changeHideChildrens = changeHideChildrens;
