@@ -836,9 +836,6 @@ storiesOf('Components|Nodes', module)
     <ListSignerRoles selected={2} onChangeHandler={action('onChangeHandler')} />
   ))
   .add('Input Table', () => {
-    const [values, setValues] = useState([]);
-    const [headers, setHeaders] = useState(defaultHeader);
-
     const handleChange = (newValue) => {
       const { headers: newHeaders, values: newValues } = newValue;
       setValues(newValues);
@@ -847,7 +844,7 @@ storiesOf('Components|Nodes', module)
     }
 
     return (
-      <InputTable value={values} headers={headers} handleHeadersAndValues={handleChange} required error />
+      <InputTable handleHeadersAndValues={handleChange} required error />
     );
   })
   .add('CardApp', () => <CardApp onClick={action('onClick')} title="Algo asi" showNotification="true" IconNotification="https://fintecimal-test.s3.amazonaws.com/fintecimal-img/stepconfigs-icons/notification_disable_icon.png"/>)

@@ -96,6 +96,14 @@ const InputTableSigners = ({ value, headers, handleHeadersAndValues, error, requ
     }, 10000);
   };
 
+  const handleOnChangeField = (field, index, value) => {
+    const newFields = fields.map((_field) => {
+      return { ..._field, ...( _field.id === field.id ? { value } : null ) };
+    });
+    const fieldsUnhide = utils.changeHideChildrens(newFields[index], newFields);
+    setFields(fieldsUnhide);
+  };
+
   useEffect(() => {
     if (headers.length) setLocalHeaders(headers);
     if (value.length) setLocalValue(value);
@@ -133,7 +141,7 @@ const InputTableSigners = ({ value, headers, handleHeadersAndValues, error, requ
           handleCleanTable={handleCleanTable}
         />
       </div>
-      <Fields fieldValues={fields} addNewRow={addNewRow} edit={edit} />
+      <Fields fieldValues={fields} handleOnChangeField={handleOnChangeField} setFieldsEmpty={setFields} addNewRow={addNewRow} edit={edit} />
     </div>
   </div>
   );

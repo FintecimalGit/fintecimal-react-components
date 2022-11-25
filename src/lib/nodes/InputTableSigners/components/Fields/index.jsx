@@ -7,26 +7,26 @@ import Button from "../../../Buttons/Button";
 import { generateValueEmpty } from '../../utils';
 import useStyles from "./style";
 
-const Fields = ({fieldValues, addNewRow, edit}) =>{
+const Fields = ({fieldValues, addNewRow, handleOnChangeField, setFieldsEmpty, edit}) =>{
     const classes = useStyles();
     const [fields, setFields]  = useState([]);
     const [deleteInfo, setDeleteInfo] = useState(false);
 
-    useEffect(() =>{
-        setFields(fieldValues);
+    useEffect(() => {
+        const fieldsUnhide = fieldValues.filter(({ hide = false }) => !hide);
+        setFields(fieldsUnhide);
     }, [fieldValues]);
 
     useEffect(() =>{
         if(deleteInfo) {
             setFields(generateValueEmpty(fields));
+            setFieldsEmpty(generateValueEmpty(fieldValues));
             setDeleteInfo(false);
         }
     }, [deleteInfo]);
 
     const handleOnChange = (field, index, value) => {
-        let newFields = fields;
-        newFields[index] = { ...field, value};
-        setFields(newFields)
+        handleOnChangeField(field, index, value);
     };
 
     const onClickAccept = () => {

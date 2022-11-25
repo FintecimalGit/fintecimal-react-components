@@ -166,6 +166,25 @@ var InputTableSigners = function InputTableSigners(_ref) {
     }, 10000);
   };
 
+  var handleOnChangeField = function handleOnChangeField(field, index, value) {
+    console.log({
+      field: field,
+      fields: fields
+    });
+    var newFields = fields.map(function (_field) {
+      return _objectSpread2({}, _field, {}, _field.id === field.id ? {
+        value: value
+      } : null);
+    });
+    console.log({
+      index: index,
+      field: field,
+      fields: fields
+    });
+    var fieldsUnhide = utils.changeHideChildrens(newFields[index], newFields);
+    setFields(fieldsUnhide);
+  };
+
   (0, _react.useEffect)(function () {
     if (headers.length) setLocalHeaders(headers);
     if (value.length) setLocalValue(value);else if (localValue.length) setLocalValue([]);
@@ -196,6 +215,8 @@ var InputTableSigners = function InputTableSigners(_ref) {
     handleCleanTable: handleCleanTable
   })), _react.default.createElement(_Fields.default, {
     fieldValues: fields,
+    handleOnChangeField: handleOnChangeField,
+    setFieldsEmpty: setFields,
     addNewRow: addNewRow,
     edit: edit
   })));

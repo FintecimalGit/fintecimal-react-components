@@ -75,42 +75,45 @@ export const defaultHeaderSigner = [
     label: 'Nombre',
     type: 'respuesta corta',
     required: false,
-  }, {
+  }, 
+  {
     id: 1,
-    name: 'fecha',
-    label: 'Fecha',
-    format: "LL",
-    type: 'fecha',
+    name: "Inversiones_En_Acciones",
+    label: "Inversiones en Acciones",
+    type: "lista",
     required: false,
-  }, {
-    id: 2,
-    name: 'curp',
-    label: 'CURP',
-    type: 'CURP',
-    required: false,
-  }, {
-    id: 3,
-    name: 'rfc',
-    label: 'RFC',
-    type: 'RFC',
-    required: false,
-  }, {
-    id: 4,
-    name: 'phone',
-    label: 'Teléfono',
-    type: 'celular',
-    required: false,
-  }, {
-    id: 5,
-    name: 'notarioocorredor',
-    label: 'notario o corrdor',
-    type: 'lista',
-    required: false,
-    options: [
-      { name: "Notario"},
-      { name: "Corredor"}
+    options: [ 
+        {
+            "name" : ""
+        }, 
+        {
+            "name" : "Si"
+        }, 
+        {
+            "name" : "No"
+        }
+    ],
+    children: [
+      2
     ]
-  },
+  }, 
+  {
+    id: 2,
+    name: 'NombreEmpresa',
+    label: 'Nombre de la Empresa',
+    type: 'respuesta corta',
+    required: false,
+    hide: true,
+    parentValue: "Si",
+    hideRequired: true
+  }, 
+  {
+    id: 3,
+    name: 'value',
+    label: 'value ($)',
+    type: 'respuesta corta',
+    required: false
+  }
 ];
 
 export const defaultDataSigner = [
