@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.generateErrorMessagesByLabel = exports.table = exports.clabe = exports.list = exports.cellphone = exports.number = exports.curp = exports.rfc = exports.email = exports.text = void 0;
+exports.generateErrorMessagesByLabel = exports.radio = exports.table = exports.clabe = exports.list = exports.cellphone = exports.number = exports.curp = exports.rfc = exports.email = exports.text = void 0;
 var text = {
   label: 'Texto',
   errorMessages: {
@@ -85,6 +85,15 @@ var table = {
   type: 'table'
 };
 exports.table = table;
+var radio = {
+  label: 'Selecciona una opción',
+  errorMessages: {
+    validation: 'Selección no válida',
+    empty: 'Debes seleccionar una opción'
+  },
+  type: 'radio'
+};
+exports.radio = radio;
 
 var generateErrorMessagesByLabel = function generateErrorMessagesByLabel(type) {
   var label = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';

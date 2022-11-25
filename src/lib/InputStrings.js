@@ -79,6 +79,15 @@ export const table = {
     type: 'table'
 };
 
+export const radio = {
+  label: 'Selecciona una opción',
+  errorMessages: {
+    validation: 'Selección no válida',
+    empty: 'Debes seleccionar una opción',
+  },
+  type: 'radio',
+};
+
 export const generateErrorMessagesByLabel = (type, label = '') => {
     return  {
         validation: type.errorMessages.validation,

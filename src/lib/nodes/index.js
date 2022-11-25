@@ -34,6 +34,7 @@ import BaseCURPInput from './BaseCURPInput';
 import ButtonDocuPass from './ButtonDocuPass';
 import PercentageInput from './PercentageInput';
 import PdfViewer from './PdfViewer';
+import RadioGroupInput from './Radio';
 
 export {
   Maps,
@@ -72,4 +73,5 @@ export {
   ButtonDocuPass,
   PercentageInput,
   PdfViewer,
+  RadioGroupInput,
 };
