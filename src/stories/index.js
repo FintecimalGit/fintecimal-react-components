@@ -8,7 +8,11 @@ import ButtonMaterial from '@material-ui/core/Button';
 import lib from '../lib';
 import ui from '../ui';
 import tables from '../commons/exampleTable';
-import { listWithCategories, listWithoutCategories } from '../lib/commons/exampleList';
+import {
+  listWithCategories,
+  listWithoutCategories,
+  longListWithoutCategories,
+} from '../lib/commons/exampleList';
 import { longText, mediumText, shortText } from '../lib/commons/exampleLongText';
 import { defaultData, defaultHeader } from '../lib/nodes/InputTable/defaults';
 import {
@@ -46,6 +50,7 @@ import {
   ButtonDocuPass,
   PercentageInput,
   PdfViewer,
+  RadioGroupInput,
 } from '../lib/nodes';
 
 import Table from '../lib/Table';
@@ -857,7 +862,24 @@ storiesOf('Components|Nodes', module)
     return (
       <InputTableSigners handleHeadersAndValues={handleChange} required error />
     );
-  });
+  })
+  .add('Radio Input', () => (
+    <form
+      onSubmit={(event) => {
+        event.preventDefault();
+        event.stopPropagation();
+      }}
+    >
+      <RadioGroupInput
+        label={shortText}
+        handleChange={action('handleChange')}
+        required
+        errorMessage={longText}
+        options={longListWithoutCategories}
+        value="La estructura organizacional está alineada con los objetivos del negocio y el entorno de control interno es sólido."
+      />
+    </form>
+  ));
 
 storiesOf('Components|Button', module)
   .add('Classic Button', () => <Button onClick={action('clicked')} />, {
