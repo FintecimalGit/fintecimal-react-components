@@ -8,6 +8,7 @@ import LongPlaceHolder from '../../LongPlaceHolder';
 import { radio } from '../../InputStrings';
 
 import { isTextLong } from '../../commons/utils';
+import LongError from '../../LongError';
 
 const RadioGroupInput = ({
   label,
@@ -18,10 +19,8 @@ const RadioGroupInput = ({
   errorMessage,
   options,
   disabled,
-  handleBlur,
   defaultValue,
 }) => {
-  console.log('options: ', options);
   const classes = useStyles();
 
   const { errorMessages, label: defaultPlaceHolder } = radio;
@@ -33,7 +32,6 @@ const RadioGroupInput = ({
   const [mError, setError] = React.useState(false);
 
   const renderOptions = (listOptions) => {
-    console.log('listOptions: ', listOptions);
     const items = listOptions.map((option) => {
       return (
         <FormControlLabel
@@ -58,8 +56,6 @@ const RadioGroupInput = ({
   };
 
   useEffect(() => {
-    console.log('mValue: ', mValue);
-    console.log('value: ', value);
     if (mValue !== value) {
       setValue(value);
     }
@@ -125,7 +121,6 @@ RadioGroupInput.propTypes = {
   handleChange: PropTypes.func.isRequired,
   placeholder: PropTypes.string,
   disabled: PropTypes.bool,
-  handleBlur: PropTypes.func,
 };
 
 export default RadioGroupInput;
