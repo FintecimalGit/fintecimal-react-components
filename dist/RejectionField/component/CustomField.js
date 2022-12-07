@@ -23,6 +23,8 @@ var _Select = _interopRequireDefault(require("../../nodes/Select"));
 
 var _BaseDatePicker = _interopRequireDefault(require("../../nodes/BaseDatePicker"));
 
+var _nodes = require("../../nodes");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
@@ -63,6 +65,9 @@ var CustomField = function CustomField(_ref) {
 
     case 'fecha':
       return _react.default.createElement(_BaseDatePicker.default, props);
+
+    case 'radiogroup':
+      return _react.default.createElement(_nodes.RadioGroupInput, props);
 
     default:
       return _react.default.createElement(_BaseTextInput.default, props);
