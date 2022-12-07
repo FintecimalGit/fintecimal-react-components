@@ -19,6 +19,8 @@ var _InputStrings = require("../../InputStrings");
 
 var _utils = require("../../commons/utils");
 
+var _LongError = _interopRequireDefault(require("../../LongError"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
@@ -40,9 +42,7 @@ var RadioGroupInput = function RadioGroupInput(_ref) {
       errorMessage = _ref.errorMessage,
       options = _ref.options,
       disabled = _ref.disabled,
-      handleBlur = _ref.handleBlur,
       defaultValue = _ref.defaultValue;
-  console.log('options: ', options);
   var classes = (0, _style.default)();
   var errorMessages = _InputStrings.radio.errorMessages,
       defaultPlaceHolder = _InputStrings.radio.label;
@@ -63,7 +63,6 @@ var RadioGroupInput = function RadioGroupInput(_ref) {
       setError = _React$useState2[1];
 
   var renderOptions = function renderOptions(listOptions) {
-    console.log('listOptions: ', listOptions);
     var items = listOptions.map(function (option) {
       return _react.default.createElement(_core.FormControlLabel, {
         className: classes.optionLabel,
@@ -88,9 +87,6 @@ var RadioGroupInput = function RadioGroupInput(_ref) {
   };
 
   (0, _react.useEffect)(function () {
-    console.log('mValue: ', mValue);
-    console.log('value: ', value);
-
     if (mValue !== value) {
       setValue(value);
     }
@@ -124,7 +120,7 @@ var RadioGroupInput = function RadioGroupInput(_ref) {
     value: mValue,
     defaultValue: defaultValue,
     onChange: mHandleChange
-  }, renderOptions(options))), mError && (0, _utils.isTextLong)(mErrorMessage) && _react.default.createElement(LongError, {
+  }, renderOptions(options))), mError && (0, _utils.isTextLong)(mErrorMessage) && _react.default.createElement(_LongError.default, {
     text: mErrorMessage
   }));
 };
@@ -147,8 +143,7 @@ RadioGroupInput.propTypes = {
   errorMessage: _propTypes.default.string,
   handleChange: _propTypes.default.func.isRequired,
   placeholder: _propTypes.default.string,
-  disabled: _propTypes.default.bool,
-  handleBlur: _propTypes.default.func
+  disabled: _propTypes.default.bool
 };
 var _default = RadioGroupInput;
 exports.default = _default;
