@@ -69,6 +69,7 @@ import UploadDocuments from '../lib/UploadDocuments';
 import FileThumbnail from '../lib/FileThumbnail';
 import FileFinder from '../lib/FileFinder';
 import SignersCarousel from '../lib/SignersCarousel';
+import Liveness from '../lib/Liveness';
 
 const {
   Input,
@@ -108,6 +109,31 @@ const signers = [
     _id: '3',
     label: 'OPERADORA DE SERVICIOS MEGA',
     status: 'Firmado',
+    completed: true,
+  },
+  
+];
+
+const signersLiveness = [
+  {
+    _id: '1',
+    label: '+52 APPS SA DE CV',
+    status: 'Firmado',
+    score: 80,
+    completed: true,
+  },
+  {
+    _id: '2',
+    label: 'JOSE ALFREDO TORRES',
+    status: 'Firmado',
+    score: 80,
+    completed: true,
+  },
+  {
+    _id: '3',
+    label: 'OPERADORA DE SERVICIOS MEGA',
+    status: 'Firmado',
+    score: 80,
     completed: true,
   },
   
@@ -1528,6 +1554,21 @@ storiesOf('NewComponents', module)
       <DropZone title="DropZone" />
     </Container>
   ))
+  .add('Liveness', () => {
+    return (
+      <Container style={{ paddingTop: '5vh', paddingBottom: '5vh' }}>
+        <Liveness
+          video="https://fintecimal-test.s3.amazonaws.com/DOCUPASS_FORM/82ad426c-0575-4bb6-bf02-921ef0c8b134.webm"
+          signers={signersLiveness}
+          title="Prueba de vida"
+          ines={{
+              front: 'https://fintecimal-test.s3.amazonaws.com/Front-1b8889a9-0126-4221-ac2f-3df92d965c7e.png',
+              reverse: 'https://fintecimal-test.s3.amazonaws.com/Front-1b8889a9-0126-4221-ac2f-3df92d965c7e.png',
+            }}
+        />
+      </Container>
+    );
+  })
   .add('FilePreview', () => {
     const [image, setImage] = useState(new File([''], 'test.png', { type: 'image/png' }));
     const [pdf, setPdf] = useState(new File([''], 'test.pdf', { type: 'application/pdf' }));
