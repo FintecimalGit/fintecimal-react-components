@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo, useState } from 'react';
 import LivenessCarousel from './LivenessCarousel';
 import useStyles from './style';
 import PropTypes from 'prop-types';
@@ -23,13 +23,16 @@ const STATUS = {
 };
 
 const Liveness = ({
-  signers,
-  ines,
-  video,
+  participants,
   verify,
   title,
 }) => {
   const clasess = useStyles();
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const participantsCarousel = useMemo(() => participants.map(({_id, label, status, score, completed}) => ({
+    _id, label, status, score, completed
+  })), [participants]);
+  const currentParticipant = useMemo(() => participants[currentIndex], [currentIndex, participants])
   return (
     <Card className={clasess.card}>
       <CardHeader
@@ -58,24 +61,24 @@ const Liveness = ({
         )}
       />
       <div className={clasess.containerCarousel}>
-        <LivenessCarousel signers={signers} />
+        <LivenessCarousel onClick={(index) => setCurrentIndex(index)} signers={participantsCarousel} />
       </div>
       <div className={clasess.containerInes}>
         <div className={clasess.grid}>
           <div>
-            <LivenessVideo video={video}/>
+            <LivenessVideo video={currentParticipant.video}/>
           </div>
           <div>
             <div className={clasess.containerIneImg}>
               <img
                 className={clasess.ineImg}
-                src={ines.front}
+                src={currentParticipant.ines[0]}
               />
             </div>
             <div className={clasess.containerIneImg}>
               <img
                 className={clasess.ineImg}
-                src={ines.reverse}
+                src={currentParticipant.ines[1]}
               />
             </div>
           </div>
@@ -87,25 +90,26 @@ const Liveness = ({
 
 Liveness.propTypes = {
   verify: PropTypes.object,
-  signers: PropTypes.arrayOf(PropTypes.shape({
+  title: PropTypes.string,
+  participants: PropTypes.arrayOf(PropTypes.shape({
     _id: PropTypes.string,
     label: PropTypes.string,
     status: PropTypes.string,
+    score: PropTypes.number,
+    ines: PropTypes.shape({
+      front: PropTypes.string,
+      reverse: PropTypes.string,
+    }),
+    videoUrl: PropTypes.string,
   })),
-  ines: PropTypes.shape({
-    front: PropTypes.string,
-    reverse: PropTypes.string,
-  }),
-  videoUrl: PropTypes.string,
 };
 
 Liveness.defaultProps = {
-  signers: [],
+  participants: [],
+  title: '',
   verify: {
     status: -1,
   },
-  ines: { front: '', reverse: ''},
-  videoUrl: '',
 };
 
 export default Liveness;
