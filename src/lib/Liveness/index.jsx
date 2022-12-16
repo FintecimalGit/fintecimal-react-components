@@ -68,7 +68,7 @@ const Liveness = ({
           <div>
             <LivenessVideo video={currentParticipant.video}/>
           </div>
-          <div>
+          <div className={clasess.ines}>
             <div className={clasess.containerIneImg}>
               <img
                 className={clasess.ineImg}

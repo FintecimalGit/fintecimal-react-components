@@ -2,25 +2,29 @@ import { makeStyles } from '@material-ui/core/styles';
 
 export default makeStyles((theme) => ({
   container: {
-    backgroundColor: '#E5E7F4',
+    backgroundColor: 'transparent',
     width: '100%',
     borderRadius: '20px',
-    padding: '6px 10px',
     display: 'flex',
     alignItems: 'center',
     boxSizing: 'border-box',
     overflowX: 'auto',
-    cursor: 'pointer',
-    [theme.breakpoints.up('sm')]: {
-      padding: '10px 15px',
-    },
   },
   flexText: {
     display: 'flex',
     justifyContent: 'space-between',
   },
   signer: {
-    flex: 1
+    flex: 1,
+    backgroundColor: '#F8F8F8',
+    padding: '6px 10px',
+    cursor: 'pointer',
+    [theme.breakpoints.up('sm')]: {
+      padding: '10px 15px',
+    },
+  },
+  current: {
+    backgroundColor: '#E5E7F4',
   },
   label: {
     fontWeight: 600,

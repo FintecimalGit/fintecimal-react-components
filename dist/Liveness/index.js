@@ -110,7 +110,9 @@ var Liveness = function Liveness(_ref) {
     className: clasess.grid
   }, _react.default.createElement("div", null, _react.default.createElement(_LivenessVideo.default, {
     video: currentParticipant.video
-  })), _react.default.createElement("div", null, _react.default.createElement("div", {
+  })), _react.default.createElement("div", {
+    className: clasess.ines
+  }, _react.default.createElement("div", {
     className: clasess.containerIneImg
   }, _react.default.createElement("img", {
     className: clasess.ineImg,

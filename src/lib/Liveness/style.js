@@ -24,6 +24,12 @@ const useStyles = makeStyles(theme => ({
   containerCarousel: {
     padding: theme.spacing(2, 2, 0, 2),
   },
+  ines:{
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   tooltipValidation: {
     display: 'inline-block',
     verticalAlign: 'middle',
