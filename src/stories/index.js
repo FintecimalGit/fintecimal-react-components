@@ -115,11 +115,11 @@ const signersLiveness = [
     label: '+52 APPS SA DE CV',
     status: 'Aceptado',
     score: 80,
-    video: "https://fintecimal-test.s3.amazonaws.com/DOCUPASS_FORM/82ad426c-0575-4bb6-bf02-921ef0c8b134.webm",
+    video: "https://fintecimal-test.s3.amazonaws.com/DOCUPASS_FORM/4a6dd39c-e090-4950-b986-dcc3a3c1e0e1.webm",
     completed: true,
     ines: [
-      'https://fintecimal-test.s3.amazonaws.com/Front-1b8889a9-0126-4221-ac2f-3df92d965c7e.png',
-      'https://fintecimal-test.s3.amazonaws.com/Front-1b8889a9-0126-4221-ac2f-3df92d965c7e.png',
+      "https://fintecimal-test.s3.amazonaws.com/DOCUPASS_FORM/Reverse-21f7bf8f-3c2f-412f-b90f-47468ad48372.png",
+      "https://fintecimal-test.s3.amazonaws.com/DOCUPASS_FORM/Reverse-980f996f-3a85-4646-bdfb-5831fc329e95.jpg",
       ]
     },
   {
@@ -127,26 +127,25 @@ const signersLiveness = [
     label: 'JOSE ALFREDO TORRES',
     status: 'Pendiente',
     score: 80,
-    video: "https://fintecimal-test.s3.amazonaws.com/DOCUPASS_FORM/82ad426c-0575-4bb6-bf02-921ef0c8b134.webm",
+    video: "https://fintecimal-test.s3.amazonaws.com/DOCUPASS_FORM/1cadac69-c48d-4180-baa5-6c03bc67eb35.webm",
     ines: [
-      'https://fintecimal-test.s3.amazonaws.com/6334d199ef7aa9003d11bceb/Front-Identificacion-Oficial-Representante-Legal-e11b7eb8-92fc-40a3-a859-c6a337825a55.jpeg',
-      'https://fintecimal-test.s3.amazonaws.com/Front-1b8889a9-0126-4221-ac2f-3df92d965c7e.png',
+      "https://fintecimal-test.s3.amazonaws.com/DOCUPASS_FORM/Reverse-df9ce723-e370-47a9-a25a-5bdaa9d43d53.png",
+      "https://fintecimal-test.s3.amazonaws.com/DOCUPASS_FORM/Reverse-5d42b79d-a653-4b0c-ad78-2605cf85d8f9.jpg",
       ],
     completed: false,
   },
   {
     _id: '3',
-    label: 'OPERADORA DE SERVICIOS MEGA',
-    status: 'Rechazado',
+    label: 'JOSE ALFREDO TORRES',
+    status: 'Pendiente',
     score: 80,
-    video: "https://fintecimal-test.s3.amazonaws.com/DOCUPASS_FORM/82ad426c-0575-4bb6-bf02-921ef0c8b134.webm",
+    video: "https://fintecimal-test.s3.amazonaws.com/DOCUPASS_FORM/1cadac69-c48d-4180-baa5-6c03bc67eb35.webm",
     ines: [
-      'https://fintecimal-test.s3.amazonaws.com/Front-1b8889a9-0126-4221-ac2f-3df92d965c7e.png',
-      'https://fintecimal-test.s3.amazonaws.com/Front-1b8889a9-0126-4221-ac2f-3df92d965c7e.png',
+      "https://fintecimal-test.s3.amazonaws.com/DOCUPASS_FORM/Reverse-df9ce723-e370-47a9-a25a-5bdaa9d43d53.png",
+      "https://fintecimal-test.s3.amazonaws.com/DOCUPASS_FORM/Reverse-5d42b79d-a653-4b0c-ad78-2605cf85d8f9.jpg",
       ],
     completed: false,
   },
-  
 ];
 
 

@@ -11,25 +11,29 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 var _default = (0, _styles.makeStyles)(function (theme) {
   return {
-    container: _defineProperty({
-      backgroundColor: '#E5E7F4',
+    container: {
+      backgroundColor: 'transparent',
       width: '100%',
       borderRadius: '20px',
-      padding: '6px 10px',
       display: 'flex',
       alignItems: 'center',
       boxSizing: 'border-box',
-      overflowX: 'auto',
-      cursor: 'pointer'
-    }, theme.breakpoints.up('sm'), {
-      padding: '10px 15px'
-    }),
+      overflowX: 'auto'
+    },
     flexText: {
       display: 'flex',
       justifyContent: 'space-between'
     },
-    signer: {
-      flex: 1
+    signer: _defineProperty({
+      flex: 1,
+      backgroundColor: '#F8F8F8',
+      padding: '6px 10px',
+      cursor: 'pointer'
+    }, theme.breakpoints.up('sm'), {
+      padding: '10px 15px'
+    }),
+    current: {
+      backgroundColor: '#E5E7F4'
     },
     label: _defineProperty({
       fontWeight: 600,

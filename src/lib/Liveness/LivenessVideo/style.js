@@ -6,9 +6,11 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2),
   },
   video: {
+    backgroundColor: '#F8F8F8',
     width: '100%',
     height: '100%',
     objectFit: 'contain',
+    border: '1px solid black',
   },
 }));
 

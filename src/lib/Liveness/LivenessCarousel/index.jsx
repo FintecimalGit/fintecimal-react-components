@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Box, Typography, Divider } from '@material-ui/core';
 import useStyles from './style';
 import clsx from 'clsx';
@@ -9,11 +9,16 @@ const Signer = ({
     status,
     score,
     onClick,
+    isActualIndex,
 }) => {
   console.log(score);
   const classes = useStyles();
   return (
-    <Box id={_id} className={classes.signer} onClick={onClick} >
+    <Box id={_id}onClick={onClick} 
+      className={clsx(classes.signer, {
+        [classes.current]: isActualIndex,
+      })}
+    >
       <Typography className={classes.label} component="span">{label}</Typography>
         <Typography className={clsx(classes.status, {
           [classes.completed]: status === 'Aceptado',
@@ -26,7 +31,13 @@ const Signer = ({
 };
 
 const LivenessCarousel = ({ signers, onClick }) => {
+  const [currentIndex, setCurrentIndex] = useState(0);
   const classes = useStyles();
+
+  const onChangeIndex = (index) => {
+    setCurrentIndex(index);
+    onClick(index);
+  };
   return (
     <Box
       className={classes.container}
@@ -45,11 +56,12 @@ const LivenessCarousel = ({ signers, onClick }) => {
             status={status}
             label={label}
             score={score}
-            onClick={() => onClick(index)}
+            isActualIndex={currentIndex === index}
+            onClick={() => onChangeIndex(index)}
           />
           {
             (index + 1) !== signers.length ? (
-              <Divider className={classes.divider} orientation="vertical" flexItem />
+              <Divider orientation="vertical" flexItem />
             ) : ''
           }
           </>
