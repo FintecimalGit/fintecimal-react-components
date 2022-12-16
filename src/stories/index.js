@@ -113,23 +113,38 @@ const signersLiveness = [
   {
     _id: '1',
     label: '+52 APPS SA DE CV',
-    status: 'Firmado',
+    status: 'Aceptado',
     score: 80,
+    video: "https://fintecimal-test.s3.amazonaws.com/DOCUPASS_FORM/82ad426c-0575-4bb6-bf02-921ef0c8b134.webm",
     completed: true,
-  },
+    ines: [
+      'https://fintecimal-test.s3.amazonaws.com/Front-1b8889a9-0126-4221-ac2f-3df92d965c7e.png',
+      'https://fintecimal-test.s3.amazonaws.com/Front-1b8889a9-0126-4221-ac2f-3df92d965c7e.png',
+      ]
+    },
   {
     _id: '2',
     label: 'JOSE ALFREDO TORRES',
-    status: 'Firmado',
+    status: 'Pendiente',
     score: 80,
-    completed: true,
+    video: "https://fintecimal-test.s3.amazonaws.com/DOCUPASS_FORM/82ad426c-0575-4bb6-bf02-921ef0c8b134.webm",
+    ines: [
+      'https://fintecimal-test.s3.amazonaws.com/6334d199ef7aa9003d11bceb/Front-Identificacion-Oficial-Representante-Legal-e11b7eb8-92fc-40a3-a859-c6a337825a55.jpeg',
+      'https://fintecimal-test.s3.amazonaws.com/Front-1b8889a9-0126-4221-ac2f-3df92d965c7e.png',
+      ],
+    completed: false,
   },
   {
     _id: '3',
     label: 'OPERADORA DE SERVICIOS MEGA',
-    status: 'Firmado',
+    status: 'Rechazado',
     score: 80,
-    completed: true,
+    video: "https://fintecimal-test.s3.amazonaws.com/DOCUPASS_FORM/82ad426c-0575-4bb6-bf02-921ef0c8b134.webm",
+    ines: [
+      'https://fintecimal-test.s3.amazonaws.com/Front-1b8889a9-0126-4221-ac2f-3df92d965c7e.png',
+      'https://fintecimal-test.s3.amazonaws.com/Front-1b8889a9-0126-4221-ac2f-3df92d965c7e.png',
+      ],
+    completed: false,
   },
   
 ];
@@ -1539,13 +1554,8 @@ storiesOf('NewComponents', module)
     return (
       <Container style={{ paddingTop: '5vh', paddingBottom: '5vh' }}>
         <Liveness
-          video="https://fintecimal-test.s3.amazonaws.com/DOCUPASS_FORM/82ad426c-0575-4bb6-bf02-921ef0c8b134.webm"
-          signers={signersLiveness}
+          participants={signersLiveness}
           title="Prueba de vida"
-          ines={{
-              front: 'https://fintecimal-test.s3.amazonaws.com/Front-1b8889a9-0126-4221-ac2f-3df92d965c7e.png',
-              reverse: 'https://fintecimal-test.s3.amazonaws.com/Front-1b8889a9-0126-4221-ac2f-3df92d965c7e.png',
-            }}
         />
       </Container>
     );

@@ -18,29 +18,32 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 var Signer = function Signer(_ref) {
-  var id = _ref.id,
+  var _id = _ref._id,
       label = _ref.label,
       status = _ref.status,
-      score = _ref.score;
+      score = _ref.score,
+      onClick = _ref.onClick;
   console.log(score);
   var classes = (0, _style.default)();
   return _react.default.createElement(_core.Box, {
-    id: id,
-    className: classes.signer
+    id: _id,
+    className: classes.signer,
+    onClick: onClick
   }, _react.default.createElement(_core.Typography, {
     className: classes.label,
     component: "span"
   }, label), _react.default.createElement(_core.Typography, {
-    className: (0, _clsx3.default)(classes.status, _defineProperty({}, classes.completed, status === 'Firmado')),
+    className: (0, _clsx3.default)(classes.status, _defineProperty({}, classes.completed, status === 'Aceptado')),
     component: "span"
   }, status), _react.default.createElement(_core.Typography, {
-    className: (0, _clsx3.default)(classes.score, _defineProperty({}, classes.completed, status === 'Firmado')),
+    className: (0, _clsx3.default)(classes.score, _defineProperty({}, classes.completed, status === 'Aceptado')),
     component: "span"
   }, score ? "Score ".concat(score, "%") : ''));
 };
 
 var LivenessCarousel = function LivenessCarousel(_ref2) {
-  var signers = _ref2.signers;
+  var signers = _ref2.signers,
+      _onClick = _ref2.onClick;
   var classes = (0, _style.default)();
   return _react.default.createElement(_core.Box, {
     className: classes.container
@@ -54,7 +57,10 @@ var LivenessCarousel = function LivenessCarousel(_ref2) {
       id: _id,
       status: status,
       label: label,
-      score: score
+      score: score,
+      onClick: function onClick() {
+        return _onClick(index);
+      }
     }), index + 1 !== signers.length ? _react.default.createElement(_core.Divider, {
       className: classes.divider,
       orientation: "vertical",

@@ -19,7 +19,8 @@ var _default = (0, _styles.makeStyles)(function (theme) {
       display: 'flex',
       alignItems: 'center',
       boxSizing: 'border-box',
-      overflowX: 'auto'
+      overflowX: 'auto',
+      cursor: 'pointer'
     }, theme.breakpoints.up('sm'), {
       padding: '10px 15px'
     }),

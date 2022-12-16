@@ -4,27 +4,28 @@ import useStyles from './style';
 import clsx from 'clsx';
 
 const Signer = ({
-    id,
+    _id,
     label,
     status,
     score,
+    onClick,
 }) => {
   console.log(score);
   const classes = useStyles();
   return (
-    <Box id={id} className={classes.signer}>
+    <Box id={_id} className={classes.signer} onClick={onClick} >
       <Typography className={classes.label} component="span">{label}</Typography>
         <Typography className={clsx(classes.status, {
-          [classes.completed]: status === 'Firmado',
+          [classes.completed]: status === 'Aceptado',
         })} component="span">{status}</Typography>
         <Typography className={clsx(classes.score, {
-          [classes.completed]: status === 'Firmado',
+          [classes.completed]: status === 'Aceptado',
         })} component="span">{score ? `Score ${score}%` : ''}</Typography>
     </Box>
   );
 };
 
-const LivenessCarousel = ({ signers }) => {
+const LivenessCarousel = ({ signers, onClick }) => {
   const classes = useStyles();
   return (
     <Box
@@ -44,6 +45,7 @@ const LivenessCarousel = ({ signers }) => {
             status={status}
             label={label}
             score={score}
+            onClick={() => onClick(index)}
           />
           {
             (index + 1) !== signers.length ? (

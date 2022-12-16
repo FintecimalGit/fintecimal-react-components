@@ -10,6 +10,7 @@ export default makeStyles((theme) => ({
     alignItems: 'center',
     boxSizing: 'border-box',
     overflowX: 'auto',
+    cursor: 'pointer',
     [theme.breakpoints.up('sm')]: {
       padding: '10px 15px',
     },
