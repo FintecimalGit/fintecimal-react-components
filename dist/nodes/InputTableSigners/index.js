@@ -11,7 +11,7 @@ var _propTypes = _interopRequireDefault(require("prop-types"));
 
 var _lodash = _interopRequireDefault(require("lodash"));
 
-var _Table = _interopRequireDefault(require("../../Table"));
+var _ShortTable = _interopRequireDefault(require("../../ShortTable"));
 
 var _Fields = _interopRequireDefault(require("./components/Fields"));
 
@@ -167,19 +167,10 @@ var InputTableSigners = function InputTableSigners(_ref) {
   };
 
   var handleOnChangeField = function handleOnChangeField(field, index, value) {
-    console.log({
-      field: field,
-      fields: fields
-    });
     var newFields = fields.map(function (_field) {
       return _objectSpread2({}, _field, {}, _field.id === field.id ? {
         value: value
       } : null);
-    });
-    console.log({
-      index: index,
-      field: field,
-      fields: fields
     });
     var fieldsUnhide = utils.changeHideChildrens(newFields[index], newFields);
     setFields(fieldsUnhide);
@@ -204,7 +195,7 @@ var InputTableSigners = function InputTableSigners(_ref) {
     className: classes.content
   }, _react.default.createElement("div", {
     className: classes.tableContent
-  }, _react.default.createElement(_Table.default, {
+  }, _react.default.createElement(_ShortTable.default, {
     headers: HEADERS,
     items: VALUES,
     deleteRow: true,

@@ -7,7 +7,7 @@ import React, {
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 
-import Table from '../../Table';
+import ShortTable from '../../ShortTable';
 import Fields from './components/Fields';
 
 import { defaultDataSigner, defaultHeaderSigner } from './defaults';
@@ -130,7 +130,7 @@ const InputTableSigners = ({ value, headers, handleHeadersAndValues, error, requ
     <div>
       <div className={classes.content}>
       <div className={classes.tableContent}>
-        <Table
+        <ShortTable
           headers={HEADERS}
           items={VALUES}
           deleteRow
