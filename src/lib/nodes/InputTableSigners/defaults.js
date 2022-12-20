@@ -113,27 +113,103 @@ export const defaultHeaderSigner = [
     label: 'value ($)',
     type: 'respuesta corta',
     required: false
+  },
+  {
+    id: 4,
+    name: 'value1',
+    label: 'value ($)',
+    type: 'respuesta corta',
+    required: false
+  }, 
+  {
+    id: 5,
+    name: 'value2',
+    label: 'value ($)',
+    type: 'respuesta corta',
+    required: false
+  }, 
+  {
+    id: 6,
+    name: 'value3',
+    label: 'value ($)',
+    type: 'respuesta corta',
+    required: false
+  }, 
+  {
+    id: 7,
+    name: 'value4',
+    label: 'value ($)',
+    type: 'respuesta corta',
+    required: false
+  }, 
+  {
+    id: 8,
+    name: 'value5',
+    label: 'value ($)',
+    type: 'respuesta corta',
+    required: false
+  }, 
+  {
+    id: 9,
+    name: 'value6',
+    label: 'value ($)',
+    type: 'respuesta corta',
+    required: false
+  }, 
+  {
+    id: 10,
+    name: 'value7',
+    label: 'value ($)',
+    type: 'respuesta corta',
+    required: false
   }
 ];
 
 export const defaultDataSigner = [
-  [{
-    name: 'firstName',
-    value: 'Isidro',
-  }, {
-    name: 'fecha',
-    value: '19 de agosto de 2022',
-  }, {
-    name: 'curp',
-    value: 'XEXX010101HNEXXXA4',
-  }, {
-    name: 'rfc',
-    value: 'XAXX010101000',
-  }, {
-    name: 'phone',
-    value: '3326238200',
-  }, {
-    name: 'notarioocorredor',
-    value: 'Notario',
-  }],
+  [
+    {
+      name: 'firstName',
+      value: 'Isidro',
+    },
+    {
+      name: 'Inversiones_En_Acciones',
+      value: 'Si',
+    }, 
+    {
+      name: 'NombreEmpresa',
+      value: 'Docupass Awui wui',
+    }, 
+    {
+      name: 'value',
+      value: '123',
+    }, 
+    {
+      name: 'value1',
+      value: '456',
+    }, 
+    {
+      name: 'value2',
+      value: '789',
+    }, 
+    {
+      name: 'value3',
+      value: '1011',
+    }, 
+    {
+      name: 'value4',
+      value: '1213',
+    },
+    {
+      name: 'value5',
+      value: '1415',
+    },
+    {
+      name: 'value6',
+      value: '1617',
+    },
+    {
+      name: 'value7',
+      value: '1819',
+    },
+  ],
 ];
