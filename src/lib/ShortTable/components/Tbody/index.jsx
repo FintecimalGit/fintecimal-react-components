@@ -21,6 +21,7 @@ const Table = ({
   onEdit,
   deleteRow,
   onDeleteRow,
+  maxHeaders,
 }) => {
   const classes = useStyles();
   const [shortItems, setShortItems] = useState([]);
@@ -60,10 +61,10 @@ const Table = ({
   };
 
   const setShortValues = () => {
-    const newShortHeaders = headers.slice(0, 4);
+    const newShortHeaders = headers.slice(0, maxHeaders);
     const newShortItems = items.map((item) => {
-      const names = Object.keys(item).slice(0, 4);
-      const values = Object.values(item).slice(0, 4);
+      const names = Object.keys(item).slice(0, maxHeaders);
+      const values = Object.values(item).slice(0, maxHeaders);
       const newItem = names.reduce((acc, name, index) => {
         acc[name] = values[index];
         return acc;

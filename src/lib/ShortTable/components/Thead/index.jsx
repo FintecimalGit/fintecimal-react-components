@@ -7,14 +7,14 @@ import classnames from 'classnames';
 import Tooltip from '@material-ui/core/Tooltip';
 import useStyles from './style';
 
-const Table = ({ headers, cleanTable, handleCleanTable }) => {
+const Table = ({ headers, cleanTable, handleCleanTable, maxHeaders }) => {
   const classes = useStyles();
   const [shortHeaders, setShortHeaders] = useState([]);
 
   const isLastIndex = (array, currentIndex) => currentIndex === (array.length - 1);
 
   const setShortValues = () => {
-    const newShortHeaders = headers.slice(0, 4);
+    const newShortHeaders = headers.slice(0, maxHeaders);
     setShortHeaders(newShortHeaders);
   };
 

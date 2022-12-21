@@ -36,7 +36,8 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 var Table = function Table(_ref) {
   var headers = _ref.headers,
       cleanTable = _ref.cleanTable,
-      handleCleanTable = _ref.handleCleanTable;
+      handleCleanTable = _ref.handleCleanTable,
+      maxHeaders = _ref.maxHeaders;
   var classes = (0, _style.default)();
 
   var _useState = (0, _react.useState)([]),
@@ -49,7 +50,7 @@ var Table = function Table(_ref) {
   };
 
   var setShortValues = function setShortValues() {
-    var newShortHeaders = headers.slice(0, 4);
+    var newShortHeaders = headers.slice(0, maxHeaders);
     setShortHeaders(newShortHeaders);
   };
 
