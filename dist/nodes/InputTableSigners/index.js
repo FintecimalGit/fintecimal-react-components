@@ -52,7 +52,9 @@ var InputTableSigners = function InputTableSigners(_ref) {
       headers = _ref.headers,
       handleHeadersAndValues = _ref.handleHeadersAndValues,
       error = _ref.error,
-      required = _ref.required;
+      required = _ref.required,
+      _ref$maxHeaders = _ref.maxHeaders,
+      maxHeaders = _ref$maxHeaders === void 0 ? 4 : _ref$maxHeaders;
   var classes = (0, _style.default)();
 
   var _useState = (0, _react.useState)([]),
@@ -203,7 +205,8 @@ var InputTableSigners = function InputTableSigners(_ref) {
     edit: true,
     onEdit: editRow,
     cleanTable: true,
-    handleCleanTable: handleCleanTable
+    handleCleanTable: handleCleanTable,
+    maxHeaders: maxHeaders
   })), _react.default.createElement(_Fields.default, {
     fieldValues: fields,
     handleOnChangeField: handleOnChangeField,

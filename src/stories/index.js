@@ -897,7 +897,7 @@ storiesOf('Components|Nodes', module)
     }
 
     return (
-      <InputTableSigners handleHeadersAndValues={handleChange} required error />
+      <InputTableSigners handleHeadersAndValues={handleChange} maxHeaders={7} required error />
     );
   })
   .add('Radio Input', () => (

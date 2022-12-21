@@ -15,7 +15,7 @@ import { table } from '../../InputStrings';
 import * as utils from './utils';
 import useStyles from './style';
 
-const InputTableSigners = ({ value, headers, handleHeadersAndValues, error, required }) => {
+const InputTableSigners = ({ value, headers, handleHeadersAndValues, error, required, maxHeaders = 4 }) => {
   const classes = useStyles();
   const [fields, setFields] = useState([]);
   const [localHeaders, setLocalHeaders] = useState([]);
@@ -139,6 +139,7 @@ const InputTableSigners = ({ value, headers, handleHeadersAndValues, error, requ
           onEdit={editRow}
           cleanTable
           handleCleanTable={handleCleanTable}
+          maxHeaders={maxHeaders}
         />
       </div>
       <Fields fieldValues={fields} handleOnChangeField={handleOnChangeField} setFieldsEmpty={setFields} addNewRow={addNewRow} edit={edit} />

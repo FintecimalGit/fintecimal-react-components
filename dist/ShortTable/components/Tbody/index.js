@@ -40,7 +40,8 @@ var Table = function Table(_ref) {
       edit = _ref.edit,
       onEdit = _ref.onEdit,
       deleteRow = _ref.deleteRow,
-      onDeleteRow = _ref.onDeleteRow;
+      onDeleteRow = _ref.onDeleteRow,
+      maxHeaders = _ref.maxHeaders;
   var classes = (0, _style.default)();
 
   var _useState = (0, _react.useState)([]),
@@ -98,10 +99,10 @@ var Table = function Table(_ref) {
   };
 
   var setShortValues = function setShortValues() {
-    var newShortHeaders = headers.slice(0, 4);
+    var newShortHeaders = headers.slice(0, maxHeaders);
     var newShortItems = items.map(function (item) {
-      var names = Object.keys(item).slice(0, 4);
-      var values = Object.values(item).slice(0, 4);
+      var names = Object.keys(item).slice(0, maxHeaders);
+      var values = Object.values(item).slice(0, maxHeaders);
       var newItem = names.reduce(function (acc, name, index) {
         acc[name] = values[index];
         return acc;
