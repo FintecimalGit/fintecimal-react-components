@@ -65,7 +65,7 @@ const Liveness = ({
       </div>
       <div className={clasess.containerInes}>
         {
-          (currentParticipant.video || currentParticipant.ines) ? (
+          (currentParticipant.video && currentParticipant.ines) ? (
             <div className={clasess.grid}>
               <div>
                 <LivenessVideo video={currentParticipant.video}/>
