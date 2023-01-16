@@ -64,25 +64,33 @@ const Liveness = ({
         <LivenessCarousel onClick={(index) => setCurrentIndex(index)} signers={participantsCarousel} />
       </div>
       <div className={clasess.containerInes}>
-        <div className={clasess.grid}>
-          <div>
-            <LivenessVideo video={currentParticipant.video}/>
-          </div>
-          <div className={clasess.ines}>
-            <div className={clasess.containerIneImg}>
-              <img
-                className={clasess.ineImg}
-                src={currentParticipant.ines[0]}
-              />
+        {
+          (currentParticipant.video || currentParticipant.ines) ? (
+            <div className={clasess.grid}>
+              <div>
+                <LivenessVideo video={currentParticipant.video}/>
+              </div>
+              <div className={clasess.ines}>
+                <div className={clasess.containerIneImg}>
+                  <img
+                    className={clasess.ineImg}
+                    src={currentParticipant.ines[0]}
+                  />
+                </div>
+                <div className={clasess.containerIneImg}>
+                  <img
+                    className={clasess.ineImg}
+                    src={currentParticipant.ines[1]}
+                  />
+                </div>
+              </div>
             </div>
-            <div className={clasess.containerIneImg}>
-              <img
-                className={clasess.ineImg}
-                src={currentParticipant.ines[1]}
-              />
-            </div>
+          ) : <div className={clasess.containerNothing}>
+            <h2 className={clasess.containerNothingTitle}>
+              Cliente no ha realizado prueba de vida
+            </h2>
           </div>
-        </div>
+        }
       </div>
     </Card>
   );
