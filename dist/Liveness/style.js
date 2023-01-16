@@ -72,6 +72,18 @@ var useStyles = (0, _styles.makeStyles)(function (theme) {
       gridTemplateColumns: '50% 50%',
       gridTemplateRows: '1fr'
     },
+    containerNothing: {
+      width: '100%',
+      height: '100%',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center'
+    },
+    containerNothingTitle: {
+      textAlign: 'center',
+      fontSize: '2rem',
+      fontWeight: 700
+    },
     containerIneImg: {
       width: '100%'
     }

@@ -106,7 +106,7 @@ var Liveness = function Liveness(_ref) {
     signers: participantsCarousel
   })), _react.default.createElement("div", {
     className: clasess.containerInes
-  }, _react.default.createElement("div", {
+  }, currentParticipant.video && currentParticipant.ines ? _react.default.createElement("div", {
     className: clasess.grid
   }, _react.default.createElement("div", null, _react.default.createElement(_LivenessVideo.default, {
     video: currentParticipant.video
@@ -122,7 +122,11 @@ var Liveness = function Liveness(_ref) {
   }, _react.default.createElement("img", {
     className: clasess.ineImg,
     src: currentParticipant.ines[1]
-  }))))));
+  })))) : _react.default.createElement("div", {
+    className: clasess.containerNothing
+  }, _react.default.createElement("h2", {
+    className: clasess.containerNothingTitle
+  }, "Cliente no ha realizado prueba de vida"))));
 };
 
 Liveness.propTypes = {
