@@ -57,7 +57,7 @@ var currencyFormatter = function currencyFormatter(value) {
   return "$".concat(value.toLocaleString('en-US')).concat(suffix ? " ".concat(suffix) : '');
 };
 
-var UploadDocuments = function UploadDocuments(_ref) {
+var UploadInvoices = function UploadInvoices(_ref) {
   var title = _ref.title,
       multiple = _ref.multiple,
       accept = _ref.accept,
@@ -274,7 +274,7 @@ var UploadDocuments = function UploadDocuments(_ref) {
     className: classes.title
   }, title), required && _react.default.createElement(_Typography.default, {
     className: classes.asterisk
-  }, "*")), _react.default.createElement(_FilePreview.default, {
+  }, "*")), file ? _react.default.createElement(_FilePreview.default, {
     verify: verify,
     onDownloadFile: onDownloadFile,
     file: file,
@@ -286,7 +286,7 @@ var UploadDocuments = function UploadDocuments(_ref) {
     multiple: multiple,
     accept: accept,
     onDrop: handleOnAdd
-  }), multiple && files.length > 0 && _react.default.createElement(_FileFinder.default, {
+  }) : '', multiple && files.length > 0 && _react.default.createElement(_FileFinder.default, {
     dragType: title,
     files: filteredFiles,
     current: currentFile,
@@ -304,7 +304,7 @@ var UploadDocuments = function UploadDocuments(_ref) {
   }));
 };
 
-UploadDocuments.propTypes = {
+UploadInvoices.propTypes = {
   title: _propTypes.default.string,
   multiple: _propTypes.default.bool,
   url: _propTypes.default.oneOfType([_propTypes.default.string, _propTypes.default.arrayOf(_propTypes.default.string)]),
@@ -322,7 +322,7 @@ UploadDocuments.propTypes = {
   fileConvertion: _propTypes.default.func,
   verify: _propTypes.default.object
 };
-UploadDocuments.defaultProps = {
+UploadInvoices.defaultProps = {
   title: '',
   multiple: false,
   accept: '',
@@ -342,5 +342,5 @@ UploadDocuments.defaultProps = {
     status: -1
   }
 };
-var _default = UploadDocuments;
+var _default = UploadInvoices;
 exports.default = _default;
