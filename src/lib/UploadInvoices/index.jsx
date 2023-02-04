@@ -16,7 +16,7 @@ const currencyFormatter = (value, defaultValue = '', suffix = '') => {
   return `$${value.toLocaleString('en-US')}${suffix ? ` ${suffix}` : ''}`;
 };
 
-const UploadDocuments = ({
+const UploadInvoices = ({
   title,
   multiple,
   accept,
@@ -152,17 +152,17 @@ const UploadDocuments = ({
           </Typography>
         )}
       </div>
-        <FilePreview
-        verify={verify}
-        onDownloadFile={onDownloadFile}
-        file={file}
-        onDelete={useDeleteDialog ? () => setShowModal(true) : handleOnDelete}
-        disabled={disabled}
-        urlDocument={url}
-        multiple={multiple}
-        accept={accept}
-        onDrop={handleOnAdd}
-      />
+        { file ? <FilePreview
+          verify={verify}
+          onDownloadFile={onDownloadFile}
+          file={file}
+          onDelete={useDeleteDialog ? () => setShowModal(true) : handleOnDelete}
+          disabled={disabled}
+          urlDocument={url}
+          multiple={multiple}
+          accept={accept}
+          onDrop={handleOnAdd}
+        /> : ''}
       {
         multiple && files.length > 0 && (
           <FileFinder
@@ -187,7 +187,7 @@ const UploadDocuments = ({
   );
 };
 
-UploadDocuments.propTypes = {
+UploadInvoices.propTypes = {
   title: PropTypes.string,
   multiple: PropTypes.bool,
   url: PropTypes.oneOfType([
@@ -212,7 +212,7 @@ UploadDocuments.propTypes = {
   verify: PropTypes.object,
 };
 
-UploadDocuments.defaultProps = {
+UploadInvoices.defaultProps = {
   title: '',
   multiple: false,
   accept: '',
@@ -233,4 +233,4 @@ UploadDocuments.defaultProps = {
   },
 };
 
-export default UploadDocuments;
+export default UploadInvoices;
