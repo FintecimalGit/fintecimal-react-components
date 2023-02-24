@@ -83,6 +83,8 @@ const UploadInvoices = ({
     onMove(oldIndex, newIndex);
   };
 
+  const handleOnDelete = () => {};
+
   const handleOnClick = (index, file) => {
     setFile(file);
     setCurrentFile(index);

@@ -139,6 +139,8 @@ var UploadInvoices = function UploadInvoices(_ref) {
     onMove(oldIndex, newIndex);
   };
 
+  var handleOnDelete = function handleOnDelete() {};
+
   var handleOnClick = function handleOnClick(index, file) {
     setFile(file);
     setCurrentFile(index);
