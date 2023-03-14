@@ -105,13 +105,13 @@ const UploadInvoices = ({
         async (invoice) => {
           console.log({ invoice });
           if (invoice instanceof File) return invoice;
-          const { pdf, importe } = invoice;
+          const { pdf, importe, uuid: invoiceName = '' } = invoice;
           let response = await fetch(pdf);
           let data = await response.blob();
           let metadata = {
             type: data.type
           };
-          const _title = `FACTURA UUID: ${uuidv4()} Importe: ${currencyFormatter(importe, 0, 'MXN')}`;
+          const _title = `FACTURA UUID: ${invoiceName || uuidv4()} Importe: ${currencyFormatter(importe, 0, 'MXN')}`;
           let file = new File([data], _title, metadata);
           return file;
         }
