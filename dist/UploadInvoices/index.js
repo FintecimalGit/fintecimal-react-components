@@ -176,7 +176,7 @@ var UploadInvoices = function UploadInvoices(_ref) {
                 var _ref3 = _asyncToGenerator(
                 /*#__PURE__*/
                 regeneratorRuntime.mark(function _callee(invoice) {
-                  var pdf, importe, response, data, metadata, _title, file;
+                  var pdf, importe, _invoice$uuid, invoiceName, response, data, metadata, _title, file;
 
                   return regeneratorRuntime.wrap(function _callee$(_context) {
                     while (1) {
@@ -194,7 +194,7 @@ var UploadInvoices = function UploadInvoices(_ref) {
                           return _context.abrupt("return", invoice);
 
                         case 3:
-                          pdf = invoice.pdf, importe = invoice.importe;
+                          pdf = invoice.pdf, importe = invoice.importe, _invoice$uuid = invoice.uuid, invoiceName = _invoice$uuid === void 0 ? '' : _invoice$uuid;
                           _context.next = 6;
                           return fetch(pdf);
 
@@ -208,7 +208,7 @@ var UploadInvoices = function UploadInvoices(_ref) {
                           metadata = {
                             type: data.type
                           };
-                          _title = "FACTURA UUID: ".concat(uuidv4(), " Importe: ").concat(currencyFormatter(importe, 0, 'MXN'));
+                          _title = "FACTURA UUID: ".concat(invoiceName || uuidv4(), " Importe: ").concat(currencyFormatter(importe, 0, 'MXN'));
                           file = new File([data], _title, metadata);
                           return _context.abrupt("return", file);
 
