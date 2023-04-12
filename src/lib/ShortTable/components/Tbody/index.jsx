@@ -22,6 +22,7 @@ const Table = ({
   deleteRow,
   onDeleteRow,
   maxHeaders,
+  disable,
 }) => {
   const classes = useStyles();
   const [shortItems, setShortItems] = useState([]);
@@ -110,6 +111,7 @@ const Table = ({
                           <IconButton
                             className={classes.noPadding}
                             onClick={handleOnEdit(item, index)}
+                            disable={disable}
                           >
                             <EditIcon />
                           </IconButton>
@@ -120,6 +122,7 @@ const Table = ({
                           <IconButton
                             className={classes.noPadding}
                             onClick={handleOnDelete(item, index)}
+                            disable={disable}
                           >
                             <DeleteIcon />
                           </IconButton>
@@ -150,6 +153,7 @@ Table.propTypes = {
   onEdit: PropTypes.func,
   deleteRow: PropTypes.bool,
   onDeleteRow: PropTypes.func,
+  disable: PropTypes.bool,
 };
 
 Table.defaultProps = {
@@ -160,6 +164,7 @@ Table.defaultProps = {
   onEdit: () => {},
   deleteRow: false,
   onDeleteRow: () => {},
+  disable: false,
 };
 
 export default Table;

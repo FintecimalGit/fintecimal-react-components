@@ -7,7 +7,7 @@ import classnames from 'classnames';
 import Tooltip from '@material-ui/core/Tooltip';
 import useStyles from './style';
 
-const Table = ({ headers, cleanTable, handleCleanTable, maxHeaders }) => {
+const Table = ({ headers, cleanTable, handleCleanTable, maxHeaders, disable }) => {
   const classes = useStyles();
   const [shortHeaders, setShortHeaders] = useState([]);
 
@@ -47,6 +47,7 @@ const Table = ({ headers, cleanTable, handleCleanTable, maxHeaders }) => {
                     <IconButton
                       className={classes.noPadding}
                       onClick={handleCleanTable}
+                      disable={disable}
                     >
                       <DeleteIcon />
                     </IconButton>
@@ -70,12 +71,14 @@ Table.propTypes = {
     }),
   ),
   cleanTable: PropTypes.bool,
+  disable: PropTypes.bool,
   handleCleanTable: PropTypes.func,
 };
 
 Table.defaultProps = {
   headers: [],
   cleanTable: false,
+  disable: false,
   handleCleanTable: () => {},
 };
 
