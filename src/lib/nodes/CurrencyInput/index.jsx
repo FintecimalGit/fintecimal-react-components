@@ -38,14 +38,17 @@ const CurrencyInput = props => {
   };
   
   useEffect(()=> {
-    if(!value) return;
+    if(!value) {
+      setValue('');
+      return;
+    }
     
     const formattedNumber = formatNumber(value);
     if (isValid(formattedNumber)) {
       setValue(formatMoney(formattedNumber));
     }
   }, [value]);
-
+  console.log({ mValue, value });
   return (
     <BaseInput
       autoComplete={autoComplete}
