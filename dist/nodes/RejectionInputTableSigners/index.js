@@ -13,6 +13,8 @@ var _propTypes = _interopRequireDefault(require("prop-types"));
 
 var _InputTableSigners = _interopRequireDefault(require("../InputTableSigners"));
 
+var _defaults = require("./defaults");
+
 var _RejectActions = _interopRequireDefault(require("../RejectActions"));
 
 var _style = _interopRequireDefault(require("./style"));
@@ -45,7 +47,8 @@ var RejectionInputTableSigners = function RejectionInputTableSigners(_ref) {
       handleHeadersAndValues = _ref.handleHeadersAndValues,
       error = _ref.error,
       required = _ref.required,
-      maxHeaders = _ref.maxHeaders;
+      maxHeaders = _ref.maxHeaders,
+      disable = _ref.disable;
   var classes = (0, _style.default)();
 
   var _useState = (0, _react.useState)('none'),
@@ -116,7 +119,7 @@ var RejectionInputTableSigners = function RejectionInputTableSigners(_ref) {
     error: error,
     required: required,
     maxHeaders: maxHeaders,
-    disable: true
+    disable: disable
   }));
 };
 
@@ -157,8 +160,8 @@ RejectionInputTableSigners.defaultProps = {
   showUndo: false,
   onUndoRejection: function onUndoRejection() {},
   hideActions: false,
-  value: defaultDataSigner,
-  headers: defaultHeaderSigner,
+  value: _defaults.defaultDataSigner,
+  headers: _defaults.defaultHeaderSigner,
   required: false,
   error: false,
   handleHeadersAndValues: function handleHeadersAndValues() {},
