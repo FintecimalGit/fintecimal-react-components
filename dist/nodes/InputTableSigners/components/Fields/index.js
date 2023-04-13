@@ -47,7 +47,7 @@ var Fields = function Fields(_ref) {
       handleOnChangeField = _ref.handleOnChangeField,
       setFieldsEmpty = _ref.setFieldsEmpty,
       edit = _ref.edit,
-      disable = _ref.disable;
+      disabled = _ref.disabled;
   var classes = (0, _style.default)();
 
   var _useState = (0, _react.useState)([]),
@@ -133,7 +133,7 @@ var Fields = function Fields(_ref) {
   }), _react.default.createElement("div", {
     className: classes.button
   }, _react.default.createElement(_Button.default, {
-    disable: disable,
+    disabled: disabled,
     text: edit ? 'Editar' : 'Agregar',
     onClick: onClickAccept
   })));
@@ -143,13 +143,13 @@ Fields.propTypes = {
   fields: _propTypes.default.array,
   addNewRow: _propTypes.default.func,
   edit: _propTypes.default.bool,
-  disable: _propTypes.default.bool
+  disabled: _propTypes.default.bool
 };
 Fields.defaultProps = {
   fields: [],
   addNewRow: function addNewRow() {},
   edit: false,
-  disable: false
+  disabled: false
 };
 var _default = Fields;
 exports.default = _default;

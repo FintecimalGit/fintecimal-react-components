@@ -48,7 +48,7 @@ var RejectionInputTableSigners = function RejectionInputTableSigners(_ref) {
       error = _ref.error,
       required = _ref.required,
       maxHeaders = _ref.maxHeaders,
-      disable = _ref.disable;
+      disabled = _ref.disabled;
   var classes = (0, _style.default)();
 
   var _useState = (0, _react.useState)('none'),
@@ -119,7 +119,7 @@ var RejectionInputTableSigners = function RejectionInputTableSigners(_ref) {
     error: error,
     required: required,
     maxHeaders: maxHeaders,
-    disable: disable
+    disabled: disabled
   }));
 };
 
@@ -143,7 +143,7 @@ RejectionInputTableSigners.propTypes = {
   handleHeadersAndValues: _propTypes.default.func,
   required: _propTypes.default.bool,
   error: _propTypes.default.bool,
-  disable: _propTypes.default.bool
+  disabled: _propTypes.default.bool
 };
 RejectionInputTableSigners.defaultProps = {
   onReject: function onReject() {},
@@ -165,7 +165,7 @@ RejectionInputTableSigners.defaultProps = {
   required: false,
   error: false,
   handleHeadersAndValues: function handleHeadersAndValues() {},
-  disable: false
+  disabled: false
 };
 var _default = RejectionInputTableSigners;
 exports.default = _default;

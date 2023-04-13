@@ -55,7 +55,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 var InputTableSigners = function InputTableSigners(_ref) {
   var value = _ref.value,
-      disable = _ref.disable,
+      disabled = _ref.disabled,
       headers = _ref.headers,
       handleHeadersAndValues = _ref.handleHeadersAndValues,
       error = _ref.error,
@@ -214,9 +214,9 @@ var InputTableSigners = function InputTableSigners(_ref) {
     cleanTable: true,
     handleCleanTable: handleCleanTable,
     maxHeaders: maxHeaders,
-    disable: disable
+    disabled: disabled
   })), _react.default.createElement(_Fields.default, {
-    disable: disable,
+    disabled: disabled,
     fieldValues: fields,
     handleOnChangeField: handleOnChangeField,
     setFieldsEmpty: setFields,
@@ -231,7 +231,7 @@ InputTableSigners.propTypes = {
   handleHeadersAndValues: _propTypes.default.func,
   required: _propTypes.default.bool,
   error: _propTypes.default.bool,
-  disable: _propTypes.default.bool
+  disabled: _propTypes.default.bool
 };
 InputTableSigners.defaultProps = {
   value: _defaults.defaultDataSigner,
@@ -239,7 +239,7 @@ InputTableSigners.defaultProps = {
   required: false,
   error: false,
   handleHeadersAndValues: function handleHeadersAndValues() {},
-  disable: false
+  disabled: false
 };
 var _default = InputTableSigners;
 exports.default = _default;

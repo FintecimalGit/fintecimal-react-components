@@ -24,7 +24,7 @@ const RejectionInputTableSigners = ({
   error,
   required,
   maxHeaders,
-  disable,
+  disabled,
 }) => {
   const classes = useStyles();
   const [forceDisplay, setForceDisplay] = useState('none');
@@ -92,7 +92,7 @@ const RejectionInputTableSigners = ({
         error={error}
         required={required}
         maxHeaders={maxHeaders}
-        disable={disable}
+        disabled={disabled}
       />
     </div>
   );
@@ -119,7 +119,7 @@ RejectionInputTableSigners.propTypes = {
   handleHeadersAndValues: PropTypes.func,
   required: PropTypes.bool,
   error: PropTypes.bool,
-  disable: PropTypes.bool,
+  disabled: PropTypes.bool,
 };
 
 RejectionInputTableSigners.defaultProps = {
@@ -143,7 +143,7 @@ RejectionInputTableSigners.defaultProps = {
   required: false,
   error: false,
   handleHeadersAndValues: () => {},
-  disable: false,
+  disabled: false,
 };
 
 export default RejectionInputTableSigners;

@@ -46,7 +46,7 @@ var Table = function Table(_ref) {
       deleteRow = _ref.deleteRow,
       onDeleteRow = _ref.onDeleteRow,
       maxHeaders = _ref.maxHeaders,
-      disable = _ref.disable;
+      disabled = _ref.disabled;
   var classes = (0, _style.default)();
 
   var _useState = (0, _react.useState)([]),
@@ -138,11 +138,11 @@ var Table = function Table(_ref) {
       }, item[key]), isLastIndex(shortHeaders, headerIndex) && _react.default.createElement("div", null, edit && _react.default.createElement(_IconButton.default, {
         className: classes.noPadding,
         onClick: handleOnEdit(item, index),
-        disable: disable
+        disabled: disabled
       }, _react.default.createElement(_Edit.default, null)), deleteRow && _react.default.createElement(_IconButton.default, {
         className: classes.noPadding,
         onClick: handleOnDelete(item, index),
-        disable: disable
+        disabled: disabled
       }, _react.default.createElement(_Delete.default, null))));
     }));
   }));
@@ -159,7 +159,7 @@ Table.propTypes = {
   onEdit: _propTypes.default.func,
   deleteRow: _propTypes.default.bool,
   onDeleteRow: _propTypes.default.func,
-  disable: _propTypes.default.bool
+  disabled: _propTypes.default.bool
 };
 Table.defaultProps = {
   headers: [],
@@ -169,7 +169,7 @@ Table.defaultProps = {
   onEdit: function onEdit() {},
   deleteRow: false,
   onDeleteRow: function onDeleteRow() {},
-  disable: false
+  disabled: false
 };
 var _default = Table;
 exports.default = _default;

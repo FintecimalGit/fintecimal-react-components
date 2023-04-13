@@ -34,7 +34,7 @@ var ShortTable = function ShortTable(_ref) {
       cleanTable = _ref.cleanTable,
       handleCleanTable = _ref.handleCleanTable,
       maxHeaders = _ref.maxHeaders,
-      disable = _ref.disable;
+      disabled = _ref.disabled;
   var classes = (0, _style.default)();
   var visibleCleanTable = (0, _react.useMemo)(function () {
     return cleanTable && items.length > 0;
@@ -42,7 +42,7 @@ var ShortTable = function ShortTable(_ref) {
   return _react.default.createElement("table", {
     className: classes.table
   }, _react.default.createElement(_Thead.default, {
-    disable: disable,
+    disabled: disabled,
     headers: headers,
     cleanTable: visibleCleanTable,
     handleCleanTable: handleCleanTable,
@@ -56,7 +56,7 @@ var ShortTable = function ShortTable(_ref) {
     deleteRow: deleteRow,
     onDeleteRow: onDeleteRow,
     maxHeaders: maxHeaders,
-    disable: disable
+    disabled: disabled
   }));
 };
 
@@ -74,7 +74,7 @@ ShortTable.propTypes = {
   cleanTable: _propTypes.default.bool,
   handleCleanTable: _propTypes.default.func,
   maxHeaders: _propTypes.default.number,
-  disable: _propTypes.default.bool
+  disabled: _propTypes.default.bool
 };
 ShortTable.defaultProps = {
   headers: [],
@@ -87,7 +87,7 @@ ShortTable.defaultProps = {
   cleanTable: false,
   handleCleanTable: function handleCleanTable() {},
   maxHeaders: 0,
-  disable: false
+  disabled: false
 };
 var _default = ShortTable;
 exports.default = _default;
