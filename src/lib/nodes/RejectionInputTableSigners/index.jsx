@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import InputTableSigners from '../InputTableSigners';
+import { defaultDataSigner, defaultHeaderSigner } from './defaults';
 
 import RejectActions from '../RejectActions';
 
@@ -23,6 +24,7 @@ const RejectionInputTableSigners = ({
   error,
   required,
   maxHeaders,
+  disable,
 }) => {
   const classes = useStyles();
   const [forceDisplay, setForceDisplay] = useState('none');
@@ -90,7 +92,7 @@ const RejectionInputTableSigners = ({
         error={error}
         required={required}
         maxHeaders={maxHeaders}
-        disable
+        disable={disable}
       />
     </div>
   );
