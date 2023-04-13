@@ -7,7 +7,7 @@ import Button from "../../../Buttons/Button";
 import { generateValueEmpty } from '../../utils';
 import useStyles from "./style";
 
-const Fields = ({fieldValues, addNewRow, handleOnChangeField, setFieldsEmpty, edit, disable}) =>{
+const Fields = ({fieldValues, addNewRow, handleOnChangeField, setFieldsEmpty, edit, disabled}) =>{
     const classes = useStyles();
     const [fields, setFields]  = useState([]);
     const [deleteInfo, setDeleteInfo] = useState(false);
@@ -73,7 +73,7 @@ const Fields = ({fieldValues, addNewRow, handleOnChangeField, setFieldsEmpty, ed
                 )
             })}
             <div className={classes.button}>
-                <Button disable={disable} text={ edit ? 'Editar' : 'Agregar' } onClick={onClickAccept} />
+                <Button disabled={disabled} text={ edit ? 'Editar' : 'Agregar' } onClick={onClickAccept} />
             </div>
         </Fragment>
     );
@@ -83,14 +83,14 @@ Fields.propTypes = {
     fields: PropTypes.array,
     addNewRow: PropTypes.func,
     edit: PropTypes.bool,
-    disable: PropTypes.bool,
+    disabled: PropTypes.bool,
 };
 
 Fields.defaultProps = {
     fields: [],
     addNewRow: () => {},
     edit: false,
-    disable: false,
+    disabled: false,
 };
 
 export default Fields;

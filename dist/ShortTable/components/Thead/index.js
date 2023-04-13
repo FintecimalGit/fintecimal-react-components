@@ -42,7 +42,7 @@ var Table = function Table(_ref) {
       cleanTable = _ref.cleanTable,
       handleCleanTable = _ref.handleCleanTable,
       maxHeaders = _ref.maxHeaders,
-      disable = _ref.disable;
+      disabled = _ref.disabled;
   var classes = (0, _style.default)();
 
   var _useState = (0, _react.useState)([]),
@@ -79,7 +79,7 @@ var Table = function Table(_ref) {
     }, _react.default.createElement(_IconButton.default, {
       className: classes.noPadding,
       onClick: handleCleanTable,
-      disable: disable
+      disabled: disabled
     }, _react.default.createElement(_Delete.default, null)))));
   })));
 };
@@ -90,13 +90,13 @@ Table.propTypes = {
     value: _propTypes.default.string
   })),
   cleanTable: _propTypes.default.bool,
-  disable: _propTypes.default.bool,
+  disabled: _propTypes.default.bool,
   handleCleanTable: _propTypes.default.func
 };
 Table.defaultProps = {
   headers: [],
   cleanTable: false,
-  disable: false,
+  disabled: false,
   handleCleanTable: function handleCleanTable() {}
 };
 var _default = Table;

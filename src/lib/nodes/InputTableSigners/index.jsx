@@ -15,7 +15,7 @@ import { table } from '../../InputStrings';
 import * as utils from './utils';
 import useStyles from './style';
 
-const InputTableSigners = ({ value, disable, headers, handleHeadersAndValues, error, required, maxHeaders = 4 }) => {
+const InputTableSigners = ({ value, disabled, headers, handleHeadersAndValues, error, required, maxHeaders = 4 }) => {
   const classes = useStyles();
   const [fields, setFields] = useState([]);
   const [localHeaders, setLocalHeaders] = useState([]);
@@ -140,10 +140,10 @@ const InputTableSigners = ({ value, disable, headers, handleHeadersAndValues, er
           cleanTable
           handleCleanTable={handleCleanTable}
           maxHeaders={maxHeaders}
-          disable={disable}
+          disabled={disabled}
         />
       </div>
-      <Fields disable={disable} fieldValues={fields} handleOnChangeField={handleOnChangeField} setFieldsEmpty={setFields} addNewRow={addNewRow} edit={edit} />
+      <Fields disabled={disabled} fieldValues={fields} handleOnChangeField={handleOnChangeField} setFieldsEmpty={setFields} addNewRow={addNewRow} edit={edit} />
     </div>
   </div>
   );
@@ -155,7 +155,7 @@ InputTableSigners.propTypes = {
   handleHeadersAndValues: PropTypes.func,
   required: PropTypes.bool,
   error: PropTypes.bool,
-  disable: PropTypes.bool,
+  disabled: PropTypes.bool,
 };
 
 InputTableSigners.defaultProps = {
@@ -164,7 +164,7 @@ InputTableSigners.defaultProps = {
   required: false,
   error: false,
   handleHeadersAndValues: () => {},
-  disable: false,
+  disabled: false,
 };
 
 export default InputTableSigners;
