@@ -71,6 +71,7 @@ import FileFinder from '../lib/FileFinder';
 import SignersCarousel from '../lib/SignersCarousel';
 import Liveness from '../lib/Liveness';
 
+
 const {
   Input,
   Button,
@@ -1742,7 +1743,22 @@ storiesOf('Components|SelectBasic', module).add('Select Basic', () => (
   </div>
 ));
 
+import Chat from '../lib/Chat';
+storiesOf('Components|Chat', module).add('Chat', () => (
+  <Chat
+    textLimit={100}
+  />
+));
+
+import ButtonChat from '../lib/ButtonChat';
+storiesOf('Components|ButtonChat', module).add('ButtonChat', () => (
+  <ButtonChat
+    textLimit={100}
+  />
+));
+
 import AutoComplete from '../lib/Autocomplete';
+
 storiesOf('Components|AutoComplete', module).add('Auto Complete', () => (
   <AutoComplete
     label="el label"

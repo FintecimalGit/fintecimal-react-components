@@ -1,0 +1,30 @@
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.UserMessage = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+var _propTypes = _interopRequireDefault(require("prop-types"));
+
+var _style = _interopRequireDefault(require("./style"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var UserMessage = function UserMessage(_ref) {
+  var message = _ref.message;
+  var classes = (0, _style.default)();
+  return _react.default.createElement("p", {
+    className: classes.container
+  }, message);
+};
+
+exports.UserMessage = UserMessage;
+UserMessage.propTypes = {
+  message: _propTypes.default.string
+};
+UserMessage.defaultProps = {
+  message: ''
+};
