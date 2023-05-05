@@ -51,6 +51,7 @@ import {
   PercentageInput,
   PdfViewer,
   RadioGroupInput,
+  InputTableSelect,
 } from '../lib/nodes';
 
 import Table from '../lib/Table';
@@ -898,6 +899,22 @@ storiesOf('Components|Nodes', module)
 
     return (
       <InputTableSigners handleHeadersAndValues={handleChange} maxHeaders={7} required error />
+    );
+  })
+  .add('Input Table Select', () => {
+    const handleChange = (newValue) => {
+      const { headers: newHeaders, values: newValues } = newValue;
+      action('handleHeaders');
+    }
+
+    return (
+      <InputTableSelect
+        handleHeadersAndValues={handleChange}
+        maxHeaders={7}
+        keysMatch={['rfcFieldAval', 'emailAval']}
+        required
+        error
+      />
     );
   })
   .add('Radio Input', () => (
