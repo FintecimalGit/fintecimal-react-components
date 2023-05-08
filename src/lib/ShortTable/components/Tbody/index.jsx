@@ -9,6 +9,8 @@ import IconButton from '@material-ui/core/IconButton';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 
+import RemoveRedEyeRoundedIcon from '@material-ui/icons/RemoveRedEyeRounded';
+
 import useStyles from './style';
 import { useState } from 'react';
 import { useEffect } from 'react';
@@ -23,6 +25,8 @@ const Table = ({
   onDeleteRow,
   maxHeaders,
   disabled,
+  isEditable,
+  onViewRow,
 }) => {
   const classes = useStyles();
   const [shortItems, setShortItems] = useState([]);
@@ -84,58 +88,50 @@ const Table = ({
 
   return (
     <tbody>
-      {
-        items.map((item, index) => (
-          <tr
-            key={`tr-${index}`}
-            className={classes.tr}
-            onClick={handleOnClickRow(item, index)}
-          >
-            {
-              shortHeaders.map(({ key }, headerIndex) => (
-                <td
-                  key={`td-${key}-${shortItems[key]}-${index}`}
-                  className={classnames(
-                    classes.td,
-                    { [classes.editButton]: edit && isLastIndex(shortHeaders, headerIndex) },
-                    { [classes.editButton]: deleteRow && isLastIndex(shortHeaders, headerIndex) },
+      {items.map((item, index) => (
+        <tr key={`tr-${index}`} className={classes.tr} onClick={handleOnClickRow(item, index)}>
+          {shortHeaders.map(({ key }, headerIndex) => (
+            <td
+              key={`td-${key}-${shortItems[key]}-${index}`}
+              className={classnames(
+                classes.td,
+                { [classes.editButton]: edit && isLastIndex(shortHeaders, headerIndex) },
+                { [classes.editButton]: deleteRow && isLastIndex(shortHeaders, headerIndex) }
+              )}
+            >
+              <span className={classes.tableValue}>{item[key]}</span>
+              {isLastIndex(shortHeaders, headerIndex) && isEditable ? (
+                <div>
+                  {edit && (
+                    <IconButton
+                      className={classes.noPadding}
+                      onClick={handleOnEdit(item, index)}
+                      disabled={disabled}
+                    >
+                      <EditIcon />
+                    </IconButton>
                   )}
-                >
-                  <span className={classes.tableValue}>
-                    { item[key] }
-                  </span>
-                  { isLastIndex(shortHeaders, headerIndex) && (
-                    <div>
-                      {
-                        edit && (
-                          <IconButton
-                            className={classes.noPadding}
-                            onClick={handleOnEdit(item, index)}
-                            disabled={disabled}
-                          >
-                            <EditIcon />
-                          </IconButton>
-                        )
-                      }
-                      {
-                        deleteRow && (
-                          <IconButton
-                            className={classes.noPadding}
-                            onClick={handleOnDelete(item, index)}
-                            disabled={disabled}
-                          >
-                            <DeleteIcon />
-                          </IconButton>
-                        )
-                      }
-                    </div>
+                  {deleteRow && (
+                    <IconButton
+                      className={classes.noPadding}
+                      onClick={handleOnDelete(item, index)}
+                      disabled={disabled}
+                    >
+                      <DeleteIcon />
+                    </IconButton>
                   )}
-                </td>
-              ))
-            }
-          </tr>
-        ))
-      }
+                </div>
+              ) : (
+                isLastIndex(shortHeaders, headerIndex) && (
+                  <div>
+                    <RemoveRedEyeRoundedIcon onClick={ () => onViewRow(item)} className={classes.icon} />
+                  </div>
+                )
+              )}
+            </td>
+          ))}
+        </tr>
+      ))}
     </tbody>
   );
 };
@@ -154,6 +150,8 @@ Table.propTypes = {
   deleteRow: PropTypes.bool,
   onDeleteRow: PropTypes.func,
   disabled: PropTypes.bool,
+  isEditable: PropTypes.bool,
+  onViewRow: PropTypes.func,
 };
 
 Table.defaultProps = {
@@ -165,6 +163,8 @@ Table.defaultProps = {
   deleteRow: false,
   onDeleteRow: () => {},
   disabled: false,
+  isEditable: true,
+  onViewRow: () => {},
 };
 
 export default Table;

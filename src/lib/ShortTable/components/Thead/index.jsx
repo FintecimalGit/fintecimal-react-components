@@ -7,7 +7,7 @@ import classnames from 'classnames';
 import Tooltip from '@material-ui/core/Tooltip';
 import useStyles from './style';
 
-const Table = ({ headers, cleanTable, handleCleanTable, maxHeaders, disabled }) => {
+const Table = ({ headers, cleanTable, handleCleanTable, maxHeaders, disabled, isEditable }) => {
   const classes = useStyles();
   const [shortHeaders, setShortHeaders] = useState([]);
 
@@ -40,7 +40,7 @@ const Table = ({ headers, cleanTable, handleCleanTable, maxHeaders, disabled }) 
                 { value }
                 {' '}
               </span>
-              { isLastIndex(shortHeaders, index) && (
+              { isLastIndex(shortHeaders, index) && isEditable && (
                 <>
                   { cleanTable && (
                   <Tooltip title="Limpiar la tabla">
@@ -73,6 +73,7 @@ Table.propTypes = {
   cleanTable: PropTypes.bool,
   disabled: PropTypes.bool,
   handleCleanTable: PropTypes.func,
+  isEditable: PropTypes.bool,
 };
 
 Table.defaultProps = {
@@ -80,6 +81,7 @@ Table.defaultProps = {
   cleanTable: false,
   disabled: false,
   handleCleanTable: () => {},
+  isEditable: false,
 };
 
 export default Table;

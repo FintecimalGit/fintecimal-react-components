@@ -18,12 +18,21 @@ const ShortTable = ({
   handleCleanTable,
   maxHeaders,
   disabled,
+  isEditable,
+  handleViewRow,
 }) => {
   const classes = useStyles();
   const visibleCleanTable = useMemo(() => cleanTable && items.length > 0, [items, cleanTable]);
   return (
     <table className={classes.table}>
-      <Thead disabled={disabled} headers={headers} cleanTable={visibleCleanTable} handleCleanTable={handleCleanTable} maxHeaders={maxHeaders} />
+      <Thead
+        disabled={disabled}
+        headers={headers}
+        cleanTable={visibleCleanTable}
+        handleCleanTable={handleCleanTable}
+        maxHeaders={maxHeaders}
+        isEditable={isEditable}
+      />
       <Tbody
         headers={headers}
         items={items}
@@ -34,6 +43,8 @@ const ShortTable = ({
         onDeleteRow={onDeleteRow}
         maxHeaders={maxHeaders}
         disabled={disabled}
+        isEditable={isEditable}
+        onViewRow={handleViewRow}
       />
     </table>
   );
@@ -56,6 +67,8 @@ ShortTable.propTypes = {
   handleCleanTable: PropTypes.func,
   maxHeaders: PropTypes.number,
   disabled: PropTypes.bool,
+  isEditable: PropTypes.bool,
+  handleViewRow: PropTypes.func,
 };
 
 ShortTable.defaultProps = {
@@ -70,6 +83,8 @@ ShortTable.defaultProps = {
   handleCleanTable: () => {},
   maxHeaders: 0,
   disabled: false,
+  isEditable: true,
+  handleViewRow: () => {},
 };
 
 export default ShortTable;

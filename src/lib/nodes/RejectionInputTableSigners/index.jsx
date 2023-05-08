@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-import InputTableSigners from '../InputTableSigners';
-import { defaultDataSigner, defaultHeaderSigner } from './defaults';
+import { defaultHeaderSigner } from './defaults';
 
 import RejectActions from '../RejectActions';
 
 import useStyles from './style';
+import RejectInputTableSigners from '../RejectInputTableSigners';
+import { defaultRejectDataSigner } from '../RejectInputTableSigners/defaults';
 
 const RejectionInputTableSigners = ({
   onReject,
@@ -85,7 +86,7 @@ const RejectionInputTableSigners = ({
             )
           }
       </div>
-      <InputTableSigners
+      <RejectInputTableSigners
         value={value}
         headers={headers}
         handleHeadersAndValues={handleHeadersAndValues}
@@ -138,7 +139,7 @@ RejectionInputTableSigners.defaultProps = {
   onUndoRejection: () => {},
   hideActions: false,
 
-  value: defaultDataSigner,
+  value: defaultRejectDataSigner,
   headers: defaultHeaderSigner,
   required: false,
   error: false,
