@@ -859,6 +859,9 @@ storiesOf('Components|Nodes', module)
       }}
     />
   ))
+  .add('Reject Input table signers', () => (
+    <RejectionInputTableSigners />
+  ))
   .add('Map', () => <SignatureMap />)
   .add('Image Actions', () => (
     <div>
@@ -1760,6 +1763,7 @@ storiesOf('Components|SelectBasic', module).add('Select Basic', () => (
 ));
 
 import AutoComplete from '../lib/Autocomplete';
+import RejectionInputTableSigners from '../lib/nodes/RejectionInputTableSigners';
 storiesOf('Components|AutoComplete', module).add('Auto Complete', () => (
   <AutoComplete
     label="el label"
