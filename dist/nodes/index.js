@@ -231,6 +231,12 @@ Object.defineProperty(exports, "InputTableSelect", {
     return _InputTableSelect.default;
   }
 });
+Object.defineProperty(exports, "InputResponseChatgpt", {
+  enumerable: true,
+  get: function get() {
+    return _InputResponseChatgpt.default;
+  }
+});
 
 var _SearchBar = _interopRequireDefault(require("./SearchBar"));
 
@@ -307,5 +313,7 @@ var _PdfViewer = _interopRequireDefault(require("./PdfViewer"));
 var _Radio = _interopRequireDefault(require("./Radio"));
 
 var _InputTableSelect = _interopRequireDefault(require("./InputTableSelect"));
+
+var _InputResponseChatgpt = _interopRequireDefault(require("./InputResponseChatgpt"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
