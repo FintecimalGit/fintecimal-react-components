@@ -71,6 +71,10 @@ import FileThumbnail from '../lib/FileThumbnail';
 import FileFinder from '../lib/FileFinder';
 import SignersCarousel from '../lib/SignersCarousel';
 import Liveness from '../lib/Liveness';
+import RejectionInputTableSigners from '../lib/nodes/RejectionInputTableSigners';
+
+import AutoComplete from '../lib/Autocomplete';
+import InputResponseChatgpt from '../lib/nodes/InputResponseChatgpt';
 
 const {
   Input,
@@ -424,131 +428,131 @@ storiesOf('Components|Nodes', module)
       </Grid>
       <Grid item sm={12}>
         <BaseDatePicker
-          value={"2021-07-25T15:32:00.000Z"}
+          value={'2021-07-25T15:32:00.000Z'}
           label="Fecha de vencimiento"
           onDateChange={action('onDateChange')}
           minDate="2020-01-01"
-          format={"lll"}
+          format={'lll'}
           disableToolBar={true}
         />
       </Grid>
       <Grid item sm={12}>
         <BaseDatePicker
-          value={"2021-07-25T15:32:00.000Z"}
+          value={'2021-07-25T15:32:00.000Z'}
           label="Fecha de vencimiento"
           onDateChange={action('onDateChange')}
           minDate="2020-01-01"
-          format={"llll"}
+          format={'llll'}
           disableToolBar={true}
         />
       </Grid>
       <Grid item sm={12}>
         <BaseDatePicker
-          value={"2021-07-25T15:32:00.000Z"}
+          value={'2021-07-25T15:32:00.000Z'}
           label="Fecha de vencimiento"
           onDateChange={action('onDateChange')}
           minDate="2020-01-01"
-          format={"LLLL"}
+          format={'LLLL'}
           disableToolBar={true}
         />
       </Grid>
       <Grid item sm={12}>
         <BaseDatePicker
-          value={"2021-07-25T15:32:00.000Z"}
+          value={'2021-07-25T15:32:00.000Z'}
           label="Fecha de vencimiento"
           onDateChange={action('onDateChange')}
           minDate="2020-01-01"
-          format={"LLL"}
+          format={'LLL'}
           disableToolBar={true}
         />
       </Grid>
       <Grid item sm={12}>
         <BaseDatePicker
-          value={"2021-07-25T15:32:00.000Z"}
+          value={'2021-07-25T15:32:00.000Z'}
           label="Fecha de vencimiento"
           onDateChange={action('onDateChange')}
           minDate="2020-01-01"
-          format={"LL"}
+          format={'LL'}
           disableToolBar={true}
         />
       </Grid>
       <Grid item sm={12}>
         <BaseDatePicker
-          value={"23 de jul. de 2021"}
+          value={'23 de jul. de 2021'}
           label="Fecha de vencimiento"
           onDateChange={action('onDateChange')}
           minDate="2020-01-01"
-          format={"ll"}
+          format={'ll'}
           disableToolBar={true}
         />
       </Grid>
       <Grid item sm={12}>
         <BaseDatePicker
-          value={"2021-07-25T15:32:00.000Z"}
+          value={'2021-07-25T15:32:00.000Z'}
           label="Fecha de vencimiento 3"
           onDateChange={action('onDateChange')}
           minDate="2020-01-01"
-          format={"l"}
+          format={'l'}
           disableToolBar={true}
         />
       </Grid>
       <Grid item sm={12}>
         <BaseDatePicker
-          value={"2021-07-25T15:32:00.000Z"}
+          value={'2021-07-25T15:32:00.000Z'}
           label="Fecha de vencimiento"
           onDateChange={action('onDateChange')}
           minDate="2020-01-01"
-          format={"L"}
+          format={'L'}
           disableToolBar={true}
         />
       </Grid>
       <Grid item sm={12}>
         <BaseDatePicker
-          value={"2021-07-25T15:32:00.000Z"}
+          value={'2021-07-25T15:32:00.000Z'}
           label="Fecha de vencimiento"
           onDateChange={action('onDateChange')}
           minDate="2020-01-01"
-          format={"LTS"}
+          format={'LTS'}
           disableToolBar={true}
         />
       </Grid>
       <Grid item sm={12}>
         <BaseDatePicker
-          value={"2021-07-25T15:32:00.000Z"}
+          value={'2021-07-25T15:32:00.000Z'}
           label="Fecha de vencimiento"
           onDateChange={action('onDateChange')}
           minDate="2020-01-01"
-          format={"LT"}
+          format={'LT'}
           disableToolBar={true}
         />
       </Grid>
       <Grid item sm={12}>
         <BaseDatePicker
-          value={"2021-07-25T15:32:00.000Z"}
+          value={'2021-07-25T15:32:00.000Z'}
           label="Fecha de vencimiento"
           onDateChange={action('onDateChange')}
           minDate="2020-01-01"
-          format={"YYYY-MM-DD"}
+          format={'YYYY-MM-DD'}
           disableToolBar={true}
         />
       </Grid>
       <Grid item sm={12}>
         <BaseDatePicker
-          value={"2021-07-25T15:32:00.000Z"}
+          value={'2021-07-25T15:32:00.000Z'}
           label="Fecha de vencimiento"
           onDateChange={action('onDateChange')}
           minDate="2020-01-01"
-          format={"DD-MM-YYYY"}
+          format={'DD-MM-YYYY'}
           disableToolBar={true}
         />
       </Grid>
       <Grid item sm={12}>
         <BaseDatePicker
-          value={"2021-07-25T15:32:00.000Z"}
+          value={'2021-07-25T15:32:00.000Z'}
           label="Fecha de vencimiento"
           onDateChange={action('onDateChange')}
           minDate="2020-01-01"
-          format={"MM-DD-YYYY"}
+          format={'MM-DD-YYYY'}
           disableToolBar={true}
         />
       </Grid>
@@ -560,88 +564,88 @@ storiesOf('Components|Nodes', module)
         name: 'name',
         label: 'Nombre',
         type: 'respuesta larga',
-        required: true
+        required: true,
       },
       {
         name: 'birthplace',
         label: 'Lugar de nacimiento',
         type: 'respuesta larga',
-        required: true
+        required: true,
       },
       {
         name: 'ocupation',
         label: 'Ocupacion',
         type: 'respuesta corta',
-        required: true
+        required: true,
       },
       {
         name: 'rfc',
         label: 'RFC',
         type: 'RFC',
-        required: true
-      }
+        required: true,
+      },
     ];
     const signers = [
       {
         signerId: '5e2f792ebee1b71b8243e236',
         fullName: 'rep test  test test',
         email: 'alfredo@fintecimal.com',
-        phone: '3333333333'
+        phone: '3333333333',
       },
       {
         signerId: '5e7b8463aa09cb61d422fcdc',
         fullName: 'HUGO LEONELO CARRILLO RAMIREZ',
         email: 'hugo.carrillo@gfmega.com',
-        phone: '3333333333'
-      }
+        phone: '3333333333',
+      },
     ];
     const fields = [
       [
         {
           name: 'name',
           label: 'Nombre',
-          type: 'respuesta larga'
+          type: 'respuesta larga',
         },
         {
           name: 'birthplace',
           label: 'Lugar de nacimiento',
           type: 'respuesta larga',
-          value: 's'
+          value: 's',
         },
         {
           name: 'ocupation',
           label: 'Ocupacion',
-          type: 'respuesta corta'
+          type: 'respuesta corta',
         },
         {
           name: 'rfc',
           label: 'RFC',
-          type: 'RFC'
-        }
+          type: 'RFC',
+        },
       ],
       [
         {
           name: 'name',
           label: 'Nombre',
-          type: 'respuesta larga'
+          type: 'respuesta larga',
         },
         {
           name: 'birthplace',
           label: 'Lugar de nacimiento',
           type: 'respuesta larga',
-          value: 'b'
+          value: 'b',
         },
         {
           name: 'ocupation',
           label: 'Ocupacion',
-          type: 'respuesta corta'
+          type: 'respuesta corta',
         },
         {
           name: 'rfc',
           label: 'RFC',
-          type: 'RFC'
-        }
-      ]
+          type: 'RFC',
+        },
+      ],
     ];
     return (
       <DynamicFields
@@ -655,20 +659,42 @@ storiesOf('Components|Nodes', module)
   .add('Currency Input', () => (
     <Grid container spacing={0}>
       <Grid key="a1" item sm={6}>
-        <CurrencyInput label="Financiamiento" handleChange={action('handleChange')} required clear />
+        <CurrencyInput
+          label="Financiamiento"
+          handleChange={action('handleChange')}
+          required
+          clear
+        />
       </Grid>
       <Grid key="a2" item sm={6}>
-        <CurrencyInput label="Monto Pagare" value='$1,000,000,000' handleChange={action('handleChange')} required clear />
+        <CurrencyInput
+          label="Monto Pagare"
+          value="$1,000,000,000"
+          handleChange={action('handleChange')}
+          required
+          clear
+        />
       </Grid>
     </Grid>
   ))
   .add('Percentage Input', () => (
     <Grid container spacing={0}>
       <Grid key="a1" item sm={6}>
-        <PercentageInput label="Interes Moratorio" handleChange={action('handleChange')} required clear />
+        <PercentageInput
+          label="Interes Moratorio"
+          handleChange={action('handleChange')}
+          required
+          clear
+        />
       </Grid>
       <Grid key="a2" item sm={6}>
-        <PercentageInput label="Interes Moratorio" value='10%' handleChange={action('handleChange')} required clear />
+        <PercentageInput
+          label="Interes Moratorio"
+          value="10%"
+          handleChange={action('handleChange')}
+          required
+          clear
+        />
       </Grid>
     </Grid>
   ))
@@ -725,7 +751,7 @@ storiesOf('Components|Nodes', module)
       required
       // error={true}
       errorMessage={shortText}
-    // value={'Todo TODOS'}
+      // value={'Todo TODOS'}
     />
   ))
   .add('Phone', () => (
@@ -736,7 +762,7 @@ storiesOf('Components|Nodes', module)
       // error={true}
       errorMessage={shortText}
       maxLength={12}
-    // value={'Todo TODOS'}
+      // value={'Todo TODOS'}
     />
   ))
   .add('Number', () => (
@@ -746,7 +772,7 @@ storiesOf('Components|Nodes', module)
       required
       // error={true}
       errorMessage={shortText}
-    // value={'Todo TODOS'}
+      // value={'Todo TODOS'}
     />
   ))
   .add('RFC', () => (
@@ -790,7 +816,7 @@ storiesOf('Components|Nodes', module)
       // error={true}
       errorMessage={shortText}
       maxLength={18}
-    // value={'Todo TODOS'}
+      // value={'Todo TODOS'}
     />
   ))
   .add('CURP', () => (
@@ -807,7 +833,7 @@ storiesOf('Components|Nodes', module)
   .add('ButtonDocuPass', () => (
     <Grid container>
       <Grid item sm={6} xs={6} lg={6}>
-        <ButtonDocuPass url="http://localhost:8080/portal/test" size={80}/>
+        <ButtonDocuPass url="http://localhost:8080/portal/test" size={80} />
       </Grid>
       <Grid item sm={6} xs={6} lg={6} />
     </Grid>
@@ -835,7 +861,7 @@ storiesOf('Components|Nodes', module)
         { name: 'Calidad baja' },
         { name: 'Sin imagen' },
         { name: 'Sin sonido' },
-        { name: 'Sin audio' }
+        { name: 'Sin audio' },
       ]}
     />
   ))
@@ -845,7 +871,7 @@ storiesOf('Components|Nodes', module)
         { name: 'Calidad baja' },
         { name: 'Sin imagen' },
         { name: 'Sin sonido' },
-        { name: 'Sin audio' }
+        { name: 'Sin audio' },
       ]}
       rejected={false}
       handlerReject={action('Reject')}
@@ -855,13 +881,11 @@ storiesOf('Components|Nodes', module)
         date: new Date(),
         reason: 'Video no corresponde a documento.',
         comments:
-          'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
+          'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
       }}
     />
   ))
-  .add('Reject Input table signers', () => (
-    <RejectionInputTableSigners />
-  ))
+  .add('Reject Input table signers', () => <RejectionInputTableSigners />)
   .add('Map', () => <SignatureMap />)
   .add('Image Actions', () => (
     <div>
@@ -885,20 +909,25 @@ storiesOf('Components|Nodes', module)
       setValues(newValues);
       setHeaders(newHeaders);
       action('handleHeaders');
-    }
+    };
 
-    return (
-      <InputTable handleHeadersAndValues={handleChange} required error />
-    );
+    return <InputTable handleHeadersAndValues={handleChange} required error />;
   })
-  .add('CardApp', () => <CardApp onClick={action('onClick')} title="Algo asi" showNotification="true" IconNotification="https://fintecimal-test.s3.amazonaws.com/fintecimal-img/stepconfigs-icons/notification_disable_icon.png"/>)
+  .add('CardApp', () => (
+    <CardApp
+      onClick={action('onClick')}
+      title="Algo asi"
+      showNotification="true"
+      IconNotification="https://fintecimal-test.s3.amazonaws.com/fintecimal-img/stepconfigs-icons/notification_disable_icon.png"
+    />
+  ))
   .add('Input Table Signers', () => {
     const handleChange = (newValue) => {
       const { headers: newHeaders, values: newValues } = newValue;
       console.log(newValues);
       console.log(newHeaders);
       action('handleHeaders');
-    }
+    };
 
     return (
       <InputTableSigners handleHeadersAndValues={handleChange} maxHeaders={7} required error />
@@ -908,7 +937,7 @@ storiesOf('Components|Nodes', module)
     const handleChange = (newValue) => {
       const { headers: newHeaders, values: newValues } = newValue;
       action('handleHeaders');
-    }
+    };
 
     return (
       <InputTableSelect
@@ -936,6 +965,12 @@ storiesOf('Components|Nodes', module)
         value="La estructura organizacional está alineada con los objetivos del negocio y el entorno de control interno es sólido."
       />
     </form>
+  ))
+  .add('Input Response chatgpt', () => (
+    <InputResponseChatgpt
+      handleChange={action('handleChange')}
+      value="Primero, clasifiquemos y filtremos los ingresos válidos de acuerdo con la política de crédito y el giro principal del solicitante: SPEI de Tercero: 800.00 (19/ENE) Depósito en Efectivo: 5,000.00 (20/ENE) SPEI de Tercero: 18,125.00 (19/ENE) Depósito en Efectivo: 6,100.00 (19/ENE) Dado que el solicitante es un empleado de empresa privada, podemos considerar que los SPEI de Tercero y los Depósitos en Efectivo son ingresos válidos. Ahora, identifiquemos y excluyamos posibles anomalías, como pagos únicos o ingresos muy altos que no se repiten. En este caso, el SPEI de 18,125.00 (19/ENE) parece ser un ingreso muy alto en comparación con los demás. Por lo tanto, lo excluiremos de nuestro análisis. Con los ingresos válidos restantes y excluyendo las anomalías, calculamos el ingreso mensual promedio de los últimos 3 meses: SPEI de Tercero: 800.00 Depósito en Efectivo: 5,000.00"
+    />
   ));
 
 storiesOf('Components|Button', module)
@@ -1762,8 +1797,6 @@ storiesOf('Components|SelectBasic', module).add('Select Basic', () => (
   </div>
 ));
 
-import AutoComplete from '../lib/Autocomplete';
-import RejectionInputTableSigners from '../lib/nodes/RejectionInputTableSigners';
 storiesOf('Components|AutoComplete', module).add('Auto Complete', () => (
   <AutoComplete
     label="el label"
