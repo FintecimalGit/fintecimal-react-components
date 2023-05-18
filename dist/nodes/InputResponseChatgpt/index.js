@@ -11,6 +11,8 @@ var _core = require("@material-ui/core");
 
 var _style = _interopRequireDefault(require("./style"));
 
+var _icons = require("@material-ui/icons");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
@@ -26,65 +28,31 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 var InputResponseChatgpt = function InputResponseChatgpt(_ref) {
   var value = _ref.value,
       handleChange = _ref.handleChange,
-      delay = _ref.delay,
+      configChatgpt = _ref.configChatgpt,
       avatarUrl = _ref.avatarUrl,
-      typeAnimationOnStart = _ref.typeAnimationOnStart,
       defaultValue = _ref.defaultValue;
+  var _configChatgpt$delay = configChatgpt.delay,
+      delay = _configChatgpt$delay === void 0 ? 100 : _configChatgpt$delay,
+      _configChatgpt$typeAn = configChatgpt.typeAnimationOnStart,
+      typeAnimationOnStart = _configChatgpt$typeAn === void 0 ? false : _configChatgpt$typeAn;
 
-  var _useState = (0, _react.useState)(true),
+  var _useState = (0, _react.useState)(''),
       _useState2 = _slicedToArray(_useState, 2),
-      typing = _useState2[0],
-      setTyping = _useState2[1];
-
-  var _useState3 = (0, _react.useState)(value),
-      _useState4 = _slicedToArray(_useState3, 2),
-      message = _useState4[0],
-      setMessage = _useState4[1];
-
-  var _useState5 = (0, _react.useState)(''),
-      _useState6 = _slicedToArray(_useState5, 2),
-      displayMessage = _useState6[0],
-      setDisplayMessage = _useState6[1];
+      displayMessage = _useState2[0],
+      setDisplayMessage = _useState2[1];
 
   var classes = (0, _style.default)();
 
-  var handleOnChange = function handleOnChange(event) {
-    setMessage(event);
-    setDisplayMessage('');
-    handleChange(event);
+  var formattedValue = function formattedValue() {
+    return value.replace(/\\n\n/g, '\n\n').replace(/\\n/g, '\n');
   };
 
   (0, _react.useEffect)(function () {
-    if (message !== value || typeAnimationOnStart) {
-      var words = message.split(' ');
-      var i = 0;
-      var intervalId = setInterval(function () {
-        if (i >= words.length) {
-          setTyping(false);
-          clearInterval(intervalId);
-          return;
-        }
-
-        setDisplayMessage(function (prev) {
-          return prev + ' ' + words[i];
-        });
-        i++;
-      }, delay);
-      return function () {
-        return clearInterval(intervalId);
-      };
-    } else {
-      setDisplayMessage(value);
+    if (value) {
+      var newValue = formattedValue();
+      setDisplayMessage(newValue);
     }
-  }, [message]);
-  (0, _react.useEffect)(function () {
-    var timer = setTimeout(function () {
-      setTyping(false);
-    }, delay);
-    return function () {
-      return clearTimeout(timer);
-    };
-  }, [delay]);
+  }, [value]);
   return _react.default.createElement(_react.default.Fragment, null, _react.default.createElement(_core.Paper, {
     className: classes.root,
     elevation: 1
@@ -95,14 +63,12 @@ var InputResponseChatgpt = function InputResponseChatgpt(_ref) {
   }), value ? _react.default.createElement(_core.Typography, {
     className: classes.message,
     variant: "body1"
-  }, displayMessage, typing && _react.default.createElement("span", {
-    className: classes.dot
-  }, ".")) : _react.default.createElement(_core.Typography, {
+  }, _react.default.createElement("pre", {
+    className: classes.spanPre
+  }, displayMessage)) : _react.default.createElement(_core.Typography, {
     className: classes.message,
     variant: "body1"
-  }, defaultValue, typing && _react.default.createElement("span", {
-    className: classes.dot
-  }, "."))));
+  }, defaultValue)));
 };
 
 InputResponseChatgpt.defaultProps = {
@@ -111,9 +77,8 @@ InputResponseChatgpt.defaultProps = {
   required: false,
   disabled: false,
   handleChange: function handleChange() {},
-  delay: 100,
   value: '',
-  typeAnimationOnStart: false,
+  configChatgpt: {},
   defaultValue: 'Aún no se ha recibido una respuesta de chatgpt'
 };
 var _default = InputResponseChatgpt;

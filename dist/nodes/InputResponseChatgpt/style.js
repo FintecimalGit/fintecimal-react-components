@@ -50,7 +50,13 @@ var useStyles = (0, _styles.makeStyles)(function (theme) {
       marginRight: theme.spacing(2)
     },
     message: {
-      color: '#333333'
+      color: '#333333',
+      fontFamily: 'Roboto, Helvetica, Arial, sams-serif'
+    },
+    spanPre: {
+      whiteSpace: 'pre-line',
+      color: '#333333',
+      fontFamily: 'Roboto, Helvetica, Arial, sams-serif'
     }
   };
 });
