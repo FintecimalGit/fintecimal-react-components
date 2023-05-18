@@ -43,6 +43,12 @@ const useStyles = makeStyles((theme) => ({
   },
   message: {
     color: '#333333',
+    fontFamily: 'Roboto, Helvetica, Arial, sams-serif'
+  },
+  spanPre: {
+    whiteSpace: 'pre-line',
+    color: '#333333',
+    fontFamily: 'Roboto, Helvetica, Arial, sams-serif'
   }
 }));
 

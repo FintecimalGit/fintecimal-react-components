@@ -1,54 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import { Avatar, Paper, Typography } from '@material-ui/core';
 import useStyles from './style';
+import { TrainRounded } from '@material-ui/icons';
 
-const InputResponseChatgpt = ({
-  value,
-  handleChange,
-  delay,
-  avatarUrl,
-  typeAnimationOnStart,
-  defaultValue,
-}) => {
-  const [typing, setTyping] = useState(true);
-  const [message, setMessage] = useState(value);
+const InputResponseChatgpt = ({ value, handleChange, configChatgpt, avatarUrl, defaultValue }) => {
+  const { delay = 100, typeAnimationOnStart = false } = configChatgpt;
 
   const [displayMessage, setDisplayMessage] = useState('');
   const classes = useStyles();
 
-  const handleOnChange = (event) => {
-    setMessage(event);
-    setDisplayMessage('');
-    handleChange(event);
+  const formattedValue = () => {
+    return value.replace(/\\n\n/g, '\n\n').replace(/\\n/g, '\n');
   };
 
   useEffect(() => {
-    if (message !== value || typeAnimationOnStart) {
-      const words = message.split(' ');
-      let i = 0;
-      const intervalId = setInterval(() => {
-        if (i >= words.length) {
-          setTyping(false);
-          clearInterval(intervalId);
-          return;
-        }
-        setDisplayMessage((prev) => prev + ' ' + words[i]);
-        i++;
-      }, delay);
-
-      return () => clearInterval(intervalId);
-    } else {
-      setDisplayMessage(value);
+    if (value) {
+      const newValue = formattedValue();
+      setDisplayMessage(newValue);
     }
-  }, [message]);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setTyping(false);
-    }, delay);
-
-    return () => clearTimeout(timer);
-  }, [delay]);
+  }, [value]);
 
   return (
     <>
@@ -56,13 +26,11 @@ const InputResponseChatgpt = ({
         <Avatar alt="Bot" src={avatarUrl} className={classes.avatar} />
         {value ? (
           <Typography className={classes.message} variant="body1">
-            {displayMessage}
-            {typing && <span className={classes.dot}>.</span>}
+            <pre className={classes.spanPre}>{displayMessage}</pre>
           </Typography>
         ) : (
           <Typography className={classes.message} variant="body1">
             {defaultValue}
-            {typing && <span className={classes.dot}>.</span>}
           </Typography>
         )}
       </Paper>
@@ -76,9 +44,8 @@ InputResponseChatgpt.defaultProps = {
   required: false,
   disabled: false,
   handleChange: () => {},
-  delay: 100,
   value: '',
-  typeAnimationOnStart: false,
+  configChatgpt: {},
   defaultValue: 'Aún no se ha recibido una respuesta de chatgpt',
 };
 
