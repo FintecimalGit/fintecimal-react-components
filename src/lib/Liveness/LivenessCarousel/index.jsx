@@ -7,11 +7,9 @@ const Signer = ({
     _id,
     label,
     status,
-    score,
     onClick,
     isActualIndex,
 }) => {
-  console.log(score);
   const classes = useStyles();
   return (
     <Box id={_id}onClick={onClick} 
@@ -21,11 +19,8 @@ const Signer = ({
     >
       <Typography className={classes.label} component="span">{label}</Typography>
         <Typography className={clsx(classes.status, {
-          [classes.completed]: status === 'Aceptado',
+          [classes.completed]: status === 'Verificado',
         })} component="span">{status}</Typography>
-        <Typography className={clsx(classes.score, {
-          [classes.completed]: status === 'Aceptado',
-        })} component="span">{score ? `Score ${score}%` : ''}</Typography>
     </Box>
   );
 };
@@ -47,7 +42,6 @@ const LivenessCarousel = ({ signers, onClick }) => {
           _id,
           status,
           label,
-          score,
         }, index) => (
           <>
           <Signer
@@ -55,7 +49,6 @@ const LivenessCarousel = ({ signers, onClick }) => {
             id={_id}
             status={status}
             label={label}
-            score={score}
             isActualIndex={currentIndex === index}
             onClick={() => onChangeIndex(index)}
           />
