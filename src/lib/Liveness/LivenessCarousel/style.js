@@ -42,7 +42,7 @@ export default makeStyles((theme) => ({
     fontWeight: 700,
     fontSize: '0.625rem',
     lineHeight: '1rem',
-    color: '#FF5F00',
+    color: '#ed0505',
     [theme.breakpoints.up('sm')]: {
       fontSize: '0.875rem',
       lineHeight: '1.25rem',
@@ -61,7 +61,7 @@ export default makeStyles((theme) => ({
     },
   },
   completed: {
-    color: '#1A9A9A',
+    color: '#1a9a2f',
   },
   divider: {
     margin: '0 40px',
