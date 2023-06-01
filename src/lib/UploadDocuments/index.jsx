@@ -37,6 +37,7 @@ const UploadDocuments = ({
   required,
   useEditorIne,
   fileConvertion,
+  verify,
 }) => {
   const classes = useStyles();
   const [file, setFile] = useState(null);
@@ -229,6 +230,7 @@ const UploadDocuments = ({
         urlDocument={url}
         multiple={multiple}
         accept={accept}
+        verify={verify}
         onDrop={handleOnAdd}
       />
     );
@@ -325,6 +327,7 @@ UploadDocuments.propTypes = {
   required: PropTypes.bool,
   useEditorIne: PropTypes.bool,
   fileConvertion: PropTypes.func,
+  verify: PropTypes.object,
 };
 
 UploadDocuments.defaultProps = {
@@ -339,6 +342,9 @@ UploadDocuments.defaultProps = {
   useDeleteDialog: false,
   placeholder: '',
   url: '',
+  verify: {
+    status: -1,
+  },
   disabled: false,
   required: false,
   useEditorIne: false,
