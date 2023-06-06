@@ -41,6 +41,8 @@ const CustomField = ({ type, ...props }) => {
       return <CurrencyInput {...props} />;
     case 'document':
       return <UploadDocuments {...props} />;
+    case 'radiogroup':
+      return <RadioGroupInput {...props}/>
     default:
       return '';
   }
