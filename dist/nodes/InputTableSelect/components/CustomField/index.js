@@ -82,6 +82,9 @@ var CustomField = function CustomField(_ref) {
     case 'document':
       return _react.default.createElement(_UploadDocuments.default, props);
 
+    case 'radiogroup':
+      return _react.default.createElement(RadioGroupInput, props);
+
     default:
       return '';
   }
