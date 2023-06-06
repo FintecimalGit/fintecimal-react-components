@@ -33,6 +33,8 @@ var _UploadDocuments = _interopRequireDefault(require("../../../../UploadDocumen
 
 var _CurrencyInput = _interopRequireDefault(require("../../../CurrencyInput"));
 
+var _Radio = _interopRequireDefault(require("../../../Radio"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
@@ -81,6 +83,9 @@ var CustomField = function CustomField(_ref) {
 
     case 'document':
       return _react.default.createElement(_UploadDocuments.default, props);
+
+    case 'radiogroup':
+      return _react.default.createElement(_Radio.default, props);
 
     default:
       return '';
