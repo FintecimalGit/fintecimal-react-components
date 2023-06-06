@@ -12,6 +12,7 @@ import TextAreaInput from '../../../TextAreaInput';
 import BaseDatePicker from "../../../BaseDatePicker";
 import UploadDocuments from "../../../../UploadDocuments";
 import CurrencyInput from "../../../CurrencyInput";
+import RadioGroupInput from '../../../Radio';
 
 const CustomField = ({ type, ...props }) => {
   switch (type) {
