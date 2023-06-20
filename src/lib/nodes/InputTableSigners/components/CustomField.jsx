@@ -1,7 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import CURPInput  from '../../../CURPInput';
-import CLABEInput from '../../../CLABEInput';
 import SelectInput from '../../Select';
 import RFCInput from '../../BaseRFCInput';
 import NumberInput from '../../BaseNumberInput';
@@ -13,6 +11,8 @@ import BaseDatePicker from "./Fields/BaseDatePicker";
 import UploadDocuments from "../../../UploadDocuments";
 import CurrencyInput from "../../CurrencyInput";
 import RadioGroupInput from '../../Radio';
+import CURPInput from '../../BaseCURPInput';
+import CLABEInput from '../../BaseClabeInput';
 
 const CustomField = ({ type, ...props }) => {
   switch (type) {
