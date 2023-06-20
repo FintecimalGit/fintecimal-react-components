@@ -9,10 +9,6 @@ var _react = _interopRequireDefault(require("react"));
 
 var _propTypes = _interopRequireDefault(require("prop-types"));
 
-var _CURPInput = _interopRequireDefault(require("../../../CURPInput"));
-
-var _CLABEInput = _interopRequireDefault(require("../../../CLABEInput"));
-
 var _Select = _interopRequireDefault(require("../../Select"));
 
 var _BaseRFCInput = _interopRequireDefault(require("../../BaseRFCInput"));
@@ -35,6 +31,10 @@ var _CurrencyInput = _interopRequireDefault(require("../../CurrencyInput"));
 
 var _Radio = _interopRequireDefault(require("../../Radio"));
 
+var _BaseCURPInput = _interopRequireDefault(require("../../BaseCURPInput"));
+
+var _BaseClabeInput = _interopRequireDefault(require("../../BaseClabeInput"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
@@ -47,10 +47,10 @@ var CustomField = function CustomField(_ref) {
 
   switch (type) {
     case 'CURP':
-      return _react.default.createElement(_CURPInput.default, props);
+      return _react.default.createElement(_BaseCURPInput.default, props);
 
     case 'CLABE':
-      return _react.default.createElement(_CLABEInput.default, props);
+      return _react.default.createElement(_BaseClabeInput.default, props);
 
     case 'lista':
       return _react.default.createElement(_Select.default, props);
