@@ -10,6 +10,7 @@ const CANCEL = 'Cancelar';
 const REJECT = 'Rechazar';
 
 const RejectTooltip = props => {
+  const { cancelButtonName, okButtonName } = props;
   const content = useRef();
 
   const [selectState, setSelectState] = useState(CLOSE);
@@ -84,12 +85,12 @@ const RejectTooltip = props => {
       </div>
       <div className={classes.footer}>
         <div className={classes.cancelContent}>
-          <ButtonFlat className={classes.button} text={CANCEL} onClick={handleClose} />
+          <ButtonFlat className={classes.button} text={cancelButtonName} onClick={handleClose} />
         </div>
         <div className={classes.rejectContent}>
           <ButtonFlat
             className={classes.button}
-            text={REJECT}
+            text={okButtonName}
             onClick={handleRejectReason}
             disabled={!reason}
           />
@@ -106,15 +107,19 @@ RejectTooltip.propTypes = {
   rejectionOptions: PropTypes.array,
   rejectionDefaultNotes: PropTypes.array,
   rejectReasonLabel: PropTypes.string,
+  cancelButtonName: PropTypes.string,
+  okButtonName: PropTypes.string,
 };
 
 RejectTooltip.defaultProps = {
   active: false,
-  onClose: () => {},
-  handleReject: () => {},
+  onClose: () => { },
+  handleReject: () => { },
   rejectionOptions: [],
   rejectionDefaultNotes: [],
-  rejectReasonLabel: 'Razón del rechazo'
+  rejectReasonLabel: 'Razón del rechazo',
+  cancelButtonName: CANCEL,
+  okButtonName: REJECT,
 };
 
 export default RejectTooltip;
