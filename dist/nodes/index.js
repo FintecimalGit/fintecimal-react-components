@@ -237,6 +237,12 @@ Object.defineProperty(exports, "InputResponseChatgpt", {
     return _InputResponseChatgpt.default;
   }
 });
+Object.defineProperty(exports, "InputCheckbox", {
+  enumerable: true,
+  get: function get() {
+    return _InputCheckbox.default;
+  }
+});
 
 var _SearchBar = _interopRequireDefault(require("./SearchBar"));
 
@@ -315,5 +321,7 @@ var _Radio = _interopRequireDefault(require("./Radio"));
 var _InputTableSelect = _interopRequireDefault(require("./InputTableSelect"));
 
 var _InputResponseChatgpt = _interopRequireDefault(require("./InputResponseChatgpt"));
+
+var _InputCheckbox = _interopRequireDefault(require("./InputCheckbox"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }

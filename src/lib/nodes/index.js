@@ -37,6 +37,7 @@ import PdfViewer from './PdfViewer';
 import RadioGroupInput from './Radio';
 import InputTableSelect from './InputTableSelect';
 import InputResponseChatgpt from './InputResponseChatgpt';
+import InputCheckbox from './InputCheckbox';
 
 export {
   Maps,
@@ -76,6 +77,7 @@ export {
   PercentageInput,
   PdfViewer,
   RadioGroupInput,
+  InputCheckbox,
   InputTableSelect,
   InputResponseChatgpt,
 };

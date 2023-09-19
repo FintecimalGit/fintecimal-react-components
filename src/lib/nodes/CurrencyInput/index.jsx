@@ -48,7 +48,7 @@ const CurrencyInput = props => {
       setValue(formatMoney(formattedNumber));
     }
   }, [value]);
-  console.log({ mValue, value });
+
   return (
     <BaseInput
       autoComplete={autoComplete}

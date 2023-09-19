@@ -12,6 +12,7 @@ import {
   listWithCategories,
   listWithoutCategories,
   longListWithoutCategories,
+  checkbox,
 } from '../lib/commons/exampleList';
 import { longText, mediumText, shortText } from '../lib/commons/exampleLongText';
 import { defaultData, defaultHeader } from '../lib/nodes/InputTable/defaults';
@@ -52,6 +53,7 @@ import {
   PdfViewer,
   RadioGroupInput,
   InputTableSelect,
+  InputCheckbox,
 } from '../lib/nodes';
 
 import Table from '../lib/Table';
@@ -962,6 +964,23 @@ storiesOf('Components|Nodes', module)
         required
         errorMessage={longText}
         options={longListWithoutCategories}
+        value="La estructura organizacional está alineada con los objetivos del negocio y el entorno de control interno es sólido."
+      />
+    </form>
+  ))
+  .add('Checkbox Input', () => (
+    <form
+      onSubmit={(event) => {
+        event.preventDefault();
+        event.stopPropagation();
+      }}
+    >
+      <InputCheckbox
+        label={shortText}
+        handleChange={action('handleChange')}
+        required
+        errorMessage={longText}
+        options={checkbox}
         value="La estructura organizacional está alineada con los objetivos del negocio y el entorno de control interno es sólido."
       />
     </form>

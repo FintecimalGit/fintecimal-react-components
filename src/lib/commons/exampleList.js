@@ -92,3 +92,15 @@ export const longListWithoutCategories = [
     name: 'Sin información.',
   },
 ];
+
+export const checkbox = [
+  {
+    "name" : "Asalariado"
+  },
+  {
+      "name" : "Independiente"
+  },
+  {
+      "name" : "Socio Accionista"
+  }
+];
