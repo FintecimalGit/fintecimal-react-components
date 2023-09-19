@@ -69,6 +69,9 @@ var CustomField = function CustomField(_ref) {
     case 'radiogroup':
       return _react.default.createElement(_nodes.RadioGroupInput, props);
 
+    case 'checkbox':
+      return _react.default.createElement(_nodes.InputCheckbox, props);
+
     default:
       return _react.default.createElement(_BaseTextInput.default, props);
   }
