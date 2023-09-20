@@ -33,7 +33,7 @@ var useStyles = (0, _styles.makeStyles)(function (theme) {
     },
     title: {
       margin: theme.spacing(2),
-      color: theme.palette.tertiary.main,
+      color: '#4c5c68',
       fontSize: '20px'
     },
     badge: {
