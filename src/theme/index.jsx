@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { createTheme, ThemeProvider } from '@material-ui/core/styles';
+import { createMuiTheme } from '@material-ui/core/styles';
+import { ThemeProvider } from '@material-ui/styles';
 
-const theme = createTheme({
+const theme = createMuiTheme({
   palette: {
     primary: {
       light: '#38e7c8',
