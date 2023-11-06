@@ -54,6 +54,7 @@ import {
   RadioGroupInput,
   InputTableSelect,
   InputCheckbox,
+  AlertsBuroInput,
 } from '../lib/nodes';
 
 import Table from '../lib/Table';
@@ -933,6 +934,18 @@ storiesOf('Components|Nodes', module)
 
     return (
       <InputTableSigners handleHeadersAndValues={handleChange} maxHeaders={7} required error />
+    );
+  })
+  .add('Alerts Buro', () => {
+    const handleChange = (newValue) => {
+      const { headers: newHeaders, values: newValues } = newValue;
+      console.log(newValues);
+      console.log(newHeaders);
+      action('handleHeaders');
+    };
+
+    return (
+      <AlertsBuroInput handleHeadersAndValues={handleChange} maxHeaders={7} required error />
     );
   })
   .add('Input Table Select', () => {
