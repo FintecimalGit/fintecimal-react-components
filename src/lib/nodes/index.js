@@ -22,6 +22,7 @@ import IDCardUpload from './IDCardUpload';
 import ListSignerRoles from './ListSignerRoles';
 import InputTable from './InputTable';
 import InputTableSigners from './InputTableSigners';
+import AlertsBuroInput from './AlertsBuroInput';
 import RejectDocuments from './RejectDocuments';
 import RejectionButtons from './RejectionButtons';
 import RejectSimple from './RejectSimple';
@@ -80,4 +81,5 @@ export {
   InputCheckbox,
   InputTableSelect,
   InputResponseChatgpt,
+  AlertsBuroInput,
 };
