@@ -55,6 +55,7 @@ import {
   InputTableSelect,
   InputCheckbox,
   AlertsBuroInput,
+  InputMatriz,
 } from '../lib/nodes';
 
 import Table from '../lib/Table';
@@ -946,6 +947,18 @@ storiesOf('Components|Nodes', module)
 
     return (
       <AlertsBuroInput handleHeadersAndValues={handleChange} maxHeaders={7} required error />
+    );
+  })
+  .add('Input Matriz', () => {
+    const handleChange = (newValue) => {
+      const { headers: newHeaders, values: newValues } = newValue;
+      console.log(newValues);
+      console.log(newHeaders);
+      action('handleHeaders');
+    };
+
+    return (
+      <InputMatriz handleHeadersAndValues={handleChange} maxHeaders={7} required error />
     );
   })
   .add('Input Table Select', () => {

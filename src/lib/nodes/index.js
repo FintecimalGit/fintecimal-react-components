@@ -39,6 +39,7 @@ import RadioGroupInput from './Radio';
 import InputTableSelect from './InputTableSelect';
 import InputResponseChatgpt from './InputResponseChatgpt';
 import InputCheckbox from './InputCheckbox';
+import InputMatriz from './InputMatriz';
 
 export {
   Maps,
@@ -82,4 +83,5 @@ export {
   InputTableSelect,
   InputResponseChatgpt,
   AlertsBuroInput,
+  InputMatriz,
 };
