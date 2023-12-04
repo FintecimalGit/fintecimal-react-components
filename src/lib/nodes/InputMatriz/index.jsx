@@ -6,7 +6,7 @@ import React, {
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 
-import { defaultHeader, defaultData, defaultFlows } from './defaults';
+import { defaultNoBestOption, defaultHeader, defaultData, defaultFlows } from './defaults';
 import { table } from '../../InputStrings';
 import * as utils from './utils';
 import useStyles from './style';
@@ -67,6 +67,8 @@ const InputMatriz = ({ value, handleHeadersAndValues, headers, flows, error, req
   };
 
   const valueFormated = (value) => {
+    const hasBestOption = value.every(({ bestOption }) => bestOption);
+    if (!hasBestOption) return defaultNoBestOption;
     const newValues = value.map(({ flow, bestOption }) => {
       const { name, cat } = bestOption;
       return [
