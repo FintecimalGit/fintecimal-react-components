@@ -39,7 +39,7 @@ var InputMatriz = function InputMatriz(_ref) {
     error = _ref.error,
     required = _ref.required,
     _ref$maxHeaders = _ref.maxHeaders,
-    maxHeaders = _ref$maxHeaders === void 0 ? 2 : _ref$maxHeaders;
+    maxHeaders = _ref$maxHeaders === void 0 ? 3 : _ref$maxHeaders;
   var classes = (0, _style.default)();
   var _useState = (0, _react.useState)([]),
     _useState2 = _slicedToArray(_useState, 2),
@@ -104,10 +104,15 @@ var InputMatriz = function InputMatriz(_ref) {
     }, 10000);
   };
   var valueFormated = function valueFormated(value) {
-    var newValues = value.map(function (_ref2) {
+    var hasBestOption = value.every(function (_ref2) {
+      var bestOption = _ref2.bestOption;
+      return bestOption;
+    });
+    if (!hasBestOption) return _defaults.defaultNoBestOption;
+    var newValues = value.map(function (_ref3) {
       var _flows$find;
-      var flow = _ref2.flow,
-        bestOption = _ref2.bestOption;
+      var flow = _ref3.flow,
+        bestOption = _ref3.bestOption;
       var name = bestOption.name,
         cat = bestOption.cat;
       return [{
@@ -118,8 +123,8 @@ var InputMatriz = function InputMatriz(_ref) {
         value: cat.toString()
       }, {
         name: 'flow',
-        value: (_flows$find = flows.find(function (_ref3) {
-          var _id = _ref3._id;
+        value: (_flows$find = flows.find(function (_ref4) {
+          var _id = _ref4._id;
           return _id === flow;
         })) === null || _flows$find === void 0 ? void 0 : _flows$find.name
       }];
