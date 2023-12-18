@@ -12,7 +12,7 @@ import * as utils from './utils';
 import useStyles from './style';
 import AlertsTable from '../../AlertsTable';
 
-const InputMatriz = ({ value, handleHeadersAndValues, headers, flows, error, required, maxHeaders = 3 }) => {
+const InputMatriz = ({ value, handleHeadersAndValues, headers, flows, error, required, maxHeaders = 5 }) => {
   const classes = useStyles();
   const [fields, setFields] = useState([]);
   const [localValue, setLocalValue] = useState([]);
@@ -67,10 +67,12 @@ const InputMatriz = ({ value, handleHeadersAndValues, headers, flows, error, req
   };
 
   const valueFormated = (value) => {
-    const hasBestOption = value.every(({ bestOption }) => bestOption);
+    const { productosAppliedView } = value;
+    if(!productosAppliedView) return defaultNoBestOption;
+    const hasBestOption = productosAppliedView.every(({ bestOption }) => bestOption);
     if (!hasBestOption) return defaultNoBestOption;
-    const newValues = value.map(({ flow, bestOption }) => {
-      const { name, cat } = bestOption;
+    const newValues = productosAppliedView.map(({ flow, bestOption }) => {
+      const { name, cat, tasa, mensualidad } = bestOption;
       return [
         {
           name: 'products',
@@ -78,12 +80,20 @@ const InputMatriz = ({ value, handleHeadersAndValues, headers, flows, error, req
         },
         {
           name: 'cat',
-          value: cat.toString(),
+          value: `${cat.toString()}%`,
         },
         {
           name: 'flow',
           value: flows.find(({ _id }) => _id === flow)?.name,
-        }
+        },
+        {
+          name: 'tasa',
+          value: `${tasa.toString()}%`,
+        },
+        {
+          name: 'mensualidad',
+          value: `${mensualidad.toString()}`,
+        },
       ];
     });
     return newValues;
@@ -91,7 +101,7 @@ const InputMatriz = ({ value, handleHeadersAndValues, headers, flows, error, req
 
   useEffect(() => {
     if (headers.length) setLocalHeaders(headers);
-    if (value.length) {
+    if (Object.keys(value).length) {
       const newValue = valueFormated(value);
       setLocalValue(newValue);
     }

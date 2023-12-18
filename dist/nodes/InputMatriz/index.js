@@ -39,7 +39,7 @@ var InputMatriz = function InputMatriz(_ref) {
     error = _ref.error,
     required = _ref.required,
     _ref$maxHeaders = _ref.maxHeaders,
-    maxHeaders = _ref$maxHeaders === void 0 ? 3 : _ref$maxHeaders;
+    maxHeaders = _ref$maxHeaders === void 0 ? 5 : _ref$maxHeaders;
   var classes = (0, _style.default)();
   var _useState = (0, _react.useState)([]),
     _useState2 = _slicedToArray(_useState, 2),
@@ -104,36 +104,46 @@ var InputMatriz = function InputMatriz(_ref) {
     }, 10000);
   };
   var valueFormated = function valueFormated(value) {
-    var hasBestOption = value.every(function (_ref2) {
+    var productosAppliedView = value.productosAppliedView;
+    if (!productosAppliedView) return _defaults.defaultNoBestOption;
+    var hasBestOption = productosAppliedView.every(function (_ref2) {
       var bestOption = _ref2.bestOption;
       return bestOption;
     });
     if (!hasBestOption) return _defaults.defaultNoBestOption;
-    var newValues = value.map(function (_ref3) {
+    var newValues = productosAppliedView.map(function (_ref3) {
       var _flows$find;
       var flow = _ref3.flow,
         bestOption = _ref3.bestOption;
       var name = bestOption.name,
-        cat = bestOption.cat;
+        cat = bestOption.cat,
+        tasa = bestOption.tasa,
+        mensualidad = bestOption.mensualidad;
       return [{
         name: 'products',
         value: name
       }, {
         name: 'cat',
-        value: cat.toString()
+        value: "".concat(cat.toString(), "%")
       }, {
         name: 'flow',
         value: (_flows$find = flows.find(function (_ref4) {
           var _id = _ref4._id;
           return _id === flow;
         })) === null || _flows$find === void 0 ? void 0 : _flows$find.name
+      }, {
+        name: 'tasa',
+        value: "".concat(tasa.toString(), "%")
+      }, {
+        name: 'mensualidad',
+        value: "".concat(mensualidad.toString())
       }];
     });
     return newValues;
   };
   (0, _react.useEffect)(function () {
     if (headers.length) setLocalHeaders(headers);
-    if (value.length) {
+    if (Object.keys(value).length) {
       var newValue = valueFormated(value);
       setLocalValue(newValue);
     } else if (localValue.length) {
