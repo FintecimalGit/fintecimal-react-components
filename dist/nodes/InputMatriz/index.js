@@ -39,7 +39,7 @@ var InputMatriz = function InputMatriz(_ref) {
     error = _ref.error,
     required = _ref.required,
     _ref$maxHeaders = _ref.maxHeaders,
-    maxHeaders = _ref$maxHeaders === void 0 ? 3 : _ref$maxHeaders;
+    maxHeaders = _ref$maxHeaders === void 0 ? 5 : _ref$maxHeaders;
   var classes = (0, _style.default)();
   var _useState = (0, _react.useState)([]),
     _useState2 = _slicedToArray(_useState, 2),

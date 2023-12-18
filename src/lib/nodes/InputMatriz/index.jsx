@@ -12,7 +12,7 @@ import * as utils from './utils';
 import useStyles from './style';
 import AlertsTable from '../../AlertsTable';
 
-const InputMatriz = ({ value, handleHeadersAndValues, headers, flows, error, required, maxHeaders = 3 }) => {
+const InputMatriz = ({ value, handleHeadersAndValues, headers, flows, error, required, maxHeaders = 5 }) => {
   const classes = useStyles();
   const [fields, setFields] = useState([]);
   const [localValue, setLocalValue] = useState([]);
