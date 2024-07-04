@@ -44,7 +44,11 @@ const TextAreaInput = ({
       target: { value: eventValue }
     } = event;
     setValue(eventValue);
-    handleChange(eventValue);
+  };
+
+  const mHandleBlur = () => {
+    handleChange(mValue);
+    if (onBlur) onBlur();
   };
 
   const mOnClear = () => {
@@ -91,7 +95,7 @@ const TextAreaInput = ({
           rows="4"
           onChange={mHandleChange}
           labelWidth={labelWidth}
-          onBlur={onBlur}
+          onBlur={mHandleBlur}
           className={classes.input}
           endAdornment={
             clear &&
