@@ -53,19 +53,19 @@ var _default = (0, _styles.makeStyles)(function (theme) {
     icon: {
       fontSize: 16
     },
-    // Nuevos estilos para la lista de resultados
     resultsList: {
       position: 'absolute',
       top: '100%',
       width: '100%',
-      backgroundColor: theme.palette.background.paper,
-      boxShadow: theme.shadows[2],
-      zIndex: 1,
+      backgroundColor: theme.palette.background.main,
+      boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)',
+      zIndex: 1000,
       borderRadius: '0 0 4px 4px',
       borderTop: '1px solid rgba(0, 0, 0, 0.12)'
     },
     listItem: {
       padding: theme.spacing(1),
+      backgroundColor: theme.palette.background.main,
       cursor: 'pointer',
       '&:hover': {
         backgroundColor: theme.palette.action.hover
