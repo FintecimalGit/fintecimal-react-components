@@ -27,6 +27,7 @@ const SearchInput = ({
   label,
   value,
   handleChange,
+  searchConfig,
   searchApi,
   required,
   error,
@@ -82,7 +83,7 @@ const SearchInput = ({
   };
 
   const searchValue = async (val) => {
-    const valuesFounded = await searchApi(val);
+    const valuesFounded = await searchApi(val, searchConfig);
     setResults(valuesFounded);
   };
 
@@ -176,12 +177,14 @@ SearchInput.defaultProps = {
   statusOnly: false,
   status: '',
   autoComplete: 'off',
+  searchConfig: {},
   searchApi: () => {},
 };
 
 SearchInput.propTypes = {
   label: PropTypes.string.isRequired,
   value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  searchConfig: PropTypes.object,
   searchApi: PropTypes.func,
   required: PropTypes.bool,
   disabled: PropTypes.bool,

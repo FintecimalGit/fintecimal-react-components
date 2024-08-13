@@ -413,6 +413,7 @@ storiesOf('Components|Nodes', module)
   ))
   .add('Search Input', () => {
     const [value, setValue] = useState('');
+    const searchConfig = { "type" : "user" };
     const searchApi = (value) => ([
       { _id: '1', value: 'Isidro Gonzalez', phone: '3326238200' },
       { _id: '2', value: 'Isidro Gomez', phone: '3326238200' },
@@ -423,6 +424,7 @@ storiesOf('Components|Nodes', module)
         label="Cualquier label"
         handleChange={(value) => setValue(value)}
         searchApi={searchApi}
+        searchConfig={searchConfig}
         // error={true}
         // errorMessage={'Este es un mensaje de error que puede tener cualquier cosa'}
         required
