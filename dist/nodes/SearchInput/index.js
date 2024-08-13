@@ -40,6 +40,7 @@ var SearchInput = function SearchInput(_ref) {
   var label = _ref.label,
     value = _ref.value,
     handleChange = _ref.handleChange,
+    searchConfig = _ref.searchConfig,
     searchApi = _ref.searchApi,
     required = _ref.required,
     error = _ref.error,
@@ -105,7 +106,7 @@ var SearchInput = function SearchInput(_ref) {
         while (1) switch (_context.prev = _context.next) {
           case 0:
             _context.next = 2;
-            return searchApi(val);
+            return searchApi(val, searchConfig);
           case 2:
             valuesFounded = _context.sent;
             setResults(valuesFounded);
@@ -202,11 +203,13 @@ SearchInput.defaultProps = {
   statusOnly: false,
   status: '',
   autoComplete: 'off',
+  searchConfig: {},
   searchApi: function searchApi() {}
 };
 SearchInput.propTypes = {
   label: _propTypes.default.string.isRequired,
   value: _propTypes.default.oneOfType([_propTypes.default.number, _propTypes.default.string]),
+  searchConfig: _propTypes.default.object,
   searchApi: _propTypes.default.func,
   required: _propTypes.default.bool,
   disabled: _propTypes.default.bool,
