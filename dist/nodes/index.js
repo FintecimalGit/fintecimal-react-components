@@ -237,6 +237,12 @@ Object.defineProperty(exports, "SearchBar", {
     return _SearchBar.default;
   }
 });
+Object.defineProperty(exports, "SearchInput", {
+  enumerable: true,
+  get: function get() {
+    return _SearchInput.default;
+  }
+});
 Object.defineProperty(exports, "Select", {
   enumerable: true,
   get: function get() {
@@ -297,4 +303,5 @@ var _InputTableSelect = _interopRequireDefault(require("./InputTableSelect"));
 var _InputResponseChatgpt = _interopRequireDefault(require("./InputResponseChatgpt"));
 var _InputCheckbox = _interopRequireDefault(require("./InputCheckbox"));
 var _InputMatriz = _interopRequireDefault(require("./InputMatriz"));
+var _SearchInput = _interopRequireDefault(require("./SearchInput"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
