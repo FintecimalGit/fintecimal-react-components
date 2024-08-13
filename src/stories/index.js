@@ -19,6 +19,7 @@ import { defaultData, defaultHeader } from '../lib/nodes/InputTable/defaults';
 import {
   SearchBar,
   BaseInput,
+  SearchInput,
   Select,
   RejectButton,
   RejectTooltip,
@@ -410,6 +411,25 @@ storiesOf('Components|Nodes', module)
       value="Text"
     />
   ))
+  .add('Search Input', () => {
+    const [value, setValue] = useState('');
+    const searchApi = (value) => ([
+      { _id: '1', value: 'Isidro Gonzalez', phone: '3326238200' },
+      { _id: '2', value: 'Isidro Gomez', phone: '3326238200' },
+      { _id: '3', value: 'Isidro de Johanson', phone: '3326238200' },
+    ]);
+    return (
+      <SearchInput
+        label="Cualquier label"
+        handleChange={(value) => setValue(value)}
+        searchApi={searchApi}
+        // error={true}
+        // errorMessage={'Este es un mensaje de error que puede tener cualquier cosa'}
+        required
+        clear
+        value={value}
+      />
+    )})
   .add('BaseDatePicker', () => (
     <Grid container spacing={0}>
       <Grid item sm={12}>

@@ -40,6 +40,7 @@ import InputTableSelect from './InputTableSelect';
 import InputResponseChatgpt from './InputResponseChatgpt';
 import InputCheckbox from './InputCheckbox';
 import InputMatriz from './InputMatriz';
+import SearchInput from './SearchInput';
 
 export {
   Maps,
@@ -84,4 +85,5 @@ export {
   InputResponseChatgpt,
   AlertsBuroInput,
   InputMatriz,
+  SearchInput,
 };
