@@ -121,9 +121,10 @@ var SearchInput = function SearchInput(_ref) {
     };
   }();
   var handleSelectItem = function handleSelectItem(item) {
-    var itemValue = item.value,
+    var _id = item._id,
+      itemValue = item.value,
       phone = item.phone;
-    handleChange("".concat(itemValue, " - ").concat(phone));
+    handleChange("".concat(_id, " - ").concat(itemValue, " - ").concat(phone));
   };
   var handleInputChange = function handleInputChange(event) {
     var valueTarget = event.target.value;
@@ -131,10 +132,17 @@ var SearchInput = function SearchInput(_ref) {
   };
   var searchingFound = function searchingFound() {
     return results.find(function (_ref3) {
-      var val = _ref3.value,
+      var _id = _ref3._id,
+        val = _ref3.value,
         phone = _ref3.phone;
-      return "".concat(val, " - ").concat(phone) === value;
+      return "".concat(_id, " - ").concat(val, " - ").concat(phone) === value;
     });
+  };
+  var fixValue = function fixValue(val) {
+    if (!val.includes('-')) return val;
+    var newValue = val.split(' - ');
+    newValue.shift();
+    return newValue.join(' - ');
   };
   (0, _react.useEffect)(function () {
     if (!value) setResults([]);
@@ -160,7 +168,7 @@ var SearchInput = function SearchInput(_ref) {
   }, selectLabel()), /*#__PURE__*/_react.default.createElement(_core.OutlinedInput, {
     autoComplete: autoComplete,
     id: "component-outlined",
-    value: value,
+    value: fixValue(value),
     onChange: handleInputChange,
     labelWidth: labelWidth,
     onBlur: onBlur,

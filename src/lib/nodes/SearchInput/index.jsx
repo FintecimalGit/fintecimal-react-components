@@ -88,8 +88,8 @@ const SearchInput = ({
   };
 
   const handleSelectItem = (item) => {
-    const { value: itemValue, phone } = item;
-    handleChange(`${itemValue} - ${phone}`);
+    const { _id, value: itemValue, phone } = item;
+    handleChange(`${_id} - ${itemValue} - ${phone}`);
   };
 
   const handleInputChange = (event) => {
@@ -98,8 +98,15 @@ const SearchInput = ({
   };
 
   const searchingFound = () => {
-    return results.find(({ value: val, phone }) => `${val} - ${phone}` === value);
+    return results.find(({ _id, value: val, phone }) => `${_id} - ${val} - ${phone}` === value);
   };
+
+  const fixValue = (val) => {
+    if (!val.includes('-')) return val;
+    const newValue = val.split(' - ');
+    newValue.shift();
+    return newValue.join(' - ');
+  }
 
   useEffect(() => {
     if (!value) setResults([]);
@@ -129,7 +136,7 @@ const SearchInput = ({
         <OutlinedInput
           autoComplete={autoComplete}
           id="component-outlined"
-          value={value}
+          value={fixValue(value)}
           onChange={handleInputChange}
           labelWidth={labelWidth}
           onBlur={onBlur}
