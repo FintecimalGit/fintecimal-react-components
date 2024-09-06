@@ -32,10 +32,11 @@ const CurrencyInput = props => {
     const formattedNumber = formatNumber(eventValue);
     if (isValid(formattedNumber)) {
       setValue(formatMoney(formattedNumber));
-      handleChange(formatMoney(formattedNumber));
       if (formattedNumber.length === 0) onClear();
     }
   };
+
+  const saveInput = () => handleChange(mValue);
   
   useEffect(()=> {
     if(!value) {
@@ -55,6 +56,7 @@ const CurrencyInput = props => {
       label={label}
       value={mValue}
       handleChange={mHandleChange}
+      onBlur={saveInput}
       required={required}
       disabled={disabled}
       error={error}
