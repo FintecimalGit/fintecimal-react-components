@@ -84,7 +84,7 @@ const InputMatriz = ({ value, handleHeadersAndValues, headers, flows, error, req
         },
         {
           name: 'flow',
-          value: flows.find(({ _id }) => _id === flow)?.name,
+          value: (flows.find(({ _id }) => _id === flow) || {}).name,
         },
         {
           name: 'tasa',

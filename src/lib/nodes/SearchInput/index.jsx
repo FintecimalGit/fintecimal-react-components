@@ -36,7 +36,6 @@ const SearchInput = ({
   type,
   clear,
   onBlur,
-  onClear,
   maxLength,
   statusOnly,
   status,
@@ -46,6 +45,12 @@ const SearchInput = ({
   const [labelWidth, setLabelWidth] = useState(0);
   const [results, setResults] = useState([]);
   const labelRef = React.useRef(null);
+  const [mValue, setValue] = useState(value);
+
+  const onClear = () => {
+    setValue('');
+    handleChange('');
+  };
 
   useEffect(() => {
     setLabelWidth(labelRef.current.offsetWidth);
@@ -89,17 +94,23 @@ const SearchInput = ({
 
   const handleSelectItem = (item) => {
     const { _id, value: itemValue, phone } = item;
+    setValue(`${_id} - ${itemValue} - ${phone}`);
     handleChange(`${_id} - ${itemValue} - ${phone}`);
-  };
-
-  const handleInputChange = (event) => {
-    const { value: valueTarget } = event.target;
-    handleChange(valueTarget);
+    setResults([]);
   };
 
   const searchingFound = () => {
     return results.find(({ _id, value: val, phone }) => `${_id} - ${val} - ${phone}` === value);
   };
+
+  const handleInputChange = (event) => {
+    const { value: valueTarget } = event.target;
+    setValue(valueTarget);
+    if (!valueTarget) setResults([]);
+    else if (valueTarget && searchingFound()) setResults([]);
+    else if (valueTarget) searchValue(valueTarget)
+  };
+
 
   const fixValue = (val) => {
     if (!val.includes('-')) return val;
@@ -107,12 +118,6 @@ const SearchInput = ({
     newValue.shift();
     return newValue.join(' - ');
   }
-
-  useEffect(() => {
-    if (!value) setResults([]);
-    if (value && searchingFound()) setResults([]);
-    else if (value) searchValue(value);
-  }, [value]);
 
   return (
     <div className={classes.root}>
@@ -136,10 +141,9 @@ const SearchInput = ({
         <OutlinedInput
           autoComplete={autoComplete}
           id="component-outlined"
-          value={fixValue(value)}
+          value={fixValue(mValue)}
           onChange={handleInputChange}
           labelWidth={labelWidth}
-          onBlur={onBlur}
           className={classes.input}
           inputProps={{
             ...(maxLength ? { maxLength } : {}),
