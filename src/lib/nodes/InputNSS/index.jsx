@@ -39,7 +39,7 @@ const InputNss = ({
       config={config}
       disabled={disabled}
       errors={errors}
-      isValid={isValidNss(value)}
+      isValid={isValidNss}
     />
   );
 };

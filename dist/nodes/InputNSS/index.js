@@ -47,7 +47,7 @@ var InputNss = function InputNss(_ref) {
     config: config,
     disabled: disabled,
     errors: errors,
-    isValid: (0, _validator.isValidNss)(value)
+    isValid: _validator.isValidNss
   });
 };
 
