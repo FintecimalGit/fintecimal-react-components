@@ -3,8 +3,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import InputWrapper from '../InputWrapper';
-import { isEmpty, textFormats } from '../../commons/utils';
+import { textFormats } from '../../commons/utils';
 import { nss } from '../../InputStrings';
+import { isValidNss } from './validator';
 
 export const InputNss = ({
   value,
@@ -32,55 +33,13 @@ export const InputNss = ({
     errorMessages: nss.errorMessages,
   };
 
-  const luhn = (nssValue) => {
-    let suma = 0;
-    let par = false;
-
-    for (let i = nssValue.length - 1; i >= 0; i--) {
-      let digito = parseInt(nssValue.charAt(i), 10);
-      if (par) {
-        if ((digito *= 2) > 9) {
-          digito -= 9;
-        }
-      } 
-
-      par = !par;
-      suma += digito;
-    }
-    return suma % 10 == 0;
-  };
-
-  const isValid = (data) => {
-    if (isEmpty(data) && !required) return true;
-
-    const regE = /^(\d{2})(\d{2})(\d{2})\d{5}$/;
-    const size = data.length;
-    const valid = data.match(regE);
-
-    if (!valid) return false;
-
-    const subDeleg = parseInt(valid[1], [10]);
-    const year = new Date().getFullYear() % 100;
-
-    let yearAlta = parseInt(valid[2], [10]);
-    let yearNac = parseInt(valid[3], [10]);
-
-    if (subDeleg != 97) {
-      if (yearAlta <= year) yearAlta += 100;
-      if (yearNac <= year) yearNac += 100;
-      if (yearNac > yearAlta) return false;
-    }
-
-    return luhn(data);
-  };
-
   return (
     <InputWrapper
       autoComplete={autoComplete}
       config={config}
       disabled={disabled}
       errors={errors}
-      isValid={isValid}
+      isValid={isValidNss(value)}
     />
   );
 };

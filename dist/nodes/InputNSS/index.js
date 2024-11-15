@@ -15,6 +15,8 @@ var _utils = require("../../commons/utils");
 
 var _InputStrings = require("../../InputStrings");
 
+var _validator = require("./validator");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var InputNss = function InputNss(_ref) {
@@ -40,53 +42,12 @@ var InputNss = function InputNss(_ref) {
     errorMessage: errorMessage,
     errorMessages: _InputStrings.nss.errorMessages
   };
-
-  var luhn = function luhn(nssValue) {
-    var suma = 0;
-    var par = false;
-
-    for (var i = nssValue.length - 1; i >= 0; i--) {
-      var digito = parseInt(nssValue.charAt(i), 10);
-
-      if (par) {
-        if ((digito *= 2) > 9) {
-          digito -= 9;
-        }
-      }
-
-      par = !par;
-      suma += digito;
-    }
-
-    return suma % 10 == 0;
-  };
-
-  var isValid = function isValid(data) {
-    if ((0, _utils.isEmpty)(data) && !required) return true;
-    var regE = /^(\d{2})(\d{2})(\d{2})\d{5}$/;
-    var size = data.length;
-    var valid = data.match(regE);
-    if (!valid) return false;
-    var subDeleg = parseInt(valid[1], [10]);
-    var year = new Date().getFullYear() % 100;
-    var yearAlta = parseInt(valid[2], [10]);
-    var yearNac = parseInt(valid[3], [10]);
-
-    if (subDeleg != 97) {
-      if (yearAlta <= year) yearAlta += 100;
-      if (yearNac <= year) yearNac += 100;
-      if (yearNac > yearAlta) return false;
-    }
-
-    return luhn(data);
-  };
-
   return _react.default.createElement(_InputWrapper.default, {
     autoComplete: autoComplete,
     config: config,
     disabled: disabled,
     errors: errors,
-    isValid: isValid
+    isValid: (0, _validator.isValidNss)(value)
   });
 };
 
