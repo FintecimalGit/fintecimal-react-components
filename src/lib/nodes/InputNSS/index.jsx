@@ -7,7 +7,7 @@ import { textFormats } from '../../commons/utils';
 import { nss } from '../../InputStrings';
 import { isValidNss } from './validator';
 
-export const InputNss = ({
+const InputNss = ({
   value,
   handleChange,
   label,
@@ -63,3 +63,5 @@ InputNss.propTypes = {
   disabled: PropTypes.bool,
   autoComplete: PropTypes.string,
 };
+
+export default InputNss;

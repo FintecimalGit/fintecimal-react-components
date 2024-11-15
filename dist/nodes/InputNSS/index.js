@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.InputNss = void 0;
+exports.default = void 0;
 
 var _react = _interopRequireDefault(require("react"));
 
@@ -51,7 +51,6 @@ var InputNss = function InputNss(_ref) {
   });
 };
 
-exports.InputNss = InputNss;
 InputNss.defaultProps = {
   label: _InputStrings.nss.label,
   type: _InputStrings.nss.type,
@@ -70,3 +69,5 @@ InputNss.propTypes = {
   disabled: _propTypes.default.bool,
   autoComplete: _propTypes.default.string
 };
+var _default = InputNss;
+exports.default = _default;
