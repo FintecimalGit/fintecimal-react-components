@@ -88,6 +88,16 @@ export const radio = {
   type: 'radio',
 };
 
+export const nss = {
+  label: 'Número de seguridad social',
+  errorMessages: {
+    validation: 'Número de seguridad social no válido',
+    empty: 'El campo es requerido',
+  },
+  type: 'text',
+};
+
+
 export const generateErrorMessagesByLabel = (type, label = '') => {
     return  {
         validation: type.errorMessages.validation,

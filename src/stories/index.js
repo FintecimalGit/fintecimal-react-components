@@ -80,6 +80,7 @@ import RejectionInputTableSigners from '../lib/nodes/RejectionInputTableSigners'
 
 import AutoComplete from '../lib/Autocomplete';
 import InputResponseChatgpt from '../lib/nodes/InputResponseChatgpt';
+import { InputNss } from '../lib/nodes/InputNSS';
 
 const {
   Input,
@@ -1037,6 +1038,17 @@ storiesOf('Components|Nodes', module)
     <InputResponseChatgpt
       handleChange={action('handleChange')}
       value="Primero, clasificamos y filtramos los ingresos válidos de acuerdo con la política de crédito y el giro principal del solicitante. Dado que el solicitante es Independiente, consideramos los ingresos de tipo SPEI de Tercero, Cheques, Depósito en Efectivo, Transferencia de Tercero, TEF de Tercero y Pago en Efectivo en Comercio.\n\nIngresos válidos en los últimos 3 meses:\n\n- 27/FEB: SPEI de Tercero - 1,500.00\n- 27/FEB: SPEI de Tercero - 5,360.00\n- 03/FEB: SPEI de Tercero - 966.00\n- 27/FEB: SPEI de Tercero - 5,549.00\n- 14/FEB: SPEI de Tercero - 5,629.41\n- 17/FEB: SPEI de Tercero - 36,291.00 (anomalía, ingreso muy alto)\n- 07/FEB: SPEI de Tercero - 830.00\n- 27/FEB: Depósito en Efectivo - 5,700.00\n- 03/FEB: Cheques - 5,000.00\n- 27/MAR: SPEI de Tercero - 8,100.00\n- 27/MAR: SPEI de Tercero - 1,500.00\n- 09/MAR: SPEI de Tercero - 100.00\n- 09/MAR: Depósito en Efectivo - 900.00\n- 24/MAR: Transferencia de Tercero - 13,000.00\n- 31/MAR: Transferencia de Tercero - 800.00\n- 09/MAR: Transferencia de Tercero - 500.00\n- 09/MAR: Transferencia de Tercero - 100.00\n- 27/MAR: Transferencia de Tercero - 1,000.00\n- 03/ABR: SPEI de Tercero - 1,620.00\n- 10/ABR: SPEI de Tercero - 12,614.00\n- 24/ABR: SPEI de Tercero - 12,008.00\n- 24/ABR: Depósito en Efectivo - 500.00\n- 18/ABR: SPEI de Tercero - 1,200.00\n- 13/ABR: SPEI de Tercero - 350.00\n- 12/ABR: Depósito en Efectivo - 11,000.00\n- 17/ABR: Depósito en Efectivo - 500.00\n- 21/ABR: Transferencia de Tercero - 1,000.00\n- 12/ABR: Transferencia de Tercero - 7,000.00\n\nExcluimos la anomalía (36,291.00) y calculamos el ingreso mensual promedio de los últimos 3 meses:\n\nIngreso total válido: 106,998.41"
+    />
+  ))
+  .add('NSS', () => (
+    <InputNss
+      label="Número de seguro social"
+      handleChange={action('handleChange')}
+      required
+      // error={true}
+      errorMessage={shortText}
+      //value={'HEGG560427MVZRRL04'}
+      //disabled
     />
   ));
 

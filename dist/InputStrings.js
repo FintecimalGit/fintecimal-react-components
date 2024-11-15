@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.generateErrorMessagesByLabel = exports.radio = exports.table = exports.clabe = exports.list = exports.cellphone = exports.number = exports.curp = exports.rfc = exports.email = exports.text = void 0;
+exports.generateErrorMessagesByLabel = exports.nss = exports.radio = exports.table = exports.clabe = exports.list = exports.cellphone = exports.number = exports.curp = exports.rfc = exports.email = exports.text = void 0;
 var text = {
   label: 'Texto',
   errorMessages: {
@@ -94,6 +94,15 @@ var radio = {
   type: 'radio'
 };
 exports.radio = radio;
+var nss = {
+  label: 'Número de seguridad social',
+  errorMessages: {
+    validation: 'Número de seguridad social no válido',
+    empty: 'El campo es requerido'
+  },
+  type: 'text'
+};
+exports.nss = nss;
 
 var generateErrorMessagesByLabel = function generateErrorMessagesByLabel(type) {
   var label = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
