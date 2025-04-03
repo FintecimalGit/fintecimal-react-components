@@ -85,7 +85,8 @@ const UploadDocuments = ({
   };
 
   const handleOnAdd = (acceptedFiles, rejectedFiles) => {
-   setFiles([...acceptedFiles, ...files]);
+  //  setFiles([...acceptedFiles, ...files]);
+  setFiles([...files, ...acceptedFiles]);
    setSearch('');
    onDrop(acceptedFiles, rejectedFiles);
   };
