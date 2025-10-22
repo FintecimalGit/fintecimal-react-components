@@ -44,12 +44,20 @@ const SearchInput = ({
   const classes = useStyles();
   const [labelWidth, setLabelWidth] = useState(0);
   const [results, setResults] = useState([]);
+  const [isFocused, setIsFocused] = useState(false);
+  const [showResults, setShowResults] = useState(false);
   const labelRef = React.useRef(null);
   const [mValue, setValue] = useState(value);
 
   const onClear = () => {
-    setValue('');
-    handleChange('');
+    const valueCleared = {
+      name: '',
+      value: '',
+      phone: '',
+      _id: '',
+    }
+    setValue(valueCleared);
+    handleChange(valueCleared);
   };
 
   useEffect(() => {
@@ -93,31 +101,95 @@ const SearchInput = ({
   };
 
   const handleSelectItem = (item) => {
-    const { _id, value: itemValue, phone } = item;
-    setValue(`${_id} - ${itemValue} - ${phone}`);
-    handleChange(`${_id} - ${itemValue} - ${phone}`);
+    // Old format
+    // const { value: itemValue, name, phone } = item;
+    // setValue(`${_id} - ${itemValue} - ${phone}`);
+    setValue(item)
+    handleChange(item)
     setResults([]);
+    setShowResults(false);
   };
 
-  const searchingFound = () => {
-    return results.find(({ _id, value: val, phone }) => `${_id} - ${val} - ${phone}` === value);
+  const searchingFound = (searchTerm = null) => {
+    const searchValue = searchTerm || (typeof mValue === 'object' ? (mValue && mValue.name) : mValue);
+    return results.find(({ name }) => `${name}` === searchValue);
   };
 
   const handleInputChange = (event) => {
     const { value: valueTarget } = event.target;
-    setValue(valueTarget);
-    if (!valueTarget) setResults([]);
-    else if (valueTarget && searchingFound()) setResults([]);
-    else if (valueTarget) searchValue(valueTarget)
+    
+    // Si está vacío, limpiar todo
+    if (!valueTarget) {
+      setResults([]);
+      const emptyObj = { name: '', value: '', phone: '', _id: '' };
+      setValue(emptyObj);
+      handleChange(emptyObj);
+      return;
+    }
+    
+    // Si hay texto, crear objeto temporal para búsqueda
+    const tempObj = {
+      name: valueTarget,
+      value: valueTarget,
+      phone: '',
+      _id: '',
+    };
+    setValue(tempObj);
+    
+    // Solo buscar si no es una coincidencia exacta
+    if (!searchingFound(valueTarget)) {
+      searchValue(valueTarget);
+    } else {
+      setResults([]);
+    }
+  };
+
+  const handleFocus = () => {
+    setIsFocused(true);
+    setShowResults(true);
+  };
+
+  const handleBlur = () => {
+    setIsFocused(false);
+    // Usar setTimeout para permitir que el click en el item se ejecute antes de ocultar la lista
+    setTimeout(() => {
+      setShowResults(false);
+    }, 150);
+    // Llamar al onBlur original si existe
+    if (onBlur) {
+      onBlur();
+    }
   };
 
 
-  const fixValue = (val) => {
+  const fixOldFormat = (val) => {
     if (!val.includes('-')) return val;
     const newValue = val.split(' - ');
     newValue.shift();
     return newValue.join(' - ');
   }
+
+
+  const fixValue = (val) => {
+
+    // Old format
+    if (typeof val === 'string') return fixOldFormat(val);
+    return (val && val.name) || '';
+  }
+
+  useEffect(() => {
+    if (searchConfig && searchConfig.searchOnLoad) {
+      const {
+        name = '',
+      } = value || {};
+      searchValue(name || '');    
+    }
+  }, [searchConfig]);
+
+  // Sincronizar value prop con estado interno
+  useEffect(() => {
+    setValue(value);
+  }, [value]);
 
   return (
     <div className={classes.root}>
@@ -143,6 +215,8 @@ const SearchInput = ({
           id="component-outlined"
           value={fixValue(mValue)}
           onChange={handleInputChange}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
           labelWidth={labelWidth}
           className={classes.input}
           inputProps={{
@@ -159,7 +233,7 @@ const SearchInput = ({
       </FormControl>
       {error && isTextLong(errorMessage) && <LongError text={errorMessage}></LongError>}
       
-      {results.length > 0 && (
+      {results.length > 0 && showResults && (
         <List className={classes.resultsList}>
           {results.map(result => (
             <ListItem 
@@ -168,7 +242,7 @@ const SearchInput = ({
               onClick={() => handleSelectItem(result)} 
               className={classes.listItem}
             >
-              <ListItemText primary={`${result.value} - ${result.phone}`} />
+              <ListItemText primary={`${result.name}`} />
             </ListItem>
           ))}
         </List>
@@ -194,7 +268,7 @@ SearchInput.defaultProps = {
 
 SearchInput.propTypes = {
   label: PropTypes.string.isRequired,
-  value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  value: PropTypes.oneOfType([PropTypes.number, PropTypes.string, PropTypes.object]),
   searchConfig: PropTypes.object,
   searchApi: PropTypes.func,
   required: PropTypes.bool,
