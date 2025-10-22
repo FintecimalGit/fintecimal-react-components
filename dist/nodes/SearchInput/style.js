@@ -4,7 +4,9 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
+
 var _styles = require("@material-ui/core/styles");
+
 var _default = (0, _styles.makeStyles)(function (theme) {
   return {
     root: {
@@ -12,8 +14,8 @@ var _default = (0, _styles.makeStyles)(function (theme) {
       flexDirection: 'column',
       flexWrap: 'wrap',
       position: 'relative' // Necesario para posicionar la lista de resultados
-    },
 
+    },
     form: {
       alignSelf: 'stretch',
       '& .MuiOutlinedInput-root.Mui-disabled.Mui-error': {
@@ -73,4 +75,5 @@ var _default = (0, _styles.makeStyles)(function (theme) {
     }
   };
 });
+
 exports.default = _default;

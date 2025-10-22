@@ -1,7 +1,5 @@
 "use strict";
 
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
@@ -36,6 +34,8 @@ function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (O
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
@@ -84,16 +84,32 @@ var SearchInput = function SearchInput(_ref) {
       results = _useState4[0],
       setResults = _useState4[1];
 
+  var _useState5 = (0, _react.useState)(false),
+      _useState6 = _slicedToArray(_useState5, 2),
+      isFocused = _useState6[0],
+      setIsFocused = _useState6[1];
+
+  var _useState7 = (0, _react.useState)(false),
+      _useState8 = _slicedToArray(_useState7, 2),
+      showResults = _useState8[0],
+      setShowResults = _useState8[1];
+
   var labelRef = _react.default.useRef(null);
 
-  var _useState5 = (0, _react.useState)(value),
-      _useState6 = _slicedToArray(_useState5, 2),
-      mValue = _useState6[0],
-      setValue = _useState6[1];
+  var _useState9 = (0, _react.useState)(value),
+      _useState10 = _slicedToArray(_useState9, 2),
+      mValue = _useState10[0],
+      setValue = _useState10[1];
 
   var onClear = function onClear() {
-    setValue('');
-    handleChange('');
+    var valueCleared = {
+      name: '',
+      value: '',
+      phone: '',
+      _id: ''
+    };
+    setValue(valueCleared);
+    handleChange(valueCleared);
   };
 
   (0, _react.useEffect)(function () {
@@ -169,36 +185,99 @@ var SearchInput = function SearchInput(_ref) {
   }();
 
   var handleSelectItem = function handleSelectItem(item) {
-    var _id = item._id,
-        itemValue = item.value,
-        phone = item.phone;
-    setValue("".concat(_id, " - ").concat(itemValue, " - ").concat(phone));
-    handleChange("".concat(_id, " - ").concat(itemValue, " - ").concat(phone));
+    // Old format
+    // const { value: itemValue, name, phone } = item;
+    // setValue(`${_id} - ${itemValue} - ${phone}`);
+    setValue(item);
+    handleChange(item);
     setResults([]);
+    setShowResults(false);
   };
 
   var searchingFound = function searchingFound() {
+    var searchTerm = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+    var searchValue = searchTerm || (_typeof(mValue) === 'object' ? mValue && mValue.name : mValue);
     return results.find(function (_ref3) {
-      var _id = _ref3._id,
-          val = _ref3.value,
-          phone = _ref3.phone;
-      return "".concat(_id, " - ").concat(val, " - ").concat(phone) === value;
+      var name = _ref3.name;
+      return "".concat(name) === searchValue;
     });
   };
 
   var handleInputChange = function handleInputChange(event) {
-    var valueTarget = event.target.value;
-    setValue(valueTarget);
-    if (!valueTarget) setResults([]);else if (valueTarget && searchingFound()) setResults([]);else if (valueTarget) searchValue(valueTarget);
+    var valueTarget = event.target.value; // Si está vacío, limpiar todo
+
+    if (!valueTarget) {
+      setResults([]);
+      var emptyObj = {
+        name: '',
+        value: '',
+        phone: '',
+        _id: ''
+      };
+      setValue(emptyObj);
+      handleChange(emptyObj);
+      return;
+    } // Si hay texto, crear objeto temporal para búsqueda
+
+
+    var tempObj = {
+      name: valueTarget,
+      value: valueTarget,
+      phone: '',
+      _id: ''
+    };
+    setValue(tempObj); // Solo buscar si no es una coincidencia exacta
+
+    if (!searchingFound(valueTarget)) {
+      searchValue(valueTarget);
+    } else {
+      setResults([]);
+    }
   };
 
-  var fixValue = function fixValue(val) {
+  var handleFocus = function handleFocus() {
+    setIsFocused(true);
+    setShowResults(true);
+  };
+
+  var handleBlur = function handleBlur() {
+    setIsFocused(false); // Usar setTimeout para permitir que el click en el item se ejecute antes de ocultar la lista
+
+    setTimeout(function () {
+      setShowResults(false);
+    }, 150); // Llamar al onBlur original si existe
+
+    if (onBlur) {
+      onBlur();
+    }
+  };
+
+  var fixOldFormat = function fixOldFormat(val) {
     if (!val.includes('-')) return val;
     var newValue = val.split(' - ');
     newValue.shift();
     return newValue.join(' - ');
   };
 
+  var fixValue = function fixValue(val) {
+    // Old format
+    if (typeof val === 'string') return fixOldFormat(val);
+    return val && val.name || '';
+  };
+
+  (0, _react.useEffect)(function () {
+    if (searchConfig && searchConfig.searchOnLoad) {
+      var _ref4 = value || {},
+          _ref4$name = _ref4.name,
+          name = _ref4$name === void 0 ? '' : _ref4$name;
+
+      searchValue(name || '');
+    }
+  }, [searchConfig]); // Sincronizar value prop con estado interno
+
+  (0, _react.useEffect)(function () {
+    setValue(value);
+  }, [value]);
   return _react.default.createElement("div", {
     className: classes.root
   }, (0, _utils.isTextLong)(label) && _react.default.createElement("div", null, _react.default.createElement(_LongPlaceHolder.default, {
@@ -221,6 +300,8 @@ var SearchInput = function SearchInput(_ref) {
     id: "component-outlined",
     value: fixValue(mValue),
     onChange: handleInputChange,
+    onFocus: handleFocus,
+    onBlur: handleBlur,
     labelWidth: labelWidth,
     className: classes.input,
     inputProps: _objectSpread({}, maxLength ? {
@@ -235,7 +316,7 @@ var SearchInput = function SearchInput(_ref) {
     disabled: disabled
   })), error && (0, _utils.isTextLong)(errorMessage) && _react.default.createElement(_LongError.default, {
     text: errorMessage
-  }), results.length > 0 && _react.default.createElement(_core.List, {
+  }), results.length > 0 && showResults && _react.default.createElement(_core.List, {
     className: classes.resultsList
   }, results.map(function (result) {
     return _react.default.createElement(_core.ListItem, {
@@ -246,7 +327,7 @@ var SearchInput = function SearchInput(_ref) {
       },
       className: classes.listItem
     }, _react.default.createElement(_core.ListItemText, {
-      primary: "".concat(result.value, " - ").concat(result.phone)
+      primary: "".concat(result.name)
     }));
   })));
 };
@@ -267,7 +348,7 @@ SearchInput.defaultProps = {
 };
 SearchInput.propTypes = {
   label: _propTypes.default.string.isRequired,
-  value: _propTypes.default.oneOfType([_propTypes.default.number, _propTypes.default.string]),
+  value: _propTypes.default.oneOfType([_propTypes.default.number, _propTypes.default.string, _propTypes.default.object]),
   searchConfig: _propTypes.default.object,
   searchApi: _propTypes.default.func,
   required: _propTypes.default.bool,

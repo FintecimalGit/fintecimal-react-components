@@ -80,7 +80,7 @@ import RejectionInputTableSigners from '../lib/nodes/RejectionInputTableSigners'
 
 import AutoComplete from '../lib/Autocomplete';
 import InputResponseChatgpt from '../lib/nodes/InputResponseChatgpt';
-import { InputNss } from '../lib/nodes/InputNSS';
+import InputNss from '../lib/nodes/InputNSS';
 
 const {
   Input,
