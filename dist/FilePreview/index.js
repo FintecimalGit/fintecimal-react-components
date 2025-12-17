@@ -73,7 +73,9 @@ var FilePreview = function FilePreview(_ref) {
       urlDocument = _ref.urlDocument,
       edit = _ref.edit,
       handleOnEdit = _ref.handleOnEdit,
-      signers = _ref.signers;
+      signers = _ref.signers,
+      _ref$lazyLoad = _ref.lazyLoad,
+      lazyLoad = _ref$lazyLoad === void 0 ? true : _ref$lazyLoad;
   var clasess = (0, _style.default)();
 
   var _useState = (0, _react.useState)(''),
@@ -81,12 +83,26 @@ var FilePreview = function FilePreview(_ref) {
       url = _useState2[0],
       setUrl = _useState2[1];
 
+  var _useState3 = (0, _react.useState)(!lazyLoad),
+      _useState4 = _slicedToArray(_useState3, 2),
+      isVisible = _useState4[0],
+      setIsVisible = _useState4[1];
+
+  var blobUrlRef = (0, _react.useRef)(null);
+  var containerRef = (0, _react.useRef)(null);
+
   var readFile = function readFile() {
+    if (blobUrlRef.current) {
+      URL.revokeObjectURL(blobUrlRef.current);
+      blobUrlRef.current = null;
+    }
+
     var reader = new FileReader();
 
     reader.onloadend = function () {
       var _url = URL.createObjectURL(file);
 
+      blobUrlRef.current = _url;
       setUrl(_url);
     };
 
@@ -105,6 +121,30 @@ var FilePreview = function FilePreview(_ref) {
    */
 
   var renderFile = function renderFile() {
+    if (lazyLoad && !isVisible) {
+      return _react.default.createElement("div", {
+        style: {
+          minHeight: '400px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          color: '#999'
+        }
+      }, "Cargando...");
+    }
+
+    if (!url) {
+      return _react.default.createElement("div", {
+        style: {
+          minHeight: '400px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          color: '#999'
+        }
+      }, "Cargando documento...");
+    }
+
     if (/^image\//.test(file.type)) {
       return _react.default.createElement("img", {
         alt: file.name,
@@ -127,6 +167,11 @@ var FilePreview = function FilePreview(_ref) {
   };
 
   var readUrlDocument = function readUrlDocument() {
+    if (blobUrlRef.current) {
+      URL.revokeObjectURL(blobUrlRef.current);
+      blobUrlRef.current = null;
+    }
+
     setUrl(urlDocument);
   };
 
@@ -135,14 +180,60 @@ var FilePreview = function FilePreview(_ref) {
   };
 
   (0, _react.useEffect)(function () {
+    if (!lazyLoad) {
+      setIsVisible(true);
+      return;
+    }
+
+    if (!containerRef.current) return;
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        } else {
+          // Cuando sale de vista, revocar el Blob URL para liberar memoria
+          if (blobUrlRef.current && url.startsWith('blob:')) {
+            URL.revokeObjectURL(blobUrlRef.current);
+            blobUrlRef.current = null;
+            setUrl(''); // Limpiar URL
+
+            setIsVisible(false); // Marcar como no visible para recrear cuando vuelva
+          }
+        }
+      });
+    }, {
+      root: null,
+      // viewport
+      rootMargin: '100px',
+      // Cargar 100px antes de que sea visible
+      threshold: 0.1 // Trigger cuando 10% es visible
+
+    });
+    observer.observe(containerRef.current);
+    return function () {
+      observer.disconnect();
+    };
+  }, [lazyLoad, url]);
+  (0, _react.useEffect)(function () {
+    if (!isVisible && lazyLoad) return;
+
     if (urlDocument && !Array.isArray(urlDocument)) {
       readUrlDocument();
-    } else {
+    } else if (file) {
       readFile();
-    }
-  }, [file, urlDocument]);
+    } // Cleanup: revocar Blob URL cuando el componente se desmonte o cambie el file/urlDocument
+
+
+    return function () {
+      if (blobUrlRef.current) {
+        URL.revokeObjectURL(blobUrlRef.current);
+        blobUrlRef.current = null;
+      }
+    };
+  }, [file, urlDocument, isVisible, lazyLoad]);
   return _react.default.createElement(_Card.default, {
-    className: clasess.card
+    className: clasess.card,
+    ref: containerRef
   }, _react.default.createElement(_CardHeader.default, {
     className: clasess.cardHeader,
     title: file.name,
@@ -186,7 +277,8 @@ FilePreview.propTypes = {
     _id: _propTypes.default.string,
     label: _propTypes.default.string,
     status: _propTypes.default.string
-  }))
+  })),
+  lazyLoad: _propTypes.default.bool
 };
 FilePreview.defaultProps = {
   file: new File([''], 'No Soportado', {
@@ -200,7 +292,8 @@ FilePreview.defaultProps = {
   signers: [],
   verify: {
     status: -1
-  }
+  },
+  lazyLoad: true
 };
 var _default = FilePreview;
 exports.default = _default;
