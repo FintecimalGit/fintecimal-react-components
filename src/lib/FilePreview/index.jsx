@@ -2,17 +2,15 @@ import React, {
   useState,
   useEffect,
   useMemo,
+  useRef,
 } from 'react';
 import PropTypes from 'prop-types';
-
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip'
-
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
-
 import useStyles from './style';
 import { PdfViewer } from '../nodes';
 import DetectPdf from '../nodes/PdfViewer/detectPdf';
@@ -37,8 +35,6 @@ const STATUS = {
   },
 };
 
-
-
 const FilePreview = ({
   file,
   verify,
@@ -49,14 +45,24 @@ const FilePreview = ({
   edit,
   handleOnEdit,
   signers,
+  lazyLoad = true,
 }) => {
   const clasess = useStyles();
   const [url, setUrl] = useState('');
+  const [isVisible, setIsVisible] = useState(!lazyLoad);
+  const blobUrlRef = useRef(null);
+  const containerRef = useRef(null);
 
   const readFile = () => {
-    const reader  = new FileReader();
+    if (blobUrlRef.current) {
+      URL.revokeObjectURL(blobUrlRef.current);
+      blobUrlRef.current = null;
+    }
+
+    const reader = new FileReader();
     reader.onloadend = function () {
       const _url = URL.createObjectURL(file);
+      blobUrlRef.current = _url;
       setUrl(_url);
     };
     reader.readAsDataURL(file);
@@ -71,6 +77,34 @@ const FilePreview = ({
    * @returns {DOMElement|String}
    */
   const renderFile = () => {
+    if (lazyLoad && !isVisible) {
+      return (
+        <div style={{ 
+          minHeight: '400px', 
+          display: 'flex', 
+          alignItems: 'center', 
+          justifyContent: 'center',
+          color: '#999'
+        }}>
+          Cargando...
+        </div>
+      );
+    }
+
+    if (!url) {
+      return (
+        <div style={{ 
+          minHeight: '400px', 
+          display: 'flex', 
+          alignItems: 'center', 
+          justifyContent: 'center',
+          color: '#999'
+        }}>
+          Cargando documento...
+        </div>
+      );
+    }
+
     if (/^image\//.test(file.type)) {
       return <img alt={file.name} src={url} height={'auto'} />;
     }
@@ -89,6 +123,10 @@ const FilePreview = ({
   };
 
   const readUrlDocument = () => {
+    if (blobUrlRef.current) {
+      URL.revokeObjectURL(blobUrlRef.current);
+      blobUrlRef.current = null;
+    }
     setUrl(urlDocument);
   };
 
@@ -97,15 +135,63 @@ const FilePreview = ({
   };
 
   useEffect(() => {
+    if (!lazyLoad) {
+      setIsVisible(true);
+      return;
+    }
+
+    if (!containerRef.current) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setIsVisible(true);
+          } else {
+            // Cuando sale de vista, revocar el Blob URL para liberar memoria
+            if (blobUrlRef.current && url.startsWith('blob:')) {
+              URL.revokeObjectURL(blobUrlRef.current);
+              blobUrlRef.current = null;
+              setUrl(''); // Limpiar URL
+              setIsVisible(false); // Marcar como no visible para recrear cuando vuelva
+            }
+          }
+        });
+      },
+      {
+        root: null, // viewport
+        rootMargin: '100px', // Cargar 100px antes de que sea visible
+        threshold: 0.1, // Trigger cuando 10% es visible
+      }
+    );
+
+    observer.observe(containerRef.current);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [lazyLoad, url]);
+
+  useEffect(() => {
+    if (!isVisible && lazyLoad) return;
+
     if (urlDocument && !Array.isArray(urlDocument)) {
       readUrlDocument();
-    } else {
+    } else if (file) {
       readFile();
     }
-  }, [file, urlDocument]);
+
+    // Cleanup: revocar Blob URL cuando el componente se desmonte o cambie el file/urlDocument
+    return () => {
+      if (blobUrlRef.current) {
+        URL.revokeObjectURL(blobUrlRef.current);
+        blobUrlRef.current = null;
+      }
+    };
+  }, [file, urlDocument, isVisible, lazyLoad]);
 
   return (
-    <Card className={clasess.card}>
+    <Card className={clasess.card} ref={containerRef}>
       <CardHeader
         className={clasess.cardHeader}
         title={file.name}
@@ -184,6 +270,7 @@ FilePreview.propTypes = {
     label: PropTypes.string,
     status: PropTypes.string,
   })),
+  lazyLoad: PropTypes.bool,
 };
 
 FilePreview.defaultProps = {
@@ -197,6 +284,7 @@ FilePreview.defaultProps = {
   verify: {
     status: -1,
   },
+  lazyLoad: true,
 };
 
 export default FilePreview;
