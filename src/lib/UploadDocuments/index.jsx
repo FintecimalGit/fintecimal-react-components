@@ -48,6 +48,7 @@ const UploadDocuments = ({
   const [showModal, setShowModal] = useState(false);
   const [flipId, setFlipId] = useState('1');
   const [filesOrder, setFilesOrder] = useState([]);
+  const [isLoadingDocuments, setIsLoadingDocuments] = useState(false);
 
   const titleRef = useRef(null);
 
@@ -181,13 +182,18 @@ const UploadDocuments = ({
   }
 
   const generateFilesToURL = async (arrayUrl) => {
+    if (!arrayUrl || !Array.isArray(arrayUrl) || arrayUrl.length === 0) {
+      setIsLoadingDocuments(false);
+      return;
+    }
+
+    setIsLoadingDocuments(true);
     try {
       const files = await Promise.all(
         arrayUrl.map(async (_url, index) => {
           if (!_url) return null;
           
           try {
-            // ✅ Usar fetchWithRetry en lugar de fetch directo
             const response = await fetchWithRetry(_url, {
               maxRetries: 3,
               timeout: 120000, // 2 minutos
@@ -202,11 +208,11 @@ const UploadDocuments = ({
             return file;
           } catch (err) {
             console.error(`Error al cargar documento ${index + 1} (${_url}):`, err);
-            // ✅ Crear un File "placeholder" para mantener el índice, pero con la URL original
+            // ✅TODO:  Crear un File "placeholder" para mantener el índice, pero con la URL original
             // Esto permite que el usuario pueda intentar abrirlo manualmente
             return {
               name: useEditorIne ? getTitle(_url, title) : title,
-              url: _url, // Guardar URL original para fallback
+              url: _url,
               error: true,
               errorMessage: err.message,
             };
@@ -228,6 +234,8 @@ const UploadDocuments = ({
       }
     } catch (e) {
       console.error('Error general al generar archivos desde URLs:', e);
+    } finally {
+      setIsLoadingDocuments(false);
     }
   };
 
@@ -258,6 +266,7 @@ const UploadDocuments = ({
         accept={accept}
         verify={verify}
         onDrop={handleOnAdd}
+        isLoading={isLoadingDocuments}
       />
     );
     else return (

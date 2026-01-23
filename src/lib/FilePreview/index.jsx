@@ -35,6 +35,8 @@ const STATUS = {
   },
 };
 
+const documentCache = new Map();
+
 const FilePreview = ({
   file,
   verify,
@@ -46,24 +48,76 @@ const FilePreview = ({
   handleOnEdit,
   signers,
   lazyLoad = true,
+  isLoading = false,
 }) => {
   const clasess = useStyles();
   const [url, setUrl] = useState('');
   const [isVisible, setIsVisible] = useState(!lazyLoad);
+  const [hasBeenLoaded, setHasBeenLoaded] = useState(false);
   const blobUrlRef = useRef(null);
   const containerRef = useRef(null);
+  const observerRef = useRef(null);
+  const documentKeyRef = useRef(null);
+  const isLoadingRef = useRef(false);
+  const isIntersectingRef = useRef(false);
+  const rafIdRef = useRef(null);
+
+  const getDocumentKey = () => {
+    if (urlDocument && !Array.isArray(urlDocument)) {
+      return `url_${urlDocument}`;
+    }
+    if (file) {
+      return `file_${file.name}_${file.size}_${file.lastModified}`;
+    }
+    return null;
+  };
 
   const readFile = () => {
-    if (blobUrlRef.current) {
-      URL.revokeObjectURL(blobUrlRef.current);
+    const docKey = getDocumentKey();
+    if (!docKey) return;
+
+    if (isLoadingRef.current) return;
+
+    if (documentCache.has(docKey)) {
+      const cachedUrl = documentCache.get(docKey);
+      blobUrlRef.current = cachedUrl;
+      setUrl(cachedUrl);
+      setHasBeenLoaded(true);
+      return;
+    }
+
+    if (blobUrlRef.current && documentKeyRef.current === docKey) {
+      setUrl(blobUrlRef.current);
+      setHasBeenLoaded(true);
+      return;
+    }
+
+    if (blobUrlRef.current && documentKeyRef.current !== docKey) {
+      if (!documentCache.has(documentKeyRef.current)) {
+        try {
+          URL.revokeObjectURL(blobUrlRef.current);
+        } catch (e) {
+        }
+      }
       blobUrlRef.current = null;
     }
 
+    isLoadingRef.current = true;
     const reader = new FileReader();
     reader.onloadend = function () {
+      isLoadingRef.current = false;
       const _url = URL.createObjectURL(file);
       blobUrlRef.current = _url;
-      setUrl(_url);
+      documentKeyRef.current = docKey;
+      documentCache.set(docKey, _url);
+      requestAnimationFrame(() => {
+        setUrl(_url);
+        setHasBeenLoaded(true);
+      });
+    };
+    reader.onerror = function () {
+      isLoadingRef.current = false;
+      console.error('Error al leer el archivo');
     };
     reader.readAsDataURL(file);
   };
@@ -73,11 +127,25 @@ const FilePreview = ({
     return !signers.some(({ status }) => status === SIGNER_STATUS_PENDING);
   }, [signers]);
 
-  /**
-   * @returns {DOMElement|String}
-   */
   const renderFile = () => {
-    if (lazyLoad && !isVisible) {
+    if (isLoading) {
+      return (
+        <div style={{ 
+          minHeight: '400px', 
+          display: 'flex', 
+          alignItems: 'center', 
+          justifyContent: 'center',
+          color: '#999',
+          flexDirection: 'column',
+          gap: '10px'
+        }}>
+          <div>Cargando documento...</div>
+          <div style={{ fontSize: '12px', color: '#bbb' }}>Por favor espera</div>
+        </div>
+      );
+    }
+
+    if (lazyLoad && !isVisible && !hasBeenLoaded) {
       return (
         <div style={{ 
           minHeight: '400px', 
@@ -91,7 +159,7 @@ const FilePreview = ({
       );
     }
 
-    if (!url) {
+    if (!url && !hasBeenLoaded) {
       return (
         <div style={{ 
           minHeight: '400px', 
@@ -106,7 +174,19 @@ const FilePreview = ({
     }
 
     if (/^image\//.test(file.type)) {
-      return <img alt={file.name} src={url} height={'auto'} />;
+      return (
+        <img 
+          alt={file.name} 
+          src={url} 
+          height={'auto'} 
+          style={{ 
+            minHeight: '400px',
+            maxWidth: '100%',
+            objectFit: 'contain'
+          }}
+          loading="lazy"
+        />
+      );
     }
     else if(/^(text||application)\//.test(file.type)) {
       if (/^(application\/pdf)/.test(file.type) && !DetectPdf()) {
@@ -123,11 +203,23 @@ const FilePreview = ({
   };
 
   const readUrlDocument = () => {
-    if (blobUrlRef.current) {
-      URL.revokeObjectURL(blobUrlRef.current);
-      blobUrlRef.current = null;
+    const docKey = getDocumentKey();
+    if (!docKey) return;
+
+    if (isLoadingRef.current) return;
+
+    if (documentCache.has(docKey)) {
+      const cachedUrl = documentCache.get(docKey);
+      setUrl(cachedUrl);
+      setHasBeenLoaded(true);
+      return;
     }
-    setUrl(urlDocument);
+
+    documentCache.set(docKey, urlDocument);
+    requestAnimationFrame(() => {
+      setUrl(urlDocument);
+      setHasBeenLoaded(true);
+    });
   };
 
   const handleOnDelete = () => {
@@ -137,54 +229,100 @@ const FilePreview = ({
   useEffect(() => {
     if (!lazyLoad) {
       setIsVisible(true);
+      isIntersectingRef.current = true;
       return;
     }
 
     if (!containerRef.current) return;
 
-    const observer = new IntersectionObserver(
+    if (observerRef.current) {
+      observerRef.current.disconnect();
+    }
+
+    if (rafIdRef.current) {
+      cancelAnimationFrame(rafIdRef.current);
+    }
+
+    observerRef.current = new IntersectionObserver(
       (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setIsVisible(true);
-          } else {
-            // Cuando sale de vista, revocar el Blob URL para liberar memoria
-            if (blobUrlRef.current && url.startsWith('blob:')) {
-              URL.revokeObjectURL(blobUrlRef.current);
-              blobUrlRef.current = null;
-              setUrl(''); // Limpiar URL
-              setIsVisible(false); // Marcar como no visible para recrear cuando vuelva
+        if (rafIdRef.current) {
+          cancelAnimationFrame(rafIdRef.current);
+        }
+
+        rafIdRef.current = requestAnimationFrame(() => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting && !isIntersectingRef.current) {
+              isIntersectingRef.current = true;
+              setIsVisible(true);
             }
-          }
+          });
+          rafIdRef.current = null;
         });
       },
       {
-        root: null, // viewport
-        rootMargin: '100px', // Cargar 100px antes de que sea visible
-        threshold: 0.1, // Trigger cuando 10% es visible
+        root: null,
+        rootMargin: '100px',
+        threshold: 0.1,
       }
     );
 
-    observer.observe(containerRef.current);
+    observerRef.current.observe(containerRef.current);
 
     return () => {
-      observer.disconnect();
+      if (rafIdRef.current) {
+        cancelAnimationFrame(rafIdRef.current);
+        rafIdRef.current = null;
+      }
+      if (observerRef.current) {
+        observerRef.current.disconnect();
+        observerRef.current = null;
+      }
     };
-  }, [lazyLoad, url]);
+  }, [lazyLoad]);
 
   useEffect(() => {
-    if (!isVisible && lazyLoad) return;
-
-    if (urlDocument && !Array.isArray(urlDocument)) {
-      readUrlDocument();
-    } else if (file) {
-      readFile();
+    const docKey = getDocumentKey();
+    const previousKey = documentKeyRef.current;
+    
+    if (previousKey && previousKey !== docKey) {
+      setHasBeenLoaded(false);
+      setUrl('');
+      isLoadingRef.current = false;
+      isIntersectingRef.current = false;
     }
 
-    // Cleanup: revocar Blob URL cuando el componente se desmonte o cambie el file/urlDocument
+    documentKeyRef.current = docKey;
+
+    if (!isVisible && lazyLoad) return;
+
+    if (docKey && documentCache.has(docKey)) {
+      const cachedUrl = documentCache.get(docKey);
+      blobUrlRef.current = cachedUrl;
+      requestAnimationFrame(() => {
+        setUrl(cachedUrl);
+        setHasBeenLoaded(true);
+      });
+      return;
+    }
+
+    if (!isLoadingRef.current) {
+      if (urlDocument && !Array.isArray(urlDocument)) {
+        readUrlDocument();
+      } else if (file) {
+        readFile();
+      }
+    }
+
     return () => {
-      if (blobUrlRef.current) {
-        URL.revokeObjectURL(blobUrlRef.current);
+      const currentKey = documentKeyRef.current;
+      if (blobUrlRef.current && currentKey) {
+        const newKey = getDocumentKey();
+        if (newKey !== currentKey || !documentCache.has(currentKey)) {
+          try {
+            URL.revokeObjectURL(blobUrlRef.current);
+          } catch (e) {
+          }
+        }
         blobUrlRef.current = null;
       }
     };
@@ -271,6 +409,7 @@ FilePreview.propTypes = {
     status: PropTypes.string,
   })),
   lazyLoad: PropTypes.bool,
+  isLoading: PropTypes.bool,
 };
 
 FilePreview.defaultProps = {
@@ -285,6 +424,7 @@ FilePreview.defaultProps = {
     status: -1,
   },
   lazyLoad: true,
+  isLoading: false,
 };
 
 export default FilePreview;

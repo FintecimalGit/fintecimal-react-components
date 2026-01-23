@@ -63,6 +63,7 @@ var STATUS = {
     label: "Documento No Valido"
   }
 };
+var documentCache = new Map();
 
 var FilePreview = function FilePreview(_ref) {
   var file = _ref.file,
@@ -75,7 +76,9 @@ var FilePreview = function FilePreview(_ref) {
       handleOnEdit = _ref.handleOnEdit,
       signers = _ref.signers,
       _ref$lazyLoad = _ref.lazyLoad,
-      lazyLoad = _ref$lazyLoad === void 0 ? true : _ref$lazyLoad;
+      lazyLoad = _ref$lazyLoad === void 0 ? true : _ref$lazyLoad,
+      _ref$isLoading = _ref.isLoading,
+      isLoading = _ref$isLoading === void 0 ? false : _ref$isLoading;
   var clasess = (0, _style.default)();
 
   var _useState = (0, _react.useState)(''),
@@ -88,22 +91,80 @@ var FilePreview = function FilePreview(_ref) {
       isVisible = _useState4[0],
       setIsVisible = _useState4[1];
 
+  var _useState5 = (0, _react.useState)(false),
+      _useState6 = _slicedToArray(_useState5, 2),
+      hasBeenLoaded = _useState6[0],
+      setHasBeenLoaded = _useState6[1];
+
   var blobUrlRef = (0, _react.useRef)(null);
   var containerRef = (0, _react.useRef)(null);
+  var observerRef = (0, _react.useRef)(null);
+  var documentKeyRef = (0, _react.useRef)(null);
+  var isLoadingRef = (0, _react.useRef)(false);
+  var isIntersectingRef = (0, _react.useRef)(false);
+  var rafIdRef = (0, _react.useRef)(null);
+
+  var getDocumentKey = function getDocumentKey() {
+    if (urlDocument && !Array.isArray(urlDocument)) {
+      return "url_".concat(urlDocument);
+    }
+
+    if (file) {
+      return "file_".concat(file.name, "_").concat(file.size, "_").concat(file.lastModified);
+    }
+
+    return null;
+  };
 
   var readFile = function readFile() {
-    if (blobUrlRef.current) {
-      URL.revokeObjectURL(blobUrlRef.current);
+    var docKey = getDocumentKey();
+    if (!docKey) return;
+    if (isLoadingRef.current) return;
+
+    if (documentCache.has(docKey)) {
+      var cachedUrl = documentCache.get(docKey);
+      blobUrlRef.current = cachedUrl;
+      setUrl(cachedUrl);
+      setHasBeenLoaded(true);
+      return;
+    }
+
+    if (blobUrlRef.current && documentKeyRef.current === docKey) {
+      setUrl(blobUrlRef.current);
+      setHasBeenLoaded(true);
+      return;
+    }
+
+    if (blobUrlRef.current && documentKeyRef.current !== docKey) {
+      if (!documentCache.has(documentKeyRef.current)) {
+        try {
+          URL.revokeObjectURL(blobUrlRef.current);
+        } catch (e) {}
+      }
+
       blobUrlRef.current = null;
     }
 
+    isLoadingRef.current = true;
     var reader = new FileReader();
 
     reader.onloadend = function () {
+      isLoadingRef.current = false;
+
       var _url = URL.createObjectURL(file);
 
       blobUrlRef.current = _url;
-      setUrl(_url);
+      documentKeyRef.current = docKey;
+      documentCache.set(docKey, _url);
+      requestAnimationFrame(function () {
+        setUrl(_url);
+        setHasBeenLoaded(true);
+      });
+    };
+
+    reader.onerror = function () {
+      isLoadingRef.current = false;
+      console.error('Error al leer el archivo');
     };
 
     reader.readAsDataURL(file);
@@ -116,12 +177,28 @@ var FilePreview = function FilePreview(_ref) {
       return status === SIGNER_STATUS_PENDING;
     });
   }, [signers]);
-  /**
-   * @returns {DOMElement|String}
-   */
 
   var renderFile = function renderFile() {
-    if (lazyLoad && !isVisible) {
+    if (isLoading) {
+      return _react.default.createElement("div", {
+        style: {
+          minHeight: '400px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          color: '#999',
+          flexDirection: 'column',
+          gap: '10px'
+        }
+      }, _react.default.createElement("div", null, "Cargando documento..."), _react.default.createElement("div", {
+        style: {
+          fontSize: '12px',
+          color: '#bbb'
+        }
+      }, "Por favor espera"));
+    }
+
+    if (lazyLoad && !isVisible && !hasBeenLoaded) {
       return _react.default.createElement("div", {
         style: {
           minHeight: '400px',
@@ -133,7 +210,7 @@ var FilePreview = function FilePreview(_ref) {
       }, "Cargando...");
     }
 
-    if (!url) {
+    if (!url && !hasBeenLoaded) {
       return _react.default.createElement("div", {
         style: {
           minHeight: '400px',
@@ -149,7 +226,13 @@ var FilePreview = function FilePreview(_ref) {
       return _react.default.createElement("img", {
         alt: file.name,
         src: url,
-        height: 'auto'
+        height: 'auto',
+        style: {
+          minHeight: '400px',
+          maxWidth: '100%',
+          objectFit: 'contain'
+        },
+        loading: "lazy"
       });
     } else if (/^(text||application)\//.test(file.type)) {
       if (/^(application\/pdf)/.test(file.type) && !(0, _detectPdf.default)()) {
@@ -167,12 +250,22 @@ var FilePreview = function FilePreview(_ref) {
   };
 
   var readUrlDocument = function readUrlDocument() {
-    if (blobUrlRef.current) {
-      URL.revokeObjectURL(blobUrlRef.current);
-      blobUrlRef.current = null;
+    var docKey = getDocumentKey();
+    if (!docKey) return;
+    if (isLoadingRef.current) return;
+
+    if (documentCache.has(docKey)) {
+      var cachedUrl = documentCache.get(docKey);
+      setUrl(cachedUrl);
+      setHasBeenLoaded(true);
+      return;
     }
 
-    setUrl(urlDocument);
+    documentCache.set(docKey, urlDocument);
+    requestAnimationFrame(function () {
+      setUrl(urlDocument);
+      setHasBeenLoaded(true);
+    });
   };
 
   var handleOnDelete = function handleOnDelete() {
@@ -182,51 +275,96 @@ var FilePreview = function FilePreview(_ref) {
   (0, _react.useEffect)(function () {
     if (!lazyLoad) {
       setIsVisible(true);
+      isIntersectingRef.current = true;
       return;
     }
 
     if (!containerRef.current) return;
-    var observer = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        } else {
-          // Cuando sale de vista, revocar el Blob URL para liberar memoria
-          if (blobUrlRef.current && url.startsWith('blob:')) {
-            URL.revokeObjectURL(blobUrlRef.current);
-            blobUrlRef.current = null;
-            setUrl(''); // Limpiar URL
 
-            setIsVisible(false); // Marcar como no visible para recrear cuando vuelva
+    if (observerRef.current) {
+      observerRef.current.disconnect();
+    }
+
+    if (rafIdRef.current) {
+      cancelAnimationFrame(rafIdRef.current);
+    }
+
+    observerRef.current = new IntersectionObserver(function (entries) {
+      if (rafIdRef.current) {
+        cancelAnimationFrame(rafIdRef.current);
+      }
+
+      rafIdRef.current = requestAnimationFrame(function () {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting && !isIntersectingRef.current) {
+            isIntersectingRef.current = true;
+            setIsVisible(true);
           }
-        }
+        });
+        rafIdRef.current = null;
       });
     }, {
       root: null,
-      // viewport
       rootMargin: '100px',
-      // Cargar 100px antes de que sea visible
-      threshold: 0.1 // Trigger cuando 10% es visible
-
+      threshold: 0.1
     });
-    observer.observe(containerRef.current);
+    observerRef.current.observe(containerRef.current);
     return function () {
-      observer.disconnect();
+      if (rafIdRef.current) {
+        cancelAnimationFrame(rafIdRef.current);
+        rafIdRef.current = null;
+      }
+
+      if (observerRef.current) {
+        observerRef.current.disconnect();
+        observerRef.current = null;
+      }
     };
-  }, [lazyLoad, url]);
+  }, [lazyLoad]);
   (0, _react.useEffect)(function () {
+    var docKey = getDocumentKey();
+    var previousKey = documentKeyRef.current;
+
+    if (previousKey && previousKey !== docKey) {
+      setHasBeenLoaded(false);
+      setUrl('');
+      isLoadingRef.current = false;
+      isIntersectingRef.current = false;
+    }
+
+    documentKeyRef.current = docKey;
     if (!isVisible && lazyLoad) return;
 
-    if (urlDocument && !Array.isArray(urlDocument)) {
-      readUrlDocument();
-    } else if (file) {
-      readFile();
-    } // Cleanup: revocar Blob URL cuando el componente se desmonte o cambie el file/urlDocument
+    if (docKey && documentCache.has(docKey)) {
+      var cachedUrl = documentCache.get(docKey);
+      blobUrlRef.current = cachedUrl;
+      requestAnimationFrame(function () {
+        setUrl(cachedUrl);
+        setHasBeenLoaded(true);
+      });
+      return;
+    }
 
+    if (!isLoadingRef.current) {
+      if (urlDocument && !Array.isArray(urlDocument)) {
+        readUrlDocument();
+      } else if (file) {
+        readFile();
+      }
+    }
 
     return function () {
-      if (blobUrlRef.current) {
-        URL.revokeObjectURL(blobUrlRef.current);
+      var currentKey = documentKeyRef.current;
+
+      if (blobUrlRef.current && currentKey) {
+        var newKey = getDocumentKey();
+
+        if (newKey !== currentKey || !documentCache.has(currentKey)) {
+          try {
+            URL.revokeObjectURL(blobUrlRef.current);
+          } catch (e) {}
+        }
+
         blobUrlRef.current = null;
       }
     };
@@ -278,7 +416,8 @@ FilePreview.propTypes = {
     label: _propTypes.default.string,
     status: _propTypes.default.string
   })),
-  lazyLoad: _propTypes.default.bool
+  lazyLoad: _propTypes.default.bool,
+  isLoading: _propTypes.default.bool
 };
 FilePreview.defaultProps = {
   file: new File([''], 'No Soportado', {
@@ -293,7 +432,8 @@ FilePreview.defaultProps = {
   verify: {
     status: -1
   },
-  lazyLoad: true
+  lazyLoad: true,
+  isLoading: false
 };
 var _default = FilePreview;
 exports.default = _default;

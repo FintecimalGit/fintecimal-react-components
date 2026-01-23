@@ -117,6 +117,11 @@ var UploadDocuments = function UploadDocuments(_ref) {
       filesOrder = _useState14[0],
       setFilesOrder = _useState14[1];
 
+  var _useState15 = (0, _react.useState)(false),
+      _useState16 = _slicedToArray(_useState15, 2),
+      isLoadingDocuments = _useState16[0],
+      setIsLoadingDocuments = _useState16[1];
+
   var titleRef = (0, _react.useRef)(null);
   var filteredFiles = (0, _react.useMemo)(function () {
     var searchLower = search.toLowerCase();
@@ -284,8 +289,18 @@ var UploadDocuments = function UploadDocuments(_ref) {
         while (1) {
           switch (_context2.prev = _context2.next) {
             case 0:
-              _context2.prev = 0;
-              _context2.next = 3;
+              if (!(!arrayUrl || !Array.isArray(arrayUrl) || arrayUrl.length === 0)) {
+                _context2.next = 3;
+                break;
+              }
+
+              setIsLoadingDocuments(false);
+              return _context2.abrupt("return");
+
+            case 3:
+              setIsLoadingDocuments(true);
+              _context2.prev = 4;
+              _context2.next = 7;
               return Promise.all(arrayUrl.map(
               /*#__PURE__*/
               function () {
@@ -331,13 +346,12 @@ var UploadDocuments = function UploadDocuments(_ref) {
                         case 15:
                           _context.prev = 15;
                           _context.t0 = _context["catch"](2);
-                          console.error("Error al cargar documento ".concat(index + 1, " (").concat(_url, "):"), _context.t0); // ✅ Crear un File "placeholder" para mantener el índice, pero con la URL original
+                          console.error("Error al cargar documento ".concat(index + 1, " (").concat(_url, "):"), _context.t0); // ✅TODO:  Crear un File "placeholder" para mantener el índice, pero con la URL original
                           // Esto permite que el usuario pueda intentar abrirlo manualmente
 
                           return _context.abrupt("return", {
                             name: useEditorIne ? getTitle(_url, title) : title,
                             url: _url,
-                            // Guardar URL original para fallback
                             error: true,
                             errorMessage: _context.t0.message
                           });
@@ -355,7 +369,7 @@ var UploadDocuments = function UploadDocuments(_ref) {
                 };
               }()));
 
-            case 3:
+            case 7:
               _files2 = _context2.sent;
               validFiles = _files2.filter(function (f) {
                 return f !== null;
@@ -374,20 +388,25 @@ var UploadDocuments = function UploadDocuments(_ref) {
                 if (firstValidFile) setFile(firstValidFile);
               }
 
-              _context2.next = 12;
+              _context2.next = 16;
               break;
 
-            case 9:
-              _context2.prev = 9;
-              _context2.t0 = _context2["catch"](0);
+            case 13:
+              _context2.prev = 13;
+              _context2.t0 = _context2["catch"](4);
               console.error('Error general al generar archivos desde URLs:', _context2.t0);
 
-            case 12:
+            case 16:
+              _context2.prev = 16;
+              setIsLoadingDocuments(false);
+              return _context2.finish(16);
+
+            case 19:
             case "end":
               return _context2.stop();
           }
         }
-      }, _callee2, null, [[0, 9]]);
+      }, _callee2, null, [[4, 13, 16, 19]]);
     }));
 
     return function generateFilesToURL(_x) {
@@ -423,7 +442,8 @@ var UploadDocuments = function UploadDocuments(_ref) {
       multiple: multiple,
       accept: accept,
       verify: verify,
-      onDrop: handleOnAdd
+      onDrop: handleOnAdd,
+      isLoading: isLoadingDocuments
     });else return _react.default.createElement(_DropZone.default, {
       multiple: multiple,
       accept: accept,
