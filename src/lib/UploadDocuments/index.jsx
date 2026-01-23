@@ -49,6 +49,8 @@ const UploadDocuments = ({
   const [flipId, setFlipId] = useState('1');
   const [filesOrder, setFilesOrder] = useState([]);
   const [isLoadingDocuments, setIsLoadingDocuments] = useState(false);
+  const [loadingStates, setLoadingStates] = useState({});
+  const [failedUrls, setFailedUrls] = useState([]);
 
   const titleRef = useRef(null);
 
@@ -181,62 +183,304 @@ const UploadDocuments = ({
     return title;
   }
 
-  const generateFilesToURL = async (arrayUrl) => {
+  const createLoadingPlaceholder = (url, index) => {
+    const _title = useEditorIne ? getTitle(url, title) : title;
+    return {
+      name: _title,
+      url: url,
+      isLoading: true,
+      index: index,
+      size: 0,
+      type: 'application/octet-stream',
+      lastModified: Date.now(),
+    };
+  };
+
+  const loadDocumentSequentially = async (url, index, isRetry = false) => {
+    if (!url) return null;
+
+    setLoadingStates(prev => ({
+      ...prev,
+      [index]: { loading: true, error: false }
+    }));
+
+    try {
+      const response = await fetchWithRetry(url, {
+        // maxRetries: isRetry ? 1 : 3,
+        maxRetries: 1,
+        timeout: 120000,
+        sequential: isRetry,
+      });
+      
+      const data = await response.blob();
+      const metadata = {
+        type: data.type || response.headers.get('content-type') || 'application/octet-stream'
+      };
+      const _title = useEditorIne ? getTitle(url, title) : title;
+      const file = new File([data], _title, metadata);
+
+      setLoadingStates(prev => ({
+        ...prev,
+        [index]: { loading: false, error: false }
+      }));
+
+      return file;
+    } catch (err) {
+      console.error(`Error al cargar documento ${index + 1} (${url}):`, err);
+      
+      setLoadingStates(prev => ({
+        ...prev,
+        [index]: { loading: false, error: true, errorMessage: err.message }
+      }));
+
+      return {
+        name: useEditorIne ? getTitle(url, title) : title,
+        url: url,
+        error: true,
+        errorMessage: err.message,
+        index: index,
+      };
+    }
+  };
+
+  const generateFilesToURL = async (arrayUrl, isRetry = false) => {
     if (!arrayUrl || !Array.isArray(arrayUrl) || arrayUrl.length === 0) {
       setIsLoadingDocuments(false);
       return;
     }
 
-    setIsLoadingDocuments(true);
-    try {
-      const files = await Promise.all(
-        arrayUrl.map(async (_url, index) => {
-          if (!_url) return null;
-          
-          try {
-            const response = await fetchWithRetry(_url, {
-              maxRetries: 3,
-              timeout: 120000, // 2 minutos
-            });
-            
-            const data = await response.blob();
-            const metadata = {
-              type: data.type || response.headers.get('content-type') || 'application/octet-stream'
-            };
-            const _title = useEditorIne ? getTitle(_url, title) : title;
-            const file = new File([data], _title, metadata);
-            return file;
-          } catch (err) {
-            console.error(`Error al cargar documento ${index + 1} (${_url}):`, err);
-            // ✅TODO:  Crear un File "placeholder" para mantener el índice, pero con la URL original
-            // Esto permite que el usuario pueda intentar abrirlo manualmente
-            return {
-              name: useEditorIne ? getTitle(_url, title) : title,
-              url: _url,
-              error: true,
-              errorMessage: err.message,
-            };
-          }
-        })
-      );
+    if (!isRetry) {
+      setLoadingStates({});
+      setFailedUrls([]);
+    }
 
-      const validFiles = files.filter(f => f !== null);
+    setIsLoadingDocuments(true);
+
+    const placeholders = arrayUrl
+      .map((url, index) => url ? createLoadingPlaceholder(url, index) : null)
+      .filter(p => p !== null);
+
+    if (placeholders.length > 0 && !isRetry) {
+      setFiles(placeholders);
+      const firstPlaceholder = placeholders[0];
+      if (firstPlaceholder) {
+        setFile(firstPlaceholder);
+      }
+    }
+
+    if (isRetry) {
+      const retryPlaceholders = arrayUrl
+        .map((url, index) => {
+          if (!url) return null;
+          const existingFile = files.find(f => f && (f.error && f.url === url));
+          if (existingFile) {
+            return createLoadingPlaceholder(url, existingFile.index || index);
+          }
+          return createLoadingPlaceholder(url, index);
+        })
+        .filter(p => p !== null);
+
+      if (retryPlaceholders.length > 0) {
+        setFiles(prevFiles => {
+          const newFiles = [...prevFiles];
+          retryPlaceholders.forEach(placeholder => {
+            const fileIndex = newFiles.findIndex(f => f && (f.error && f.url === placeholder.url));
+            if (fileIndex >= 0) {
+              newFiles[fileIndex] = placeholder;
+            }
+          });
+          return newFiles.filter(f => f !== null);
+        });
+        if (retryPlaceholders[0]) {
+          setFile(retryPlaceholders[0]);
+        }
+      }
+
+      const loadedFiles = [];
       
-      if (useEditorIne) {
+      for (let i = 0; i < arrayUrl.length; i++) {
+        const url = arrayUrl[i];
+        if (!url) {
+          loadedFiles.push(null);
+          continue;
+        }
+
+        const existingFile = files.find(f => f && (f.error && f.url === url));
+        const index = existingFile ? (existingFile.index !== undefined ? existingFile.index : i) : i;
+
+        const file = await loadDocumentSequentially(url, index, true);
+        loadedFiles.push(file);
+
+        if (file && !file.error) {
+          setFiles(prevFiles => {
+            const newFiles = [...prevFiles];
+            const fileIndex = newFiles.findIndex(f => f && (f.index === index || (f.error && f.url === url) || (f.isLoading && f.url === url)));
+            if (fileIndex >= 0) {
+              newFiles[fileIndex] = file;
+            } else {
+              newFiles.push(file);
+            }
+            return newFiles.filter(f => f !== null);
+          });
+          
+          const firstValidFile = file;
+          if (firstValidFile && !firstValidFile.isLoading) {
+            setFile(firstValidFile);
+          }
+        } else if (file && file.error) {
+          setFiles(prevFiles => {
+            const newFiles = [...prevFiles];
+            const fileIndex = newFiles.findIndex(f => f && (f.index === index || (f.error && f.url === url) || (f.isLoading && f.url === url)));
+            if (fileIndex >= 0) {
+              newFiles[fileIndex] = file;
+            }
+            return newFiles.filter(f => f !== null);
+          });
+        }
+      }
+
+      const validFiles = loadedFiles.filter(f => f !== null);
+      
+      if (useEditorIne && validFiles.length > 0) {
         const newSortFiles = constructFiles(validFiles);
         setFilesOrder(newSortFiles);
       }
-      
-      if (validFiles.length) {
-        setFiles(validFiles);
-        const firstValidFile = validFiles.find(f => !f.error) || validFiles[0];
-        if (firstValidFile) setFile(firstValidFile);
-      }
-    } catch (e) {
-      console.error('Error general al generar archivos desde URLs:', e);
-    } finally {
+
       setIsLoadingDocuments(false);
+      return;
     }
+
+    const loadPromises = arrayUrl.map(async (url, index) => {
+      if (!url) return null;
+      
+      try {
+        const file = await loadDocumentSequentially(url, index, false);
+        
+        if (file && !file.error) {
+          setFiles(prevFiles => {
+            const newFiles = [...prevFiles];
+            const fileIndex = newFiles.findIndex(f => f && (f.isLoading && f.index === index));
+            if (fileIndex >= 0) {
+              newFiles[fileIndex] = file;
+            } else {
+              newFiles.push(file);
+            }
+            
+            const firstValidFile = newFiles.find(f => !f.error && !f.isLoading);
+            if (firstValidFile && !firstValidFile.isLoading) {
+              setFile(firstValidFile);
+            }
+            
+            return newFiles.filter(f => f !== null);
+          });
+        } else if (file && file.error) {
+          setFailedUrls(prev => [...prev, { url, index }]);
+          setFiles(prevFiles => {
+            const newFiles = [...prevFiles];
+            const fileIndex = newFiles.findIndex(f => f && (f.isLoading && f.index === index));
+            if (fileIndex >= 0) {
+              newFiles[fileIndex] = file;
+            }
+            return newFiles.filter(f => f !== null);
+          });
+        }
+        
+        return file;
+      } catch (error) {
+        console.error(`Error al cargar documento ${index + 1}:`, error);
+        const errorFile = {
+          name: useEditorIne ? getTitle(url, title) : title,
+          url: url,
+          error: true,
+          errorMessage: error.message,
+          index: index,
+        };
+        setFailedUrls(prev => [...prev, { url, index }]);
+        return errorFile;
+      }
+    });
+
+    const loadedFiles = await Promise.all(loadPromises);
+
+    const validFiles = loadedFiles.filter(f => f !== null);
+    
+    if (useEditorIne && validFiles.length > 0) {
+      const newSortFiles = constructFiles(validFiles);
+      setFilesOrder(newSortFiles);
+    }
+    
+    setFiles(validFiles);
+    
+    const firstValidFile = validFiles.find(f => !f.error && !f.isLoading);
+    if (firstValidFile && !firstValidFile.isLoading) {
+      setFile(firstValidFile);
+    } else if (validFiles.length > 0) {
+      setFile(validFiles[0]);
+    }
+
+    setIsLoadingDocuments(false);
+  };
+
+  const retryFailedDocuments = async () => {
+    if (failedUrls.length === 0) return;
+
+    const urlsToRetry = failedUrls.map(f => f.url);
+    const currentFailedUrls = [...failedUrls];
+    setFailedUrls([]);
+    setIsLoadingDocuments(true);
+    
+    const retryPlaceholders = currentFailedUrls.map(({ url, index }) => 
+      createLoadingPlaceholder(url, index)
+    );
+
+    setFiles(prevFiles => {
+      const newFiles = [...prevFiles];
+      retryPlaceholders.forEach(placeholder => {
+        const fileIndex = newFiles.findIndex(f => f && (f.error && f.url === placeholder.url));
+        if (fileIndex >= 0) {
+          newFiles[fileIndex] = placeholder;
+        }
+      });
+      return newFiles.filter(f => f !== null);
+    });
+
+    if (retryPlaceholders[0]) {
+      setFile(retryPlaceholders[0]);
+    }
+    
+    for (let i = 0; i < currentFailedUrls.length; i++) {
+      const { url, index } = currentFailedUrls[i];
+      const file = await loadDocumentSequentially(url, index, true);
+      
+      if (file && !file.error) {
+        setFiles(prevFiles => {
+          const newFiles = [...prevFiles];
+          const fileIndex = newFiles.findIndex(f => f && (f.index === index || (f.error && f.url === url) || (f.isLoading && f.url === url)));
+          if (fileIndex >= 0) {
+            newFiles[fileIndex] = file;
+          } else {
+            newFiles.push(file);
+          }
+          return newFiles.filter(f => f !== null);
+        });
+        
+        const firstValidFile = file;
+        if (firstValidFile && !firstValidFile.isLoading) {
+          setFile(firstValidFile);
+        }
+      } else if (file && file.error) {
+        setFiles(prevFiles => {
+          const newFiles = [...prevFiles];
+          const fileIndex = newFiles.findIndex(f => f && (f.index === index || (f.error && f.url === url) || (f.isLoading && f.url === url)));
+          if (fileIndex >= 0) {
+            newFiles[fileIndex] = file;
+          }
+          return newFiles.filter(f => f !== null);
+        });
+      }
+    }
+
+    setIsLoadingDocuments(false);
   };
 
   const checkFiles = () => {
@@ -255,20 +499,44 @@ const UploadDocuments = ({
         fileConvertion={fileConvertion}
       />
     );
-    else if (file) return (
-      <FilePreview
-        onDownloadFile={onDownloadFile}
-        file={file}
-        onDelete={useDeleteDialog ? () => setShowModal(true) : handleOnDelete}
-        disabled={disabled}
-        urlDocument={url}
-        multiple={multiple}
-        accept={accept}
-        verify={verify}
-        onDrop={handleOnAdd}
-        isLoading={isLoadingDocuments}
-      />
-    );
+    else if (file) {
+      const fileIsLoading = file.isLoading || (file.index !== undefined && loadingStates[file.index] && loadingStates[file.index].loading);
+      const fileHasError = file.error || (file.index !== undefined && loadingStates[file.index] && loadingStates[file.index].error);
+      
+      return (
+        <FilePreview
+          onDownloadFile={onDownloadFile}
+          file={file}
+          onDelete={useDeleteDialog ? () => setShowModal(true) : handleOnDelete}
+          disabled={disabled}
+          urlDocument={file.url || url}
+          multiple={multiple}
+          accept={accept}
+          verify={verify}
+          onDrop={handleOnAdd}
+          isLoading={fileIsLoading}
+          hasError={fileHasError}
+          errorMessage={file.errorMessage || (file.index !== undefined && loadingStates[file.index] && loadingStates[file.index].errorMessage)}
+          onRetry={fileHasError && file.url ? () => retryFailedDocuments() : undefined}
+        />
+      );
+    }
+    else if (isLoadingDocuments) {
+      return (
+        <div style={{ 
+          minHeight: '400px', 
+          display: 'flex', 
+          alignItems: 'center', 
+          justifyContent: 'center',
+          color: '#999',
+          flexDirection: 'column',
+          gap: '10px'
+        }}>
+          <div>Cargando documentos...</div>
+          <div style={{ fontSize: '12px', color: '#bbb' }}>Por favor espera</div>
+        </div>
+      );
+    }
     else return (
       <DropZone
         multiple={multiple}

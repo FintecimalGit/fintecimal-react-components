@@ -78,7 +78,12 @@ var FilePreview = function FilePreview(_ref) {
       _ref$lazyLoad = _ref.lazyLoad,
       lazyLoad = _ref$lazyLoad === void 0 ? true : _ref$lazyLoad,
       _ref$isLoading = _ref.isLoading,
-      isLoading = _ref$isLoading === void 0 ? false : _ref$isLoading;
+      isLoading = _ref$isLoading === void 0 ? false : _ref$isLoading,
+      _ref$hasError = _ref.hasError,
+      hasError = _ref$hasError === void 0 ? false : _ref$hasError,
+      _ref$errorMessage = _ref.errorMessage,
+      errorMessage = _ref$errorMessage === void 0 ? '' : _ref$errorMessage,
+      onRetry = _ref.onRetry;
   var clasess = (0, _style.default)();
 
   var _useState = (0, _react.useState)(''),
@@ -117,6 +122,10 @@ var FilePreview = function FilePreview(_ref) {
   };
 
   var readFile = function readFile() {
+    if (!file || !(file instanceof File)) {
+      return;
+    }
+
     var docKey = getDocumentKey();
     if (!docKey) return;
     if (isLoadingRef.current) return;
@@ -179,6 +188,43 @@ var FilePreview = function FilePreview(_ref) {
   }, [signers]);
 
   var renderFile = function renderFile() {
+    if (hasError) {
+      return _react.default.createElement("div", {
+        style: {
+          minHeight: '400px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          color: '#d32f2f',
+          flexDirection: 'column',
+          gap: '15px',
+          padding: '20px'
+        }
+      }, _react.default.createElement("div", {
+        style: {
+          fontSize: '16px',
+          fontWeight: 'bold'
+        }
+      }, "Error al cargar el documento"), _react.default.createElement("div", {
+        style: {
+          fontSize: '14px',
+          color: '#666',
+          textAlign: 'center'
+        }
+      }, errorMessage || 'No se pudo cargar el documento'), onRetry && _react.default.createElement("button", {
+        onClick: onRetry,
+        style: {
+          padding: '10px 20px',
+          backgroundColor: '#1976d2',
+          color: 'white',
+          border: 'none',
+          borderRadius: '4px',
+          cursor: 'pointer',
+          fontSize: '14px'
+        }
+      }, "Reintentar"));
+    }
+
     if (isLoading) {
       return _react.default.createElement("div", {
         style: {
@@ -220,6 +266,10 @@ var FilePreview = function FilePreview(_ref) {
           color: '#999'
         }
       }, "Cargando documento...");
+    }
+
+    if (!file || !(file instanceof File)) {
+      return null;
     }
 
     if (/^image\//.test(file.type)) {
@@ -348,7 +398,7 @@ var FilePreview = function FilePreview(_ref) {
     if (!isLoadingRef.current) {
       if (urlDocument && !Array.isArray(urlDocument)) {
         readUrlDocument();
-      } else if (file) {
+      } else if (file && file instanceof File) {
         readFile();
       }
     }
@@ -374,7 +424,7 @@ var FilePreview = function FilePreview(_ref) {
     ref: containerRef
   }, _react.default.createElement(_CardHeader.default, {
     className: clasess.cardHeader,
-    title: file.name,
+    title: file && file.name ? file.name : 'Documento',
     action: _react.default.createElement(_react.default.Fragment, null, verify.status !== -1 ? _react.default.createElement(_Tooltip.default, {
       title: STATUS[verify.status].label,
       placement: "top",
@@ -417,7 +467,10 @@ FilePreview.propTypes = {
     status: _propTypes.default.string
   })),
   lazyLoad: _propTypes.default.bool,
-  isLoading: _propTypes.default.bool
+  isLoading: _propTypes.default.bool,
+  hasError: _propTypes.default.bool,
+  errorMessage: _propTypes.default.string,
+  onRetry: _propTypes.default.func
 };
 FilePreview.defaultProps = {
   file: new File([''], 'No Soportado', {
@@ -433,7 +486,10 @@ FilePreview.defaultProps = {
     status: -1
   },
   lazyLoad: true,
-  isLoading: false
+  isLoading: false,
+  hasError: false,
+  errorMessage: '',
+  onRetry: undefined
 };
 var _default = FilePreview;
 exports.default = _default;

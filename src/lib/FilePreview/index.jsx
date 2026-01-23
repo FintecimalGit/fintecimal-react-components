@@ -49,6 +49,9 @@ const FilePreview = ({
   signers,
   lazyLoad = true,
   isLoading = false,
+  hasError = false,
+  errorMessage = '',
+  onRetry,
 }) => {
   const clasess = useStyles();
   const [url, setUrl] = useState('');
@@ -73,6 +76,10 @@ const FilePreview = ({
   };
 
   const readFile = () => {
+    if (!file || !(file instanceof File)) {
+      return;
+    }
+
     const docKey = getDocumentKey();
     if (!docKey) return;
 
@@ -128,6 +135,42 @@ const FilePreview = ({
   }, [signers]);
 
   const renderFile = () => {
+    if (hasError) {
+      return (
+        <div style={{ 
+          minHeight: '400px', 
+          display: 'flex', 
+          alignItems: 'center', 
+          justifyContent: 'center',
+          color: '#d32f2f',
+          flexDirection: 'column',
+          gap: '15px',
+          padding: '20px'
+        }}>
+          <div style={{ fontSize: '16px', fontWeight: 'bold' }}>Error al cargar el documento</div>
+          <div style={{ fontSize: '14px', color: '#666', textAlign: 'center' }}>
+            {errorMessage || 'No se pudo cargar el documento'}
+          </div>
+          {onRetry && (
+            <button
+              onClick={onRetry}
+              style={{
+                padding: '10px 20px',
+                backgroundColor: '#1976d2',
+                color: 'white',
+                border: 'none',
+                borderRadius: '4px',
+                cursor: 'pointer',
+                fontSize: '14px'
+              }}
+            >
+              Reintentar
+            </button>
+          )}
+        </div>
+      );
+    }
+
     if (isLoading) {
       return (
         <div style={{ 
@@ -171,6 +214,10 @@ const FilePreview = ({
           Cargando documento...
         </div>
       );
+    }
+
+    if (!file || !(file instanceof File)) {
+      return null;
     }
 
     if (/^image\//.test(file.type)) {
@@ -308,7 +355,7 @@ const FilePreview = ({
     if (!isLoadingRef.current) {
       if (urlDocument && !Array.isArray(urlDocument)) {
         readUrlDocument();
-      } else if (file) {
+      } else if (file && file instanceof File) {
         readFile();
       }
     }
@@ -332,7 +379,7 @@ const FilePreview = ({
     <Card className={clasess.card} ref={containerRef}>
       <CardHeader
         className={clasess.cardHeader}
-        title={file.name}
+        title={file && file.name ? file.name : 'Documento'}
         action={
           (
             <>
@@ -410,6 +457,9 @@ FilePreview.propTypes = {
   })),
   lazyLoad: PropTypes.bool,
   isLoading: PropTypes.bool,
+  hasError: PropTypes.bool,
+  errorMessage: PropTypes.string,
+  onRetry: PropTypes.func,
 };
 
 FilePreview.defaultProps = {
@@ -425,6 +475,9 @@ FilePreview.defaultProps = {
   },
   lazyLoad: true,
   isLoading: false,
+  hasError: false,
+  errorMessage: '',
+  onRetry: undefined,
 };
 
 export default FilePreview;

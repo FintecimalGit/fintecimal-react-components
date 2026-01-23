@@ -79,7 +79,17 @@ const FileFinder = ({
 };
 
 FileFinder.propTypes = {
-  files: PropTypes.arrayOf(PropTypes.instanceOf(File)),
+  files: PropTypes.arrayOf(
+    PropTypes.oneOfType([
+      PropTypes.instanceOf(File),
+      PropTypes.shape({
+        name: PropTypes.string,
+        isLoading: PropTypes.bool,
+        error: PropTypes.bool,
+        url: PropTypes.string,
+      }),
+    ])
+  ),
   current: PropTypes.number,
   onClick: PropTypes.func,
   search: PropTypes.string,

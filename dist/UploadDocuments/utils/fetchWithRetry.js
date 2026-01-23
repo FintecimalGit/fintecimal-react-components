@@ -11,14 +11,6 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-/**
- * Fetch con retry y timeout para manejar errores de red
- * @param {string} url - URL a cargar
- * @param {Object} options - Opciones
- * @param {number} options.maxRetries - Número máximo de reintentos (default: 3)
- * @param {number} options.timeout - Timeout en ms (default: 120000)
- * @returns {Promise<Response>}
- */
 var fetchWithRetry =
 /*#__PURE__*/
 function () {
@@ -30,6 +22,8 @@ function () {
         maxRetries,
         _options$timeout,
         timeout,
+        _options$sequential,
+        sequential,
         lastError,
         attempt,
         _ret,
@@ -42,7 +36,7 @@ function () {
         switch (_context3.prev = _context3.next) {
           case 0:
             options = _args3.length > 1 && _args3[1] !== undefined ? _args3[1] : {};
-            _options$maxRetries = options.maxRetries, maxRetries = _options$maxRetries === void 0 ? 3 : _options$maxRetries, _options$timeout = options.timeout, timeout = _options$timeout === void 0 ? 120000 : _options$timeout;
+            _options$maxRetries = options.maxRetries, maxRetries = _options$maxRetries === void 0 ? 3 : _options$maxRetries, _options$timeout = options.timeout, timeout = _options$timeout === void 0 ? 180000 : _options$timeout, _options$sequential = options.sequential, sequential = _options$sequential === void 0 ? false : _options$sequential;
             attempt = 0;
 
           case 3:
@@ -134,7 +128,7 @@ function () {
           case 11:
             _context3.prev = 11;
             _context3.t1 = _context3["catch"](4);
-            lastError = _context3.t1; // Si no es el último intento, esperar antes de reintentar
+            lastError = _context3.t1;
 
             if (!(attempt < maxRetries - 1)) {
               _context3.next = 16;
@@ -149,8 +143,7 @@ function () {
                 while (1) {
                   switch (_context2.prev = _context2.next) {
                     case 0:
-                      delay = Math.min(1000 * Math.pow(2, attempt), 5000); // Exponential backoff
-
+                      delay = sequential ? Math.min(2000 * Math.pow(2, attempt), 10000) : Math.min(1000 * Math.pow(2, attempt), 5000);
                       _context2.next = 3;
                       return new Promise(function (resolve) {
                         return setTimeout(resolve, delay);

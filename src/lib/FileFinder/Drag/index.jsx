@@ -54,7 +54,15 @@ const Drag = ({ file, index, moveCard, handleOnClick, selected, dragType, enable
 };
 
 Drag.propTypes = {
-  file: PropTypes.instanceOf(File),
+  file: PropTypes.oneOfType([
+    PropTypes.instanceOf(File),
+    PropTypes.shape({
+      name: PropTypes.string,
+      isLoading: PropTypes.bool,
+      error: PropTypes.bool,
+      url: PropTypes.string,
+    }),
+  ]),
   moveCard: PropTypes.func.isRequired,
   index: PropTypes.number.isRequired,
   selected: PropTypes.bool,

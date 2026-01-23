@@ -11,7 +11,7 @@ var _react = _interopRequireWildcard(require("react"));
 
 var _propTypes = _interopRequireDefault(require("prop-types"));
 
-var _classnames3 = _interopRequireDefault(require("classnames"));
+var _classnames7 = _interopRequireDefault(require("classnames"));
 
 var _pdf = _interopRequireDefault(require("pdfjs-dist/build/pdf"));
 
@@ -280,19 +280,108 @@ var FileThumbnail = function FileThumbnail(_ref) {
   }();
 
   var handleOnClick = function handleOnClick() {
+    if (file && (file.isLoading || file.error)) {
+      return;
+    }
+
     onClick(file);
   };
 
   (0, _react.useEffect)(function () {
-    var type = file.type;
-    if (isPDF(type)) readPDF();
-    if (isImage(type)) readImage();
+    if (!file) {
+      setUrl('');
+      return;
+    }
+
+    if (file.isLoading || file.error) {
+      setUrl('');
+      return;
+    }
+
+    if (file instanceof File) {
+      var type = file.type;
+      if (isPDF(type)) readPDF();
+      if (isImage(type)) readImage();
+    }
   }, [file]);
+
+  if (file && file.isLoading) {
+    return _react.default.createElement("div", {
+      className: clasess.root,
+      style: {
+        cursor: 'wait',
+        opacity: 0.8
+      }
+    }, _react.default.createElement("div", {
+      className: (0, _classnames7.default)(clasess.imageContainer, _defineProperty({}, clasess.isOver, isOver)),
+      style: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#f5f5f5',
+        border: '2px dashed #1976d2',
+        position: 'relative'
+      }
+    }, _react.default.createElement("div", {
+      style: {
+        textAlign: 'center',
+        color: '#1976d2',
+        fontSize: '11px',
+        fontWeight: '500',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        gap: '8px'
+      }
+    }, _react.default.createElement("div", {
+      style: {
+        width: '20px',
+        height: '20px',
+        border: '2px solid #e3f2fd',
+        borderTop: '2px solid #1976d2',
+        borderRadius: '50%',
+        animation: 'spin 1s linear infinite'
+      }
+    }), _react.default.createElement("div", null, "Cargando...")), _react.default.createElement("style", null, "\n            @keyframes spin {\n              0% { transform: rotate(0deg); }\n              100% { transform: rotate(360deg); }\n            }\n          ")), _react.default.createElement(_Typography.default, {
+      className: (0, _classnames7.default)(clasess.typography, _defineProperty({}, clasess.typographySelected, selected)),
+      style: {
+        color: '#1976d2'
+      }
+    }, file.name || 'Cargando...'));
+  }
+
+  if (file && file.error) {
+    return _react.default.createElement("div", {
+      className: clasess.root,
+      style: {
+        cursor: 'not-allowed',
+        opacity: 0.7
+      }
+    }, _react.default.createElement("div", {
+      className: (0, _classnames7.default)(clasess.imageContainer, _defineProperty({}, clasess.isOver, isOver)),
+      style: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#ffebee',
+        border: '2px dashed #f44336'
+      }
+    }, _react.default.createElement("div", {
+      style: {
+        textAlign: 'center',
+        color: '#d32f2f',
+        fontSize: '12px'
+      }
+    }, _react.default.createElement("div", null, "Error"))), _react.default.createElement(_Typography.default, {
+      className: (0, _classnames7.default)(clasess.typography, _defineProperty({}, clasess.typographySelected, selected))
+    }, file.name || 'Error al cargar'));
+  }
+
   return _react.default.createElement("div", {
     className: clasess.root,
     onClick: handleOnClick
   }, _react.default.createElement("div", {
-    className: (0, _classnames3.default)(clasess.imageContainer, _defineProperty({}, clasess.isOver, isOver))
+    className: (0, _classnames7.default)(clasess.imageContainer, _defineProperty({}, clasess.isOver, isOver))
   }, _react.default.createElement("img", {
     alt: file.name,
     src: url,
@@ -303,12 +392,17 @@ var FileThumbnail = function FileThumbnail(_ref) {
       display: 'flex'
     } : {}
   }, _react.default.createElement(_Visibility.default, null))), _react.default.createElement(_Typography.default, {
-    className: (0, _classnames3.default)(clasess.typography, _defineProperty({}, clasess.typographySelected, selected))
+    className: (0, _classnames7.default)(clasess.typography, _defineProperty({}, clasess.typographySelected, selected))
   }, file.name));
 };
 
 FileThumbnail.propTypes = {
-  file: _propTypes.default.instanceOf(File),
+  file: _propTypes.default.oneOfType([_propTypes.default.instanceOf(File), _propTypes.default.shape({
+    name: _propTypes.default.string,
+    isLoading: _propTypes.default.bool,
+    error: _propTypes.default.bool,
+    url: _propTypes.default.string
+  })]),
   selected: _propTypes.default.bool,
   isOver: _propTypes.default.bool
 };
