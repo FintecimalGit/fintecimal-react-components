@@ -108,14 +108,114 @@ const FileThumbnail = ({ file, selected, onClick, isOver }) => {
   };
   
   const handleOnClick = () => {
+    if (file && (file.isLoading || file.error)) {
+      return;
+    }
     onClick(file);
   };
 
   useEffect(() => {
-    const { type } = file;
-    if (isPDF(type)) readPDF();
-    if (isImage(type)) readImage();
+    if (!file) {
+      setUrl('');
+      return;
+    }
+    if (file.isLoading || file.error) {
+      setUrl('');
+      return;
+    }
+    if (file instanceof File) {
+      const { type } = file;
+      if (isPDF(type)) readPDF();
+      if (isImage(type)) readImage();
+    }
   }, [file]);
+
+  if (file && file.isLoading) {
+    return (
+      <div className={clasess.root} style={{ cursor: 'wait', opacity: 0.8 }}>
+        <div className={classnames(
+          clasess.imageContainer,
+          { [clasess.isOver]: isOver },
+        )} style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          backgroundColor: '#f5f5f5',
+          border: '2px dashed #1976d2',
+          position: 'relative'
+        }}>
+          <div style={{
+            textAlign: 'center',
+            color: '#1976d2',
+            fontSize: '11px',
+            fontWeight: '500',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            gap: '8px'
+          }}>
+            <div style={{
+              width: '20px',
+              height: '20px',
+              border: '2px solid #e3f2fd',
+              borderTop: '2px solid #1976d2',
+              borderRadius: '50%',
+              animation: 'spin 1s linear infinite'
+            }}></div>
+            <div>Cargando...</div>
+          </div>
+          <style>{`
+            @keyframes spin {
+              0% { transform: rotate(0deg); }
+              100% { transform: rotate(360deg); }
+            }
+          `}</style>
+        </div>
+        <Typography
+          className={classnames(
+            clasess.typography,
+            { [clasess.typographySelected]: selected },
+          )}
+          style={{ color: '#1976d2' }}
+        >
+          { file.name || 'Cargando...' }
+        </Typography>
+      </div>
+    );
+  }
+
+  if (file && file.error) {
+    return (
+      <div className={clasess.root} style={{ cursor: 'not-allowed', opacity: 0.7 }}>
+        <div className={classnames(
+          clasess.imageContainer,
+          { [clasess.isOver]: isOver },
+        )} style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          backgroundColor: '#ffebee',
+          border: '2px dashed #f44336'
+        }}>
+          <div style={{
+            textAlign: 'center',
+            color: '#d32f2f',
+            fontSize: '12px'
+          }}>
+            <div>Error</div>
+          </div>
+        </div>
+        <Typography
+          className={classnames(
+            clasess.typography,
+            { [clasess.typographySelected]: selected },
+          )}
+        >
+          { file.name || 'Error al cargar' }
+        </Typography>
+      </div>
+    );
+  }
 
   return (
     <div className={clasess.root} onClick={handleOnClick}>
@@ -141,14 +241,22 @@ const FileThumbnail = ({ file, selected, onClick, isOver }) => {
           { [clasess.typographySelected]: selected },
         )}
       >
-        { file.name }
+        { file.name }
       </Typography>
     </div>
   );
 };
 
 FileThumbnail.propTypes = {
-  file: PropTypes.instanceOf(File),
+  file: PropTypes.oneOfType([
+    PropTypes.instanceOf(File),
+    PropTypes.shape({
+      name: PropTypes.string,
+      isLoading: PropTypes.bool,
+      error: PropTypes.bool,
+      url: PropTypes.string,
+    }),
+  ]),
   selected: PropTypes.bool,
   isOver: PropTypes.bool,
 };

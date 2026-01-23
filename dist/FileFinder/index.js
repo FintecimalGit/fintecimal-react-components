@@ -89,7 +89,12 @@ var FileFinder = function FileFinder(_ref) {
 };
 
 FileFinder.propTypes = {
-  files: _propTypes.default.arrayOf(_propTypes.default.instanceOf(File)),
+  files: _propTypes.default.arrayOf(_propTypes.default.oneOfType([_propTypes.default.instanceOf(File), _propTypes.default.shape({
+    name: _propTypes.default.string,
+    isLoading: _propTypes.default.bool,
+    error: _propTypes.default.bool,
+    url: _propTypes.default.string
+  })])),
   current: _propTypes.default.number,
   onClick: _propTypes.default.func,
   search: _propTypes.default.string,
