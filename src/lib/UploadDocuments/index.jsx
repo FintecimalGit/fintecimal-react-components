@@ -14,6 +14,7 @@ import DeleteDialog from './DeleteDialog';
 import IneEditor from '../IneEditor';
 
 import useStyles from './style';
+import { fetchWithRetry } from './utils/fetchWithRetry';
 
 const REVERSE = 'Reverse';
 const FRONT = "Front";
@@ -181,28 +182,52 @@ const UploadDocuments = ({
 
   const generateFilesToURL = async (arrayUrl) => {
     try {
-      const files = await Promise.all(arrayUrl.map(
-        async (_url) => {
-          let response = await fetch(_url);
-          let data = await response.blob();
-          let metadata = {
-            type: data.type
-          };
-          const _title = useEditorIne ? getTitle(_url, title) : title;
-          let file = new File([data], _title, metadata);
-          return file;
-        }
-      ));
-      if (useEditorIne){
-        const newSortFiles = constructFiles(files);
+      const files = await Promise.all(
+        arrayUrl.map(async (_url, index) => {
+          if (!_url) return null;
+          
+          try {
+            // ✅ Usar fetchWithRetry en lugar de fetch directo
+            const response = await fetchWithRetry(_url, {
+              maxRetries: 3,
+              timeout: 120000, // 2 minutos
+            });
+            
+            const data = await response.blob();
+            const metadata = {
+              type: data.type || response.headers.get('content-type') || 'application/octet-stream'
+            };
+            const _title = useEditorIne ? getTitle(_url, title) : title;
+            const file = new File([data], _title, metadata);
+            return file;
+          } catch (err) {
+            console.error(`Error al cargar documento ${index + 1} (${_url}):`, err);
+            // ✅ Crear un File "placeholder" para mantener el índice, pero con la URL original
+            // Esto permite que el usuario pueda intentar abrirlo manualmente
+            return {
+              name: useEditorIne ? getTitle(_url, title) : title,
+              url: _url, // Guardar URL original para fallback
+              error: true,
+              errorMessage: err.message,
+            };
+          }
+        })
+      );
+
+      const validFiles = files.filter(f => f !== null);
+      
+      if (useEditorIne) {
+        const newSortFiles = constructFiles(validFiles);
         setFilesOrder(newSortFiles);
       }
-      const [file] = files;
-      if(files) setFiles(files);
-      if(file) setFile(file);
-    }
-    catch(e) {
-      console.log(e);
+      
+      if (validFiles.length) {
+        setFiles(validFiles);
+        const firstValidFile = validFiles.find(f => !f.error) || validFiles[0];
+        if (firstValidFile) setFile(firstValidFile);
+      }
+    } catch (e) {
+      console.error('Error general al generar archivos desde URLs:', e);
     }
   };
 

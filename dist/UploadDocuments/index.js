@@ -27,6 +27,8 @@ var _IneEditor = _interopRequireDefault(require("../IneEditor"));
 
 var _style = _interopRequireDefault(require("./style"));
 
+var _fetchWithRetry = require("./utils/fetchWithRetry");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
@@ -276,7 +278,7 @@ var UploadDocuments = function UploadDocuments(_ref) {
     var _ref3 = _asyncToGenerator(
     /*#__PURE__*/
     regeneratorRuntime.mark(function _callee2(arrayUrl) {
-      var _files2, newSortFiles, _files3, _file2;
+      var _files2, validFiles, newSortFiles, firstValidFile;
 
       return regeneratorRuntime.wrap(function _callee2$(_context2) {
         while (1) {
@@ -289,68 +291,103 @@ var UploadDocuments = function UploadDocuments(_ref) {
               function () {
                 var _ref4 = _asyncToGenerator(
                 /*#__PURE__*/
-                regeneratorRuntime.mark(function _callee(_url) {
-                  var response, data, metadata, _title, file;
+                regeneratorRuntime.mark(function _callee(_url, index) {
+                  var response, data, metadata, _title, _file2;
 
                   return regeneratorRuntime.wrap(function _callee$(_context) {
                     while (1) {
                       switch (_context.prev = _context.next) {
                         case 0:
-                          _context.next = 2;
-                          return fetch(_url);
+                          if (_url) {
+                            _context.next = 2;
+                            break;
+                          }
+
+                          return _context.abrupt("return", null);
 
                         case 2:
-                          response = _context.sent;
+                          _context.prev = 2;
                           _context.next = 5;
-                          return response.blob();
+                          return (0, _fetchWithRetry.fetchWithRetry)(_url, {
+                            maxRetries: 3,
+                            timeout: 120000 // 2 minutos
+
+                          });
 
                         case 5:
+                          response = _context.sent;
+                          _context.next = 8;
+                          return response.blob();
+
+                        case 8:
                           data = _context.sent;
                           metadata = {
-                            type: data.type
+                            type: data.type || response.headers.get('content-type') || 'application/octet-stream'
                           };
                           _title = useEditorIne ? getTitle(_url, title) : title;
-                          file = new File([data], _title, metadata);
-                          return _context.abrupt("return", file);
+                          _file2 = new File([data], _title, metadata);
+                          return _context.abrupt("return", _file2);
 
-                        case 10:
+                        case 15:
+                          _context.prev = 15;
+                          _context.t0 = _context["catch"](2);
+                          console.error("Error al cargar documento ".concat(index + 1, " (").concat(_url, "):"), _context.t0); // ✅ Crear un File "placeholder" para mantener el índice, pero con la URL original
+                          // Esto permite que el usuario pueda intentar abrirlo manualmente
+
+                          return _context.abrupt("return", {
+                            name: useEditorIne ? getTitle(_url, title) : title,
+                            url: _url,
+                            // Guardar URL original para fallback
+                            error: true,
+                            errorMessage: _context.t0.message
+                          });
+
+                        case 19:
                         case "end":
                           return _context.stop();
                       }
                     }
-                  }, _callee);
+                  }, _callee, null, [[2, 15]]);
                 }));
 
-                return function (_x2) {
+                return function (_x2, _x3) {
                   return _ref4.apply(this, arguments);
                 };
               }()));
 
             case 3:
               _files2 = _context2.sent;
+              validFiles = _files2.filter(function (f) {
+                return f !== null;
+              });
 
               if (useEditorIne) {
-                newSortFiles = constructFiles(_files2);
+                newSortFiles = constructFiles(validFiles);
                 setFilesOrder(newSortFiles);
               }
 
-              _files3 = _slicedToArray(_files2, 1), _file2 = _files3[0];
-              if (_files2) setFiles(_files2);
-              if (_file2) setFile(_file2);
-              _context2.next = 13;
+              if (validFiles.length) {
+                setFiles(validFiles);
+                firstValidFile = validFiles.find(function (f) {
+                  return !f.error;
+                }) || validFiles[0];
+                if (firstValidFile) setFile(firstValidFile);
+              }
+
+              _context2.next = 12;
               break;
 
-            case 10:
-              _context2.prev = 10;
+            case 9:
+              _context2.prev = 9;
               _context2.t0 = _context2["catch"](0);
-              console.log(_context2.t0);
+              console.error('Error general al generar archivos desde URLs:', _context2.t0);
 
-            case 13:
+            case 12:
             case "end":
               return _context2.stop();
           }
         }
-      }, _callee2, null, [[0, 10]]);
+      }, _callee2, null, [[0, 9]]);
     }));
 
     return function generateFilesToURL(_x) {
