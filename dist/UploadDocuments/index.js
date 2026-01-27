@@ -138,6 +138,8 @@ var UploadDocuments = function UploadDocuments(_ref) {
       failedUrls = _useState20[0],
       setFailedUrls = _useState20[1];
 
+  var userSelectedFileRef = (0, _react.useRef)(null);
+  var lastUserSelectionRef = (0, _react.useRef)(null);
   var titleRef = (0, _react.useRef)(null);
   var filteredFiles = (0, _react.useMemo)(function () {
     var searchLower = search.toLowerCase();
@@ -230,9 +232,75 @@ var UploadDocuments = function UploadDocuments(_ref) {
     setShowModal(false);
   };
 
+  var getFileKey = function getFileKey(f) {
+    if (!f) return null;
+
+    if (f instanceof File) {
+      return "file_".concat(f.name, "_").concat(f.size, "_").concat(f.lastModified);
+    }
+
+    if (f.url) {
+      return "url_".concat(f.url);
+    }
+
+    if (f.index !== undefined) {
+      return "index_".concat(f.index);
+    }
+
+    return null;
+  };
+
   var handleOnClick = function handleOnClick(index, file) {
-    setFile(file);
-    setCurrentFile(index);
+    if (!file) return;
+    var fileKey = getFileKey(file);
+    var actualIndex = filteredFiles.findIndex(function (f) {
+      return getFileKey(f) === fileKey;
+    });
+    var actualFile = actualIndex >= 0 ? filteredFiles[actualIndex] : file;
+
+    if (actualFile && (actualFile.isLoading || actualFile.error)) {
+      var realFileInFiles = files.find(function (f) {
+        if (!f) return false;
+
+        if (f instanceof File) {
+          var _fKey = getFileKey(f);
+
+          return _fKey === fileKey;
+        }
+
+        var fKey = getFileKey(f);
+
+        if (fKey !== fileKey) {
+          if (f.url && file.url && f.url === file.url && !f.isLoading && !f.error) {
+            return true;
+          }
+
+          return false;
+        }
+
+        if (!f.isLoading && !f.error) return true;
+        return false;
+      });
+
+      if (realFileInFiles) {
+        actualFile = realFileInFiles;
+      }
+    }
+
+    var realIndex = files.findIndex(function (f) {
+      if (!f) return false;
+      var fKey = getFileKey(f);
+      return fKey === getFileKey(actualFile);
+    });
+    userSelectedFileRef.current = actualFile;
+    lastUserSelectionRef.current = actualFile;
+    setFile(actualFile);
+    setCurrentFile(realIndex >= 0 ? realIndex : index);
+    setTimeout(function () {
+      if (userSelectedFileRef.current === actualFile) {
+        userSelectedFileRef.current = null;
+      }
+    }, 2000);
     titleRef.current.scrollIntoView();
   };
   /**
@@ -344,9 +412,8 @@ var UploadDocuments = function UploadDocuments(_ref) {
               _context.prev = 4;
               _context.next = 7;
               return (0, _fetchWithRetry.fetchWithRetry)(url, {
-                // maxRetries: isRetry ? 1 : 3,
-                maxRetries: 1,
-                timeout: 120000,
+                maxRetries: isRetry ? 1 : 2,
+                timeout: 180000,
                 sequential: isRetry
               });
 
@@ -781,24 +848,59 @@ var UploadDocuments = function UploadDocuments(_ref) {
     var _ref6 = _asyncToGenerator(
     /*#__PURE__*/
     regeneratorRuntime.mark(function _callee4() {
-      var urlsToRetry, currentFailedUrls, retryPlaceholders, _loop2, i;
+      var specificFile,
+          urlsToRetry,
+          currentFailedUrls,
+          retryUrl,
+          retryIndex,
+          retryPlaceholders,
+          updatedFilesAfterPlaceholders,
+          currentFileKey,
+          retryFileKey,
+          retryUrlKey,
+          placeholderIndex,
+          _loop2,
+          i,
+          _args6 = arguments;
 
       return regeneratorRuntime.wrap(function _callee4$(_context6) {
         while (1) {
           switch (_context6.prev = _context6.next) {
             case 0:
-              if (!(failedUrls.length === 0)) {
-                _context6.next = 2;
+              specificFile = _args6.length > 0 && _args6[0] !== undefined ? _args6[0] : null;
+              urlsToRetry = [];
+              currentFailedUrls = [];
+
+              if (!(specificFile && specificFile.error && (specificFile.url || url))) {
+                _context6.next = 9;
                 break;
               }
 
+              retryUrl = specificFile.url || url;
+              retryIndex = specificFile.index !== undefined ? specificFile.index : files.findIndex(function (f) {
+                return f === specificFile;
+              });
+              currentFailedUrls = [{
+                url: retryUrl,
+                index: retryIndex >= 0 ? retryIndex : 0
+              }];
+              _context6.next = 14;
+              break;
+
+            case 9:
+              if (!(failedUrls.length > 0)) {
+                _context6.next = 13;
+                break;
+              }
+
+              currentFailedUrls = _toConsumableArray(failedUrls);
+              _context6.next = 14;
+              break;
+
+            case 13:
               return _context6.abrupt("return");
 
-            case 2:
-              urlsToRetry = failedUrls.map(function (f) {
-                return f.url;
-              });
-              currentFailedUrls = _toConsumableArray(failedUrls);
+            case 14:
               setFailedUrls([]);
               setIsLoadingDocuments(true);
               retryPlaceholders = currentFailedUrls.map(function (_ref7) {
@@ -806,6 +908,7 @@ var UploadDocuments = function UploadDocuments(_ref) {
                     index = _ref7.index;
                 return createLoadingPlaceholder(url, index);
               });
+              updatedFilesAfterPlaceholders = [];
               setFiles(function (prevFiles) {
                 var newFiles = _toConsumableArray(prevFiles);
 
@@ -818,19 +921,36 @@ var UploadDocuments = function UploadDocuments(_ref) {
                     newFiles[fileIndex] = placeholder;
                   }
                 });
-                return newFiles.filter(function (f) {
+                updatedFilesAfterPlaceholders = newFiles.filter(function (f) {
                   return f !== null;
                 });
+                return updatedFilesAfterPlaceholders;
               });
 
-              if (retryPlaceholders[0]) {
-                setFile(retryPlaceholders[0]);
+              if (specificFile && retryPlaceholders[0]) {
+                currentFileKey = getFileKey(file);
+                retryFileKey = getFileKey(specificFile);
+                retryUrlKey = "url_".concat(retryPlaceholders[0].url);
+
+                if (currentFileKey === retryFileKey || currentFileKey === retryUrlKey || !currentFileKey) {
+                  setFile(retryPlaceholders[0]);
+                  placeholderIndex = updatedFilesAfterPlaceholders.findIndex(function (f) {
+                    return f && f.url === retryPlaceholders[0].url;
+                  });
+
+                  if (placeholderIndex >= 0) {
+                    setCurrentFile(placeholderIndex);
+                  }
+
+                  userSelectedFileRef.current = null;
+                  lastUserSelectionRef.current = null;
+                }
               }
 
               _loop2 =
               /*#__PURE__*/
               regeneratorRuntime.mark(function _loop2(i) {
-                var _currentFailedUrls$i, url, index, file, firstValidFile;
+                var _currentFailedUrls$i, url, index, file;
 
                 return regeneratorRuntime.wrap(function _loop2$(_context5) {
                   while (1) {
@@ -857,15 +977,44 @@ var UploadDocuments = function UploadDocuments(_ref) {
                               newFiles.push(file);
                             }
 
-                            return newFiles.filter(function (f) {
+                            var updatedFiles = newFiles.filter(function (f) {
                               return f !== null;
                             });
-                          });
-                          firstValidFile = file;
+                            var firstValidFile = file;
 
-                          if (firstValidFile && !firstValidFile.isLoading) {
-                            setFile(firstValidFile);
-                          }
+                            if (firstValidFile && !firstValidFile.isLoading) {
+                              var foundIndex = updatedFiles.findIndex(function (f) {
+                                return f && (f.error && f.url === url || f.isLoading && f.url === url || f === firstValidFile);
+                              });
+
+                              if (foundIndex >= 0) {
+                                var _retryFileKey = getFileKey(firstValidFile);
+
+                                var _retryUrlKey = "url_".concat(url);
+
+                                var currentFileInState = file;
+
+                                var _currentFileKey = currentFileInState ? getFileKey(currentFileInState) : null;
+
+                                if (_currentFileKey === _retryFileKey || _currentFileKey === _retryUrlKey) {
+                                  setCurrentFile(foundIndex);
+                                  setFile(firstValidFile);
+                                } else if (!userSelectedFileRef.current && !lastUserSelectionRef.current) {
+                                  var prevFileInState = prevFiles.find(function (f) {
+                                    return f && !f.error && !f.isLoading && (f.url === url || f.isLoading && f.url === url);
+                                  }) || prevFiles[0];
+                                  var prevFileKey = prevFileInState ? getFileKey(prevFileInState) : null;
+
+                                  if (!prevFileKey || prevFileKey === _retryFileKey || prevFileKey === _retryUrlKey) {
+                                    setCurrentFile(foundIndex);
+                                    setFile(firstValidFile);
+                                  }
+                                }
+                              }
+                            }
+
+                            return updatedFiles;
+                          });
                         } else if (file && file.error) {
                           setFiles(function (prevFiles) {
                             var newFiles = _toConsumableArray(prevFiles);
@@ -882,6 +1031,12 @@ var UploadDocuments = function UploadDocuments(_ref) {
                               return f !== null;
                             });
                           });
+                          setFailedUrls(function (prev) {
+                            return [].concat(_toConsumableArray(prev), [{
+                              url: url,
+                              index: index
+                            }]);
+                          });
                         }
 
                       case 5:
@@ -893,23 +1048,23 @@ var UploadDocuments = function UploadDocuments(_ref) {
               });
               i = 0;
 
-            case 11:
+            case 22:
               if (!(i < currentFailedUrls.length)) {
-                _context6.next = 16;
+                _context6.next = 27;
                 break;
               }
 
-              return _context6.delegateYield(_loop2(i), "t0", 13);
+              return _context6.delegateYield(_loop2(i), "t0", 24);
 
-            case 13:
+            case 24:
               i++;
-              _context6.next = 11;
+              _context6.next = 22;
               break;
 
-            case 16:
+            case 27:
               setIsLoadingDocuments(false);
 
-            case 17:
+            case 28:
             case "end":
               return _context6.stop();
           }
@@ -940,16 +1095,21 @@ var UploadDocuments = function UploadDocuments(_ref) {
       } : handleOnDelete,
       fileConvertion: fileConvertion
     });else if (file) {
-      var fileIsLoading = file.isLoading || file.index !== undefined && loadingStates[file.index] && loadingStates[file.index].loading;
+      var isThisFileLoading = file.isLoading || file.index !== undefined && loadingStates[file.index] && loadingStates[file.index].loading;
+      var fileIsLoading = isThisFileLoading;
       var fileHasError = file.error || file.index !== undefined && loadingStates[file.index] && loadingStates[file.index].error;
+      var shouldUseUrlDocument = !(file instanceof File) && (file.url || url);
+      var urlDocumentValue = shouldUseUrlDocument ? file.url || url : undefined;
+      var fileKey = getFileKey(file);
       return _react.default.createElement(_FilePreview.default, {
+        key: fileKey || "file_".concat(Date.now()),
         onDownloadFile: onDownloadFile,
         file: file,
         onDelete: useDeleteDialog ? function () {
           return setShowModal(true);
         } : handleOnDelete,
         disabled: disabled,
-        urlDocument: file.url || url,
+        urlDocument: urlDocumentValue,
         multiple: multiple,
         accept: accept,
         verify: verify,
@@ -957,8 +1117,8 @@ var UploadDocuments = function UploadDocuments(_ref) {
         isLoading: fileIsLoading,
         hasError: fileHasError,
         errorMessage: file.errorMessage || file.index !== undefined && loadingStates[file.index] && loadingStates[file.index].errorMessage,
-        onRetry: fileHasError && file.url ? function () {
-          return retryFailedDocuments();
+        onRetry: fileHasError && (file.url || url) ? function () {
+          return retryFailedDocuments(file);
         } : undefined
       });
     } else if (isLoadingDocuments) {
@@ -987,12 +1147,45 @@ var UploadDocuments = function UploadDocuments(_ref) {
   };
 
   (0, _react.useEffect)(function () {
-    setCurrentFile(0);
-    if (filteredFiles.length > 0) setFile(filteredFiles[0]);else setSearch('');
+    if (!userSelectedFileRef.current) {
+      if (filteredFiles.length > 0) {
+        var fileKey = getFileKey(file);
+        var currentFileExists = fileKey && filteredFiles.some(function (f) {
+          return getFileKey(f) === fileKey;
+        });
+
+        if (!currentFileExists) {
+          setCurrentFile(0);
+          setFile(filteredFiles[0]);
+        }
+      } else {
+        setSearch('');
+      }
+    }
   }, [filteredFiles]);
   (0, _react.useEffect)(function () {
-    setCurrentFile(0);
-    if (files.length <= 0) setFile(null);
+    if (!userSelectedFileRef.current) {
+      if (files.length <= 0) {
+        setFile(null);
+        setCurrentFile(0);
+      } else {
+        var fileKey = getFileKey(file);
+        var currentFileExists = fileKey && files.some(function (f) {
+          return getFileKey(f) === fileKey;
+        });
+
+        if (!currentFileExists && files.length > 0) {
+          var firstValidFile = files.find(function (f) {
+            return !f.error && !f.isLoading;
+          }) || files[0];
+
+          if (firstValidFile) {
+            setFile(firstValidFile);
+            setCurrentFile(files.indexOf(firstValidFile));
+          }
+        }
+      }
+    }
   }, [files]);
   (0, _react.useEffect)(function () {
     var arrayUrl = url !== '' && typeof url === "string" ? [url] : url;
