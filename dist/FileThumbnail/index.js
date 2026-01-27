@@ -280,7 +280,7 @@ var FileThumbnail = function FileThumbnail(_ref) {
   }();
 
   var handleOnClick = function handleOnClick() {
-    if (file && (file.isLoading || file.error)) {
+    if (file && file.isLoading) {
       return;
     }
 
@@ -353,9 +353,10 @@ var FileThumbnail = function FileThumbnail(_ref) {
   if (file && file.error) {
     return _react.default.createElement("div", {
       className: clasess.root,
+      onClick: handleOnClick,
       style: {
-        cursor: 'not-allowed',
-        opacity: 0.7
+        cursor: 'pointer',
+        opacity: 0.9
       }
     }, _react.default.createElement("div", {
       className: (0, _classnames7.default)(clasess.imageContainer, _defineProperty({}, clasess.isOver, isOver)),
@@ -370,10 +371,19 @@ var FileThumbnail = function FileThumbnail(_ref) {
       style: {
         textAlign: 'center',
         color: '#d32f2f',
-        fontSize: '12px'
+        fontSize: '12px',
+        fontWeight: '500'
       }
-    }, _react.default.createElement("div", null, "Error"))), _react.default.createElement(_Typography.default, {
-      className: (0, _classnames7.default)(clasess.typography, _defineProperty({}, clasess.typographySelected, selected))
+    }, _react.default.createElement("div", null, "Error"), _react.default.createElement("div", {
+      style: {
+        fontSize: '10px',
+        marginTop: '4px'
+      }
+    }, "Click para reintentar"))), _react.default.createElement(_Typography.default, {
+      className: (0, _classnames7.default)(clasess.typography, _defineProperty({}, clasess.typographySelected, selected)),
+      style: {
+        color: '#d32f2f'
+      }
     }, file.name || 'Error al cargar'));
   }
 

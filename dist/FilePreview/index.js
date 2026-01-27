@@ -128,7 +128,10 @@ var FilePreview = function FilePreview(_ref) {
 
     var docKey = getDocumentKey();
     if (!docKey) return;
-    if (isLoadingRef.current) return;
+
+    if (isLoadingRef.current && documentKeyRef.current === docKey) {
+      return;
+    }
 
     if (documentCache.has(docKey)) {
       var cachedUrl = documentCache.get(docKey);
@@ -154,26 +157,36 @@ var FilePreview = function FilePreview(_ref) {
       blobUrlRef.current = null;
     }
 
+    var currentDocKey = docKey;
     isLoadingRef.current = true;
+    documentKeyRef.current = currentDocKey;
     var reader = new FileReader();
 
     reader.onloadend = function () {
+      if (documentKeyRef.current !== currentDocKey) {
+        isLoadingRef.current = false;
+        return;
+      }
+
       isLoadingRef.current = false;
 
       var _url = URL.createObjectURL(file);
 
       blobUrlRef.current = _url;
-      documentKeyRef.current = docKey;
-      documentCache.set(docKey, _url);
+      documentCache.set(currentDocKey, _url);
       requestAnimationFrame(function () {
-        setUrl(_url);
-        setHasBeenLoaded(true);
+        if (documentKeyRef.current === currentDocKey) {
+          setUrl(_url);
+          setHasBeenLoaded(true);
+        }
       });
     };
 
     reader.onerror = function () {
-      isLoadingRef.current = false;
-      console.error('Error al leer el archivo');
+      if (documentKeyRef.current === currentDocKey) {
+        isLoadingRef.current = false;
+        console.error('Error al leer el archivo');
+      }
     };
 
     reader.readAsDataURL(file);
@@ -212,7 +225,12 @@ var FilePreview = function FilePreview(_ref) {
           textAlign: 'center'
         }
       }, errorMessage || 'No se pudo cargar el documento'), onRetry && _react.default.createElement("button", {
-        onClick: onRetry,
+        type: "button",
+        onClick: function onClick(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          onRetry();
+        },
         style: {
           padding: '10px 20px',
           backgroundColor: '#1976d2',
@@ -282,7 +300,11 @@ var FilePreview = function FilePreview(_ref) {
           maxWidth: '100%',
           objectFit: 'contain'
         },
-        loading: "lazy"
+        loading: "lazy",
+        onError: function onError(e) {
+          e.target.style.display = 'none';
+          console.error('Error al cargar la imagen');
+        }
       });
     } else if (/^(text||application)\//.test(file.type)) {
       if (/^(application\/pdf)/.test(file.type) && !(0, _detectPdf.default)()) {
@@ -294,7 +316,20 @@ var FilePreview = function FilePreview(_ref) {
 
       return _react.default.createElement("iframe", {
         title: file.name,
-        src: url
+        src: url,
+        onLoad: function onLoad(e) {
+          try {
+            var iframe = e.target;
+
+            if (iframe.contentDocument && iframe.contentDocument.body) {
+              var body = iframe.contentDocument.body;
+
+              if (body.innerHTML.includes('ERR_') || body.innerHTML.includes('Failed to load')) {
+                console.error('Error al cargar el documento en el iframe');
+              }
+            }
+          } catch (err) {}
+        }
       });
     } else return 'No Soportado';
   };
@@ -302,7 +337,10 @@ var FilePreview = function FilePreview(_ref) {
   var readUrlDocument = function readUrlDocument() {
     var docKey = getDocumentKey();
     if (!docKey) return;
-    if (isLoadingRef.current) return;
+
+    if (isLoadingRef.current && documentKeyRef.current === docKey) {
+      return;
+    }
 
     if (documentCache.has(docKey)) {
       var cachedUrl = documentCache.get(docKey);
@@ -311,10 +349,14 @@ var FilePreview = function FilePreview(_ref) {
       return;
     }
 
-    documentCache.set(docKey, urlDocument);
+    var currentDocKey = docKey;
+    documentKeyRef.current = currentDocKey;
+    documentCache.set(currentDocKey, urlDocument);
     requestAnimationFrame(function () {
-      setUrl(urlDocument);
-      setHasBeenLoaded(true);
+      if (documentKeyRef.current === currentDocKey) {
+        setUrl(urlDocument);
+        setHasBeenLoaded(true);
+      }
     });
   };
 
@@ -333,12 +375,15 @@ var FilePreview = function FilePreview(_ref) {
 
     if (observerRef.current) {
       observerRef.current.disconnect();
+      observerRef.current = null;
     }
 
     if (rafIdRef.current) {
       cancelAnimationFrame(rafIdRef.current);
+      rafIdRef.current = null;
     }
 
+    var container = containerRef.current;
     observerRef.current = new IntersectionObserver(function (entries) {
       if (rafIdRef.current) {
         cancelAnimationFrame(rafIdRef.current);
@@ -358,7 +403,7 @@ var FilePreview = function FilePreview(_ref) {
       rootMargin: '100px',
       threshold: 0.1
     });
-    observerRef.current.observe(containerRef.current);
+    observerRef.current.observe(container);
     return function () {
       if (rafIdRef.current) {
         cancelAnimationFrame(rafIdRef.current);
@@ -373,29 +418,36 @@ var FilePreview = function FilePreview(_ref) {
   }, [lazyLoad]);
   (0, _react.useEffect)(function () {
     var docKey = getDocumentKey();
+    if (!docKey) return;
     var previousKey = documentKeyRef.current;
+    var documentChanged = previousKey && previousKey !== docKey;
 
-    if (previousKey && previousKey !== docKey) {
+    if (documentChanged) {
       setHasBeenLoaded(false);
       setUrl('');
       isLoadingRef.current = false;
       isIntersectingRef.current = false;
     }
 
-    documentKeyRef.current = docKey;
-    if (!isVisible && lazyLoad) return;
+    if (!lazyLoad || documentChanged) {
+      setIsVisible(true);
+      isIntersectingRef.current = true;
+    }
 
-    if (docKey && documentCache.has(docKey)) {
+    if (documentCache.has(docKey)) {
       var cachedUrl = documentCache.get(docKey);
       blobUrlRef.current = cachedUrl;
-      requestAnimationFrame(function () {
-        setUrl(cachedUrl);
-        setHasBeenLoaded(true);
-      });
+      documentKeyRef.current = docKey;
+      setIsVisible(true);
+      isIntersectingRef.current = true;
+      setUrl(cachedUrl);
+      setHasBeenLoaded(true);
       return;
     }
 
-    if (!isLoadingRef.current) {
+    if (!isLoadingRef.current || documentKeyRef.current !== docKey) {
+      documentKeyRef.current = docKey;
+
       if (urlDocument && !Array.isArray(urlDocument)) {
         readUrlDocument();
       } else if (file && file instanceof File) {
@@ -406,7 +458,7 @@ var FilePreview = function FilePreview(_ref) {
     return function () {
       var currentKey = documentKeyRef.current;
 
-      if (blobUrlRef.current && currentKey) {
+      if (blobUrlRef.current && currentKey && currentKey === docKey) {
         var newKey = getDocumentKey();
 
         if (newKey !== currentKey || !documentCache.has(currentKey)) {
@@ -415,10 +467,12 @@ var FilePreview = function FilePreview(_ref) {
           } catch (e) {}
         }
 
-        blobUrlRef.current = null;
+        if (newKey !== currentKey) {
+          blobUrlRef.current = null;
+        }
       }
     };
-  }, [file, urlDocument, isVisible, lazyLoad]);
+  }, [file, urlDocument, lazyLoad]);
   return _react.default.createElement(_Card.default, {
     className: clasess.card,
     ref: containerRef

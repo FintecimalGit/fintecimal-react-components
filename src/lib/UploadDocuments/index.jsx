@@ -51,6 +51,8 @@ const UploadDocuments = ({
   const [isLoadingDocuments, setIsLoadingDocuments] = useState(false);
   const [loadingStates, setLoadingStates] = useState({});
   const [failedUrls, setFailedUrls] = useState([]);
+  const userSelectedFileRef = useRef(null);
+  const lastUserSelectionRef = useRef(null);
 
   const titleRef = useRef(null);
 
@@ -137,9 +139,67 @@ const UploadDocuments = ({
     setShowModal(false)
   };
 
+  const getFileKey = (f) => {
+    if (!f) return null;
+    if (f instanceof File) {
+      return `file_${f.name}_${f.size}_${f.lastModified}`;
+    }
+    if (f.url) {
+      return `url_${f.url}`;
+    }
+    if (f.index !== undefined) {
+      return `index_${f.index}`;
+    }
+    return null;
+  };
+
   const handleOnClick = (index, file) => {
-    setFile(file);
-    setCurrentFile(index);
+    if (!file) return;
+    
+    const fileKey = getFileKey(file);
+    const actualIndex = filteredFiles.findIndex(f => getFileKey(f) === fileKey);
+    let actualFile = actualIndex >= 0 ? filteredFiles[actualIndex] : file;
+    
+    if (actualFile && (actualFile.isLoading || actualFile.error)) {
+      const realFileInFiles = files.find(f => {
+        if (!f) return false;
+        if (f instanceof File) {
+          const fKey = getFileKey(f);
+          return fKey === fileKey;
+        }
+        const fKey = getFileKey(f);
+        if (fKey !== fileKey) {
+          if (f.url && file.url && f.url === file.url && !f.isLoading && !f.error) {
+            return true;
+          }
+          return false;
+        }
+        if (!f.isLoading && !f.error) return true;
+        return false;
+      });
+      if (realFileInFiles) {
+        actualFile = realFileInFiles;
+      }
+    }
+    
+    const realIndex = files.findIndex(f => {
+      if (!f) return false;
+      const fKey = getFileKey(f);
+      return fKey === getFileKey(actualFile);
+    });
+    
+    userSelectedFileRef.current = actualFile;
+    lastUserSelectionRef.current = actualFile;
+    
+    setFile(actualFile);
+    setCurrentFile(realIndex >= 0 ? realIndex : index);
+    
+    setTimeout(() => {
+      if (userSelectedFileRef.current === actualFile) {
+        userSelectedFileRef.current = null;
+      }
+    }, 2000);
+    
     titleRef.current.scrollIntoView();
   };
 
@@ -206,9 +266,8 @@ const UploadDocuments = ({
 
     try {
       const response = await fetchWithRetry(url, {
-        // maxRetries: isRetry ? 1 : 3,
-        maxRetries: 1,
-        timeout: 120000,
+        maxRetries: isRetry ? 1 : 2,
+        timeout: 180000,
         sequential: isRetry,
       });
       
@@ -421,11 +480,20 @@ const UploadDocuments = ({
     setIsLoadingDocuments(false);
   };
 
-  const retryFailedDocuments = async () => {
-    if (failedUrls.length === 0) return;
+  const retryFailedDocuments = async (specificFile = null) => {
+    let urlsToRetry = [];
+    let currentFailedUrls = [];
 
-    const urlsToRetry = failedUrls.map(f => f.url);
-    const currentFailedUrls = [...failedUrls];
+    if (specificFile && specificFile.error && (specificFile.url || url)) {
+      const retryUrl = specificFile.url || url;
+      const retryIndex = specificFile.index !== undefined ? specificFile.index : files.findIndex(f => f === specificFile);
+      currentFailedUrls = [{ url: retryUrl, index: retryIndex >= 0 ? retryIndex : 0 }];
+    } else if (failedUrls.length > 0) {
+      currentFailedUrls = [...failedUrls];
+    } else {
+      return;
+    }
+
     setFailedUrls([]);
     setIsLoadingDocuments(true);
     
@@ -433,6 +501,7 @@ const UploadDocuments = ({
       createLoadingPlaceholder(url, index)
     );
 
+    let updatedFilesAfterPlaceholders = [];
     setFiles(prevFiles => {
       const newFiles = [...prevFiles];
       retryPlaceholders.forEach(placeholder => {
@@ -441,11 +510,24 @@ const UploadDocuments = ({
           newFiles[fileIndex] = placeholder;
         }
       });
-      return newFiles.filter(f => f !== null);
+      updatedFilesAfterPlaceholders = newFiles.filter(f => f !== null);
+      return updatedFilesAfterPlaceholders;
     });
-
-    if (retryPlaceholders[0]) {
-      setFile(retryPlaceholders[0]);
+    
+    if (specificFile && retryPlaceholders[0]) {
+      const currentFileKey = getFileKey(file);
+      const retryFileKey = getFileKey(specificFile);
+      const retryUrlKey = `url_${retryPlaceholders[0].url}`;
+      
+      if (currentFileKey === retryFileKey || currentFileKey === retryUrlKey || !currentFileKey) {
+        setFile(retryPlaceholders[0]);
+        const placeholderIndex = updatedFilesAfterPlaceholders.findIndex(f => f && f.url === retryPlaceholders[0].url);
+        if (placeholderIndex >= 0) {
+          setCurrentFile(placeholderIndex);
+        }
+        userSelectedFileRef.current = null;
+        lastUserSelectionRef.current = null;
+      }
     }
     
     for (let i = 0; i < currentFailedUrls.length; i++) {
@@ -461,13 +543,35 @@ const UploadDocuments = ({
           } else {
             newFiles.push(file);
           }
-          return newFiles.filter(f => f !== null);
+          const updatedFiles = newFiles.filter(f => f !== null);
+          
+          const firstValidFile = file;
+          if (firstValidFile && !firstValidFile.isLoading) {
+            const foundIndex = updatedFiles.findIndex(f => f && ((f.error && f.url === url) || (f.isLoading && f.url === url) || f === firstValidFile));
+            if (foundIndex >= 0) {
+              const retryFileKey = getFileKey(firstValidFile);
+              const retryUrlKey = `url_${url}`;
+              
+              const currentFileInState = file;
+              const currentFileKey = currentFileInState ? getFileKey(currentFileInState) : null;
+              
+              if (currentFileKey === retryFileKey || currentFileKey === retryUrlKey) {
+                setCurrentFile(foundIndex);
+                setFile(firstValidFile);
+              } else if (!userSelectedFileRef.current && !lastUserSelectionRef.current) {
+                const prevFileInState = prevFiles.find(f => f && !f.error && !f.isLoading && (f.url === url || f.isLoading && f.url === url)) || prevFiles[0];
+                const prevFileKey = prevFileInState ? getFileKey(prevFileInState) : null;
+                
+                if (!prevFileKey || prevFileKey === retryFileKey || prevFileKey === retryUrlKey) {
+                  setCurrentFile(foundIndex);
+                  setFile(firstValidFile);
+                }
+              }
+            }
+          }
+          
+          return updatedFiles;
         });
-        
-        const firstValidFile = file;
-        if (firstValidFile && !firstValidFile.isLoading) {
-          setFile(firstValidFile);
-        }
       } else if (file && file.error) {
         setFiles(prevFiles => {
           const newFiles = [...prevFiles];
@@ -477,6 +581,7 @@ const UploadDocuments = ({
           }
           return newFiles.filter(f => f !== null);
         });
+        setFailedUrls(prev => [...prev, { url, index }]);
       }
     }
 
@@ -500,16 +605,22 @@ const UploadDocuments = ({
       />
     );
     else if (file) {
-      const fileIsLoading = file.isLoading || (file.index !== undefined && loadingStates[file.index] && loadingStates[file.index].loading);
+      const isThisFileLoading = file.isLoading || (file.index !== undefined && loadingStates[file.index] && loadingStates[file.index].loading);
+      const fileIsLoading = isThisFileLoading;
       const fileHasError = file.error || (file.index !== undefined && loadingStates[file.index] && loadingStates[file.index].error);
       
+      const shouldUseUrlDocument = !(file instanceof File) && (file.url || url);
+      const urlDocumentValue = shouldUseUrlDocument ? (file.url || url) : undefined;
+      
+      const fileKey = getFileKey(file);
       return (
         <FilePreview
+          key={fileKey || `file_${Date.now()}`}
           onDownloadFile={onDownloadFile}
           file={file}
           onDelete={useDeleteDialog ? () => setShowModal(true) : handleOnDelete}
           disabled={disabled}
-          urlDocument={file.url || url}
+          urlDocument={urlDocumentValue}
           multiple={multiple}
           accept={accept}
           verify={verify}
@@ -517,7 +628,7 @@ const UploadDocuments = ({
           isLoading={fileIsLoading}
           hasError={fileHasError}
           errorMessage={file.errorMessage || (file.index !== undefined && loadingStates[file.index] && loadingStates[file.index].errorMessage)}
-          onRetry={fileHasError && file.url ? () => retryFailedDocuments() : undefined}
+          onRetry={fileHasError && (file.url || url) ? () => retryFailedDocuments(file) : undefined}
         />
       );
     }
@@ -548,14 +659,39 @@ const UploadDocuments = ({
   };
 
   useEffect(() => {
-    setCurrentFile(0);
-    if (filteredFiles.length > 0) setFile(filteredFiles[0]);
-    else setSearch('');
+    if (!userSelectedFileRef.current) {
+      if (filteredFiles.length > 0) {
+        const fileKey = getFileKey(file);
+        const currentFileExists = fileKey && filteredFiles.some(f => getFileKey(f) === fileKey);
+        
+        if (!currentFileExists) {
+          setCurrentFile(0);
+          setFile(filteredFiles[0]);
+        }
+      } else {
+        setSearch('');
+      }
+    }
   }, [filteredFiles]);
 
   useEffect(() => {
-    setCurrentFile(0);
-    if (files.length <= 0) setFile(null);
+    if (!userSelectedFileRef.current) {
+      if (files.length <= 0) {
+        setFile(null);
+        setCurrentFile(0);
+      } else {
+        const fileKey = getFileKey(file);
+        const currentFileExists = fileKey && files.some(f => getFileKey(f) === fileKey);
+        
+        if (!currentFileExists && files.length > 0) {
+          const firstValidFile = files.find(f => !f.error && !f.isLoading) || files[0];
+          if (firstValidFile) {
+            setFile(firstValidFile);
+            setCurrentFile(files.indexOf(firstValidFile));
+          }
+        }
+      }
+    }
   }, [files]);
 
   useEffect(() => {

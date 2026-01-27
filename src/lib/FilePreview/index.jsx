@@ -83,7 +83,9 @@ const FilePreview = ({
     const docKey = getDocumentKey();
     if (!docKey) return;
 
-    if (isLoadingRef.current) return;
+    if (isLoadingRef.current && documentKeyRef.current === docKey) {
+      return;
+    }
 
     if (documentCache.has(docKey)) {
       const cachedUrl = documentCache.get(docKey);
@@ -109,22 +111,32 @@ const FilePreview = ({
       blobUrlRef.current = null;
     }
 
+    const currentDocKey = docKey;
     isLoadingRef.current = true;
+    documentKeyRef.current = currentDocKey;
+    
     const reader = new FileReader();
     reader.onloadend = function () {
+      if (documentKeyRef.current !== currentDocKey) {
+        isLoadingRef.current = false;
+        return;
+      }
       isLoadingRef.current = false;
       const _url = URL.createObjectURL(file);
       blobUrlRef.current = _url;
-      documentKeyRef.current = docKey;
-      documentCache.set(docKey, _url);
+      documentCache.set(currentDocKey, _url);
       requestAnimationFrame(() => {
-        setUrl(_url);
-        setHasBeenLoaded(true);
+        if (documentKeyRef.current === currentDocKey) {
+          setUrl(_url);
+          setHasBeenLoaded(true);
+        }
       });
     };
     reader.onerror = function () {
-      isLoadingRef.current = false;
-      console.error('Error al leer el archivo');
+      if (documentKeyRef.current === currentDocKey) {
+        isLoadingRef.current = false;
+        console.error('Error al leer el archivo');
+      }
     };
     reader.readAsDataURL(file);
   };
@@ -153,7 +165,12 @@ const FilePreview = ({
           </div>
           {onRetry && (
             <button
-              onClick={onRetry}
+              type="button"
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                onRetry();
+              }}
               style={{
                 padding: '10px 20px',
                 backgroundColor: '#1976d2',
@@ -232,6 +249,10 @@ const FilePreview = ({
             objectFit: 'contain'
           }}
           loading="lazy"
+          onError={(e) => {
+            e.target.style.display = 'none';
+            console.error('Error al cargar la imagen');
+          }}
         />
       );
     }
@@ -244,7 +265,24 @@ const FilePreview = ({
           />
         );
       }
-      return <iframe title={file.name} src={url} />;
+      return (
+        <iframe 
+          title={file.name} 
+          src={url}
+          onLoad={(e) => {
+            try {
+              const iframe = e.target;
+              if (iframe.contentDocument && iframe.contentDocument.body) {
+                const body = iframe.contentDocument.body;
+                if (body.innerHTML.includes('ERR_') || body.innerHTML.includes('Failed to load')) {
+                  console.error('Error al cargar el documento en el iframe');
+                }
+              }
+            } catch (err) {
+            }
+          }}
+        />
+      );
     }
     else return 'No Soportado';
   };
@@ -253,7 +291,9 @@ const FilePreview = ({
     const docKey = getDocumentKey();
     if (!docKey) return;
 
-    if (isLoadingRef.current) return;
+    if (isLoadingRef.current && documentKeyRef.current === docKey) {
+      return;
+    }
 
     if (documentCache.has(docKey)) {
       const cachedUrl = documentCache.get(docKey);
@@ -262,10 +302,14 @@ const FilePreview = ({
       return;
     }
 
-    documentCache.set(docKey, urlDocument);
+    const currentDocKey = docKey;
+    documentKeyRef.current = currentDocKey;
+    documentCache.set(currentDocKey, urlDocument);
     requestAnimationFrame(() => {
-      setUrl(urlDocument);
-      setHasBeenLoaded(true);
+      if (documentKeyRef.current === currentDocKey) {
+        setUrl(urlDocument);
+        setHasBeenLoaded(true);
+      }
     });
   };
 
@@ -284,12 +328,15 @@ const FilePreview = ({
 
     if (observerRef.current) {
       observerRef.current.disconnect();
+      observerRef.current = null;
     }
 
     if (rafIdRef.current) {
       cancelAnimationFrame(rafIdRef.current);
+      rafIdRef.current = null;
     }
 
+    const container = containerRef.current;
     observerRef.current = new IntersectionObserver(
       (entries) => {
         if (rafIdRef.current) {
@@ -313,7 +360,7 @@ const FilePreview = ({
       }
     );
 
-    observerRef.current.observe(containerRef.current);
+    observerRef.current.observe(container);
 
     return () => {
       if (rafIdRef.current) {
@@ -329,30 +376,36 @@ const FilePreview = ({
 
   useEffect(() => {
     const docKey = getDocumentKey();
-    const previousKey = documentKeyRef.current;
+    if (!docKey) return;
     
-    if (previousKey && previousKey !== docKey) {
+    const previousKey = documentKeyRef.current;
+    const documentChanged = previousKey && previousKey !== docKey;
+    
+    if (documentChanged) {
       setHasBeenLoaded(false);
       setUrl('');
       isLoadingRef.current = false;
       isIntersectingRef.current = false;
     }
 
-    documentKeyRef.current = docKey;
+    if (!lazyLoad || documentChanged) {
+      setIsVisible(true);
+      isIntersectingRef.current = true;
+    }
 
-    if (!isVisible && lazyLoad) return;
-
-    if (docKey && documentCache.has(docKey)) {
+    if (documentCache.has(docKey)) {
       const cachedUrl = documentCache.get(docKey);
       blobUrlRef.current = cachedUrl;
-      requestAnimationFrame(() => {
-        setUrl(cachedUrl);
-        setHasBeenLoaded(true);
-      });
+      documentKeyRef.current = docKey;
+      setIsVisible(true);
+      isIntersectingRef.current = true;
+      setUrl(cachedUrl);
+      setHasBeenLoaded(true);
       return;
     }
 
-    if (!isLoadingRef.current) {
+    if (!isLoadingRef.current || documentKeyRef.current !== docKey) {
+      documentKeyRef.current = docKey;
       if (urlDocument && !Array.isArray(urlDocument)) {
         readUrlDocument();
       } else if (file && file instanceof File) {
@@ -362,7 +415,7 @@ const FilePreview = ({
 
     return () => {
       const currentKey = documentKeyRef.current;
-      if (blobUrlRef.current && currentKey) {
+      if (blobUrlRef.current && currentKey && currentKey === docKey) {
         const newKey = getDocumentKey();
         if (newKey !== currentKey || !documentCache.has(currentKey)) {
           try {
@@ -370,10 +423,12 @@ const FilePreview = ({
           } catch (e) {
           }
         }
-        blobUrlRef.current = null;
+        if (newKey !== currentKey) {
+          blobUrlRef.current = null;
+        }
       }
     };
-  }, [file, urlDocument, isVisible, lazyLoad]);
+  }, [file, urlDocument, lazyLoad]);
 
   return (
     <Card className={clasess.card} ref={containerRef}>
