@@ -108,7 +108,7 @@ const FileThumbnail = ({ file, selected, onClick, isOver }) => {
   };
   
   const handleOnClick = () => {
-    if (file && (file.isLoading || file.error)) {
+    if (file && file.isLoading) {
       return;
     }
     onClick(file);
@@ -186,7 +186,7 @@ const FileThumbnail = ({ file, selected, onClick, isOver }) => {
 
   if (file && file.error) {
     return (
-      <div className={clasess.root} style={{ cursor: 'not-allowed', opacity: 0.7 }}>
+      <div className={clasess.root} onClick={handleOnClick} style={{ cursor: 'pointer', opacity: 0.9 }}>
         <div className={classnames(
           clasess.imageContainer,
           { [clasess.isOver]: isOver },
@@ -200,9 +200,11 @@ const FileThumbnail = ({ file, selected, onClick, isOver }) => {
           <div style={{
             textAlign: 'center',
             color: '#d32f2f',
-            fontSize: '12px'
+            fontSize: '12px',
+            fontWeight: '500'
           }}>
             <div>Error</div>
+            <div style={{ fontSize: '10px', marginTop: '4px' }}>Click para reintentar</div>
           </div>
         </div>
         <Typography
@@ -210,6 +212,7 @@ const FileThumbnail = ({ file, selected, onClick, isOver }) => {
             clasess.typography,
             { [clasess.typographySelected]: selected },
           )}
+          style={{ color: '#d32f2f' }}
         >
           { file.name || 'Error al cargar' }
         </Typography>
