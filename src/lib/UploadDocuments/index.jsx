@@ -157,42 +157,58 @@ const UploadDocuments = ({
     if (!file) return;
     
     const fileKey = getFileKey(file);
-    const actualIndex = filteredFiles.findIndex(f => getFileKey(f) === fileKey);
-    let actualFile = actualIndex >= 0 ? filteredFiles[actualIndex] : file;
     
-    if (actualFile && (actualFile.isLoading || actualFile.error)) {
+    // Buscar el archivo real en el array files (no filtrado)
+    // Si el archivo clickeado está en estado de carga o error, buscar su versión actualizada
+    let actualFile = file;
+    
+    if (file.isLoading || file.error) {
+      // Buscar en files el archivo real (ya cargado) con la misma URL
       const realFileInFiles = files.find(f => {
-        if (!f) return false;
-        if (f instanceof File) {
-          const fKey = getFileKey(f);
-          return fKey === fileKey;
+        if (!f || f.isLoading || f.error) return false;
+        if (f instanceof File && file.url) {
+          // Comparar por URL si el archivo original tenía URL
+          return false; // Los File no tienen URL directamente
         }
-        const fKey = getFileKey(f);
-        if (fKey !== fileKey) {
-          if (f.url && file.url && f.url === file.url && !f.isLoading && !f.error) {
-            return true;
-          }
-          return false;
+        // Comparar por URL
+        if (f.url && file.url && f.url === file.url) {
+          return true;
         }
-        if (!f.isLoading && !f.error) return true;
-        return false;
+        return getFileKey(f) === fileKey;
       });
+      
       if (realFileInFiles) {
         actualFile = realFileInFiles;
       }
+    } else {
+      // Buscar en files para asegurar que tenemos la referencia más actualizada
+      const updatedFile = files.find(f => {
+        if (!f) return false;
+        return getFileKey(f) === fileKey;
+      });
+      if (updatedFile) {
+        actualFile = updatedFile;
+      }
     }
     
-    const realIndex = files.findIndex(f => {
+    // Calcular el índice en filteredFiles para la selección visual
+    const filteredIndex = filteredFiles.findIndex(f => {
       if (!f) return false;
       const fKey = getFileKey(f);
-      return fKey === getFileKey(actualFile);
+      const actualKey = getFileKey(actualFile);
+      if (fKey === actualKey) return true;
+      // También comparar por URL en caso de que las keys no coincidan
+      if (f.url && actualFile.url && f.url === actualFile.url) return true;
+      if (f.url && file.url && f.url === file.url) return true;
+      return false;
     });
     
     userSelectedFileRef.current = actualFile;
     lastUserSelectionRef.current = actualFile;
     
     setFile(actualFile);
-    setCurrentFile(realIndex >= 0 ? realIndex : index);
+    // Usar el índice de filteredFiles para que coincida con la comparación en FileFinder
+    setCurrentFile(filteredIndex >= 0 ? filteredIndex : index);
     
     setTimeout(() => {
       if (userSelectedFileRef.current === actualFile) {
@@ -662,11 +678,24 @@ const UploadDocuments = ({
     if (!userSelectedFileRef.current) {
       if (filteredFiles.length > 0) {
         const fileKey = getFileKey(file);
-        const currentFileExists = fileKey && filteredFiles.some(f => getFileKey(f) === fileKey);
+        const currentFileIndex = filteredFiles.findIndex(f => {
+          if (!f) return false;
+          const fKey = getFileKey(f);
+          if (fKey === fileKey) return true;
+          // También comparar por URL
+          if (f.url && file && file.url && f.url === file.url) return true;
+          return false;
+        });
         
-        if (!currentFileExists) {
-          setCurrentFile(0);
-          setFile(filteredFiles[0]);
+        if (currentFileIndex < 0) {
+          // El archivo actual no existe en filteredFiles, seleccionar el primero
+          const firstValidFile = filteredFiles.find(f => f && !f.error && !f.isLoading) || filteredFiles[0];
+          const firstValidIndex = filteredFiles.indexOf(firstValidFile);
+          setCurrentFile(firstValidIndex >= 0 ? firstValidIndex : 0);
+          setFile(firstValidFile || filteredFiles[0]);
+        } else {
+          // Actualizar currentFile para que coincida con el índice en filteredFiles
+          setCurrentFile(currentFileIndex);
         }
       } else {
         setSearch('');
@@ -684,15 +713,29 @@ const UploadDocuments = ({
         const currentFileExists = fileKey && files.some(f => getFileKey(f) === fileKey);
         
         if (!currentFileExists && files.length > 0) {
-          const firstValidFile = files.find(f => !f.error && !f.isLoading) || files[0];
+          const firstValidFile = files.find(f => f && !f.error && !f.isLoading) || files[0];
           if (firstValidFile) {
             setFile(firstValidFile);
-            setCurrentFile(files.indexOf(firstValidFile));
+            // Calcular el índice en filteredFiles para consistencia
+            const filteredIndex = filteredFiles.findIndex(f => {
+              if (!f) return false;
+              return getFileKey(f) === getFileKey(firstValidFile);
+            });
+            setCurrentFile(filteredIndex >= 0 ? filteredIndex : 0);
+          }
+        } else if (currentFileExists) {
+          // Actualizar currentFile para que coincida con filteredFiles
+          const filteredIndex = filteredFiles.findIndex(f => {
+            if (!f) return false;
+            return getFileKey(f) === fileKey;
+          });
+          if (filteredIndex >= 0 && filteredIndex !== currentFile) {
+            setCurrentFile(filteredIndex);
           }
         }
       }
     }
-  }, [files]);
+  }, [files, filteredFiles]);
 
   useEffect(() => {
     const arrayUrl = (url !== '' && typeof url === "string") ? [url] : url;
