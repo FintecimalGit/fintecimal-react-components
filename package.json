@@ -51,6 +51,7 @@
     "storybook": "start-storybook -p 9009 -s public",
     "build-storybook": "build-storybook -s public",
     "dist": "node scripts/build-incremental.js",
+    "dist:sync": "node scripts/build-incremental.js --sync",
     "dist:all": "npx babel ./src/lib/ --out-dir ./dist/ --presets=@babel/preset-env,@babel/preset-react --plugins=babel-plugin-inline-dotenv"
   },
   "eslintConfig": {
