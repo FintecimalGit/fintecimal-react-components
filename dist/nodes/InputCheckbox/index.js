@@ -58,7 +58,7 @@ var InputCheckbox = function InputCheckbox(_ref) {
     setState(function (prevState) {
       return _objectSpread({}, prevState, _defineProperty({}, optionName, checked));
     });
-    var formatValue = Array.isArray(value) ? value.map(function (valueItem) {
+    var formatValue = Array.isArray(value) && value.length > 0 ? value.map(function (valueItem) {
       var nameValueItem = valueItem.name;
       if (nameValueItem === optionName) return {
         name: nameValueItem,

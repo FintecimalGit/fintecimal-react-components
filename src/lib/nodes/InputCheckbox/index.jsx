@@ -21,7 +21,7 @@ const InputCheckbox = ({
       ...prevState,
       [optionName]: checked,
     }));
-    const formatValue = Array.isArray(value) ? value.map((valueItem) => {
+    const formatValue = Array.isArray(value) && value.length > 0 ? value.map((valueItem) => {
       const { name: nameValueItem } = valueItem;
       if (nameValueItem === optionName) return { name: nameValueItem, checked };
       return valueItem;
