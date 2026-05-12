@@ -1030,7 +1030,7 @@ storiesOf('Components|Nodes', module)
         required
         errorMessage={longText}
         options={checkbox}
-        value="La estructura organizacional está alineada con los objetivos del negocio y el entorno de control interno es sólido."
+        value={''}
       />
     </form>
   ))
