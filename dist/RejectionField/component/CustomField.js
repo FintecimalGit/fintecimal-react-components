@@ -72,6 +72,9 @@ var CustomField = function CustomField(_ref) {
     case 'checkbox':
       return _react.default.createElement(_nodes.InputCheckbox, props);
 
+    case 'search':
+      return _react.default.createElement(_nodes.SearchInput, props);
+
     default:
       return _react.default.createElement(_BaseTextInput.default, props);
   }

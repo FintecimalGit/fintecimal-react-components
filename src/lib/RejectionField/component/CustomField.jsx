@@ -9,7 +9,7 @@ import RFCInput from '../../nodes/BaseRFCInput';
 import NumberInput from '../../nodes/BaseNumberInput';
 import SelectInput from '../../nodes/Select';
 import BaseDatePicker from '../../nodes/BaseDatePicker';
-import { InputCheckbox, RadioGroupInput } from '../../nodes';
+import { InputCheckbox, RadioGroupInput, SearchInput } from '../../nodes';
 
 const CustomField = ({ type, ...props }) => {
   const { name } = type;
@@ -37,6 +37,8 @@ const CustomField = ({ type, ...props }) => {
       return <RadioGroupInput {...props}/>
     case 'checkbox':
       return <InputCheckbox {...props}/>
+    case 'search':
+      return <SearchInput {...props}/>
     default:
       return <TextInput {...props} />;
   }
