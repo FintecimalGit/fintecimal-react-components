@@ -113,12 +113,6 @@ var PdfViewer = function PdfViewer(_ref2) {
 
   var onDocumentLoadSuccess = function onDocumentLoadSuccess(_ref3) {
     var pages = _ref3.numPages;
-
-    if (!pages || pages === 0) {
-      setLoadFailed(true);
-      return;
-    }
-
     setLoadFailed(false);
     setNumPages(pages);
   };
