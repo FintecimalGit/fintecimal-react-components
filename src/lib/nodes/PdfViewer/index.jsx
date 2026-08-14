@@ -78,7 +78,6 @@ const PdfViewer = ({ url, onDownloadFile, marginTop }) => {
   }, [numPages]);
 
   if (loadFailed) {
-    console.log('loadFailed', url);
     return (
       <iframe
         title={getDocumentName(url)}
