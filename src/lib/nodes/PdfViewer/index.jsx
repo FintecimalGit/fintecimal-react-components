@@ -40,10 +40,6 @@ const PdfViewer = ({ url, onDownloadFile, marginTop }) => {
   );
 
   const onDocumentLoadSuccess = ({ numPages: pages }) => {
-    if (!pages || pages === 0) {
-      setLoadFailed(true);
-      return;
-    }
     setLoadFailed(false);
     setNumPages(pages);
   };

@@ -226,30 +226,14 @@ const FilePreview = ({
       );
     }
     else if(/^(text||application)\//.test(file.type)) {
-      if (/^(application\/pdf)/.test(file.type) && !DetectPdf()) {
-        return (
-          <PdfViewer 
-            url={url}
-            onDownloadFile={onDownloadFile}
-          />
-        );
-      }
+      // TODO: re-enable PdfViewer for non-XFA PDFs once fallback is stable
+      // if (/^(application\/pdf)/.test(file.type) && !DetectPdf()) {
+      //   return <PdfViewer url={url} onDownloadFile={onDownloadFile} />;
+      // }
       return (
         <iframe 
           title={file.name} 
           src={url}
-          onLoad={(e) => {
-            try {
-              const iframe = e.target;
-              if (iframe.contentDocument && iframe.contentDocument.body) {
-                const body = iframe.contentDocument.body;
-                if (body.innerHTML.includes('ERR_') || body.innerHTML.includes('Failed to load')) {
-                  console.error('Error al cargar el documento en el iframe');
-                }
-              }
-            } catch (err) {
-            }
-          }}
         />
       );
     }
