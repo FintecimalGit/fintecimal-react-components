@@ -12,12 +12,18 @@ const PdfViewer = ({ url, onDownloadFile, marginTop }) => {
   const [scale, setScale] = useState(1);
   const [numPages, setNumPages] = useState(0);
   const [actualPage, setActualPage] = useState(1);
+  const [loadFailed, setLoadFailed] = useState(false);
   const classes = useStyles();
 
-  const memoizedUrl = useMemo(() => ({url}), [url]);
+  const memoizedUrl = useMemo(() => ({ url }), [url]);
 
   const onDocumentLoadSuccess = ({ numPages: pages }) => {
+    setLoadFailed(false);
     setNumPages(pages);
+  };
+
+  const onDocumentLoadError = () => {
+    setLoadFailed(true);
   };
 
   const onPageLoadSuccess = ({ _pageIndex, _pageInfo }) => {
@@ -57,17 +63,36 @@ const PdfViewer = ({ url, onDownloadFile, marginTop }) => {
       stopScrollRef.current = false;
       return;
     }
+    const page1 = pageDataRef.current[1];
+    if (!page1 || !page1.height) return;
     const value = +evt.target.scrollTop;
-    const actual = Math.round(value / (pageDataRef.current[1].height * scaleRef.current + marginTop)) + 1;
+    const actual = Math.round(value / (page1.height * scaleRef.current + marginTop)) + 1;
     setActualPage(actual);
   };
 
   useEffect(() => {
     if (documentRef.current) documentRef.current.addEventListener('scroll', scrollDocument);
     return () => {
-      documentRef.current.removeEventListener('scroll', scrollDocument);
+      if (documentRef.current) documentRef.current.removeEventListener('scroll', scrollDocument);
     };
   }, [numPages]);
+
+  if (loadFailed) {
+    console.log('loadFailed', url);
+    return (
+      <iframe
+        title={getDocumentName(url)}
+        src={url}
+        style={{
+          width: '100%',
+          height: '100%',
+          minHeight: '600px',
+          border: 'none',
+          backgroundColor: '#202124',
+        }}
+      />
+    );
+  }
 
   return (
     <>
@@ -83,6 +108,7 @@ const PdfViewer = ({ url, onDownloadFile, marginTop }) => {
         <Document
           file={memoizedUrl}
           onLoadSuccess={onDocumentLoadSuccess}
+          onLoadError={onDocumentLoadError}
           className={classes.container}
           inputRef={documentRef}
         >
