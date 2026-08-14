@@ -45,10 +45,28 @@ function _iterableToArrayLimit(arr, i) { if (!(Symbol.iterator in Object(arr) ||
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
-var PdfViewer = function PdfViewer(_ref) {
+var IframeFallback = function IframeFallback(_ref) {
   var url = _ref.url,
-      onDownloadFile = _ref.onDownloadFile,
-      marginTop = _ref.marginTop;
+      title = _ref.title,
+      minHeight = _ref.minHeight;
+  return _react.default.createElement("iframe", {
+    title: title,
+    src: url,
+    style: {
+      width: '100%',
+      height: '100%',
+      minHeight: minHeight || '600px',
+      border: 'none',
+      backgroundColor: '#202124',
+      display: 'block'
+    }
+  });
+};
+
+var PdfViewer = function PdfViewer(_ref2) {
+  var url = _ref2.url,
+      onDownloadFile = _ref2.onDownloadFile,
+      marginTop = _ref2.marginTop;
   var pageDataRef = (0, _react.useRef)({});
   var documentRef = (0, _react.useRef)(null);
   var stopScrollRef = (0, _react.useRef)(false);
@@ -81,8 +99,20 @@ var PdfViewer = function PdfViewer(_ref) {
     };
   }, [url]);
 
-  var onDocumentLoadSuccess = function onDocumentLoadSuccess(_ref2) {
-    var pages = _ref2.numPages;
+  var getDocumentName = function getDocumentName(_url) {
+    return _url.split('/').pop();
+  };
+
+  var iframeFallback = (0, _react.useMemo)(function () {
+    return _react.default.createElement(IframeFallback, {
+      url: url,
+      title: getDocumentName(url),
+      minHeight: "600px"
+    });
+  }, [url]);
+
+  var onDocumentLoadSuccess = function onDocumentLoadSuccess(_ref3) {
+    var pages = _ref3.numPages;
     setLoadFailed(false);
     setNumPages(pages);
   };
@@ -91,9 +121,9 @@ var PdfViewer = function PdfViewer(_ref) {
     setLoadFailed(true);
   };
 
-  var onPageLoadSuccess = function onPageLoadSuccess(_ref3) {
-    var _pageIndex = _ref3._pageIndex,
-        _pageInfo = _ref3._pageInfo;
+  var onPageLoadSuccess = function onPageLoadSuccess(_ref4) {
+    var _pageIndex = _ref4._pageIndex,
+        _pageInfo = _ref4._pageInfo;
     var index = _pageIndex;
     var view = _pageInfo.view;
     pageDataRef.current = _objectSpread({}, pageDataRef.current, _defineProperty({}, index, {
@@ -106,10 +136,6 @@ var PdfViewer = function PdfViewer(_ref) {
     var newValue = +evt.target.value.split('.')[0];
     if (newValue !== 0 && !newValue || newValue > numPages) return;
     setActualPage(newValue);
-  };
-
-  var getDocumentName = function getDocumentName(_url) {
-    return _url.split('/').pop();
   };
 
   var onEnterActualPage = function onEnterActualPage(evt) {
@@ -152,17 +178,7 @@ var PdfViewer = function PdfViewer(_ref) {
   }, [numPages]);
 
   if (loadFailed) {
-    return _react.default.createElement("iframe", {
-      title: getDocumentName(url),
-      src: url,
-      style: {
-        width: '100%',
-        height: '100%',
-        minHeight: '600px',
-        border: 'none',
-        backgroundColor: '#202124'
-      }
-    });
+    return iframeFallback;
   }
 
   return _react.default.createElement(_react.default.Fragment, null, _react.default.createElement(_NavigationBar.default, {
@@ -177,6 +193,7 @@ var PdfViewer = function PdfViewer(_ref) {
     file: memoizedUrl,
     onLoadSuccess: onDocumentLoadSuccess,
     onLoadError: onDocumentLoadError,
+    error: iframeFallback,
     className: classes.container,
     inputRef: documentRef
   }, Array.from(new Array(numPages), function (el, index) {
