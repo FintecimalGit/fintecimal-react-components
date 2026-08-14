@@ -152,7 +152,6 @@ var PdfViewer = function PdfViewer(_ref) {
   }, [numPages]);
 
   if (loadFailed) {
-    console.log('loadFailed', url);
     return _react.default.createElement("iframe", {
       title: getDocumentName(url),
       src: url,
