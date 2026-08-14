@@ -1,5 +1,7 @@
 "use strict";
 
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
@@ -17,7 +19,9 @@ var _style = _interopRequireDefault(require("./style"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
 
@@ -27,7 +31,9 @@ function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.
 
 function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
 
-function _objectSpread2(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
@@ -35,7 +41,7 @@ function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArra
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
 
-function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+function _iterableToArrayLimit(arr, i) { if (!(Symbol.iterator in Object(arr) || Object.prototype.toString.call(arr) === "[object Arguments]")) { return; } var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
@@ -63,6 +69,11 @@ var PdfViewer = function PdfViewer(_ref) {
       actualPage = _useState6[0],
       setActualPage = _useState6[1];
 
+  var _useState7 = (0, _react.useState)(false),
+      _useState8 = _slicedToArray(_useState7, 2),
+      loadFailed = _useState8[0],
+      setLoadFailed = _useState8[1];
+
   var classes = (0, _style.default)();
   var memoizedUrl = (0, _react.useMemo)(function () {
     return {
@@ -72,7 +83,12 @@ var PdfViewer = function PdfViewer(_ref) {
 
   var onDocumentLoadSuccess = function onDocumentLoadSuccess(_ref2) {
     var pages = _ref2.numPages;
+    setLoadFailed(false);
     setNumPages(pages);
+  };
+
+  var onDocumentLoadError = function onDocumentLoadError() {
+    setLoadFailed(true);
   };
 
   var onPageLoadSuccess = function onPageLoadSuccess(_ref3) {
@@ -80,7 +96,7 @@ var PdfViewer = function PdfViewer(_ref) {
         _pageInfo = _ref3._pageInfo;
     var index = _pageIndex;
     var view = _pageInfo.view;
-    pageDataRef.current = _objectSpread2({}, pageDataRef.current, _defineProperty({}, index, {
+    pageDataRef.current = _objectSpread({}, pageDataRef.current, _defineProperty({}, index, {
       width: view[2],
       height: view[3]
     }));
@@ -121,17 +137,35 @@ var PdfViewer = function PdfViewer(_ref) {
       return;
     }
 
+    var page1 = pageDataRef.current[1];
+    if (!page1 || !page1.height) return;
     var value = +evt.target.scrollTop;
-    var actual = Math.round(value / (pageDataRef.current[1].height * scaleRef.current + marginTop)) + 1;
+    var actual = Math.round(value / (page1.height * scaleRef.current + marginTop)) + 1;
     setActualPage(actual);
   };
 
   (0, _react.useEffect)(function () {
     if (documentRef.current) documentRef.current.addEventListener('scroll', scrollDocument);
     return function () {
-      documentRef.current.removeEventListener('scroll', scrollDocument);
+      if (documentRef.current) documentRef.current.removeEventListener('scroll', scrollDocument);
     };
   }, [numPages]);
+
+  if (loadFailed) {
+    console.log('loadFailed', url);
+    return _react.default.createElement("iframe", {
+      title: getDocumentName(url),
+      src: url,
+      style: {
+        width: '100%',
+        height: '100%',
+        minHeight: '600px',
+        border: 'none',
+        backgroundColor: '#202124'
+      }
+    });
+  }
+
   return _react.default.createElement(_react.default.Fragment, null, _react.default.createElement(_NavigationBar.default, {
     actualPage: actualPage,
     handleActualPage: handleActualPage,
@@ -143,6 +177,7 @@ var PdfViewer = function PdfViewer(_ref) {
   }), _react.default.createElement(_entry.Document, {
     file: memoizedUrl,
     onLoadSuccess: onDocumentLoadSuccess,
+    onLoadError: onDocumentLoadError,
     className: classes.container,
     inputRef: documentRef
   }, Array.from(new Array(numPages), function (el, index) {
