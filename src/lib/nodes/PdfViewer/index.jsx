@@ -4,6 +4,21 @@ import PropTypes from 'prop-types';
 import NavigationBar from './NavigationBar';
 import useStyles from './style';
 
+const IframeFallback = ({ url, title, minHeight }) => (
+  <iframe
+    title={title}
+    src={url}
+    style={{
+      width: '100%',
+      height: '100%',
+      minHeight: minHeight || '600px',
+      border: 'none',
+      backgroundColor: '#202124',
+      display: 'block',
+    }}
+  />
+);
+
 const PdfViewer = ({ url, onDownloadFile, marginTop }) => {
   const pageDataRef = useRef({});
   const documentRef = useRef(null);
@@ -16,6 +31,13 @@ const PdfViewer = ({ url, onDownloadFile, marginTop }) => {
   const classes = useStyles();
 
   const memoizedUrl = useMemo(() => ({ url }), [url]);
+
+  const getDocumentName = (_url) => _url.split('/').pop();
+
+  const iframeFallback = useMemo(
+    () => <IframeFallback url={url} title={getDocumentName(url)} minHeight="600px" />,
+    [url],
+  );
 
   const onDocumentLoadSuccess = ({ numPages: pages }) => {
     setLoadFailed(false);
@@ -37,8 +59,6 @@ const PdfViewer = ({ url, onDownloadFile, marginTop }) => {
     if ((newValue !== 0 && !newValue) || (newValue > numPages)) return;
     setActualPage(newValue);
   };
-
-  const getDocumentName = (_url) => _url.split('/').pop();
 
   const onEnterActualPage = (evt) => {
     if (evt.key === 'Enter') {
@@ -78,19 +98,7 @@ const PdfViewer = ({ url, onDownloadFile, marginTop }) => {
   }, [numPages]);
 
   if (loadFailed) {
-    return (
-      <iframe
-        title={getDocumentName(url)}
-        src={url}
-        style={{
-          width: '100%',
-          height: '100%',
-          minHeight: '600px',
-          border: 'none',
-          backgroundColor: '#202124',
-        }}
-      />
-    );
+    return iframeFallback;
   }
 
   return (
@@ -108,6 +116,7 @@ const PdfViewer = ({ url, onDownloadFile, marginTop }) => {
           file={memoizedUrl}
           onLoadSuccess={onDocumentLoadSuccess}
           onLoadError={onDocumentLoadError}
+          error={iframeFallback}
           className={classes.container}
           inputRef={documentRef}
         >
