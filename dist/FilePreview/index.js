@@ -276,9 +276,10 @@ var FilePreview = function FilePreview(_ref) {
       // if (/^(application\/pdf)/.test(file.type) && !DetectPdf()) {
       //   return <PdfViewer url={url} onDownloadFile={onDownloadFile} />;
       // }
+      var iframeSrc = urlDocument && !Array.isArray(urlDocument) ? urlDocument : url;
       return _react.default.createElement("iframe", {
         title: file.name,
-        src: url
+        src: iframeSrc
       });
     } else return 'No Soportado';
   };

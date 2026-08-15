@@ -276,6 +276,7 @@ const UploadDocuments = ({
       };
       const _title = useEditorIne ? getTitle(url, title) : title;
       const file = new File([data], _title, metadata);
+      file._sourceUrl = url;
 
       setLoadingStates(prev => ({
         ...prev,
@@ -609,7 +610,9 @@ const UploadDocuments = ({
       const fileHasError = file.error || (file.index !== undefined && loadingStates[file.index] && loadingStates[file.index].error);
       
       const shouldUseUrlDocument = !(file instanceof File) && (file.url || url);
-      const urlDocumentValue = shouldUseUrlDocument ? (file.url || url) : undefined;
+      const urlDocumentValue = shouldUseUrlDocument
+        ? (file.url || url)
+        : (file instanceof File && file._sourceUrl) ? file._sourceUrl : undefined;
       
       const fileKey = getFileKey(file);
       return (
