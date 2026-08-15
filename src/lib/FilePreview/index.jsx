@@ -230,10 +230,11 @@ const FilePreview = ({
       // if (/^(application\/pdf)/.test(file.type) && !DetectPdf()) {
       //   return <PdfViewer url={url} onDownloadFile={onDownloadFile} />;
       // }
+      const iframeSrc = urlDocument && !Array.isArray(urlDocument) ? urlDocument : url;
       return (
         <iframe 
           title={file.name} 
-          src={url}
+          src={iframeSrc}
         />
       );
     }
