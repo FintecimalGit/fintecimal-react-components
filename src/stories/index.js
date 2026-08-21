@@ -496,7 +496,7 @@ storiesOf('Components|Nodes', module)
       <Grid item sm={12}>
         <BaseDatePicker
           value={'2021-07-25T15:32:00.000Z'}
-          label="Fecha de vencimiento"
+          label="Fecha de vencimiento LL"
           onDateChange={action('onDateChange')}
           minDate="2020-01-01"
           format={'LL'}
@@ -506,7 +506,7 @@ storiesOf('Components|Nodes', module)
       <Grid item sm={12}>
         <BaseDatePicker
           value={'23 de jul. de 2021'}
-          label="Fecha de vencimiento"
+          label="Fecha de vencimiento ll"
           onDateChange={action('onDateChange')}
           minDate="2020-01-01"
           format={'ll'}
